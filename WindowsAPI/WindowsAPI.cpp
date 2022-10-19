@@ -3,10 +3,40 @@
 
 #define MAX_LOADSTRING 100
 
+struct Pos
+{
+    int x;
+    int y;
+
+}; typedef Pos Size;
+
+class Player
+{
+public:
+    Player()
+    : m_pos()
+    , m_size()
+    {}
+    ~Player() {}
+
+    void SetPos(Pos _pos) { m_pos = _pos; }
+    Pos GetPos() { return m_pos; }
+
+    void SetSize(Size _size) { m_size = _size; }
+    Size GetSize() { return m_size; }
+
+private:
+    Pos m_pos;
+    Size m_size;
+};
+
+
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
+Player player;
+
 
 // 전방선언
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -99,7 +129,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
     case WM_CREATE:
     {
+        Pos pPos = { 100, 100 };
+        Size pSize = { 100, 100 };
+        player.SetPos(pPos);
+        player.SetSize(pSize);
         SetWindowPos(hWnd, nullptr, 0, 0, 1920, 1080, 0);
+        SetTimer(hWnd, 0, 100, nullptr);
     }
     case WM_COMMAND:
         {
@@ -118,6 +153,41 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+    case WM_KEYDOWN:
+    {
+        Pos pPos = player.GetPos();
+        switch (wParam)
+        {
+        case 'W':
+        {
+            pPos.y += -10;
+        }
+        break;
+        case 'A':
+        {
+            pPos.x += -10;
+        }
+        break;
+        case 'S':
+        {
+            pPos.y += 10;
+        }
+        break;
+        case 'D':
+        {
+            pPos.x += 10;
+        }
+        break;
+        default:
+            break;
+        }
+        player.SetPos(pPos);
+    }
+    case WM_TIMER:
+    {
+        InvalidateRect(hWnd, nullptr, false);
+
+    }
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
@@ -136,7 +206,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HPEN hPen = (HPEN)GetStockObject(NULL_PEN);
             HPEN hPrevPen = (HPEN)SelectObject(hdc, hPen);
 
-            Rectangle(hdc, 100, 100, 300, 300);
+            //Rectangle(hdc, 100, 100, 300, 300);
+
+            Pos pPos = player.GetPos();
+            Size pSize = player.GetSize();
+
+            Ellipse(hdc, pPos.x, pPos.y, pPos.x + pSize.x, pPos.y + pSize.y);
+
+
             SelectObject(hdc, hPrevPen);
 
             
@@ -146,6 +223,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
+        KillTimer(hWnd, 0);
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);

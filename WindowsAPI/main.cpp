@@ -1,41 +1,13 @@
-﻿#include "framework.h"
+﻿#include "Common.h"
 #include "WindowsAPI.h"
+#include "jsApplication.h"
 
 #define MAX_LOADSTRING 100
-
-struct Pos
-{
-    int x;
-    int y;
-
-}; typedef Pos Size;
-
-class Player
-{
-public:
-    Player()
-    : m_pos()
-    , m_size()
-    {}
-    ~Player() {}
-
-    void SetPos(Pos _pos) { m_pos = _pos; }
-    Pos GetPos() { return m_pos; }
-
-    void SetSize(Size _size) { m_size = _size; }
-    Size GetSize() { return m_size; }
-
-private:
-    Pos m_pos;
-    Size m_size;
-};
-
 
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
-Player player;
 
 
 // 전방선언
@@ -63,19 +35,31 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSAPI));
     MSG msg;
 
 
-    // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (true)
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            if (msg.message == WM_QUIT)
+                break;
+
+            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+            {
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
         }
+        else
+        {
+            // 게임 진행
+        }
+    }
+    if (msg.message == WM_QUIT)
+    {
+        // 메모리 해제할 예정
     }
 
     return (int) msg.wParam;
@@ -110,14 +94,23 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   WindowData winData;
+   winData.width = 1920;
+   winData.height = 1080;
+
+   winData.hWnd = hWnd;
+   winData.hdc = nullptr;
 
    if (!hWnd)
    {
       return FALSE;
    }
 
+   SetWindowPos(hWnd, nullptr, 0, 0, winData.width, winData.height, 0);
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
+
+   js::jsApplication::GetInstance().Initialize(winData);
 
    return TRUE;
 }
@@ -127,15 +120,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
-    case WM_CREATE:
-    {
-        Pos pPos = { 100, 100 };
-        Size pSize = { 100, 100 };
-        player.SetPos(pPos);
-        player.SetSize(pSize);
-        SetWindowPos(hWnd, nullptr, 0, 0, 1920, 1080, 0);
-        SetTimer(hWnd, 0, 100, nullptr);
-    }
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -153,77 +137,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
-    case WM_KEYDOWN:
-    {
-        Pos pPos = player.GetPos();
-        switch (wParam)
-        {
-        case 'W':
-        {
-            pPos.y += -10;
-        }
-        break;
-        case 'A':
-        {
-            pPos.x += -10;
-        }
-        break;
-        case 'S':
-        {
-            pPos.y += 10;
-        }
-        break;
-        case 'D':
-        {
-            pPos.x += 10;
-        }
-        break;
-        default:
-            break;
-        }
-        player.SetPos(pPos);
-    }
-    case WM_TIMER:
-    {
-        InvalidateRect(hWnd, nullptr, false);
-
-    }
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             
-            
-
-
             // 화면 초기화
             HBRUSH hClearBrush = (HBRUSH)GetStockObject(GRAY_BRUSH);
             HBRUSH hPrevBrush = (HBRUSH)SelectObject(hdc, hClearBrush);
             Rectangle(hdc, -1, -1, 1921, 1081);
             SelectObject(hdc, hPrevBrush);
 
-            
+            // 그리는 용도로 선언한 팬
             HPEN hPen = (HPEN)GetStockObject(NULL_PEN);
             HPEN hPrevPen = (HPEN)SelectObject(hdc, hPen);
 
-            //Rectangle(hdc, 100, 100, 300, 300);
-
-            Pos pPos = player.GetPos();
-            Size pSize = player.GetSize();
-
-            Ellipse(hdc, pPos.x, pPos.y, pPos.x + pSize.x, pPos.y + pSize.y);
 
 
-            SelectObject(hdc, hPrevPen);
 
-            
+
+
+            SelectObject(hdc, hPrevPen);            
             // stockObject를 사용하기 때문에 소멸시킬 대상이 없음
             EndPaint(hWnd, &ps);
         }
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
-        KillTimer(hWnd, 0);
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);

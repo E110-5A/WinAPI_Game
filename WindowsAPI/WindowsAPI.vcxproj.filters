@@ -1,49 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="0 Main">
+      <UniqueIdentifier>{aeec4f41-66ae-437f-81ec-dbd6d97725a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="리소스 파일">
+    <Filter Include="0 Main\리소스 파일">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="1 Engine">
+      <UniqueIdentifier>{6cf00bed-4437-4055-a2bd-87900b909d3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2 Client">
+      <UniqueIdentifier>{a09dfee9-73a1-4c93-9a6c-e4d7fd5cd928}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>0 Main</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>0 Main</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>0 Main</Filter>
     </ClInclude>
     <ClInclude Include="WindowsAPI.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>0 Main</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="WindowsAPI.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
+    <ClInclude Include="Common.h">
+      <Filter>1 Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="jsMath.h">
+      <Filter>1 Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="jsApplication.h">
+      <Filter>1 Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="jsEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
-      <Filter>리소스 파일</Filter>
+      <Filter>0 Main\리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>0 Main\리소스 파일</Filter>
     </Image>
     <Image Include="WindowsAPI.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>0 Main\리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>0 Main</Filter>
+    </ClCompile>
+    <ClCompile Include="jsApplication.cpp">
+      <Filter>1 Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="jsEntity.cpp" />
   </ItemGroup>
 </Project>

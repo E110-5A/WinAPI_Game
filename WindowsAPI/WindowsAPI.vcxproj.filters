@@ -11,8 +11,29 @@
     <Filter Include="1 Engine">
       <UniqueIdentifier>{6cf00bed-4437-4055-a2bd-87900b909d3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1 Engine\Common">
+      <UniqueIdentifier>{377bc0eb-c093-4b91-9a82-ea6403976fea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject">
+      <UniqueIdentifier>{bf5e999b-5e64-40f2-948a-c82b921a03bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\HighLevel Interface">
+      <UniqueIdentifier>{e4250be8-6e60-4257-b148-2e5ba18bee5f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="2 Client">
       <UniqueIdentifier>{a09dfee9-73a1-4c93-9a6c-e4d7fd5cd928}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\Scene">
+      <UniqueIdentifier>{335f4c3c-8b7b-46e8-a28e-cc4c74d26328}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\Manager">
+      <UniqueIdentifier>{43887eec-2e17-45cf-970c-1493f6530db1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\Base">
+      <UniqueIdentifier>{c8af8821-aa97-42dd-99da-784b40f4743e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\Scene\Base">
+      <UniqueIdentifier>{4227f9cf-db06-4036-baf5-8c4cb04a81cd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -29,15 +50,35 @@
       <Filter>0 Main</Filter>
     </ClInclude>
     <ClInclude Include="Common.h">
-      <Filter>1 Engine</Filter>
+      <Filter>1 Engine\Common</Filter>
     </ClInclude>
     <ClInclude Include="jsMath.h">
-      <Filter>1 Engine</Filter>
+      <Filter>1 Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="jsEntity.h">
+      <Filter>1 Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="def.h">
+      <Filter>1 Engine\Common</Filter>
     </ClInclude>
     <ClInclude Include="jsApplication.h">
-      <Filter>1 Engine</Filter>
+      <Filter>1 Engine\HighLevel Interface</Filter>
     </ClInclude>
-    <ClInclude Include="jsEntity.h" />
+    <ClInclude Include="jsScene.h">
+      <Filter>1 Engine\Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="jsSceneManager.h">
+      <Filter>1 Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="jsLogoScene.h">
+      <Filter>1 Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="jsGameObject.h">
+      <Filter>1 Engine\GameObject\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="jsPlayer.h">
+      <Filter>1 Engine\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -56,9 +97,26 @@
     <ClCompile Include="main.cpp">
       <Filter>0 Main</Filter>
     </ClCompile>
-    <ClCompile Include="jsApplication.cpp">
-      <Filter>1 Engine</Filter>
+    <ClCompile Include="jsEntity.cpp">
+      <Filter>1 Engine\Common</Filter>
     </ClCompile>
-    <ClCompile Include="jsEntity.cpp" />
+    <ClCompile Include="jsApplication.cpp">
+      <Filter>1 Engine\HighLevel Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="jsScene.cpp">
+      <Filter>1 Engine\Scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="jsSceneManager.cpp">
+      <Filter>1 Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="jsLogoScene.cpp">
+      <Filter>1 Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="jsGameObject.cpp">
+      <Filter>1 Engine\GameObject\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="jsPlayer.cpp">
+      <Filter>1 Engine\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

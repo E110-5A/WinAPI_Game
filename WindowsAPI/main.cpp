@@ -55,11 +55,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         else
         {
             // 게임 진행
+            js::jsApplication::GetInstance().Tick();
         }
     }
     if (msg.message == WM_QUIT)
     {
         // 메모리 해제할 예정
+        //js::jsApplication::GetInstance().
     }
 
     return (int) msg.wParam;

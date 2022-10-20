@@ -7,8 +7,8 @@
 #include <list>
 #include <map>
 
-
-
+#include "def.h"
+#include "jsMath.h"
 
 struct WindowData
 {

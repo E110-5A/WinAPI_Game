@@ -8,17 +8,18 @@ namespace js
 	public:
 		static jsApplication& GetInstance()
 		{
+			static jsApplication m_Instance;
 			return m_Instance;
 		}
-
-		jsApplication();
-		~jsApplication();
 
 		void Initialize(WindowData _data);
 		void Tick();
 
 	private:
-		static jsApplication	m_Instance;
+		jsApplication();
+		~jsApplication();
+	private:
+		
 		WindowData				m_WindowData;
 	};
 }

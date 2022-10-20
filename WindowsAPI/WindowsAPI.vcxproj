@@ -128,10 +128,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Common.h" />
+    <ClInclude Include="def.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="jsApplication.h" />
     <ClInclude Include="jsEntity.h" />
+    <ClInclude Include="jsGameObject.h" />
+    <ClInclude Include="jsLogoScene.h" />
     <ClInclude Include="jsMath.h" />
+    <ClInclude Include="jsPlayer.h" />
+    <ClInclude Include="jsScene.h" />
+    <ClInclude Include="jsSceneManager.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WindowsAPI.h" />
@@ -139,6 +145,11 @@
   <ItemGroup>
     <ClCompile Include="jsApplication.cpp" />
     <ClCompile Include="jsEntity.cpp" />
+    <ClCompile Include="jsGameObject.cpp" />
+    <ClCompile Include="jsLogoScene.cpp" />
+    <ClCompile Include="jsPlayer.cpp" />
+    <ClCompile Include="jsScene.cpp" />
+    <ClCompile Include="jsSceneManager.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

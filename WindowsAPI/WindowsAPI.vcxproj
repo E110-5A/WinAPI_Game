@@ -133,11 +133,14 @@
     <ClInclude Include="jsApplication.h" />
     <ClInclude Include="jsEntity.h" />
     <ClInclude Include="jsGameObject.h" />
+    <ClInclude Include="jsInput.h" />
     <ClInclude Include="jsLogoScene.h" />
     <ClInclude Include="jsMath.h" />
     <ClInclude Include="jsPlayer.h" />
+    <ClInclude Include="jsProjectile.h" />
     <ClInclude Include="jsScene.h" />
     <ClInclude Include="jsSceneManager.h" />
+    <ClInclude Include="jsTime.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WindowsAPI.h" />
@@ -146,10 +149,13 @@
     <ClCompile Include="jsApplication.cpp" />
     <ClCompile Include="jsEntity.cpp" />
     <ClCompile Include="jsGameObject.cpp" />
+    <ClCompile Include="jsInput.cpp" />
     <ClCompile Include="jsLogoScene.cpp" />
     <ClCompile Include="jsPlayer.cpp" />
+    <ClCompile Include="jsProjectile.cpp" />
     <ClCompile Include="jsScene.cpp" />
     <ClCompile Include="jsSceneManager.cpp" />
+    <ClCompile Include="jsTime.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

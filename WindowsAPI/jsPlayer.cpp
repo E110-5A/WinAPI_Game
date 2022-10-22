@@ -1,9 +1,14 @@
 #include "jsPlayer.h"
+#include "jsTime.h"
+#include "jsInput.h"
+#include "jsProjectile.h"
+#include "jsSceneManager.h"
+#include "jsScene.h"
 
 namespace js
 {
 	jsPlayer::jsPlayer()
-		: m_Speed(0.01f)
+		: m_Speed(100.f)
 	{
 		SetPos(Pos(100.f, 100.f));
 		SetScale(Size(100.f, 100.f));
@@ -11,24 +16,37 @@ namespace js
 	jsPlayer::~jsPlayer()
 	{
 	}
+
 	void jsPlayer::Tick()
 	{
 		Pos pos = GetPos();
-		if (GetAsyncKeyState('W') & 0x8000)
+		if (KEY_PRESSE(eKeyCode::W))
 		{
-			pos.y -= m_Speed;
+			pos.y -= m_Speed * jsTime::GetDeltaTime();
 		}
-		if (GetAsyncKeyState('A') & 0x8000)
+		if (KEY_PRESSE(eKeyCode::A))
 		{
-			pos.x -= m_Speed;
+			pos.x -= m_Speed * jsTime::GetDeltaTime();
 		}
-		if (GetAsyncKeyState('S') & 0x8000)
+		if (KEY_PRESSE(eKeyCode::S))
 		{
-			pos.y += m_Speed;
+			pos.y += m_Speed * jsTime::GetDeltaTime();
 		}
-		if (GetAsyncKeyState('D') & 0x8000)
+		if (KEY_PRESSE(eKeyCode::D))
 		{
-			pos.x += m_Speed;
+			pos.x += m_Speed * jsTime::GetDeltaTime();
+		}
+		if (KEY_DOWN(eKeyCode::J))
+		{
+			jsProjectile* missile = new jsProjectile;
+			jsScene* playScene = jsSceneManager::GetCurScene();
+			playScene->AddGameObject(missile);
+
+
+			Pos startPos = GetScale() / 2.f;
+			Pos missilePos = (pos + startPos) - (missile->GetScale() / 2.f);
+			
+			missile->SetPos(missilePos);
 		}
 		SetPos(pos);
 	}

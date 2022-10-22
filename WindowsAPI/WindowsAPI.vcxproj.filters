@@ -79,6 +79,15 @@
     <ClInclude Include="jsPlayer.h">
       <Filter>1 Engine\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="jsTime.h">
+      <Filter>1 Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="jsInput.h">
+      <Filter>1 Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="jsProjectile.h">
+      <Filter>1 Engine\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -116,6 +125,15 @@
       <Filter>1 Engine\GameObject\Base</Filter>
     </ClCompile>
     <ClCompile Include="jsPlayer.cpp">
+      <Filter>1 Engine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="jsTime.cpp">
+      <Filter>1 Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="jsInput.cpp">
+      <Filter>1 Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="jsProjectile.cpp">
       <Filter>1 Engine\GameObject</Filter>
     </ClCompile>
   </ItemGroup>

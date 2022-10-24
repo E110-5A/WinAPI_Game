@@ -88,6 +88,8 @@
     <ClInclude Include="jsProjectile.h">
       <Filter>1 Engine\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="jsRain.h" />
+    <ClInclude Include="jsRainPool.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -136,5 +138,7 @@
     <ClCompile Include="jsProjectile.cpp">
       <Filter>1 Engine\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="jsRain.cpp" />
+    <ClCompile Include="jsRainPool.cpp" />
   </ItemGroup>
 </Project>

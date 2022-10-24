@@ -36,7 +36,7 @@ namespace js
 		{
 			pos.x += m_Speed * jsTime::GetDeltaTime();
 		}
-		if (KEY_DOWN(eKeyCode::J))
+		if (KEY_DOWN(eKeyCode::SPACE))
 		{
 			jsProjectile* missile = new jsProjectile;
 			jsScene* playScene = jsSceneManager::GetCurScene();

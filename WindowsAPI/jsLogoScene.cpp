@@ -1,5 +1,7 @@
 #include "jsLogoScene.h"
 #include "jsPlayer.h"
+#include "jsRainPool.h"
+
 namespace js
 {
 	jsLogoScene::jsLogoScene()
@@ -11,6 +13,7 @@ namespace js
 	void jsLogoScene::Initialize()
 	{
 		AddGameObject(new jsPlayer);
+		jsRainPool::Init(this);
 	}
 	void jsLogoScene::Tick()
 	{

@@ -50,12 +50,19 @@ namespace js
 		}
 		SetPos(pos);
 	}
-	void jsPlayer::Render(HDC _dc)
+	void jsPlayer::Render(HDC _hdc)
 	{
+		HBRUSH blueBrush = CreateSolidBrush(RGB(153, 204, 255));
+		Brush brush(_hdc, blueBrush);
+
+		HPEN greenBrush = CreatePen(PS_SOLID, 1, RGB(153, 255, 204));
+		Pen pen(_hdc, greenBrush);
+
 		Pos pos = GetPos();
 		Size scale = GetScale();
 
-		Rectangle(_dc, pos.x, pos.y,
+		Rectangle(_hdc, pos.x, pos.y,
 			pos.x + scale.x, pos.y + scale.y);
+
 	}
 }

@@ -18,6 +18,8 @@ namespace js
 	private:
 		jsApplication();
 		~jsApplication();
+
+		void InitializeWindow(WindowData _data);
 	private:
 		
 		WindowData				m_WindowData;

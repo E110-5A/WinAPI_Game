@@ -16,7 +16,7 @@ namespace js
 
 		if (curPos.y >= 1000.f)
 		{
-			SetSpeed(rand() % 800);
+			SetSpeed(100 + rand() % 800);
 			curPos.x = rand() % 1921;
 			curPos.y = 100.f;
 		}

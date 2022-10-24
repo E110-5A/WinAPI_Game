@@ -16,17 +16,23 @@ namespace js
 
 		if (curPos.y >= 1000.f)
 		{
-			SetSpeed(100 + rand() % 800);
+			SetSpeed(300 + rand() % 400);
 			curPos.x = rand() % 1921;
-			curPos.y = 100.f;
+			curPos.y = rand() % 100;
+			SetRGB(rand() % 255, rand() % 255, rand() % 255);
 		}
 		curPos.y += m_Speed * jsTime::GetDeltaTime();
 		SetPos(curPos);
-
+		
 		
 	}
 	void jsRain::Render(HDC _hdc)
 	{
+		HBRUSH randBrush = CreateSolidBrush(RGB(R,G,B));
+		Brush brush(_hdc, randBrush);
+
+		HPEN randPen = CreatePen(PS_SOLID, 1, RGB(R, G, B));
+		Pen pen(_hdc, randPen);
 		Pos pos = GetPos();
 		Size scale = GetScale();
 

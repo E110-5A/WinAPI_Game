@@ -1,7 +1,7 @@
 #pragma once
 #include "Common.h"
 
-#define RAIN 10
+#define RAIN 21
 
 namespace js
 {

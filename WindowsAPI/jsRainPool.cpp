@@ -11,9 +11,10 @@ namespace js
 		for (size_t i = 0; i < RAIN; i++)
 		{
 			rain[i] = new jsRain;
-			rain[i]->SetPos(Pos(rand() % 1921, 200));
+			rain[i]->SetPos(Pos(rand() % 1921, rand() % 200));
 			rain[i]->SetScale(Pos(rand() % 100, rand() % 100));
-			rain[i]->SetSpeed(rand() % 800);
+			rain[i]->SetSpeed(250 + rand() % 600);
+			rain[i]->SetRGB(rand() % 255, rand() % 255, rand() % 255);
 			_target->AddGameObject(rain[i]);
 		}
 	}

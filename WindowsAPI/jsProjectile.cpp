@@ -3,9 +3,9 @@
 namespace js
 {
 	jsProjectile::jsProjectile()
-		: m_fSpeed(400.f)
+		: m_fSpeed(800.f)
 	{
-		SetScale(Size(100.f, 100.f));
+		SetScale(Size(20.f, 60.f));
 	}
 	jsProjectile::~jsProjectile()
 	{

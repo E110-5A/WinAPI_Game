@@ -8,10 +8,10 @@
 namespace js
 {
 	jsPlayer::jsPlayer()
-		: m_Speed(100.f)
+		: m_Speed(400.f)
 	{
-		SetPos(Pos(100.f, 100.f));
-		SetScale(Size(100.f, 100.f));
+		SetPos(Pos(100.f, 700.f));
+		SetScale(Size(70.f, 70.f));
 	}
 	jsPlayer::~jsPlayer()
 	{
@@ -55,8 +55,8 @@ namespace js
 		HBRUSH blueBrush = CreateSolidBrush(RGB(153, 204, 255));
 		Brush brush(_hdc, blueBrush);
 
-		HPEN greenBrush = CreatePen(PS_SOLID, 1, RGB(153, 255, 204));
-		Pen pen(_hdc, greenBrush);
+		HPEN greenPen = CreatePen(PS_SOLID, 1, RGB(153, 255, 204));
+		Pen pen(_hdc, greenPen);
 
 		Pos pos = GetPos();
 		Size scale = GetScale();

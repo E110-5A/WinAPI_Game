@@ -3,6 +3,7 @@
 
 namespace js
 {
+	class jsImage;
 	class jsPlayer :
 		public jsGameObject
 	{
@@ -14,6 +15,7 @@ namespace js
 
 	private:
 		float m_Speed;
+		js::jsImage* m_Image;
 	};
 }
 

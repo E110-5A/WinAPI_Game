@@ -13,6 +13,7 @@ namespace js
 	{
 		jsSceneManager::Release();
 		ReleaseDC(m_WindowData.hWnd, m_WindowData.hdc);
+		ReleaseDC(m_WindowData.hWnd, m_WindowData.backBuffer);
 	}
 
 	void jsApplication::InitializeWindow(WindowData _data)

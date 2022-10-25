@@ -4,14 +4,23 @@
 #include "jsProjectile.h"
 #include "jsSceneManager.h"
 #include "jsScene.h"
+#include "jsImage.h"
+#include "jsResources.h"
 
 namespace js
 {
 	jsPlayer::jsPlayer()
 		: m_Speed(400.f)
+		, m_Image(nullptr)
 	{
-		SetPos(Pos(100.f, 700.f));
-		SetScale(Size(70.f, 70.f));
+		SetPos(Pos(100.f, 500.f));
+		SetScale(Size(20.f, 60.f));
+
+		if (nullptr == m_Image)
+		{
+			m_Image = jsResources<jsImage>::Load(L"Player", L"..\\Resources\\Image\\Player\\idlex3.bmp");
+			
+		}
 	}
 	jsPlayer::~jsPlayer()
 	{
@@ -50,19 +59,23 @@ namespace js
 		}
 		SetPos(pos);
 	}
-	void jsPlayer::Render(HDC _hdc)
+	void jsPlayer::Render(HDC hdc)
 	{
-		HBRUSH blueBrush = CreateSolidBrush(RGB(153, 204, 255));
-		Brush brush(_hdc, blueBrush);
-
-		HPEN greenPen = CreatePen(PS_SOLID, 1, RGB(153, 255, 204));
-		Pen pen(_hdc, greenPen);
-
 		Pos pos = GetPos();
 		Size scale = GetScale();
 
-		Rectangle(_hdc, pos.x, pos.y,
-			pos.x + scale.x, pos.y + scale.y);
+		//HBRUSH blueBrush = CreateSolidBrush(RGB(153, 204, 255));
+		//Brush brush(hdc, blueBrush);
 
+		//HPEN greenPen = CreatePen(PS_SOLID, 1, RGB(153, 255, 204));
+		//Pen pen(hdc, greenPen);
+
+		//Rectangle(hdc, pos.x, pos.y,
+		//	pos.x + scale.x, pos.y + scale.y);
+
+		
+		BitBlt(hdc, pos.x, pos.y,
+			m_Image->GetWidth(), m_Image->GetHeight(),
+			m_Image->GetDC(), 0, 0, SRCCOPY);
 	}
 }

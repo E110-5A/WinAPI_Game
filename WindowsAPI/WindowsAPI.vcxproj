@@ -133,6 +133,7 @@
     <ClInclude Include="jsApplication.h" />
     <ClInclude Include="jsEntity.h" />
     <ClInclude Include="jsGameObject.h" />
+    <ClInclude Include="jsImage.h" />
     <ClInclude Include="jsInput.h" />
     <ClInclude Include="jsLogoScene.h" />
     <ClInclude Include="jsMath.h" />
@@ -140,6 +141,8 @@
     <ClInclude Include="jsProjectile.h" />
     <ClInclude Include="jsRain.h" />
     <ClInclude Include="jsRainPool.h" />
+    <ClInclude Include="jsResource.h" />
+    <ClInclude Include="jsResources.h" />
     <ClInclude Include="jsScene.h" />
     <ClInclude Include="jsSceneManager.h" />
     <ClInclude Include="jsTime.h" />
@@ -151,12 +154,15 @@
     <ClCompile Include="jsApplication.cpp" />
     <ClCompile Include="jsEntity.cpp" />
     <ClCompile Include="jsGameObject.cpp" />
+    <ClCompile Include="jsImage.cpp" />
     <ClCompile Include="jsInput.cpp" />
     <ClCompile Include="jsLogoScene.cpp" />
     <ClCompile Include="jsPlayer.cpp" />
     <ClCompile Include="jsProjectile.cpp" />
     <ClCompile Include="jsRain.cpp" />
     <ClCompile Include="jsRainPool.cpp" />
+    <ClCompile Include="jsResource.cpp" />
+    <ClCompile Include="jsResources.cpp" />
     <ClCompile Include="jsScene.cpp" />
     <ClCompile Include="jsSceneManager.cpp" />
     <ClCompile Include="jsTime.cpp" />

@@ -35,6 +35,12 @@
     <Filter Include="1 Engine\Scene\Base">
       <UniqueIdentifier>{4227f9cf-db06-4036-baf5-8c4cb04a81cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1 Engine\Resource">
+      <UniqueIdentifier>{3020b1f2-6f31-4f8b-9bc3-a5b82ebf2e50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\Resource\base">
+      <UniqueIdentifier>{4528a46b-9098-48f0-aab9-729d381af842}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -90,6 +96,13 @@
     </ClInclude>
     <ClInclude Include="jsRain.h" />
     <ClInclude Include="jsRainPool.h" />
+    <ClInclude Include="jsResource.h">
+      <Filter>1 Engine\Resource\base</Filter>
+    </ClInclude>
+    <ClInclude Include="jsImage.h" />
+    <ClInclude Include="jsResources.h">
+      <Filter>1 Engine\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -140,5 +153,12 @@
     </ClCompile>
     <ClCompile Include="jsRain.cpp" />
     <ClCompile Include="jsRainPool.cpp" />
+    <ClCompile Include="jsResource.cpp">
+      <Filter>1 Engine\Resource\base</Filter>
+    </ClCompile>
+    <ClCompile Include="jsImage.cpp" />
+    <ClCompile Include="jsResources.cpp">
+      <Filter>1 Engine\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

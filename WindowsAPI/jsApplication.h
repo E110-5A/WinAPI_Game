@@ -12,6 +12,8 @@ namespace js
 			return m_Instance;
 		}
 
+		WindowData GetWindowData() { return m_WindowData; }
+
 		void Initialize(WindowData _data);
 		void Tick();
 

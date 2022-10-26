@@ -3,26 +3,29 @@
 
 namespace js
 {
-
-	class jsGameObject :
-		public jsEntity
+	class Component;
+	class GameObject :
+		public Entity
 	{
 	public:
-		jsGameObject();
-		virtual ~jsGameObject();
+		GameObject();
+		virtual ~GameObject();
 
 		virtual void Initialize();
 		virtual void Tick();
-		virtual void Render(HDC _dc);
+		virtual void Render(HDC hdc);
 
-		void SetPos(Pos _Pos) { m_Pos = _Pos; }
-		Pos GetPos() { return m_Pos; }
-		void SetScale(Size _Scale) { m_Scale = _Scale; }
-		Size GetScale() { return m_Scale; }
+		void SetPos(Pos pos) { mPos = pos; }
+		Pos GetPos() { return mPos; }
+		void SetScale(Size scale) { mScale = scale; }
+		Size GetScale() { return mScale; }
+
+		void AddComponent(Component* component);
 
 	private:
-		Pos		m_Pos;
-		Size	m_Scale;
+		std::vector<Component*> mComponents;
+		Pos		mPos;
+		Size	mScale;
 	};
 }
 

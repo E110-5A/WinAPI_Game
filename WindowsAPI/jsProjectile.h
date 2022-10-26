@@ -4,12 +4,12 @@
 namespace js
 {
 
-	class jsProjectile :
-		public jsGameObject
+	class Projectile :
+		public GameObject
 	{
 	public:
-		jsProjectile();
-		~jsProjectile();
+		Projectile();
+		~Projectile();
 
 		virtual void Tick() override;
 		virtual void Render(HDC _hdc) override;

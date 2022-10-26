@@ -4,7 +4,7 @@
 namespace js
 {
 	class jsRain :
-		public jsGameObject
+		public GameObject
 	{
 	public:
 		jsRain();

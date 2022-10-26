@@ -10,6 +10,8 @@
 #include "def.h"
 #include "jsMath.h"
 
+#pragma comment(lib, "Msimg32.lib")
+
 struct WindowData
 {
 	HWND	hWnd;

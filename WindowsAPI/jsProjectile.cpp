@@ -2,21 +2,21 @@
 #include "jsTime.h"
 namespace js
 {
-	jsProjectile::jsProjectile()
+	Projectile::Projectile()
 		: m_fSpeed(800.f)
 	{
 		SetScale(Size(20.f, 60.f));
 	}
-	jsProjectile::~jsProjectile()
+	Projectile::~Projectile()
 	{
 	}
-	void jsProjectile::Tick()
+	void Projectile::Tick()
 	{
 		Pos pos = GetPos();
 		pos.y -= m_fSpeed * jsTime::GetDeltaTime();
 		SetPos(pos);
 	}
-	void jsProjectile::Render(HDC _hdc)
+	void Projectile::Render(HDC _hdc)
 	{
 		Pos pos = GetPos();
 		Size scale = GetScale();

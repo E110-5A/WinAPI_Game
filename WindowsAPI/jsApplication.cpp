@@ -2,69 +2,84 @@
 #include "jsSceneManager.h"
 #include "jsTime.h"
 #include "jsInput.h"
+#include "jsResources.h"
+
 namespace js
 {
-	jsApplication::jsApplication()
+	Application::Application()
 	{
-		m_WindowData.clear();
+		mWindowData.clear();
 	}
 
-	jsApplication::~jsApplication()
+	Application::~Application()
 	{
-		jsSceneManager::Release();
-		ReleaseDC(m_WindowData.hWnd, m_WindowData.hdc);
-		ReleaseDC(m_WindowData.hWnd, m_WindowData.backBuffer);
+		Resources::Release();
+		SceneManager::Release();
+		ReleaseDC(mWindowData.hWnd, mWindowData.hdc);
+		ReleaseDC(mWindowData.hWnd, mWindowData.backBuffer);
 	}
 
-	void jsApplication::InitializeWindow(WindowData _data)
+	void Application::InitializeWindow(WindowData _data)
 	{
-		m_WindowData = _data;
-		m_WindowData.hdc = GetDC(_data.hWnd);
+		mWindowData = _data;
+		mWindowData.hdc = GetDC(_data.hWnd);
 
-		RECT rect = { 0,0,m_WindowData.width, m_WindowData.height };
+		RECT rect = { 0,0,mWindowData.width, mWindowData.height };
 		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
 
-		SetWindowPos(m_WindowData.hWnd, nullptr, 0, 0
+		SetWindowPos(mWindowData.hWnd, nullptr, 0, 0
 			, rect.right - rect.left, rect.bottom - rect.top, 0);
 
-		ShowWindow(m_WindowData.hWnd, true);
+		ShowWindow(mWindowData.hWnd, true);
 
 
-		m_WindowData.backTexture 
-			= CreateCompatibleBitmap(m_WindowData.hdc, m_WindowData.width, m_WindowData.height);
+		mWindowData.backTexture 
+			= CreateCompatibleBitmap(mWindowData.hdc, mWindowData.width, mWindowData.height);
 
-		m_WindowData.backBuffer
-			= CreateCompatibleDC(m_WindowData.hdc);
+		mWindowData.backBuffer
+			= CreateCompatibleDC(mWindowData.hdc);
 		HBITMAP defaultBitMap
-			= (HBITMAP)SelectObject(m_WindowData.backBuffer, m_WindowData.backTexture);
+			= (HBITMAP)SelectObject(mWindowData.backBuffer, mWindowData.backTexture);
 
 		DeleteObject(defaultBitMap);
+
+		mPens[(UINT)ePenColor::Red] = CreatePen(PS_SOLID, 1, RGB(255,0,0));
+		mPens[(UINT)ePenColor::Green] = CreatePen(PS_SOLID, 1, RGB(0,255,0));
+		mPens[(UINT)ePenColor::Blue] = CreatePen(PS_SOLID, 1, RGB(0,0,255));
+		
+		mBrushs[(UINT)eBrushColor::Transparent] = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
+		mBrushs[(UINT)eBrushColor::Black] = (HBRUSH)GetStockObject(BLACK_BRUSH);
+		mBrushs[(UINT)eBrushColor::Gray] = (HBRUSH)GetStockObject(GRAY_BRUSH);
+		mBrushs[(UINT)eBrushColor::White] = (HBRUSH)GetStockObject(WHITE_BRUSH);
+
 	}
 
-	void jsApplication::Initialize(WindowData _data)
+	void Application::Initialize(WindowData _data)
 	{
 		InitializeWindow(_data);
 
 
 		jsTime::Initialize();
 		jsInput::Initialize();
-		jsSceneManager::Initialize();
+		SceneManager::Initialize();
 	}
 
-	void jsApplication::Tick()
+	void Application::Tick()
 	{
 		jsTime::Tick();
 		jsInput::Tick();
-		jsSceneManager::Tick();
 
-		Rectangle(m_WindowData.backBuffer, -1, -1, m_WindowData.width + 1, m_WindowData.height + 1);
+		Brush brush(mWindowData.backBuffer, mBrushs[(UINT)eBrushColor::Gray]);
+		Rectangle(mWindowData.backBuffer, -1, -1, mWindowData.width + 1, mWindowData.height + 1);
 
-		jsSceneManager::Render(m_WindowData.backBuffer);
-		jsInput::Render(m_WindowData.backBuffer);
-		jsTime::Render(m_WindowData.backBuffer);
 
-		BitBlt(m_WindowData.hdc, 0, 0, m_WindowData.width, m_WindowData.height,
-			m_WindowData.backBuffer, 0, 0, SRCCOPY);
+		SceneManager::Tick();
+		SceneManager::Render(mWindowData.backBuffer);
+		jsInput::Render(mWindowData.backBuffer);
+		jsTime::Render(mWindowData.backBuffer);
+
+		BitBlt(mWindowData.hdc, 0, 0, mWindowData.width, mWindowData.height,
+			mWindowData.backBuffer, 0, 0, SRCCOPY);
 	}
 }
 

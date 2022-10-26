@@ -4,7 +4,7 @@
 namespace js
 {
 	class jsLogoScene :
-		public jsScene
+		public Scene
 	{
 	public:
 		jsLogoScene();

@@ -3,11 +3,11 @@
 namespace js
 {
 
-	jsScene::jsScene()
+	Scene::Scene()
 	{
 	}
 
-	jsScene::~jsScene()
+	Scene::~Scene()
 	{
 		for (size_t obj = 0; obj < m_GameObj.size(); ++obj)
 		{
@@ -16,7 +16,7 @@ namespace js
 		}
 	}
 
-	void jsScene::Initialize()
+	void Scene::Initialize()
 	{
 		for (size_t obj = 0; obj < m_GameObj.size(); ++obj)
 		{
@@ -24,7 +24,7 @@ namespace js
 		}
 	}
 
-	void jsScene::Tick()
+	void Scene::Tick()
 	{
 		for (size_t obj = 0; obj < m_GameObj.size(); ++obj)
 		{
@@ -32,7 +32,7 @@ namespace js
 		}
 	}
 
-	void jsScene::Render(HDC _dc)
+	void Scene::Render(HDC _dc)
 	{
 		for (size_t obj = 0; obj < m_GameObj.size(); ++obj)
 		{
@@ -40,7 +40,7 @@ namespace js
 		}
 	}
 
-	void jsScene::AddGameObject(jsGameObject* _obj)
+	void Scene::AddGameObject(GameObject* _obj)
 	{
 		if (nullptr != _obj)
 			m_GameObj.push_back(_obj);

@@ -41,6 +41,12 @@
     <Filter Include="1 Engine\Resource\base">
       <UniqueIdentifier>{4528a46b-9098-48f0-aab9-729d381af842}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1 Engine\Component">
+      <UniqueIdentifier>{9b7041c0-b66e-4cec-8525-f8682bf4c226}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\Component\Base">
+      <UniqueIdentifier>{0abf21eb-0977-4877-be13-8467a19f1f1b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -99,9 +105,20 @@
     <ClInclude Include="jsResource.h">
       <Filter>1 Engine\Resource\base</Filter>
     </ClInclude>
-    <ClInclude Include="jsImage.h" />
     <ClInclude Include="jsResources.h">
       <Filter>1 Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="jsImage.h">
+      <Filter>1 Engine\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="jsAnimator.h">
+      <Filter>1 Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="jsCollider.h">
+      <Filter>1 Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="jsComponent.h">
+      <Filter>1 Engine\Component\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -156,9 +173,23 @@
     <ClCompile Include="jsResource.cpp">
       <Filter>1 Engine\Resource\base</Filter>
     </ClCompile>
-    <ClCompile Include="jsImage.cpp" />
     <ClCompile Include="jsResources.cpp">
       <Filter>1 Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="jsMath.cpp">
+      <Filter>1 Engine\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="jsImage.cpp">
+      <Filter>1 Engine\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="jsAnimator.cpp">
+      <Filter>1 Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="jsCollider.cpp">
+      <Filter>1 Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="jsComponent.cpp">
+      <Filter>1 Engine\Component\Base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

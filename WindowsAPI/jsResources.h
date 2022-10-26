@@ -5,12 +5,13 @@
 namespace js
 {
 
-	template<typename T>
-	class jsResources
+	
+	class Resources
 	{
 	public:
-		typedef std::map<std::wstring, jsResource*>::iterator ResourceIter;
+		typedef std::map<std::wstring, Resource*>::iterator ResourceIter;
 
+		template<typename T>
 		static T* Find(const std::wstring& key)
 		{
 			// 리소스 중복체크
@@ -21,9 +22,11 @@ namespace js
 			}
 			return nullptr;
 		}
+
+		template<typename T>
 		static T* Load(const std::wstring& key, const std::wstring& path)
 		{
-			T* resource = Find(key);
+			T* resource = Resources::Find<T>(key);
 			if (nullptr != resource)
 				return resource;
 
@@ -41,12 +44,20 @@ namespace js
 			return dynamic_cast<T*>(resource);
 		}
 
+		static void Release()
+		{
+			ResourceIter iter = mResources.begin();
+			for (; iter != mResources.end(); ++iter)
+			{
+				if (nullptr == iter->second)
+					continue;
+
+				delete (iter->second);
+				iter->second = nullptr;
+			}
+		}
+
 	private:
-		static std::map<std::wstring, jsResource*> mResources;
+		static std::map<std::wstring, Resource*> mResources;
 	};
-
-	
-
-	template <typename T>
-	std::map<std::wstring, jsResource*> jsResources<T>::mResources;
 }

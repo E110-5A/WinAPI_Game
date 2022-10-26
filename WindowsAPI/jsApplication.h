@@ -3,28 +3,30 @@
 
 namespace js
 {
-	class jsApplication
+	class Application
 	{
 	public:
-		static jsApplication& GetInstance()
+		static Application& GetInstance()
 		{
-			static jsApplication m_Instance;
+			static Application m_Instance;
 			return m_Instance;
 		}
 
-		WindowData GetWindowData() { return m_WindowData; }
+		WindowData GetWindowData() { return mWindowData; }
 
 		void Initialize(WindowData _data);
 		void Tick();
 
 	private:
-		jsApplication();
-		~jsApplication();
+		Application();
+		~Application();
 
 		void InitializeWindow(WindowData _data);
-	private:
-		
-		WindowData				m_WindowData;
+
+	private:		
+		WindowData	mWindowData;
+		HPEN		mPens[(UINT)ePenColor::End];
+		HBRUSH		mBrushs[(UINT)eBrushColor::End];
 	};
 }
 

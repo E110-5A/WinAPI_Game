@@ -130,7 +130,10 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="def.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="jsAnimator.h" />
     <ClInclude Include="jsApplication.h" />
+    <ClInclude Include="jsCollider.h" />
+    <ClInclude Include="jsComponent.h" />
     <ClInclude Include="jsEntity.h" />
     <ClInclude Include="jsGameObject.h" />
     <ClInclude Include="jsImage.h" />
@@ -151,12 +154,16 @@
     <ClInclude Include="WindowsAPI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="jsAnimator.cpp" />
     <ClCompile Include="jsApplication.cpp" />
+    <ClCompile Include="jsCollider.cpp" />
+    <ClCompile Include="jsComponent.cpp" />
     <ClCompile Include="jsEntity.cpp" />
     <ClCompile Include="jsGameObject.cpp" />
     <ClCompile Include="jsImage.cpp" />
     <ClCompile Include="jsInput.cpp" />
     <ClCompile Include="jsLogoScene.cpp" />
+    <ClCompile Include="jsMath.cpp" />
     <ClCompile Include="jsPlayer.cpp" />
     <ClCompile Include="jsProjectile.cpp" />
     <ClCompile Include="jsRain.cpp" />

@@ -5,12 +5,12 @@
 
 namespace js
 {
-	class jsScene;
+	class Scene;
 	class jsRain;
 	class jsRainPool
 	{
 	public:
-		static void Init(jsScene* _target);
+		static void Init(Scene* _target);
 
 	private:
 		static jsRain* rain[RAIN];

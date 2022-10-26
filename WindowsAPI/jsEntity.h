@@ -3,18 +3,18 @@
 
 namespace js
 {
-	class jsEntity
+	class Entity
 	{
 	public:
-		jsEntity();
-		virtual ~jsEntity();
+		Entity();
+		virtual ~Entity();
 
-		void SetName(const std::wstring _strname) { m_strName = _strname; }
-		std::wstring GetName() { return m_strName; }
+		void SetName(const std::wstring name) { mName = name; }
+		std::wstring GetName() { return mName; }
 
 	private:
-		std::wstring	m_strName;
-		UINT			m_iID;
+		std::wstring	mName;
+		UINT			mId;
 	};
 
 }

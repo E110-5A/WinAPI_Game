@@ -4,22 +4,22 @@
 
 namespace js
 {
-	class jsGameObject;
-	class jsScene :
-		public jsEntity
+	class GameObject;
+	class Scene :
+		public Entity
 	{
 	public:
-		jsScene();
-		virtual ~jsScene();
+		Scene();
+		virtual ~Scene();
 
 		virtual void Initialize();
 		virtual void Tick();
 		virtual void Render(HDC _dc);
 
-		void AddGameObject(jsGameObject* _obj);
+		void AddGameObject(GameObject* _obj);
 
 	private:
-		std::vector<jsGameObject*> m_GameObj;
+		std::vector<GameObject*> m_GameObj;
 	};
 
 

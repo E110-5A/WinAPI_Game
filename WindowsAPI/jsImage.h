@@ -3,12 +3,12 @@
 
 namespace js
 {
-	class jsImage :
-		public jsResource
+	class Image :
+		public Resource
 	{
 	public:
-		jsImage();
-		~jsImage();
+		Image();
+		~Image();
 
 		virtual HRESULT Load(const std::wstring& _strPath) override;
 

@@ -3,29 +3,29 @@
 
 namespace js
 {
-	jsScene* jsSceneManager::m_Scene[(UINT)eSceneType::END] = {};
-	jsScene* jsSceneManager::m_CurScene = nullptr;
+	Scene* SceneManager::m_Scene[(UINT)eSceneType::End] = {};
+	Scene* SceneManager::m_CurScene = nullptr;
 	
-	void jsSceneManager::Initialize()
+	void SceneManager::Initialize()
 	{
-		m_Scene[(UINT)eSceneType::LOGO] = new jsLogoScene;
-		m_Scene[(UINT)eSceneType::LOGO]->Initialize();
+		m_Scene[(UINT)eSceneType::Logo] = new jsLogoScene;
+		m_Scene[(UINT)eSceneType::Logo]->Initialize();
 
-		m_CurScene = m_Scene[(UINT)eSceneType::LOGO];
+		m_CurScene = m_Scene[(UINT)eSceneType::Logo];
 	}
 
-	void jsSceneManager::Tick()
+	void SceneManager::Tick()
 	{
 		m_CurScene->Tick();
 	}
 	
-	void jsSceneManager::Render(HDC _dc)
+	void SceneManager::Render(HDC _dc)
 	{
 		m_CurScene->Render(_dc);
 	}
-	void jsSceneManager::Release()
+	void SceneManager::Release()
 	{
-		for (jsScene* scene : m_Scene)
+		for (Scene* scene : m_Scene)
 		{
 			if (nullptr != scene)
 			{

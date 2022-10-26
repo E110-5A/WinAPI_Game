@@ -29,6 +29,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // 메모리 누수 확인
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
+    //_CrtSetBreakAlloc();
+
     // wndclass 정의 (초기 세팅설정)
     MyRegisterClass(hInstance);
 
@@ -58,7 +60,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         else
         {
             // 게임 진행
-            js::jsApplication::GetInstance().Tick();
+            js::Application::GetInstance().Tick();
         }
     }
     if (msg.message == WM_QUIT)
@@ -116,7 +118,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
-   js::jsApplication::GetInstance().Initialize(winData);
+   js::Application::GetInstance().Initialize(winData);
 
    return TRUE;
 }

@@ -3,8 +3,8 @@
 
 namespace js
 {
-	class jsScene;
-	class jsSceneManager
+	class Scene;
+	class SceneManager
 	{
 	public:
 		static void Initialize();
@@ -12,11 +12,11 @@ namespace js
 		static void Render(HDC _dc);
 		static void Release();
 
-		static jsScene* GetCurScene() { return m_CurScene; }
+		static Scene* GetCurScene() { return m_CurScene; }
 		
 	private:
-		static jsScene* m_Scene[(UINT)eSceneType::END];
-		static jsScene* m_CurScene;
+		static Scene* m_Scene[(UINT)eSceneType::End];
+		static Scene* m_CurScene;
 	};
 
 

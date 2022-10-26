@@ -2,11 +2,11 @@
 #include "Common.h"
 namespace js
 {
-	class jsResource
+	class Resource
 	{
 	public:
-		jsResource();
-		virtual ~jsResource();
+		Resource();
+		virtual ~Resource();
 
 		virtual HRESULT Load(const std::wstring& _strPath) = 0;
 

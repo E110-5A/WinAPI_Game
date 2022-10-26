@@ -2,10 +2,10 @@
 
 namespace js
 {
-	jsResource::jsResource()
+	Resource::Resource()
 	{
 	}
-	jsResource::~jsResource()
+	Resource::~Resource()
 	{
 	}
 }

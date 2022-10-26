@@ -3,19 +3,19 @@
 
 namespace js
 {
-	class jsImage;
-	class jsPlayer :
-		public jsGameObject
+	class Image;
+	class Player :
+		public GameObject
 	{
 	public:
-		jsPlayer();
-		~jsPlayer();
+		Player();
+		~Player();
 		virtual void Tick() override;
-		virtual void Render(HDC _dc) override;
+		virtual void Render(HDC hdc) override;
 
 	private:
-		float m_Speed;
-		js::jsImage* m_Image;
+		float mSpeed;
+		js::Image* mImage;
 	};
 }
 

@@ -2,9 +2,9 @@
 
 namespace js
 {
-	jsEntity::jsEntity()
-		: m_iID(1)
+	Entity::Entity()
+		: mId(1)
 	{}
-	jsEntity::~jsEntity()
+	Entity::~Entity()
 	{}
 }

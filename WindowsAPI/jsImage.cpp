@@ -3,7 +3,7 @@
 
 namespace js
 {
-	jsImage::jsImage()
+	Image::Image()
 		: m_Bitmap(NULL)
 		, m_hdc(NULL)
 		, m_Width(0)
@@ -11,13 +11,13 @@ namespace js
 	{
 	}
 
-	jsImage::~jsImage()
+	Image::~Image()
 	{
-		HWND hWnd = jsApplication::GetInstance().GetWindowData().hWnd;
+		HWND hWnd = Application::GetInstance().GetWindowData().hWnd;
 		ReleaseDC(hWnd, m_hdc);
 	}
 
-	HRESULT jsImage::Load(const std::wstring& _strPath)
+	HRESULT Image::Load(const std::wstring& _strPath)
 	{
 		m_Bitmap = 
 			(HBITMAP)LoadImageW(nullptr, _strPath.c_str(), 
@@ -38,7 +38,7 @@ namespace js
 		m_Width = bitInfo.bmWidth;
 		m_Height = bitInfo.bmHeight;
 
-		HDC mainDC = jsApplication::GetInstance().GetWindowData().hdc;
+		HDC mainDC = Application::GetInstance().GetWindowData().hdc;
 		m_hdc = CreateCompatibleDC(mainDC);
 
 		HBITMAP prevBit = (HBITMAP)SelectObject(m_hdc, m_Bitmap);

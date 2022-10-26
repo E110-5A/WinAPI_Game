@@ -12,15 +12,15 @@ namespace js
 	}
 	void jsLogoScene::Initialize()
 	{
-		AddGameObject(new jsPlayer);
-		jsRainPool::Init(this);
+		AddGameObject(new Player);
+		//jsRainPool::Init(this);
 	}
 	void jsLogoScene::Tick()
 	{
-		jsScene::Tick();
+		Scene::Tick();
 	}
 	void jsLogoScene::Render(HDC _dc)
 	{
-		jsScene::Render(_dc);
+		Scene::Render(_dc);
 	}
 }

@@ -38,12 +38,12 @@ private:
 	HPEN m_targetPen;
 
 public:
-	Pen(HDC _hdc, HPEN _pen)
-		: m_hdc(_hdc)
+	Pen(HDC hdc, HPEN pen)
+		: m_hdc(hdc)
 		, m_prevPen(NULL)
-		, m_targetPen(_pen)
+		, m_targetPen(pen)
 	{
-		m_prevPen = (HPEN)SelectObject(m_hdc, _pen);
+		m_prevPen = (HPEN)SelectObject(m_hdc, pen);
 	}
 	~Pen()
 	{
@@ -60,12 +60,12 @@ private:
 	HBRUSH m_targetBrush;
 
 public:
-	Brush(HDC _hdc, HBRUSH _brush)
-		: m_hdc(_hdc)
+	Brush(HDC hdc, HBRUSH brush)
+		: m_hdc(hdc)
 		, m_prevBrush(NULL)
-		, m_targetBrush(_brush)
+		, m_targetBrush(brush)
 	{
-		m_prevBrush = (HBRUSH)SelectObject(m_hdc, _brush);
+		m_prevBrush = (HBRUSH)SelectObject(m_hdc, brush);
 	}
 	
 	~Brush()

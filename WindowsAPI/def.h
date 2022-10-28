@@ -7,7 +7,6 @@
 
 enum class eSceneType
 {
-	Logo,
 	Title,
 	Play,
 	End,

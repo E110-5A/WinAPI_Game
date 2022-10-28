@@ -20,7 +20,8 @@ namespace js
 
 		if (nullptr == mImage)
 		{
-			mImage = Resources::Load<Image>(L"Player", L"..\\Resources\\Image\\Player\\idlex3.bmp");
+			mImage = Resources::Load<Image>
+				(L"Player", L"..\\Resources\\Image\\Player\\idle.bmp");
 		}
 		AddComponent(new Animator);
 		AddComponent(new Collider);
@@ -66,20 +67,8 @@ namespace js
 	}
 	void Player::Render(HDC hdc)
 	{
-		
-
 		Pos pos = GetPos();
 		Size scale = GetScale();
-
-		//HBRUSH blueBrush = CreateSolidBrush(RGB(153, 204, 255));
-		//Brush brush(hdc, blueBrush);
-
-		//HPEN greenPen = CreatePen(PS_SOLID, 1, RGB(153, 255, 204));
-		//Pen pen(hdc, greenPen);
-
-		//Rectangle(hdc, pos.x, pos.y,
-		//	pos.x + scale.x, pos.y + scale.y);
-
 
 		Vector2 finalPos;
 		finalPos.x = (pos.x - mImage->GetWidth() * (scale.x / 2.f));

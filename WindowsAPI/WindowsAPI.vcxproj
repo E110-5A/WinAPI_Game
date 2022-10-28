@@ -132,15 +132,16 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="jsAnimator.h" />
     <ClInclude Include="jsApplication.h" />
+    <ClInclude Include="jsBGObj.h" />
     <ClInclude Include="jsCollider.h" />
     <ClInclude Include="jsComponent.h" />
     <ClInclude Include="jsEntity.h" />
     <ClInclude Include="jsGameObject.h" />
     <ClInclude Include="jsImage.h" />
     <ClInclude Include="jsInput.h" />
-    <ClInclude Include="jsLogoScene.h" />
     <ClInclude Include="jsMath.h" />
     <ClInclude Include="jsPlayer.h" />
+    <ClInclude Include="jsPlayScene.h" />
     <ClInclude Include="jsProjectile.h" />
     <ClInclude Include="jsRain.h" />
     <ClInclude Include="jsRainPool.h" />
@@ -149,6 +150,7 @@
     <ClInclude Include="jsScene.h" />
     <ClInclude Include="jsSceneManager.h" />
     <ClInclude Include="jsTime.h" />
+    <ClInclude Include="jsTitleScene.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WindowsAPI.h" />
@@ -156,15 +158,16 @@
   <ItemGroup>
     <ClCompile Include="jsAnimator.cpp" />
     <ClCompile Include="jsApplication.cpp" />
+    <ClCompile Include="jsBGObj.cpp" />
     <ClCompile Include="jsCollider.cpp" />
     <ClCompile Include="jsComponent.cpp" />
     <ClCompile Include="jsEntity.cpp" />
     <ClCompile Include="jsGameObject.cpp" />
     <ClCompile Include="jsImage.cpp" />
     <ClCompile Include="jsInput.cpp" />
-    <ClCompile Include="jsLogoScene.cpp" />
     <ClCompile Include="jsMath.cpp" />
     <ClCompile Include="jsPlayer.cpp" />
+    <ClCompile Include="jsPlayScene.cpp" />
     <ClCompile Include="jsProjectile.cpp" />
     <ClCompile Include="jsRain.cpp" />
     <ClCompile Include="jsRainPool.cpp" />
@@ -173,6 +176,7 @@
     <ClCompile Include="jsScene.cpp" />
     <ClCompile Include="jsSceneManager.cpp" />
     <ClCompile Include="jsTime.cpp" />
+    <ClCompile Include="jsTitleScene.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

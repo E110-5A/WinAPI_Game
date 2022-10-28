@@ -12,11 +12,12 @@ namespace js
 		static void Render(HDC _dc);
 		static void Release();
 
-		static Scene* GetCurScene() { return m_CurScene; }
+		static void ChangeScene(eSceneType type);
+		static Scene* GetCurScene() { return mCurScene; }
 		
 	private:
-		static Scene* m_Scene[(UINT)eSceneType::End];
-		static Scene* m_CurScene;
+		static Scene* mScene[(UINT)eSceneType::End];
+		static Scene* mCurScene;
 	};
 
 

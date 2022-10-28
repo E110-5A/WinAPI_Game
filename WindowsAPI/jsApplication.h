@@ -17,6 +17,9 @@ namespace js
 		void Initialize(WindowData _data);
 		void Tick();
 
+		HPEN GetPen(ePenColor color) { return mPens[(UINT)color]; }
+		HBRUSH GetBrush(eBrushColor color) { return mBrushs[(UINT)color]; }
+
 	private:
 		Application();
 		~Application();

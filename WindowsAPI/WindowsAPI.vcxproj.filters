@@ -47,6 +47,9 @@
     <Filter Include="1 Engine\Component\Base">
       <UniqueIdentifier>{0abf21eb-0977-4877-be13-8467a19f1f1b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="homework">
+      <UniqueIdentifier>{937efefe-5622-4dea-a370-e07351c56e9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -82,9 +85,6 @@
     <ClInclude Include="jsSceneManager.h">
       <Filter>1 Engine\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="jsLogoScene.h">
-      <Filter>1 Engine\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="jsGameObject.h">
       <Filter>1 Engine\GameObject\Base</Filter>
     </ClInclude>
@@ -100,8 +100,6 @@
     <ClInclude Include="jsProjectile.h">
       <Filter>1 Engine\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="jsRain.h" />
-    <ClInclude Include="jsRainPool.h" />
     <ClInclude Include="jsResource.h">
       <Filter>1 Engine\Resource\base</Filter>
     </ClInclude>
@@ -119,6 +117,21 @@
     </ClInclude>
     <ClInclude Include="jsComponent.h">
       <Filter>1 Engine\Component\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="jsPlayScene.h">
+      <Filter>1 Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="jsTitleScene.h">
+      <Filter>1 Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="jsBGObj.h">
+      <Filter>1 Engine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="jsRainPool.h">
+      <Filter>homework</Filter>
+    </ClInclude>
+    <ClInclude Include="jsRain.h">
+      <Filter>homework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -150,9 +163,6 @@
     <ClCompile Include="jsSceneManager.cpp">
       <Filter>1 Engine\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="jsLogoScene.cpp">
-      <Filter>1 Engine\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="jsGameObject.cpp">
       <Filter>1 Engine\GameObject\Base</Filter>
     </ClCompile>
@@ -168,8 +178,6 @@
     <ClCompile Include="jsProjectile.cpp">
       <Filter>1 Engine\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="jsRain.cpp" />
-    <ClCompile Include="jsRainPool.cpp" />
     <ClCompile Include="jsResource.cpp">
       <Filter>1 Engine\Resource\base</Filter>
     </ClCompile>
@@ -190,6 +198,21 @@
     </ClCompile>
     <ClCompile Include="jsComponent.cpp">
       <Filter>1 Engine\Component\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="jsPlayScene.cpp">
+      <Filter>1 Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="jsTitleScene.cpp">
+      <Filter>1 Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="jsBGObj.cpp">
+      <Filter>1 Engine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="jsRainPool.cpp">
+      <Filter>homework</Filter>
+    </ClCompile>
+    <ClCompile Include="jsRain.cpp">
+      <Filter>homework</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

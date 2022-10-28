@@ -45,6 +45,10 @@ namespace js
 	}
 	void GameObject::AddComponent(Component* component)
 	{
+		if (nullptr == component)
+			return;
+
 		mComponents.push_back(component);
+		component->mOwner = this;
 	}
 }

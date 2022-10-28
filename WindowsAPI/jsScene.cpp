@@ -25,11 +25,12 @@ namespace js
 	}
 
 	void Scene::Tick()
-	{
+	{		
 		for (size_t obj = 0; obj < m_GameObj.size(); ++obj)
 		{
 			m_GameObj[obj]->Tick();
 		}
+
 	}
 
 	void Scene::Render(HDC _dc)

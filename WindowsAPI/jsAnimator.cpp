@@ -11,6 +11,7 @@ namespace js
 	}
 	void Animator::Tick()
 	{
+
 	}
 	void Animator::Render(HDC hdc)
 	{

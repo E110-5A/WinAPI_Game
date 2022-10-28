@@ -1,31 +1,34 @@
 #include "jsSceneManager.h"
-#include "jsLogoScene.h"
+#include "jsTitleScene.h"
+#include "jsPlayScene.h"
 
 namespace js
 {
-	Scene* SceneManager::m_Scene[(UINT)eSceneType::End] = {};
-	Scene* SceneManager::m_CurScene = nullptr;
+	Scene* SceneManager::mScene[(UINT)eSceneType::End] = {};
+	Scene* SceneManager::mCurScene = nullptr;
 	
 	void SceneManager::Initialize()
 	{
-		m_Scene[(UINT)eSceneType::Logo] = new jsLogoScene;
-		m_Scene[(UINT)eSceneType::Logo]->Initialize();
+		mScene[(UINT)eSceneType::Title] = new TitleScene;
+		mScene[(UINT)eSceneType::Title]->Initialize();
+		mScene[(UINT)eSceneType::Play] = new PlayScene;
+		mScene[(UINT)eSceneType::Play]->Initialize();
 
-		m_CurScene = m_Scene[(UINT)eSceneType::Logo];
+		ChangeScene(eSceneType::Title);
 	}
 
 	void SceneManager::Tick()
 	{
-		m_CurScene->Tick();
+		mCurScene->Tick();
 	}
 	
 	void SceneManager::Render(HDC _dc)
 	{
-		m_CurScene->Render(_dc);
+		mCurScene->Render(_dc);
 	}
 	void SceneManager::Release()
 	{
-		for (Scene* scene : m_Scene)
+		for (Scene* scene : mScene)
 		{
 			if (nullptr != scene)
 			{
@@ -33,5 +36,18 @@ namespace js
 				scene = nullptr;
 			}
 		}
+	}
+	void SceneManager::ChangeScene(eSceneType type)
+	{
+		if (nullptr == mCurScene)
+		{
+			mCurScene = mScene[(UINT)eSceneType::Title];
+		}
+		else
+		{
+			mCurScene->Exit();
+			mCurScene = mScene[(UINT)type];
+		}
+		mCurScene->Enter();
 	}
 }

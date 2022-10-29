@@ -15,16 +15,23 @@ namespace js
 		: mSpeed(400.f)
 		, mImage(nullptr)
 	{
+		// 내 초기값 세팅
 		SetPos(Pos(100.f, 100.f));
 		SetScale(Size(3.f, 3.f));
 
+		// 내 이미지 세팅
 		if (nullptr == mImage)
 		{
 			mImage = Resources::Load<Image>
 				(L"Player", L"..\\Resources\\Image\\Player\\idle.bmp");
 		}
+		// 컴포넌트 부착
 		AddComponent(new Animator);
 		AddComponent(new Collider);
+
+		// 컴포넌트 초기화
+		Collider* myCollider = GetComponent<Collider>();
+		myCollider->SetPos(GetPos());
 	}
 	Player::~Player()
 	{
@@ -37,25 +44,25 @@ namespace js
 		Pos pos = GetPos();
 		if (KEY_PRESSE(eKeyCode::W))
 		{
-			pos.y -= mSpeed * jsTime::GetDeltaTime();
+			pos.y -= mSpeed * Time::GetDeltaTime();
 		}
 		if (KEY_PRESSE(eKeyCode::A))
 		{
-			pos.x -= mSpeed * jsTime::GetDeltaTime();
+			pos.x -= mSpeed * Time::GetDeltaTime();
 		}
 		if (KEY_PRESSE(eKeyCode::S))
 		{
-			pos.y += mSpeed * jsTime::GetDeltaTime();
+			pos.y += mSpeed * Time::GetDeltaTime();
 		}
 		if (KEY_PRESSE(eKeyCode::D))
 		{
-			pos.x += mSpeed * jsTime::GetDeltaTime();
+			pos.x += mSpeed * Time::GetDeltaTime();
 		}
 		if (KEY_DOWN(eKeyCode::SPACE))
 		{
 			Projectile* missile = new Projectile;
 			Scene* playScene = SceneManager::GetCurScene();
-			playScene->AddGameObject(missile);
+			playScene->AddGameObject(missile, eColliderLayer::Player_Projectile);
 
 
 			Pos startPos = GetScale() / 2.f;

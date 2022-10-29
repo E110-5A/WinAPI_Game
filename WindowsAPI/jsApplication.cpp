@@ -3,7 +3,7 @@
 #include "jsTime.h"
 #include "jsInput.h"
 #include "jsResources.h"
-
+#include "jsCollisionManager.h"
 namespace js
 {
 	Application::Application()
@@ -51,32 +51,33 @@ namespace js
 		mBrushs[(UINT)eBrushColor::Black] = (HBRUSH)GetStockObject(BLACK_BRUSH);
 		mBrushs[(UINT)eBrushColor::Gray] = (HBRUSH)GetStockObject(GRAY_BRUSH);
 		mBrushs[(UINT)eBrushColor::White] = (HBRUSH)GetStockObject(WHITE_BRUSH);
-
 	}
 
 	void Application::Initialize(WindowData _data)
 	{
 		InitializeWindow(_data);
 
-
-		jsTime::Initialize();
+		Time::Initialize();
 		jsInput::Initialize();
 		SceneManager::Initialize();
 	}
 
 	void Application::Tick()
 	{
-		jsTime::Tick();
+		Time::Tick();
 		jsInput::Tick();
+
+		SceneManager::Tick();
+		CollisionManager::Tick();
+		
 
 		Brush brush(mWindowData.backBuffer, mBrushs[(UINT)eBrushColor::Gray]);
 		Rectangle(mWindowData.backBuffer, -1, -1, mWindowData.width + 1, mWindowData.height + 1);
-
-
-		SceneManager::Tick();
+		// 랜더링 전에 화면 초기화 진행
 		SceneManager::Render(mWindowData.backBuffer);
 		jsInput::Render(mWindowData.backBuffer);
-		jsTime::Render(mWindowData.backBuffer);
+		Time::Render(mWindowData.backBuffer);
+
 
 		BitBlt(mWindowData.hdc, 0, 0, mWindowData.width, mWindowData.height,
 			mWindowData.backBuffer, 0, 0, SRCCOPY);

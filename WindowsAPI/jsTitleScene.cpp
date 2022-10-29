@@ -16,7 +16,7 @@ namespace js
 		BGObj* bg = new BGObj();
 		bg->SetImage(L"TitleBG", L"Title_BG.bmp");
 		bg->Initialize();
-		AddGameObject(bg);
+		AddGameObject(bg, eColliderLayer::BackGround);
 
 	}
 	void TitleScene::Tick()

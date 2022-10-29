@@ -13,7 +13,7 @@ namespace js
 	void Projectile::Tick()
 	{
 		Pos pos = GetPos();
-		pos.y -= m_fSpeed * jsTime::GetDeltaTime();
+		pos.y -= m_fSpeed * Time::GetDeltaTime();
 		SetPos(pos);
 	}
 	void Projectile::Render(HDC _hdc)

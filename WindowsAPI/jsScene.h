@@ -14,16 +14,15 @@ namespace js
 
 		virtual void Initialize();	// 씬이 최초로 생성될 때 호출
 		virtual void Tick();
-		virtual void Render(HDC _dc);
+		virtual void Render(HDC hdc);
 
 		virtual void Enter() {}		// 해당 씬으로 변경될 때 호출
 		virtual void Exit() {}
 
-		void AddGameObject(GameObject* _obj);
-
+		void AddGameObject(GameObject* obj, eColliderLayer type);
+		std::vector<GameObject*>& GetGameObjects(eColliderLayer type) { return mObjects[(UINT)type]; }
 	private:
-		std::vector<GameObject*> m_GameObj;
+		std::vector<std::vector<GameObject*>> mObjects;
 	};
-
 
 }

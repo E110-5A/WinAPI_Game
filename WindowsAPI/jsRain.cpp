@@ -21,7 +21,7 @@ namespace js
 			curPos.y = rand() % 100;
 			SetRGB(rand() % 255, rand() % 255, rand() % 255);
 		}
-		curPos.y += m_Speed * jsTime::GetDeltaTime();
+		curPos.y += m_Speed * Time::GetDeltaTime();
 		SetPos(curPos);
 		
 		

@@ -4,17 +4,15 @@
 namespace js
 {
 	class Image;
-	class Player :
-		public GameObject
+	class Monster : public GameObject
 	{
 	public:
-		Player();
-		~Player();
+		Monster();
+		~Monster();
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 
 	private:
-		float mSpeed;
 		Image* mImage;
 	};
 }

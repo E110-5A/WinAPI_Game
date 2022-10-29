@@ -1,5 +1,6 @@
 #pragma once
 #include "jsEntity.h"
+#include "jsComponent.h"
 
 namespace js
 {
@@ -21,6 +22,20 @@ namespace js
 		Size GetScale() { return mScale; }
 
 		void AddComponent(Component* component);
+
+		template <typename T>
+		__forceinline T* GetComponent()
+		{
+			T* retComp;
+			for (Component* component : mComponents)
+			{
+				retComp = dynamic_cast<T*>(component);
+				if (nullptr != retComp)
+					return retComp;
+			}
+
+			return nullptr;
+		}
 
 	private:
 		std::vector<Component*> mComponents;

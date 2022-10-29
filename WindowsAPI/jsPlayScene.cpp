@@ -3,7 +3,8 @@
 #include "jsSceneManager.h"
 #include "jsInput.h"
 #include "jsBGObj.h"
-
+#include "jsMonster.h"
+#include "jsCollisionManager.h"
 namespace js
 {
 	PlayScene::PlayScene()
@@ -17,14 +18,17 @@ namespace js
 		BGObj* bg = new BGObj();
 		bg->SetImage(L"PlayBG", L"Play_BG.bmp");
 		bg->Initialize();
-		AddGameObject(bg);
+		AddGameObject(bg, eColliderLayer::BackGround);
 
 		BGObj* g = new BGObj();
 		g->SetImage(L"PlayG", L"Play_Ground.bmp");
 		g->Initialize();
-		AddGameObject(g);
+		AddGameObject(g, eColliderLayer::Tile);
 
-		AddGameObject(new Player);
+		AddGameObject(new Player, eColliderLayer::Player);
+		AddGameObject(new Monster, eColliderLayer::Monster);
+
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Monster, true);
 
 	}
 	void PlayScene::Tick()

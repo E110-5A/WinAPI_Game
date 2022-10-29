@@ -17,6 +17,11 @@ namespace js
 		void SetPos(Pos pos) { mPos = pos; }
 		void SetScale(Scale scale) { mScale = scale; }
 
+		Vector2 GetOffset() { return mOffset; }
+		Pos GetPos() { return mPos; }
+		Scale GetScale() { return mScale; }
+
+
 	private:
 		Vector2 mOffset;
 		Pos mPos;

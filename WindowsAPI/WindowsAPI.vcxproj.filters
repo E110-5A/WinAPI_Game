@@ -133,6 +133,10 @@
     <ClInclude Include="jsRain.h">
       <Filter>homework</Filter>
     </ClInclude>
+    <ClInclude Include="jsCollisionManager.h">
+      <Filter>1 Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="jsMonster.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -214,5 +218,9 @@
     <ClCompile Include="jsRain.cpp">
       <Filter>homework</Filter>
     </ClCompile>
+    <ClCompile Include="jsCollisionManager.cpp">
+      <Filter>1 Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="jsMonster.cpp" />
   </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ namespace js
 		, mPos(Vector2::Zero)
 		, mScale(Vector2::One)
 	{
-		SetScale(Size(100.f, 100.f));
+		SetScale(Size(50.f, 50.f));
 	}
 	Collider::~Collider()
 	{
@@ -23,7 +23,7 @@ namespace js
 	}
 	void Collider::Render(HDC hdc)
 	{
-		HPEN green = Application::GetInstance().GetPen(ePenColor::Green);
+		HPEN green = CreatePen(PS_SOLID, 2, RGB(0, 255, 0));
 		Pen pen(hdc, green);
 
 		HBRUSH tr = Application::GetInstance().GetBrush(eBrushColor::Transparent);

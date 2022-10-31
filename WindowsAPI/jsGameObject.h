@@ -4,7 +4,6 @@
 
 namespace js
 {
-	class Component;
 	class GameObject :
 		public Entity
 	{

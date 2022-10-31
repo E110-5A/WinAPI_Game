@@ -3,8 +3,7 @@
 
 namespace js
 {
-	class Collider :
-		public Component
+	class Collider : public Component
 	{
 	public:
 		Collider();

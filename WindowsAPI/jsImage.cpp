@@ -5,7 +5,7 @@ namespace js
 {
 	Image::Image()
 		: m_Bitmap(NULL)
-		, m_hdc(NULL)
+		, mHdc(NULL)
 		, m_Width(0)
 		, m_Height(0)
 	{
@@ -14,7 +14,7 @@ namespace js
 	Image::~Image()
 	{
 		HWND hWnd = Application::GetInstance().GetWindowData().hWnd;
-		ReleaseDC(hWnd, m_hdc);
+		ReleaseDC(hWnd, mHdc);
 	}
 
 	HRESULT Image::Load(const std::wstring& _strPath)
@@ -39,9 +39,9 @@ namespace js
 		m_Height = bitInfo.bmHeight;
 
 		HDC mainDC = Application::GetInstance().GetWindowData().hdc;
-		m_hdc = CreateCompatibleDC(mainDC);
+		mHdc = CreateCompatibleDC(mainDC);
 
-		HBITMAP prevBit = (HBITMAP)SelectObject(m_hdc, m_Bitmap);
+		HBITMAP prevBit = (HBITMAP)SelectObject(mHdc, m_Bitmap);
 		DeleteObject(prevBit);
 
 		return S_OK;

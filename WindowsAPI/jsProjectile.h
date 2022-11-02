@@ -14,6 +14,10 @@ namespace js
 		virtual void Tick() override;
 		virtual void Render(HDC _hdc) override;
 
+		virtual void OnCollisionEnter(Collider* other)override;
+		virtual void OnCollisionStay(Collider* other)override;
+		virtual void OnCollisionExit(Collider* other)override;
+
 	private:
 		float m_fSpeed;
 	};

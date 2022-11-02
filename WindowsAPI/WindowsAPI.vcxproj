@@ -133,11 +133,13 @@
     <ClInclude Include="jsAnimator.h" />
     <ClInclude Include="jsApplication.h" />
     <ClInclude Include="jsBGObj.h" />
+    <ClInclude Include="jsCamera.h" />
     <ClInclude Include="jsCollider.h" />
     <ClInclude Include="jsCollisionManager.h" />
     <ClInclude Include="jsComponent.h" />
     <ClInclude Include="jsEntity.h" />
     <ClInclude Include="jsGameObject.h" />
+    <ClInclude Include="jsGround.h" />
     <ClInclude Include="jsImage.h" />
     <ClInclude Include="jsInput.h" />
     <ClInclude Include="jsMath.h" />
@@ -161,11 +163,13 @@
     <ClCompile Include="jsAnimator.cpp" />
     <ClCompile Include="jsApplication.cpp" />
     <ClCompile Include="jsBGObj.cpp" />
+    <ClCompile Include="jsCamera.cpp" />
     <ClCompile Include="jsCollider.cpp" />
     <ClCompile Include="jsCollisionManager.cpp" />
     <ClCompile Include="jsComponent.cpp" />
     <ClCompile Include="jsEntity.cpp" />
     <ClCompile Include="jsGameObject.cpp" />
+    <ClCompile Include="jsGround.cpp" />
     <ClCompile Include="jsImage.cpp" />
     <ClCompile Include="jsInput.cpp" />
     <ClCompile Include="jsMath.cpp" />

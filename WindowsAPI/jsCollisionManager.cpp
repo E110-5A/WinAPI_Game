@@ -7,6 +7,7 @@
 namespace js
 {
 	WORD CollisionManager::mMatrix[_COLLIDER_LAYER] = {};
+	std::map<UINT64, bool> CollisionManager::mCollisionInfo;
 
 	void CollisionManager::Tick()
 	{
@@ -63,33 +64,85 @@ namespace js
 		// iterator를 사용해서 코드가 매우 길어지기 때문에 auto 사용
 		for (auto leftObject : lefts)
 		{
-			if (nullptr == leftObject->GetComponent<Collider>())
+			Collider* leftCollider = leftObject->GetComponent<Collider>();
+			if (nullptr == leftCollider)
 				continue;
 
 			for (auto rightObject : rights)
 			{
-				if (nullptr == rightObject->GetComponent<Collider>())
+				Collider* rightCollider = rightObject->GetComponent<Collider>();
+				
+				if (nullptr == rightCollider)
 					continue;
 
 				if (leftObject == rightObject)
 					continue;
 
-				if (Intersect(leftObject->GetComponent<Collider>(), rightObject->GetComponent<Collider>()))
-				// 충돌
-				{
-					int a = 0;
-				}
-				else
-				// 안충돌
-				{
-					int a = 0;
-				}
+
+				ColliderCollision(leftCollider, rightCollider);
+			}
+		}
+	}
+
+	void CollisionManager::ColliderCollision(Collider* left, Collider* right)
+	{
+		ColliderID id;
+
+		id.left = left->GetID();
+		id.right = right->GetID();
+		
+		std::map<UINT64, bool>::iterator iter
+			= mCollisionInfo.find(id.ID);
+
+		// 이전에 없던 충돌정보라면 충돌정보를 생성해준다
+		if (iter == mCollisionInfo.end())
+		{
+			mCollisionInfo.insert(std::make_pair(id.ID, false));
+			iter = mCollisionInfo.find(id.ID);
+		}
+
+		if (Intersect(left, right))
+			// 충돌
+		{
+			// 처음 충돌한 상태
+			if (false == iter->second)
+			{
+				left->OnCollisionEnter(right);
+				right->OnCollisionEnter(left);
+
+
+				iter->second = true;
+			}
+			else
+				// 충돌중인 상태
+			{
+				left->OnCollisionStay(right);
+				right->OnCollisionStay(left);
+			}
+		}
+		else
+			// 안충돌
+		{
+			// 충돌에서 벗어난 상태
+			if (true == iter->second)
+			{
+				left->OnCollisionExit(right);
+				right->OnCollisionExit(left);
+
+
+				iter->second = false;
 			}
 		}
 	}
 
 	bool CollisionManager::Intersect(Collider* left, Collider* right)
 	{
+		if (left->GetOwner()->IsDeath())
+			return false;
+		if (right->GetOwner()->IsDeath())
+			return false;
+
+
 		Pos leftPos = left->GetPos();
 		Scale leftScale = left->GetScale();
 

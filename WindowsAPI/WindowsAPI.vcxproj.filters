@@ -50,6 +50,9 @@
     <Filter Include="homework">
       <UniqueIdentifier>{937efefe-5622-4dea-a370-e07351c56e9d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1 Engine\GameObject\BackGround">
+      <UniqueIdentifier>{ab7b9e2a-a23f-4950-a2bc-dbc1cda023e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -124,9 +127,6 @@
     <ClInclude Include="jsTitleScene.h">
       <Filter>1 Engine\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="jsBGObj.h">
-      <Filter>1 Engine\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="jsRainPool.h">
       <Filter>homework</Filter>
     </ClInclude>
@@ -137,6 +137,13 @@
       <Filter>1 Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="jsMonster.h" />
+    <ClInclude Include="jsCamera.h" />
+    <ClInclude Include="jsBGObj.h">
+      <Filter>1 Engine\GameObject\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="jsGround.h">
+      <Filter>1 Engine\GameObject\BackGround</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -209,9 +216,6 @@
     <ClCompile Include="jsTitleScene.cpp">
       <Filter>1 Engine\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="jsBGObj.cpp">
-      <Filter>1 Engine\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="jsRainPool.cpp">
       <Filter>homework</Filter>
     </ClCompile>
@@ -222,5 +226,12 @@
       <Filter>1 Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="jsMonster.cpp" />
+    <ClCompile Include="jsCamera.cpp" />
+    <ClCompile Include="jsBGObj.cpp">
+      <Filter>1 Engine\GameObject\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="jsGround.cpp">
+      <Filter>1 Engine\GameObject\BackGround</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

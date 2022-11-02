@@ -2,9 +2,12 @@
 #include "jsPlayer.h"
 #include "jsSceneManager.h"
 #include "jsInput.h"
+#include "jsCollisionManager.h"
+#include "jsCamera.h"
+
 #include "jsBGObj.h"
 #include "jsMonster.h"
-#include "jsCollisionManager.h"
+#include "jsGround.h"
 namespace js
 {
 	PlayScene::PlayScene()
@@ -20,15 +23,21 @@ namespace js
 		bg->Initialize();
 		AddGameObject(bg, eColliderLayer::BackGround);
 
-		BGObj* g = new BGObj();
+		Ground* g = new Ground();
 		g->SetImage(L"PlayG", L"Play_Ground.bmp");
 		g->Initialize();
 		AddGameObject(g, eColliderLayer::Tile);
 
-		AddGameObject(new Player, eColliderLayer::Player);
+
+		GameObject* pPlayer = new Player;
+		AddGameObject(pPlayer, eColliderLayer::Player);
+		
+		Camera::SetTarget(pPlayer);
+
 		AddGameObject(new Monster, eColliderLayer::Monster);
 
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Monster, true);
+		CollisionManager::SetLayer(eColliderLayer::Player_Projectile, eColliderLayer::Monster, true);
 
 	}
 	void PlayScene::Tick()

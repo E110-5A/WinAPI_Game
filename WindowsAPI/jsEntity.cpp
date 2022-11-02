@@ -3,7 +3,8 @@
 namespace js
 {
 	Entity::Entity()
-		: mId(1)
+		: mName(L"")
+		, mID((UINT32)this)
 	{}
 	Entity::~Entity()
 	{}

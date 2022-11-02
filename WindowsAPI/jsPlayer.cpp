@@ -8,16 +8,17 @@
 #include "jsResources.h"
 #include "jsAnimator.h"
 #include "jsCollider.h"
+#include "jsCamera.h"
 
 namespace js
 {
 	Player::Player()
-		: mSpeed(400.f)
+		: mSpeed(300.f)
 		, mImage(nullptr)
 	{
 		// 내 초기값 세팅
-		SetPos(Pos(100.f, 100.f));
-		SetScale(Size(3.f, 3.f));
+		SetPos(Pos(100.f, 300.f));
+		SetScale(Size(10.f, 10.f));
 
 		// 내 이미지 세팅
 		if (nullptr == mImage)
@@ -81,17 +82,39 @@ namespace js
 		finalPos.x = (pos.x - mImage->GetWidth() * (scale.x / 2.f));
 		finalPos.y = (pos.y - mImage->GetHeight() * (scale.y / 2.f));
 
+		finalPos = Camera::CalculatePos(finalPos);
+
 		Vector2 rect;
 		rect.x = mImage->GetWidth() * scale.x;
 		rect.y = mImage->GetHeight() * scale.y;
 
+		BLENDFUNCTION func = {};
+		func.AlphaFormat = AC_SRC_ALPHA;
+		func.BlendOp = AC_SRC_OVER;
+		func.BlendFlags = 0;
+		func.SourceConstantAlpha = 255;
 
-		TransparentBlt(hdc, 
+		AlphaBlend(hdc,
 			finalPos.x, finalPos.y,
 			rect.x, rect.y,
-			mImage->GetDC(), 0, 0, 
-			mImage->GetWidth(), mImage->GetHeight(), RGB(255,0,255));
+			mImage->GetDC(), 0, 0,
+			mImage->GetWidth(), mImage->GetHeight(), func);
+
+		//TransparentBlt(hdc, 
+		//	finalPos.x, finalPos.y,
+		//	rect.x, rect.y,
+		//	mImage->GetDC(), 0, 0, 
+		//	mImage->GetWidth(), mImage->GetHeight(), RGB(255,0,255));
 
 		GameObject::Render(hdc);
+	}
+	void Player::OnCollisionEnter(Collider* other)
+	{
+	}
+	void Player::OnCollisionStay(Collider* other)
+	{
+	}
+	void Player::OnCollisionExit(Collider* other)
+	{
 	}
 }

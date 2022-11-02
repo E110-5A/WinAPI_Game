@@ -1,4 +1,5 @@
 #include "jsTime.h"
+#include "jsApplication.h"
 
 namespace js
 {
@@ -26,11 +27,17 @@ namespace js
 	}
 	void Time::Render(HDC _dc)
 	{
-		wchar_t szFloat[30] = {};
+		mTime += GetDeltaTime();
 
-		float fps = 1.0f / mDeltaTime;
-		swprintf_s(szFloat, 30, L"fps : %f", fps);
-		size_t strLen = wcsnlen_s(szFloat, 30);
-		TextOut(_dc, 10, 10, szFloat, (int)strLen);
+		wchar_t szFloat[30] = {};
+		if (1.0f < mTime)
+		{
+			float fps = 1.0f / mDeltaTime;
+			swprintf_s(szFloat, 30, L"MyGame! fps : %f", fps);
+			HWND hWnd = Application::GetInstance().GetWindowData().hWnd;
+			SetWindowText(hWnd, szFloat);
+
+			mTime = 0.f;
+		}
 	}
 }

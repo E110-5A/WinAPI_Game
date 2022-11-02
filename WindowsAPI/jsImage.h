@@ -12,13 +12,13 @@ namespace js
 
 		virtual HRESULT Load(const std::wstring& _strPath) override;
 
-		HDC GetDC() { return m_hdc; }
+		HDC GetDC() { return mHdc; }
 		UINT GetWidth() { return m_Width; }
 		UINT GetHeight() { return m_Height; }
 
 	private:
 		HBITMAP m_Bitmap;
-		HDC		m_hdc;
+		HDC		mHdc;
 		UINT	m_Width;
 		UINT	m_Height;
 	};

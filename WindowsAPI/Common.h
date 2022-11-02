@@ -6,6 +6,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <set>
 
 #include "def.h"
 #include "jsMath.h"
@@ -33,44 +34,55 @@ struct WindowData
 struct Pen
 {
 private:
-	HDC m_hdc;
-	HPEN m_prevPen;
-	HPEN m_targetPen;
+	HDC mHdc;
+	HPEN mPrevPen;
+	HPEN mTargetPen;
 
 public:
-	Pen(HDC hdc, HPEN pen)
-		: m_hdc(hdc)
-		, m_prevPen(NULL)
-		, m_targetPen(pen)
+	Pen(HDC hdc)
+		: mHdc(hdc)
+		, mPrevPen(NULL)
+		, mTargetPen(NULL)
 	{
-		m_prevPen = (HPEN)SelectObject(m_hdc, pen);
+
+	}
+	Pen(HDC hdc, HPEN pen)
+		: mHdc(hdc)
+		, mPrevPen(NULL)
+		, mTargetPen(pen)
+	{
+		mPrevPen = (HPEN)SelectObject(mHdc, pen);
 	}
 	~Pen()
 	{
-		SelectObject(m_hdc, m_prevPen);
-		DeleteObject(m_targetPen);
+		SelectObject(mHdc, mPrevPen);
+		DeleteObject(mTargetPen);
+	}
+	void SetPen(HPEN pen)
+	{
+		mPrevPen = (HPEN)SelectObject(mHdc, pen);
 	}
 };
 
 struct Brush
 {
 private:
-	HDC m_hdc;
-	HBRUSH m_prevBrush;
-	HBRUSH m_targetBrush;
+	HDC mHdc;
+	HBRUSH mPrevBrush;
+	HBRUSH mTargetBrush;
 
 public:
 	Brush(HDC hdc, HBRUSH brush)
-		: m_hdc(hdc)
-		, m_prevBrush(NULL)
-		, m_targetBrush(brush)
+		: mHdc(hdc)
+		, mPrevBrush(NULL)
+		, mTargetBrush(brush)
 	{
-		m_prevBrush = (HBRUSH)SelectObject(m_hdc, brush);
+		mPrevBrush = (HBRUSH)SelectObject(mHdc, brush);
 	}
 	
 	~Brush()
 	{
-		SelectObject(m_hdc, m_prevBrush);
-		DeleteObject(m_targetBrush);
+		SelectObject(mHdc, mPrevBrush);
+		DeleteObject(mTargetBrush);
 	}
 };

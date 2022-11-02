@@ -6,6 +6,7 @@ namespace js
 	GameObject::GameObject()
 		: mPos { 0.f, 0.f }
 		, mScale { 1.f, 1.f }
+		, mDead(false)
 	{
 	}
 
@@ -30,6 +31,7 @@ namespace js
 		{
 			if (component == nullptr)
 				continue;
+			
 			component->Tick();
 		}
 	}
@@ -40,8 +42,18 @@ namespace js
 		{
 			if (component == nullptr)
 				continue;
+			
 			component->Render(hdc);
 		}
+	}
+	void GameObject::OnCollisionEnter(Collider* other)
+	{
+	}
+	void GameObject::OnCollisionStay(Collider* other)
+	{
+	}
+	void GameObject::OnCollisionExit(Collider* other)
+	{
 	}
 	void GameObject::AddComponent(Component* component)
 	{

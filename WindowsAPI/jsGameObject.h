@@ -4,6 +4,7 @@
 
 namespace js
 {
+	class Collider;
 	class GameObject :
 		public Entity
 	{
@@ -15,12 +16,19 @@ namespace js
 		virtual void Tick();
 		virtual void Render(HDC hdc);
 
+		virtual void OnCollisionEnter(Collider* other);
+		virtual void OnCollisionStay(Collider* other);
+		virtual void OnCollisionExit(Collider* other);
+
 		void SetPos(Pos pos) { mPos = pos; }
 		Pos GetPos() { return mPos; }
 		void SetScale(Size scale) { mScale = scale; }
 		Size GetScale() { return mScale; }
 
 		void AddComponent(Component* component);
+		void Death() { mDead = true; }
+		bool IsDeath() { return mDead; }
+
 
 		template <typename T>
 		__forceinline T* GetComponent()
@@ -40,6 +48,7 @@ namespace js
 		std::vector<Component*> mComponents;
 		Pos		mPos;
 		Size	mScale;
+		bool	mDead;
 	};
 }
 

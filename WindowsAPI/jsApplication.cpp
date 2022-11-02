@@ -4,6 +4,8 @@
 #include "jsInput.h"
 #include "jsResources.h"
 #include "jsCollisionManager.h"
+#include "jsCamera.h"
+
 namespace js
 {
 	Application::Application()
@@ -60,6 +62,7 @@ namespace js
 		Time::Initialize();
 		jsInput::Initialize();
 		SceneManager::Initialize();
+		Camera::Initialize();
 	}
 
 	void Application::Tick()
@@ -67,6 +70,7 @@ namespace js
 		Time::Tick();
 		jsInput::Tick();
 
+		Camera::Tick();
 		SceneManager::Tick();
 		CollisionManager::Tick();
 		

@@ -12,6 +12,11 @@ namespace js
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 
+		virtual void OnCollisionEnter(Collider* other);
+		virtual void OnCollisionStay(Collider* other);
+		virtual void OnCollisionExit(Collider* other);
+
+
 		void SetOffset(Vector2 offset) { mOffset = offset; }
 		void SetPos(Pos pos) { mPos = pos; }
 		void SetScale(Scale scale) { mScale = scale; }
@@ -25,6 +30,8 @@ namespace js
 		Vector2 mOffset;
 		Pos mPos;
 		Scale mScale;
+
+		size_t mCollisionCount;
 	};
 
 }

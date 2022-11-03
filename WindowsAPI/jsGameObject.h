@@ -10,6 +10,7 @@ namespace js
 	{
 	public:
 		GameObject();
+		GameObject(Pos pos);
 		virtual ~GameObject();
 
 		virtual void Initialize();

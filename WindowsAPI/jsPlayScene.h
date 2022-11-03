@@ -17,5 +17,6 @@ namespace js
 		virtual void Exit() override;
 
 	private:
+		GameObject* mObj[10];
 	};
 }

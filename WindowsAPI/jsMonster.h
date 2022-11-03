@@ -8,7 +8,10 @@ namespace js
 	{
 	public:
 		Monster();
+		Monster(Pos pos);
 		~Monster();
+
+		void Init();
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 

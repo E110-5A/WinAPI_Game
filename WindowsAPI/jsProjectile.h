@@ -19,7 +19,8 @@ namespace js
 		virtual void OnCollisionExit(Collider* other)override;
 
 	private:
-		float m_fSpeed;
+		float mSpeed;
+		float mLifeTime;
 	};
 }
 

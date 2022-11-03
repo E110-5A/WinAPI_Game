@@ -10,19 +10,33 @@ namespace js
 		: mImage(nullptr)
 	{
 		SetPos(Pos(600.f, 100.f));
-		SetScale(Size(3.f, 3.f));
+		SetScale(Size(2.f, 2.f));
 
+		Init();
+	}
+	Monster::Monster(Pos pos)
+		: mImage(nullptr)
+	{
+		SetPos(pos);
+		SetScale(Size(2.f, 2.f));
+
+		Init();
+	}
+	Monster::~Monster()
+	{
+	}
+
+	void Monster::Init()
+	{
 		if (nullptr == mImage)
 		{
 			mImage = Resources::Load<Image>
 				(L"Mon", L"..\\Resources\\Image\\Enemy\\testMonster.bmp");
 		}
-		Collider* collMon = new Collider;
-		collMon->SetScale(Size(100.f, 100.f));
-		AddComponent(collMon);
-	}
-	Monster::~Monster()
-	{
+		Collider* monCollider = new Collider;
+		monCollider->SetPos(GetPos());
+		monCollider->SetScale(Size(45.f, 70.f) * GetScale());
+		AddComponent(monCollider);
 	}
 
 	void Monster::Tick()
@@ -68,7 +82,13 @@ namespace js
 	}
 	void Monster::OnCollisionEnter(Collider* other)
 	{
-		this->Death();
+		// hp가 0아래면 destroy
+
+		// 플레이어인 경우 ret
+
+		// 투사체인 경우 -hp
+
+		// 점프대인 경우 위로 점프
 	}
 	void Monster::OnCollisionStay(Collider* other)
 	{

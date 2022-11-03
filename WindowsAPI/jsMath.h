@@ -22,25 +22,39 @@ namespace js
 		Vector2() = default;
 		~Vector2() = default;
 
-		Vector2 operator /(const float _value)
+		Vector2 operator /(const float value)
 		{
 			Vector2 vec;
-			vec.x = x / _value;
-			vec.y = y / _value;
+			vec.x = x / value;
+			vec.y = y / value;
 			return vec;
 		}
-		Vector2 operator +(const Vector2& _other)
+		Vector2 operator *(const float value)
 		{
 			Vector2 vec;
-			vec.x = x + _other.x;
-			vec.y = y + _other.y;
+			vec.x = x * value;
+			vec.y = y * value;
 			return vec;
 		}
-		Vector2 operator -(const Vector2& _other)
+		Vector2 operator *(const Vector2& other)
 		{
 			Vector2 vec;
-			vec.x = x - _other.x;
-			vec.y = y - _other.y;
+			vec.x = x * other.x;
+			vec.y = y * other.y;
+			return vec;
+		}
+		Vector2 operator +(const Vector2& other)
+		{
+			Vector2 vec;
+			vec.x = x + other.x;
+			vec.y = y + other.y;
+			return vec;
+		}
+		Vector2 operator -(const Vector2& other)
+		{
+			Vector2 vec;
+			vec.x = x - other.x;
+			vec.y = y - other.y;
 			return vec;
 		}
 	};

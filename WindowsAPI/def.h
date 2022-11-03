@@ -52,6 +52,15 @@ enum class eColliderLayer
 	UI = _COLLIDER_LAYER - 1,
 	End = _COLLIDER_LAYER,
 };
+
+enum class eCameraEffect
+{
+	FadeIn,
+	FadeOut,
+	None,
+	End,
+};
+
 union ColliderID
 {
 	struct

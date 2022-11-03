@@ -4,6 +4,7 @@
 #include "jsInput.h"
 #include "jsCollisionManager.h"
 #include "jsCamera.h"
+#include "jsObject.h"
 
 #include "jsBGObj.h"
 #include "jsMonster.h"
@@ -28,13 +29,13 @@ namespace js
 		g->Initialize();
 		AddGameObject(g, eColliderLayer::Tile);
 
-
-		GameObject* pPlayer = new Player;
-		AddGameObject(pPlayer, eColliderLayer::Player);
-		
+		GameObject* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 380.f));		
 		Camera::SetTarget(pPlayer);
 
-		AddGameObject(new Monster, eColliderLayer::Monster);
+		mObj[0] = object::Instantiate<Monster>(eColliderLayer::Monster, Pos(740.f, 360.f));
+		mObj[1] = object::Instantiate<Monster>(eColliderLayer::Monster, Pos(840.f, 360.f));
+		mObj[2] = object::Instantiate<Monster>(eColliderLayer::Monster, Pos(940.f, 360.f));
+
 
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Monster, true);
 		CollisionManager::SetLayer(eColliderLayer::Player_Projectile, eColliderLayer::Monster, true);
@@ -43,6 +44,10 @@ namespace js
 	void PlayScene::Tick()
 	{
 		Scene::Tick();
+		if (KEY_DOWN(eKeyCode::K))
+		{
+			object::Destroy(mObj[1]);
+		}
 		if (KEY_DOWN(eKeyCode::N))
 		{
 			SceneManager::ChangeScene(eSceneType::Title);

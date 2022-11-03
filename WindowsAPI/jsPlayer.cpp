@@ -18,24 +18,41 @@ namespace js
 	{
 		// 내 초기값 세팅
 		SetPos(Pos(100.f, 300.f));
-		SetScale(Size(10.f, 10.f));
+		SetScale(Size(3.f, 3.f));
 
+		Init();
+	}
+	Player::Player(Pos pos)
+		: mSpeed(300.f)
+		, mImage(nullptr)
+	{
+		SetPos(pos);
+		SetScale(Size(3.f, 3.f));
+
+		Init();		
+	}
+	Player::~Player()
+	{
+	}
+
+	void Player::Init()
+	{
 		// 내 이미지 세팅
 		if (nullptr == mImage)
 		{
 			mImage = Resources::Load<Image>
 				(L"Player", L"..\\Resources\\Image\\Player\\idle.bmp");
 		}
-		// 컴포넌트 부착
-		AddComponent(new Animator);
-		AddComponent(new Collider);
 
-		// 컴포넌트 초기화
-		Collider* myCollider = GetComponent<Collider>();
+		// 콜라이더 설정
+		Collider* myCollider = new Collider;
 		myCollider->SetPos(GetPos());
-	}
-	Player::~Player()
-	{
+		myCollider->SetScale(Size(5.f, 12.f) * GetScale());
+		myCollider->SetOffset(Vector2(-12.f, 0.f));
+		AddComponent(myCollider);
+
+		// 애니메이터 설정
+		AddComponent(new Animator);
 	}
 
 	void Player::Tick()
@@ -99,12 +116,6 @@ namespace js
 			rect.x, rect.y,
 			mImage->GetDC(), 0, 0,
 			mImage->GetWidth(), mImage->GetHeight(), func);
-
-		//TransparentBlt(hdc, 
-		//	finalPos.x, finalPos.y,
-		//	rect.x, rect.y,
-		//	mImage->GetDC(), 0, 0, 
-		//	mImage->GetWidth(), mImage->GetHeight(), RGB(255,0,255));
 
 		GameObject::Render(hdc);
 	}

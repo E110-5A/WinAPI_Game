@@ -13,6 +13,7 @@ namespace js
 		}
 
 		WindowData GetWindowData() { return mWindowData; }
+		HDC GetHdc() { return mWindowData.hdc; }
 
 		void Initialize(WindowData _data);
 		void Tick();

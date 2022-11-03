@@ -79,12 +79,18 @@ namespace js
 		Rectangle(mWindowData.backBuffer, -1, -1, mWindowData.width + 1, mWindowData.height + 1);
 		// 랜더링 전에 화면 초기화 진행
 		SceneManager::Render(mWindowData.backBuffer);
+		Camera::Render(mWindowData.backBuffer);
+		
 		jsInput::Render(mWindowData.backBuffer);
 		Time::Render(mWindowData.backBuffer);
 
 
 		BitBlt(mWindowData.hdc, 0, 0, mWindowData.width, mWindowData.height,
 			mWindowData.backBuffer, 0, 0, SRCCOPY);
+
+
+		SceneManager::DestroyGameObject();
+
 	}
 }
 

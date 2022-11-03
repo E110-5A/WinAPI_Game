@@ -2,6 +2,7 @@
 #include "jsInput.h"
 #include "jsSceneManager.h"
 #include "jsBGObj.h"
+#include "jsCamera.h"
 
 namespace js
 {
@@ -17,6 +18,8 @@ namespace js
 		bg->SetImage(L"TitleBG", L"Title_BG.bmp");
 		bg->Initialize();
 		AddGameObject(bg, eColliderLayer::BackGround);
+
+		
 
 	}
 	void TitleScene::Tick()

@@ -9,7 +9,10 @@ namespace js
 	{
 	public:
 		Player();
+		Player(Pos pos);
 		~Player();
+
+		void Init();
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 

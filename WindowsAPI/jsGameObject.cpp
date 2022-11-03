@@ -10,6 +10,13 @@ namespace js
 	{
 	}
 
+	GameObject::GameObject(Pos pos)
+		: mPos (pos)
+		, mScale {1.f, 1.f}
+		, mDead(false)
+	{
+	}
+
 	GameObject::~GameObject()
 	{
 		for (Component* component : mComponents)

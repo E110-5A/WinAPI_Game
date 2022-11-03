@@ -1,6 +1,7 @@
 #include "jsSceneManager.h"
 #include "jsTitleScene.h"
 #include "jsPlayScene.h"
+#include "jsObject.h"
 
 namespace js
 {
@@ -25,6 +26,10 @@ namespace js
 	void SceneManager::Render(HDC _dc)
 	{
 		mCurScene->Render(_dc);
+	}
+	void SceneManager::DestroyGameObject()
+	{
+		object::Release();
 	}
 	void SceneManager::Release()
 	{

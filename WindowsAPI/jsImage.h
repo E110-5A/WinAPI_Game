@@ -7,19 +7,21 @@ namespace js
 		public Resource
 	{
 	public:
+		static Image* Create(const std::wstring& key, UINT width, UINT height);
+
 		Image();
 		~Image();
 
-		virtual HRESULT Load(const std::wstring& _strPath) override;
+		virtual HRESULT Load(const std::wstring& strPath) override;
 
 		HDC GetDC() { return mHdc; }
-		UINT GetWidth() { return m_Width; }
-		UINT GetHeight() { return m_Height; }
+		UINT GetWidth() { return mWidth; }
+		UINT GetHeight() { return mHeight; }
 
 	private:
-		HBITMAP m_Bitmap;
+		HBITMAP mBitmap;
 		HDC		mHdc;
-		UINT	m_Width;
-		UINT	m_Height;
+		UINT	mWidth;
+		UINT	mHeight;
 	};
 }

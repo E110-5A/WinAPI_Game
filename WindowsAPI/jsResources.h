@@ -11,7 +11,18 @@ namespace js
 	public:
 		typedef std::map<std::wstring, Resource*>::iterator ResourceIter;
 
-		template<typename T>
+		template <typename T>
+		static void Insert(const std::wstring& key, T* resource)
+		{
+			if (nullptr == resource ||
+				key.empty())
+				return;
+
+			mResources.insert(std::make_pair(key, resource));
+		}
+
+
+		template <typename T>
 		static T* Find(const std::wstring& key)
 		{
 			// 리소스 중복체크

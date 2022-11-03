@@ -144,6 +144,7 @@
     <ClInclude Include="jsInput.h" />
     <ClInclude Include="jsMath.h" />
     <ClInclude Include="jsMonster.h" />
+    <ClInclude Include="jsObject.h" />
     <ClInclude Include="jsPlayer.h" />
     <ClInclude Include="jsPlayScene.h" />
     <ClInclude Include="jsProjectile.h" />

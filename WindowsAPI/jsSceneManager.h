@@ -10,9 +10,11 @@ namespace js
 		static void Initialize();
 		static void Tick();
 		static void Render(HDC _dc);
+		static void DestroyGameObject();
 		static void Release();
 
 		static void ChangeScene(eSceneType type);
+		static Scene* GetPlayScene() { return mScene[(UINT)eSceneType::Play]; }
 		static Scene* GetCurScene() { return mCurScene; }
 		
 	private:

@@ -6,7 +6,8 @@
 namespace js
 {
 	Projectile::Projectile()
-		: m_fSpeed(800.f)
+		: mSpeed(5000.f)
+		, mLifeTime(0.1f)
 	{
 		SetScale(Size(60.f, 20.f));
 		Collider* myCollider = new Collider();
@@ -20,11 +21,17 @@ namespace js
 	}
 	void Projectile::Tick()
 	{
+		GameObject::Tick();
+		mLifeTime -= Time::GetDeltaTime();
+		if (0.f >= mLifeTime)
+		{
+			this->Death();
+		}
+
 		Pos pos = GetPos();
-		pos.x += m_fSpeed * Time::GetDeltaTime();
+		pos.x += mSpeed * Time::GetDeltaTime();
 		SetPos(pos);
 
-		GameObject::Tick();
 	}
 	void Projectile::Render(HDC hdc)
 	{

@@ -41,7 +41,7 @@ namespace js
 		if (nullptr == mImage)
 		{
 			mImage = Resources::Load<Image>
-				(L"Player", L"..\\Resources\\Image\\Player\\idle.bmp");
+				(L"Player", L"..\\Resources\\Image\\Player\\player.bmp");
 		}
 
 		// 콜라이더 설정
@@ -50,9 +50,19 @@ namespace js
 		myCollider->SetScale(Size(5.f, 12.f) * GetScale());
 		myCollider->SetOffset(Vector2(-12.f, 0.f));
 		AddComponent(myCollider);
-
+			
 		// 애니메이터 설정
-		AddComponent(new Animator);
+		mAnimator = new Animator;
+		mAnimator->CreateAnimation(L"Idle", mImage, Pos(0.f, 0.f), Size(30.f, 36.f)
+			, Vector2(0.f, 0.f), 1, 0.1f);
+		mAnimator->CreateAnimation(L"WalkRight", mImage, Pos(0.0f, 36.0f), Size(18.0f, 33.0f)
+			, Vector2(0.0f, 0.0f), 8, 0.1f);
+		mAnimator->CreateAnimation(L"DubleTab", mImage, Pos(0.0f, 69.0f), Size(60.0f, 36.0f)
+			, Vector2(0.0f, 0.0f), 5, 0.1f);
+
+		mAnimator->Play(L"Idle");
+
+		AddComponent(mAnimator);
 	}
 
 	void Player::Tick()
@@ -60,6 +70,34 @@ namespace js
 		GameObject::Tick();
 
 		Pos pos = GetPos();
+		
+		if (KEY_DOWN(eKeyCode::A))
+		{
+			mAnimator->Play(L"WalkRight", true);
+		}
+		if (KEY_DOWN(eKeyCode::D))
+		{
+			mAnimator->Play(L"WalkRight", true);
+		}
+		if (KEY_DOWN(eKeyCode::J))
+		{
+			mAnimator->Play(L"DubleTab");
+		}
+
+		if (KEY_UP(eKeyCode::A))
+		{
+			mAnimator->Play(L"Idle", true);
+		}
+		if (KEY_UP(eKeyCode::D))
+		{
+			mAnimator->Play(L"Idle", true);
+		}
+		if (KEY_UP(eKeyCode::J))
+		{
+			mAnimator->Play(L"Idle", true);
+		}
+
+		/*
 		if (KEY_PRESSE(eKeyCode::W))
 		{
 			pos.y -= mSpeed * Time::GetDeltaTime();
@@ -75,8 +113,8 @@ namespace js
 		if (KEY_PRESSE(eKeyCode::D))
 		{
 			pos.x += mSpeed * Time::GetDeltaTime();
-		}
-		if (KEY_DOWN(eKeyCode::SPACE))
+		}*/
+		/*if (KEY_DOWN(eKeyCode::SPACE))
 		{
 			Projectile* missile = new Projectile;
 			Scene* playScene = SceneManager::GetCurScene();
@@ -87,35 +125,14 @@ namespace js
 			Pos missilePos = (pos + startPos) - (missile->GetScale() / 2.f);
 			
 			missile->SetPos(missilePos);
-		}
+		}*/
+
+		mAnimator->mCompleteEvent = std::bind(&Player::WalkComplete, this);
+
 		SetPos(pos);
 	}
 	void Player::Render(HDC hdc)
 	{
-		Pos pos = GetPos();
-		Size scale = GetScale();
-
-		Vector2 finalPos;
-		finalPos.x = (pos.x - mImage->GetWidth() * (scale.x / 2.f));
-		finalPos.y = (pos.y - mImage->GetHeight() * (scale.y / 2.f));
-
-		finalPos = Camera::CalculatePos(finalPos);
-
-		Vector2 rect;
-		rect.x = mImage->GetWidth() * scale.x;
-		rect.y = mImage->GetHeight() * scale.y;
-
-		BLENDFUNCTION func = {};
-		func.AlphaFormat = AC_SRC_ALPHA;
-		func.BlendOp = AC_SRC_OVER;
-		func.BlendFlags = 0;
-		func.SourceConstantAlpha = 255;
-
-		AlphaBlend(hdc,
-			finalPos.x, finalPos.y,
-			rect.x, rect.y,
-			mImage->GetDC(), 0, 0,
-			mImage->GetWidth(), mImage->GetHeight(), func);
 
 		GameObject::Render(hdc);
 	}
@@ -127,5 +144,9 @@ namespace js
 	}
 	void Player::OnCollisionExit(Collider* other)
 	{
+	}
+	void Player::WalkComplete()
+	{
+		// 걸을때 이팩트를 추가 하던가 말던가
 	}
 }

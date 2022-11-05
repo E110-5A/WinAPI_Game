@@ -12,7 +12,7 @@ namespace js
 		static __forceinline T* Instantiate(eColliderLayer type)
 		{
 			T* gameObject = new T();
-			Scene* scene = SceneManager::GetPlayScene();
+			Scene* scene = SceneManager::GetCurScene();
 			scene->AddGameObject(dynamic_cast<GameObject*>(gameObject), type);
 
 			return gameObject;
@@ -21,7 +21,7 @@ namespace js
 		static __forceinline T* Instantiate(eColliderLayer type, Pos pos)
 		{
 			T* gameObject = new T(pos);
-			Scene* scene = SceneManager::GetPlayScene();
+			Scene* scene = SceneManager::GetCurScene();
 			scene->AddGameObject(dynamic_cast<GameObject*>(gameObject), type);
 
 			return gameObject;
@@ -30,6 +30,11 @@ namespace js
 		static __forceinline void Destroy(GameObject* target)
 		{
 			target->Death();
+		}
+
+		static __forceinline void Destroy(GameObject* target, float time)
+		{
+			target->SetDeath(time);
 		}
 
 		static __forceinline void Release()

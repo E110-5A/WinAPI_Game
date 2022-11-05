@@ -6,8 +6,8 @@
 namespace js
 {
 	Projectile::Projectile()
-		: mSpeed(5000.f)
-		, mLifeTime(0.1f)
+		: mSpeed(5800.f)
+		, mLifeTime(0.15f)
 	{
 		SetScale(Size(60.f, 20.f));
 		Collider* myCollider = new Collider();

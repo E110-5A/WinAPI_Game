@@ -7,6 +7,7 @@
 #include <list>
 #include <map>
 #include <set>
+#include <functional>
 
 #include "def.h"
 #include "jsMath.h"

@@ -26,11 +26,12 @@ namespace js
 		void SetScale(Size scale) { mScale = scale; }
 		Size GetScale() { return mScale; }
 
-		void AddComponent(Component* component);
 		void Death() { mDead = true; }
 		bool IsDeath() { return mDead; }
+		void SetDeath(float time);
+		void DeathLoop();
 
-
+		void AddComponent(Component* component);
 		template <typename T>
 		__forceinline T* GetComponent()
 		{
@@ -50,6 +51,8 @@ namespace js
 		Pos		mPos;
 		Size	mScale;
 		bool	mDead;
+		float	mDeathTime;
+		bool	mBeDeath;
 	};
 }
 

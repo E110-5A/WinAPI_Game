@@ -40,6 +40,7 @@ namespace js
 	}
 	void TitleScene::Enter()
 	{
+		Camera::SetCameraEffect(eCameraEffect::FadeIn);
 	}
 	void TitleScene::Exit()
 	{

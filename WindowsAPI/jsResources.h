@@ -14,8 +14,8 @@ namespace js
 		template <typename T>
 		static void Insert(const std::wstring& key, T* resource)
 		{
-			if (nullptr == resource ||
-				key.empty())
+			if (nullptr == resource 
+				|| key == L"")
 				return;
 
 			mResources.insert(std::make_pair(key, resource));

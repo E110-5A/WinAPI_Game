@@ -1,10 +1,14 @@
 #include "jsScene.h"
 #include "jsGameObject.h"
+#include "jsSceneManager.h"
+
 namespace js
 {
 
 	Scene::Scene()
 	{
+		// 초기화용
+		SceneManager::SetCurScene(this);
 		mObjects.resize(_COLLIDER_LAYER);
 	}
 

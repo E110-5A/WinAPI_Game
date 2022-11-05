@@ -12,21 +12,19 @@ namespace js
 		static void Tick();
 		static void Render(HDC hdc);
 
-		static void SetTarget(GameObject* target) { mTarget = target; }
 		static Pos CalculatePos(Pos pos) { return pos - mDistance; }
-		void SetCameraEffect(eCameraEffect effect) { mEffect = effect; }
-
-
+		static void SetTarget(GameObject* target) { mTarget = target; }
+		static void SetCameraEffect(eCameraEffect effect) { mEffect = effect; }
 
 	private:
 		Camera() = default;
 		~Camera() = default;
 		
 	private:
-		static Size mResoultion;
-		static Pos mLookPosition;
-		static Vector2 mDistance;
-		static GameObject* mTarget;
+		static Size mResoultion;	// 해상도
+		static Pos mLookPosition;	// 카메라 위치
+		static Vector2 mDistance;	// 해상도 중심좌표와 카메라 위치간의 간격
+		static GameObject* mTarget; // 카메라 추격 대상
 
 
 		static eCameraEffect mEffect;

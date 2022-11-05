@@ -33,10 +33,11 @@ namespace js
 			mImage = Resources::Load<Image>
 				(L"Mon", L"..\\Resources\\Image\\Enemy\\testMonster.bmp");
 		}
+		// 콜라이더 설정
 		Collider* monCollider = new Collider;
 		monCollider->SetPos(GetPos());
 		monCollider->SetScale(Size(45.f, 70.f) * GetScale());
-		AddComponent(monCollider);
+		// AddComponent(monCollider);
 	}
 
 	void Monster::Tick()
@@ -72,11 +73,6 @@ namespace js
 			mImage->GetDC(), 0, 0,
 			mImage->GetWidth(), mImage->GetHeight(), func);
 
-		//TransparentBlt(hdc,
-		//	finalPos.x, finalPos.y,
-		//	rect.x, rect.y,
-		//	mImage->GetDC(), 0, 0,
-		//	mImage->GetWidth(), mImage->GetHeight(), RGB(255, 0, 255));
 
 		GameObject::Render(hdc);
 	}

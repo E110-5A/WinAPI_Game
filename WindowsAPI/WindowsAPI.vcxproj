@@ -130,6 +130,7 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="def.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="jsAnimation.h" />
     <ClInclude Include="jsAnimator.h" />
     <ClInclude Include="jsApplication.h" />
     <ClInclude Include="jsBGObj.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="WindowsAPI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="jsAnimation.cpp" />
     <ClCompile Include="jsAnimator.cpp" />
     <ClCompile Include="jsApplication.cpp" />
     <ClCompile Include="jsBGObj.cpp" />

@@ -1,19 +1,22 @@
 #include "jsGameObject.h"
 #include "jsComponent.h"
+#include "jsTime.h"
 
 namespace js
 {
 	GameObject::GameObject()
-		: mPos { 0.f, 0.f }
-		, mScale { 1.f, 1.f }
-		, mDead(false)
+		: mPos (Vector2::Zero)
+		, mScale (Vector2::One)
+		, mDead (false)
+		, mDeathTime (-10.f)
 	{
 	}
 
 	GameObject::GameObject(Pos pos)
 		: mPos (pos)
-		, mScale {1.f, 1.f}
-		, mDead(false)
+		, mScale (Vector2::One)
+		, mDead (false)
+		, mDeathTime (-10.f)
 	{
 	}
 
@@ -34,6 +37,8 @@ namespace js
 
 	void GameObject::Tick()
 	{
+		DeathLoop();
+
 		for (Component* component : mComponents)
 		{
 			if (component == nullptr)
@@ -61,6 +66,25 @@ namespace js
 	}
 	void GameObject::OnCollisionExit(Collider* other)
 	{
+	}
+	void GameObject::SetDeath(float time)
+	{
+		if (0.f >= mDeathTime)
+		{
+		mDeathTime = time; 
+		mBeDeath = true;
+		}
+	}
+	void GameObject::DeathLoop()
+	{
+		if (true == mBeDeath)
+		{
+			mDeathTime -= Time::GetDeltaTime();
+			if (0 > mDeathTime)
+			{
+				Death();
+			}
+		}
 	}
 	void GameObject::AddComponent(Component* component)
 	{

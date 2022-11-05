@@ -45,14 +45,11 @@ namespace js
 	void SceneManager::ChangeScene(eSceneType type)
 	{
 		if (nullptr == mCurScene)
-		{
-			mCurScene = mScene[(UINT)eSceneType::Title];
-		}
-		else
-		{
-			mCurScene->Exit();
-			mCurScene = mScene[(UINT)type];
-		}
+			return;
+		
+		mCurScene->Exit();
+		mCurScene = mScene[(UINT)type];
+
 		mCurScene->Enter();
 	}
 }

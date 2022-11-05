@@ -57,6 +57,14 @@ namespace js
 			vec.y = y - other.y;
 			return vec;
 		}
+
+		void operator +=(const Vector2& other)
+		{
+			
+			x = x + other.x;
+			y = y + other.y;
+		}
+
 	};
 	typedef Vector2 Pos, Size, Scale;
 }

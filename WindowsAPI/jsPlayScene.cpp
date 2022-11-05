@@ -33,8 +33,6 @@ namespace js
 		Camera::SetTarget(pPlayer);
 
 		mObj[0] = object::Instantiate<Monster>(eColliderLayer::Monster, Pos(740.f, 360.f));
-		mObj[1] = object::Instantiate<Monster>(eColliderLayer::Monster, Pos(840.f, 360.f));
-		mObj[2] = object::Instantiate<Monster>(eColliderLayer::Monster, Pos(940.f, 360.f));
 
 
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Monster, true);
@@ -46,7 +44,7 @@ namespace js
 		Scene::Tick();
 		if (KEY_DOWN(eKeyCode::K))
 		{
-			object::Destroy(mObj[1]);
+			object::Destroy(mObj[1],1.f);
 		}
 		if (KEY_DOWN(eKeyCode::N))
 		{
@@ -63,6 +61,7 @@ namespace js
 	}
 	void PlayScene::Enter()
 	{
+		Camera::SetCameraEffect(eCameraEffect::FadeIn);
 	}
 	void PlayScene::Exit()
 	{

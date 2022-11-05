@@ -16,14 +16,16 @@ namespace js
 	 Image* Camera::mBlind = nullptr;
 	 float Camera::mAlphaTime = 0.f;
 	 float Camera::mBlindAlpha = 0.f;
-	 float Camera::mEndTime = 10.f;
+	 float Camera::mEndTime = 2.f;
+
 	void Camera::Initialize()
 	{
 		WindowData data = Application::GetInstance().GetWindowData();
 
 		mResoultion = Vector2(data.width, data.height);
+		// 해상도의 중심 위치가 현재 카메라의 위치
 		mLookPosition = (mResoultion / 2.f);
-		mEffect = eCameraEffect::FadeIn;
+		//mEffect = eCameraEffect::FadeIn;
 		mBlind = Image::Create(L"Blind", data.width, data.height);
 	}
 
@@ -35,7 +37,7 @@ namespace js
 		{
 			mAlphaTime += Time::GetDeltaTime();
 
-			// 시간 비율
+			// 현재 시간에서 종료 시간까지 비율 구하기
 			float ratio = (mAlphaTime / mEndTime);
 
 			if (eCameraEffect::FadeIn == mEffect)
@@ -46,17 +48,18 @@ namespace js
 			{
 				mBlindAlpha = ratio;
 			}
-
 		}
 
-
+		// 타겟이 있으면 추격카메라
 		if (nullptr != mTarget)
 			mLookPosition = mTarget->GetPos();
 
+		// 월드와 로컬간의 간격차를 계산
 		mDistance = mLookPosition - (mResoultion / 2.f);
 	}
 	void Camera::Render(HDC hdc)
 	{
+		// 투명도가 0에 가까워지면 렌더링하지 않음
 		if (mBlindAlpha <= 0.f)
 			return;
 

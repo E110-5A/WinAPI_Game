@@ -151,6 +151,9 @@
     <ClInclude Include="jsCamera.h">
       <Filter>1 Engine\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="jsAnimation.h">
+      <Filter>1 Engine\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -243,6 +246,9 @@
     </ClCompile>
     <ClCompile Include="jsCamera.cpp">
       <Filter>1 Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="jsAnimation.cpp">
+      <Filter>1 Engine\Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

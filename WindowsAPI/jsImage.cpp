@@ -20,8 +20,8 @@ namespace js
 		image->mBitmap = CreateCompatibleBitmap(hdc, width, height);
 		image->mHdc = CreateCompatibleDC(hdc);
 
-		if (NULL == image->mBitmap ||
-			NULL == image->mHdc)
+		if (NULL == image->mBitmap 
+			|| NULL == image->mHdc)
 			return nullptr;
 
 		// 비트맵과 DC를 연결
@@ -30,7 +30,7 @@ namespace js
 
 		// 비트맵 정보확인
 		BITMAP bitmap = {};
-		GetObject(image->mHdc, sizeof(BITMAP), &bitmap);
+		GetObject(image->mBitmap, sizeof(BITMAP), &bitmap);
 
 		image->mWidth = bitmap.bmWidth;
 		image->mHeight = bitmap.bmHeight;

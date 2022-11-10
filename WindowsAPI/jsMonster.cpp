@@ -34,7 +34,7 @@ namespace js
 				(L"Mon", L"..\\Resources\\Image\\Enemy\\testMonster.bmp");
 		}
 		// 콜라이더 설정
-		Collider* monCollider = new Collider;
+		Collider* monCollider = new Collider();
 		monCollider->SetPos(GetPos());
 		monCollider->SetScale(Size(45.f, 70.f) * GetScale());
 		// AddComponent(monCollider);

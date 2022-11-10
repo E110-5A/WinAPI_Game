@@ -10,15 +10,20 @@ namespace js
 	Animator::Animator()
 		: Component(eComponentType::Animator)
 		, mCurAnimation(nullptr)
-		, mImage(nullptr)
 		, mIsLoop (true)
 	{
-		//mImage = Resources::Load<Image>(L"Player", L"..\\Resources\\Image\\Player\\idle.bmp");
 	}
 
 	Animator::~Animator()
 	{
-
+		for (auto iter : mAnimations)
+		{
+			delete iter.second;
+		}
+		for (auto iter : mEvents)
+		{
+			delete iter.second;
+		}
 	}
 
 	void Animator::Tick()
@@ -29,7 +34,9 @@ namespace js
 
 			if (mIsLoop && mCurAnimation->isComplete())
 			{
-				mCompleteEvent();
+				Animator::Events* events = FindEvents(mCurAnimation->GetName());
+				if (nullptr != events)
+					events->mCompleteEvent();
 				mCurAnimation->Reset();
 			}
 		}
@@ -64,16 +71,54 @@ namespace js
 		animation = new Animation();		
 		animation->Create(image, leftTop, size, offset, 
 			spriteLength, duration, bAffectedCamera);
-
 		animation->SetName(name);
 		animation->SetAnimator(this);
-
-
 		mAnimations.insert(std::make_pair(name, animation));
+		
+		Events* events = new Events();
+		mEvents.insert(std::make_pair(name, events));
 	}
+
+	void Animator::CreateAnimation(const std::wstring& path, const std::wstring& name, Vector2 offset, float duration)
+	{
+		UINT width = 0;
+		UINT height = 0;
+		UINT fileCount = 0;
+		std::filesystem::path fs(path.c_str());
+
+		std::vector<Image*> images;
+
+		for (auto& p : std::filesystem::recursive_directory_iterator(path))
+		{
+			std::wstring fileName = p.path().filename();
+			std::wstring fullName = path + L"\\" + fileName;
+
+			Image* image = Resources::Load<Image>(fileName, fullName);
+			images.push_back(image);
+
+			if (width < image->GetWidth())
+				width = image->GetWidth();
+			if (height < image->GetHeight())
+				height = image->GetHeight();
+			++fileCount;
+		}
+
+		mSpriteSheet = Image::Create(name, width * fileCount, height);
+		int idx = 0;
+		for (Image* image : images)
+		{
+			BitBlt(mSpriteSheet->GetDC(), width * idx, 0, image->GetWidth(), image->GetHeight(), image->GetDC(), 0, 0, SRCCOPY);
+			++idx;
+		}
+
+		CreateAnimation(name, mSpriteSheet, Vector2(0.f, 0.f), Size(width, height), offset, fileCount, duration);
+	}
+
 	void Animator::Play(const std::wstring& name, bool bLoop)
 	{
-		mStartEvent();
+		Animator::Events* events = FindEvents(name);
+		if (nullptr != events)
+			events->mStartEvent();
 		Animation* prevAnimation = mCurAnimation;
 		mCurAnimation = FindAnimation(name);
 		mCurAnimation->Reset();
@@ -82,7 +127,36 @@ namespace js
 		// 이전과 다른 애니메이션이 나오면 EndEvent
 		if (prevAnimation != mCurAnimation)
 		{
-			mEndEvent();
+			if (nullptr != events)
+				events->mEndEvent();
 		}
+	}
+
+	Animator::Events* Animator::FindEvents(const std::wstring& key)
+	{
+		std::map<std::wstring, Events*>::iterator iter = mEvents.find(key);
+		if (iter == mEvents.end())
+		{
+			return nullptr;
+		}
+		return iter->second;
+	}
+	std::function<void()>& Animator::GetStartEvents(const std::wstring& key)
+	{
+		Events* events = FindEvents(key);
+
+		return events->mStartEvent.mEvent;
+	}
+	std::function<void()>& Animator::GetCompleteEvents(const std::wstring& key)
+	{
+		Events* events = FindEvents(key);
+
+		return events->mCompleteEvent.mEvent;
+	}
+	std::function<void()>& Animator::GetEndEvents(const std::wstring& key)
+	{
+		Events* events = FindEvents(key);
+
+		return events->mEndEvent.mEvent;
 	}
 }

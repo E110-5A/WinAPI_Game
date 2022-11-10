@@ -2,6 +2,7 @@
 #include "jsTime.h"
 #include "jsCollider.h"
 #include "jsCamera.h"
+#include "jsInput.h"
 
 namespace js
 {
@@ -14,6 +15,8 @@ namespace js
 
 		myCollider->SetScale(Size(60.f, 20.f));
 		AddComponent(myCollider);
+
+
 
 	}
 	Projectile::~Projectile()
@@ -28,8 +31,24 @@ namespace js
 			this->Death();
 		}
 
+
+
 		Pos pos = GetPos();
-		pos.x += mSpeed * Time::GetDeltaTime();
+		Pos mousePos = Input::GetMousePos();
+
+
+		mDir = mousePos - pos;
+
+
+		pos.x += mDir.x * mSpeed * Time::GetDeltaTime();
+		pos.y += mDir.y * mSpeed * Time::GetDeltaTime();
+
+
+
+
+
+
+
 		SetPos(pos);
 
 	}

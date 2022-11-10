@@ -33,7 +33,7 @@ namespace js
 		UP,
 		NONE,
 	};
-	class jsInput
+	class Input
 	{
 	public:
 		struct Key
@@ -49,9 +49,11 @@ namespace js
 		static void Render(HDC _dc);
 
 		static eKeyState GetKeyState(eKeyCode _KeyCode);
+		static Vector2 GetMousePos() { return mMousePos; }
 
 	private:
-		static std::vector<jsInput::Key> m_Keys;
+		static std::vector<Input::Key> mKeys;
+		static Vector2 mMousePos;
 	};
 
 

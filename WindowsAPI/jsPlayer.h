@@ -3,6 +3,18 @@
 
 namespace js
 {
+	struct PlayerStat
+	{
+		float MaxHp;		// 110				+ 32
+		float CurHp;
+		float RegenHp;		// 0.6				+ 0.12
+		float Def;			// 0				+ 2
+		float MoveSpeed;	// 1.3
+		float Att;			// 12				+ 3
+		float AttSpeed;		// 정확한 수치 ㅁ?ㄹ
+		float AttRange;		// 700
+	};
+
 	class Image;
 	class Animator;
 	class Collider;
@@ -35,6 +47,9 @@ namespace js
 
 		Animator* mAnimator;
 		Collider* mCollider;
+
+		PlayerStat mStat;
+
 	};
 }
 

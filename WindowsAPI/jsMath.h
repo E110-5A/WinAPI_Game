@@ -1,7 +1,11 @@
 #pragma once
+#include <math.h>
+
+#define PI 3.141592
 
 namespace js
 {
+
 	struct Vector2
 	{
 		static Vector2 Zero;
@@ -57,14 +61,48 @@ namespace js
 			vec.y = y - other.y;
 			return vec;
 		}
-
 		void operator +=(const Vector2& other)
 		{
 			
 			x = x + other.x;
 			y = y + other.y;
 		}
+		float Length()
+		{
+			return sqrtf(x * x + y * y);
+		}
+		Vector2& Normalize()
+		{
+			float length = Length();
+			x /= length;
+			y /= length;
 
+			return *this;
+		}
 	};
 	typedef Vector2 Pos, Size, Scale;
+
+	namespace math
+	{
+
+		inline float DegreeToRadian(float degree)
+		{
+			return degree / 180 * PI;
+		}
+		inline float RadianToDegree(float radian)
+		{
+			return radian * 180 / PI;
+		}
+		// 
+		inline Vector2 Rotate(const Vector2 value, float degree)
+		{
+			Vector2 ret = Vector2::Zero;
+			float radian = DegreeToRadian(degree);
+
+			ret.x = value.x * cosf(radian) - value.y * sinf(radian);
+			ret.y = value.x * sinf(radian) + value.y * cosf(radian);
+
+			return ret;
+		}
+	}
 }

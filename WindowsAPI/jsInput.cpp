@@ -1,7 +1,9 @@
 #include "jsInput.h"
+#include "jsApplication.h"
 
 namespace js
 {
+	Vector2 Input::mMousePos = Vector2::Zero;
 	int ASCII[(UINT)eKeyCode::END] =
 	{
 		'Q','W','E','R','T','Y','U','I','O','P',
@@ -19,56 +21,78 @@ namespace js
 
 		'0','1','2','3','4','5','6','7','8','9',
 	};
-	std::vector<jsInput::Key> jsInput::m_Keys;
+	std::vector<Input::Key> Input::mKeys;
 
-	void jsInput::Initialize()
+	void Input::Initialize()
 	{
 		for (size_t idx = 0; idx < (UINT)eKeyCode::END; idx++)
 		{
 			Key key = { (eKeyCode)idx, eKeyState::NONE, false };
 
-			m_Keys.push_back(key);
+			mKeys.push_back(key);
 		}
 	}
-	void jsInput::Tick()
+	void Input::Tick()
 	{
-		for (size_t idx = 0; idx < (UINT)eKeyCode::END; idx++)
+		if (GetFocus())
 		{
-			// 키가 눌린 경우
-			if (GetAsyncKeyState(ASCII[idx]) & 0x8000)
+			// 키보드
+			for (size_t idx = 0; idx < (UINT)eKeyCode::END; idx++)
 			{
-				// 이전에 눌렸음
-				if (m_Keys[idx].bPressed)
+				// 키가 눌린 경우
+				if (GetAsyncKeyState(ASCII[idx]) & 0x8000)
 				{
-					m_Keys[idx].state = eKeyState::PRESSED;
+					// 이전에 눌렸음
+					if (mKeys[idx].bPressed)
+					{
+						mKeys[idx].state = eKeyState::PRESSED;
+					}
+					else
+					{
+						mKeys[idx].state = eKeyState::DOWN;
+					}
+					mKeys[idx].bPressed = true;
 				}
+				// 키가 눌리지 않은 경우
 				else
 				{
-					m_Keys[idx].state = eKeyState::DOWN;
+					// 이전에 눌렸음
+					if (mKeys[idx].bPressed)
+					{
+						mKeys[idx].state = eKeyState::UP;
+					}
+					else
+					{
+						mKeys[idx].state = eKeyState::NONE;
+					}
+					mKeys[idx].bPressed = false;
 				}
-				m_Keys[idx].bPressed = true;
 			}
-			// 키가 눌리지 않은 경우
-			else
+			// 마우스
+			POINT mousePos = {};
+			GetCursorPos(&mousePos);
+			HWND hwnd = Application::GetInstance().GetWindowData().hWnd;
+			ScreenToClient(hwnd, &mousePos);
+			mMousePos.x = mousePos.x;
+			mMousePos.y = mousePos.y;
+		}
+		else
+		{
+			for (UINT idx = 0; idx < (UINT)eKeyCode::END; ++idx)
 			{
-				// 이전에 눌렸음
-				if (m_Keys[idx].bPressed)
-				{
-					m_Keys[idx].state = eKeyState::UP;
-				}
-				else
-				{
-					m_Keys[idx].state = eKeyState::NONE;
-				}
-				m_Keys[idx].bPressed = false;
+				if (eKeyState::DOWN == mKeys[idx].state
+					|| eKeyState::PRESSED == mKeys[idx].state)
+					mKeys[idx].state = eKeyState::UP;
+				else if (eKeyState::UP == mKeys[idx].state)
+					mKeys[idx].state = eKeyState::NONE;
 			}
 		}
 	}
-	void jsInput::Render(HDC _dc)
+	void Input::Render(HDC _dc)
 	{
 	}
-	eKeyState jsInput::GetKeyState(eKeyCode _KeyCode)
+	eKeyState Input::GetKeyState(eKeyCode _KeyCode)
 	{
-		return m_Keys[(UINT)_KeyCode].state;
+		return mKeys[(UINT)_KeyCode].state;
 	}
 }

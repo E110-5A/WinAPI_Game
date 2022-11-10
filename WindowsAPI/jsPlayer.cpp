@@ -86,6 +86,9 @@ namespace js
 			, Vector2(-12.0f, 0.0f), 9, 0.1f);
 		mAnimator->CreateAnimation(L"DiveL", mImage, Pos(0.0f, 312.0f), Size(36.0f, 36.0f)
 			, Vector2(-12.0f, 0.0f), 9, 0.1f);
+
+
+
 	}
 
 	void Player::Tick()

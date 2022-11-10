@@ -60,7 +60,7 @@ namespace js
 		InitializeWindow(_data);
 
 		Time::Initialize();
-		jsInput::Initialize();
+		Input::Initialize();
 		SceneManager::Initialize();
 		Camera::Initialize();
 	}
@@ -68,7 +68,7 @@ namespace js
 	void Application::Tick()
 	{
 		Time::Tick();
-		jsInput::Tick();
+		Input::Tick();
 
 		Camera::Tick();
 		SceneManager::Tick();
@@ -81,7 +81,7 @@ namespace js
 		SceneManager::Render(mWindowData.backBuffer);
 		Camera::Render(mWindowData.backBuffer);
 		
-		jsInput::Render(mWindowData.backBuffer);
+		Input::Render(mWindowData.backBuffer);
 		Time::Render(mWindowData.backBuffer);
 
 

@@ -19,6 +19,7 @@ namespace js
 		virtual void OnCollisionExit(Collider* other)override;
 
 	private:
+		Vector2 mDir;
 		float mSpeed;
 		float mLifeTime;
 	};

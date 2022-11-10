@@ -44,7 +44,7 @@ namespace js
 			
 			for (size_t y = 0; y < _COLLIDER_LAYER; y++)
 			{
-				for (LayerObjects iter = objects[y].begin(); iter != objects[y].end();)
+				for (std::vector<GameObject*>::iterator iter = objects[y].begin(); iter != objects[y].end();)
 				{
 					if (true == (*iter)->IsDeath())
 					{

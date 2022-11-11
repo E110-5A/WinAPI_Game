@@ -11,9 +11,10 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름�
 
 
 // 전방선언
-ATOM                MyRegisterClass(HINSTANCE hInstance);
+ATOM                MyRegisterClass(HINSTANCE hInstance, WNDPROC wndProc, LPCWSTR wndName);
 BOOL                InitInstance(HINSTANCE, int);
-LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
+LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM); 
+LRESULT CALLBACK    AtlasWndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -32,7 +33,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     //_CrtSetBreakAlloc(532);
 
     // wndclass 정의 (초기 세팅설정)
-    MyRegisterClass(hInstance);
+    MyRegisterClass(hInstance, WndProc, szWindowClass);
+    MyRegisterClass(hInstance, AtlasWndProc, L"AtlasWindow");
 
     // 메인 윈도우 생성 및 활성화
     if (!InitInstance (hInstance, nCmdShow))
@@ -73,22 +75,22 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 }
 
 
-ATOM MyRegisterClass(HINSTANCE hInstance)
+ATOM MyRegisterClass(HINSTANCE hInstance, WNDPROC wndProc, LPCWSTR wndName)
 {
     WNDCLASSEXW wcex;
 
     wcex.cbSize = sizeof(WNDCLASSEX);
 
     wcex.style          = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc    = WndProc;
+    wcex.lpfnWndProc    = wndProc;
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WINDOWSAPI));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_WINDOWSAPI);
-    wcex.lpszClassName  = szWindowClass;
+    wcex.lpszMenuName   = nullptr; // MAKEINTRESOURCEW(IDC_WINDOWSAPI);
+    wcex.lpszClassName  = wndName;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
     return RegisterClassExW(&wcex);
@@ -99,35 +101,58 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   WindowData winData;
-   winData.width = 1280;
-   winData.height = 720;
+   WindowData windowData;
+   windowData.width = 1280;
+   windowData.height = 720;
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-   
-   winData.hWnd = hWnd;
-   winData.hdc = nullptr;
+
+   windowData.hWnd = hWnd;
+   windowData.hdc = nullptr;
 
    if (!hWnd)
    {
       return FALSE;
    }
 
-   SetWindowPos(hWnd, nullptr, 0, 0, winData.width, winData.height, 0);
+   SetWindowPos(hWnd, nullptr, -7, 0, windowData.width, windowData.height, 0);
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
-   js::Application::GetInstance().Initialize(winData);
+   js::Application::GetInstance().Initialize(windowData);
+
+
+   WindowData atlasWindowData;
+
+   hWnd = CreateWindowW(L"AtlasWindow", szTitle, WS_OVERLAPPEDWINDOW,
+       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+
+   atlasWindowData.hWnd = hWnd;
+
+   js::Application::GetInstance().InitializeAtlasWindow(atlasWindowData);
 
    return TRUE;
 }
 
 
+
+#include "jsSceneManager.h"
+#include "jsScene.h"
+#include "jsToolScene.h"
+#include "jsTilePalette.h"
+#include "jsTile.h"
+#include "jsImage.h"
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+    case WM_CREATE:
+    {
+        
+    }
+    break;
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -150,26 +175,80 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             
-            // 화면 초기화
-            HBRUSH hClearBrush = (HBRUSH)GetStockObject(GRAY_BRUSH);
-            HBRUSH hPrevBrush = (HBRUSH)SelectObject(hdc, hClearBrush);
-            Rectangle(hdc, -1, -1, 1921, 1081);
-            SelectObject(hdc, hPrevBrush);
-
-            // 그리는 용도로 선언한 팬
-            HPEN hPen = (HPEN)GetStockObject(NULL_PEN);
-            HPEN hPrevPen = (HPEN)SelectObject(hdc, hPen);
-
-
-
-
-
-
-            SelectObject(hdc, hPrevPen);            
-            // stockObject를 사용하기 때문에 소멸시킬 대상이 없음
             EndPaint(hWnd, &ps);
         }
         break;
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
+    default:
+        return DefWindowProc(hWnd, message, wParam, lParam);
+    }
+    return 0;
+}
+
+
+
+
+LRESULT CALLBACK AtlasWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    switch (message)
+    {
+    case WM_CREATE:
+    {
+        WindowData windowData = js::Application::GetInstance().GetWindowData();
+        WindowData atlasWindowData = js::Application::GetInstance().GetAtlasWindowData();
+
+
+        js::Scene* Scene = js::SceneManager::GetCurScene();
+        js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(Scene);
+        js::Image* atlas = toolScene->GetAtlasImage();
+
+
+        RECT rect = { 0,0,atlas->GetWidth(), atlas->GetHeight() };
+        SetWindowPos(hWnd, nullptr, 
+            windowData.width, 0, atlas->GetWidth(), atlas->GetHeight(), 0);
+        ShowWindow(hWnd, true);
+        UpdateWindow(hWnd);
+    }
+    case WM_COMMAND:
+    {
+        int wmId = LOWORD(wParam);
+        // 메뉴 선택을 구문 분석합니다:
+        switch (wmId)
+        {
+        case IDM_ABOUT:
+            DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+            break;
+        case IDM_EXIT:
+            DestroyWindow(hWnd);
+            break;
+        default:
+            return DefWindowProc(hWnd, message, wParam, lParam);
+        }
+    }
+    break;
+    case WM_PAINT:
+    {
+        PAINTSTRUCT ps;
+        HDC hdc = BeginPaint(hWnd, &ps);
+
+        WindowData atlasWindowData = js::Application::GetInstance().GetAtlasWindowData();
+        js::Scene* Scene = js::SceneManager::GetCurScene();
+        js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(Scene);
+        js::Image* atlas = toolScene->GetAtlasImage();
+
+        js::Pos pos(js::Vector2::Zero);
+
+        TransparentBlt(hdc, pos.x, pos.y, atlas->GetWidth(), atlas->GetHeight(),
+            atlas->GetDC(), 0, 0, atlas->GetWidth(), atlas->GetHeight(),
+            RGB(255, 0, 255));
+
+
+        // stockObject를 사용하기 때문에 소멸시킬 대상이 없음
+        EndPaint(hWnd, &ps);
+    }
+    break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;

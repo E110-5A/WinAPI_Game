@@ -16,8 +16,8 @@ namespace js
 		virtual void Tick();
 		virtual void Render(HDC hdc);
 
-		virtual void Enter() {}		// 해당 씬으로 변경될 때 호출
-		virtual void Exit() {}
+		virtual void Enter();		// 해당 씬으로 변경될 때 호출
+		virtual void Exit();
 
 		void AddGameObject(GameObject* obj, eColliderLayer type);
 		std::vector<GameObject*>& GetGameObjects(eColliderLayer type) { return mObjects[(UINT)type]; }

@@ -163,4 +163,10 @@ namespace js
 		}
 		return false;
 	}
+	void CollisionManager::Clear()
+	{
+		memset(mMatrix, 0, sizeof(WORD) * _COLLIDER_LAYER);
+		
+		mCollisionInfo.clear();
+	}
 }

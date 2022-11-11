@@ -15,9 +15,11 @@ namespace js
 		static void LayerCollision(Scene* scene, eColliderLayer left, eColliderLayer right);
 		// 충돌체간 충돌 확인
 		static void ColliderCollision(Collider* left, Collider* right);
-
-
+		// 두 충돌체 충돌 비교
 		static bool Intersect(Collider* left, Collider* right);
+
+		// 씬 변경시 충돌 초기화
+		static void Clear();
 
 	private:
 		static WORD mMatrix[_COLLIDER_LAYER];

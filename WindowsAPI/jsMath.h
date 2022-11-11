@@ -67,6 +67,14 @@ namespace js
 			x = x + other.x;
 			y = y + other.y;
 		}
+		bool operator ==(const Vector2& other)
+		{
+			if (x != other.x)
+				return false;
+			if (y != other.y)
+				return false;
+			return true;
+		}
 		float Length()
 		{
 			return sqrtf(x * x + y * y);

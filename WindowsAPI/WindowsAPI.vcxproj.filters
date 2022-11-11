@@ -53,6 +53,12 @@
     <Filter Include="1 Engine\GameObject\BackGround">
       <UniqueIdentifier>{ab7b9e2a-a23f-4950-a2bc-dbc1cda023e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1 Engine\GameObject\Tile">
+      <UniqueIdentifier>{046c83af-50a0-4b0e-a188-2fd68c0edb7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\Game">
+      <UniqueIdentifier>{603c99fe-b6af-4003-9837-528785e52388}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -91,17 +97,11 @@
     <ClInclude Include="jsGameObject.h">
       <Filter>1 Engine\GameObject\Base</Filter>
     </ClInclude>
-    <ClInclude Include="jsPlayer.h">
-      <Filter>1 Engine\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="jsTime.h">
       <Filter>1 Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="jsInput.h">
       <Filter>1 Engine\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="jsProjectile.h">
-      <Filter>1 Engine\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="jsResource.h">
       <Filter>1 Engine\Resource\base</Filter>
@@ -145,14 +145,29 @@
     <ClInclude Include="jsObject.h">
       <Filter>1 Engine\Common</Filter>
     </ClInclude>
-    <ClInclude Include="jsMonster.h">
-      <Filter>1 Engine\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="jsCamera.h">
       <Filter>1 Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="jsAnimation.h">
       <Filter>1 Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="jsTile.h">
+      <Filter>1 Engine\GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="jsTilePalette.h">
+      <Filter>1 Engine\GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="jsToolScene.h">
+      <Filter>1 Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="jsMonster.h">
+      <Filter>1 Engine\GameObject\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="jsPlayer.h">
+      <Filter>1 Engine\GameObject\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="jsProjectile.h">
+      <Filter>1 Engine\GameObject\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -187,17 +202,11 @@
     <ClCompile Include="jsGameObject.cpp">
       <Filter>1 Engine\GameObject\Base</Filter>
     </ClCompile>
-    <ClCompile Include="jsPlayer.cpp">
-      <Filter>1 Engine\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="jsTime.cpp">
       <Filter>1 Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="jsInput.cpp">
       <Filter>1 Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="jsProjectile.cpp">
-      <Filter>1 Engine\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="jsResource.cpp">
       <Filter>1 Engine\Resource\base</Filter>
@@ -241,14 +250,29 @@
     <ClCompile Include="jsGround.cpp">
       <Filter>1 Engine\GameObject\BackGround</Filter>
     </ClCompile>
-    <ClCompile Include="jsMonster.cpp">
-      <Filter>1 Engine\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="jsCamera.cpp">
       <Filter>1 Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="jsAnimation.cpp">
       <Filter>1 Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="jsToolScene.cpp">
+      <Filter>1 Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="jsTile.cpp">
+      <Filter>1 Engine\GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="jsTilePalette.cpp">
+      <Filter>1 Engine\GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="jsMonster.cpp">
+      <Filter>1 Engine\GameObject\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="jsPlayer.cpp">
+      <Filter>1 Engine\GameObject\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="jsProjectile.cpp">
+      <Filter>1 Engine\GameObject\Game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

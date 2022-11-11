@@ -15,6 +15,7 @@ namespace js
 	Player::Player()
 		: mSpeed(300.f)
 		, mImage(nullptr)
+		, mDir(Vector2::Right)
 	{
 		// 내 초기값 세팅
 		SetPos(Pos(100.f, 300.f));
@@ -25,6 +26,7 @@ namespace js
 	Player::Player(Pos pos)
 		: mSpeed(300.f)
 		, mImage(nullptr)
+		, mDir(Vector2::Right)
 	{
 		SetPos(pos);
 		SetScale(Size(3.f, 3.f));
@@ -64,28 +66,28 @@ namespace js
 		mAnimator->CreateAnimation(L"IdleR", mImage, Pos(0.f, 0.f), Size(30.f, 36.f)
 			, Vector2(-10.f, 0.f), 1, 0.1f);
 		mAnimator->CreateAnimation(L"IdleL", mImage, Pos(0.f, 36.f), Size(30.f, 36.f)
-			, Vector2(-10.f, 0.f), 1, 0.1f);
+			, Vector2(-8.f, 0.f), 1, 0.1f);
 
-		mAnimator->CreateAnimation(L"WalkR", mImage, Pos(0.0f, 72.0f), Size(18.0f, 33.0f)
-			, Vector2(-10.0f, 0.0f), 8, 0.1f);
-		mAnimator->CreateAnimation(L"WalkL", mImage, Pos(0.0f, 105.0f), Size(18.0f, 33.0f)
-			, Vector2(-10.0f, 0.0f), 8, 0.1f);
+		mAnimator->CreateAnimation(L"WalkR", mImage, Pos(0.f, 72.f), Size(18.0f, 33.f)
+			, Vector2(-10.f, 0.f), 8, 0.1f);
+		mAnimator->CreateAnimation(L"WalkL", mImage, Pos(0.f, 105.f), Size(18.0f, 33.f)
+			, Vector2(-10.f, 0.f), 8, 0.1f);
 
 
-		mAnimator->CreateAnimation(L"DubleTabR", mImage, Pos(0.0f, 138.0f), Size(60.0f, 36.0f)
-			, Vector2(2.0f, 0.0f), 5, 0.1f);
-		mAnimator->CreateAnimation(L"DubleTabL", mImage, Pos(0.0f, 174.0f), Size(60.0f, 36.0f)
-			, Vector2(2.0f, 0.0f), 5, 0.1f);
+		mAnimator->CreateAnimation(L"DubleTabR", mImage, Pos(0.f, 138.f), Size(60.f, 36.f)
+			, Vector2(2.f, 0.f), 5, 0.1f);
+		mAnimator->CreateAnimation(L"DubleTabL", mImage, Pos(0.f, 174.f), Size(60.f, 36.f)
+			, Vector2(-25.f, 0.f), 5, 0.1f);
 
-		mAnimator->CreateAnimation(L"FMJR", mImage, Pos(0.0f, 210.0f), Size(96.0f, 33.0f)
-			, Vector2(23.0f, 0.0f), 5, 0.1f);
-		mAnimator->CreateAnimation(L"FMJL", mImage, Pos(0.0f, 243.0f), Size(96.0f, 33.0f)
-			, Vector2(23.0f, 0.0f), 5, 0.1f);
+		mAnimator->CreateAnimation(L"FMJR", mImage, Pos(0.f, 210.f), Size(96.0f, 33.f)
+			, Vector2(23.f, 0.f), 5, 0.1f);
+		mAnimator->CreateAnimation(L"FMJL", mImage, Pos(0.f, 243.f), Size(96.0f, 33.f)
+			, Vector2(-45.f, 0.f), 5, 0.1f);
 
-		mAnimator->CreateAnimation(L"DiveR", mImage, Pos(0.0f, 276.0f), Size(36.0f, 36.0f)
-			, Vector2(-12.0f, 0.0f), 9, 0.1f);
-		mAnimator->CreateAnimation(L"DiveL", mImage, Pos(0.0f, 312.0f), Size(36.0f, 36.0f)
-			, Vector2(-12.0f, 0.0f), 9, 0.1f);
+		mAnimator->CreateAnimation(L"DiveR", mImage, Pos(0.f, 276.f), Size(36.f, 36.f)
+			, Vector2(-12.f, 0.f), 9, 0.1f);
+		mAnimator->CreateAnimation(L"DiveL", mImage, Pos(0.f, 312.f), Size(36.f, 36.f)
+			, Vector2(-8.f, 0.f), 9, 0.1f);
 
 
 
@@ -111,10 +113,12 @@ namespace js
 		}
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
+			mDir = Vector2::Left;
 			pos.x -= mSpeed * Time::GetDeltaTime();
 		}		
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
+			mDir = Vector2::Right;
 			pos.x += mSpeed * Time::GetDeltaTime();
 		}
 		/*if (KEY_DOWN(eKeyCode::Z))
@@ -138,6 +142,8 @@ namespace js
 
 		GameObject::Render(hdc);
 	}
+
+
 	void Player::PlayAnim()
 	{
 		if (KEY_DOWN(eKeyCode::RIGHT))
@@ -150,15 +156,24 @@ namespace js
 		}
 		if (KEY_DOWN(eKeyCode::Z))
 		{
-			mAnimator->Play(L"DubleTabR");
+			if (mDir == Vector2::Right)
+				mAnimator->Play(L"DubleTabR");
+			else
+				mAnimator->Play(L"DubleTabL");
 		}
 		if (KEY_DOWN(eKeyCode::X))
 		{
-			mAnimator->Play(L"FMJR", false);
+			if (mDir == Vector2::Right)
+				mAnimator->Play(L"FMJR", false);
+			else
+				mAnimator->Play(L"FMJL", false);
 		}
 		if (KEY_DOWN(eKeyCode::C))
 		{
-			mAnimator->Play(L"DiveR", false);
+			if (mDir == Vector2::Right)
+				mAnimator->Play(L"DiveR", false);
+			else
+				mAnimator->Play(L"DiveL", false);
 		}
 
 		if (KEY_UP(eKeyCode::RIGHT))
@@ -170,6 +185,11 @@ namespace js
 			mAnimator->Play(L"IdleL", true);
 		}
 	}
+
+
+
+
+
 	void Player::OnCollisionEnter(Collider* other)
 	{
 	}

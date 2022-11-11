@@ -48,6 +48,7 @@ namespace js
 		Animator* mAnimator;
 		Collider* mCollider;
 
+		Vector2 mDir;
 		PlayerStat mStat;
 
 	};

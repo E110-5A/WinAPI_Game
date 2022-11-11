@@ -159,8 +159,11 @@
     <ClInclude Include="jsResources.h" />
     <ClInclude Include="jsScene.h" />
     <ClInclude Include="jsSceneManager.h" />
+    <ClInclude Include="jsTile.h" />
+    <ClInclude Include="jsTilePalette.h" />
     <ClInclude Include="jsTime.h" />
     <ClInclude Include="jsTitleScene.h" />
+    <ClInclude Include="jsToolScene.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WindowsAPI.h" />
@@ -190,8 +193,11 @@
     <ClCompile Include="jsResources.cpp" />
     <ClCompile Include="jsScene.cpp" />
     <ClCompile Include="jsSceneManager.cpp" />
+    <ClCompile Include="jsTile.cpp" />
+    <ClCompile Include="jsTilePalette.cpp" />
     <ClCompile Include="jsTime.cpp" />
     <ClCompile Include="jsTitleScene.cpp" />
+    <ClCompile Include="jsToolScene.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

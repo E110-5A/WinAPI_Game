@@ -1,3 +1,7 @@
+#include <Windows.h>
+#include "framework.h"
+#include "WindowsAPI.h"
+
 #include "jsApplication.h"
 #include "jsSceneManager.h"
 #include "jsTime.h"
@@ -8,61 +12,20 @@
 
 namespace js
 {
-	Application::Application()
+	void Application::Initialize(WindowData data)
 	{
-		mWindowData.clear();
-	}
-
-	Application::~Application()
-	{
-		Resources::Release();
-		SceneManager::Release();
-		ReleaseDC(mWindowData.hWnd, mWindowData.hdc);
-		ReleaseDC(mWindowData.hWnd, mWindowData.backBuffer);
-	}
-
-	void Application::InitializeWindow(WindowData _data)
-	{
-		mWindowData = _data;
-		mWindowData.hdc = GetDC(_data.hWnd);
-
-		RECT rect = { 0,0,mWindowData.width, mWindowData.height };
-		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
-
-		SetWindowPos(mWindowData.hWnd, nullptr, 0, 0
-			, rect.right - rect.left, rect.bottom - rect.top, 0);
-
-		ShowWindow(mWindowData.hWnd, true);
-
-
-		mWindowData.backTexture 
-			= CreateCompatibleBitmap(mWindowData.hdc, mWindowData.width, mWindowData.height);
-
-		mWindowData.backBuffer
-			= CreateCompatibleDC(mWindowData.hdc);
-		HBITMAP defaultBitMap
-			= (HBITMAP)SelectObject(mWindowData.backBuffer, mWindowData.backTexture);
-
-		DeleteObject(defaultBitMap);
-
-		mPens[(UINT)ePenColor::Red] = CreatePen(PS_SOLID, 1, RGB(255,0,0));
-		mPens[(UINT)ePenColor::Green] = CreatePen(PS_SOLID, 1, RGB(0,255,0));
-		mPens[(UINT)ePenColor::Blue] = CreatePen(PS_SOLID, 1, RGB(0,0,255));
-		
-		mBrushs[(UINT)eBrushColor::Transparent] = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
-		mBrushs[(UINT)eBrushColor::Black] = (HBRUSH)GetStockObject(BLACK_BRUSH);
-		mBrushs[(UINT)eBrushColor::Gray] = (HBRUSH)GetStockObject(GRAY_BRUSH);
-		mBrushs[(UINT)eBrushColor::White] = (HBRUSH)GetStockObject(WHITE_BRUSH);
-	}
-
-	void Application::Initialize(WindowData _data)
-	{
-		InitializeWindow(_data);
+		InitializeWindow(data);
 
 		Time::Initialize();
 		Input::Initialize();
 		SceneManager::Initialize();
 		Camera::Initialize();
+	}
+
+	void Application::InitializeAtlasWindow(WindowData data)
+	{
+		mAtlasWindowData = data;
+		mAtlasWindowData.hdc = GetDC(data.hWnd);
 	}
 
 	void Application::Tick()
@@ -91,6 +54,68 @@ namespace js
 
 		SceneManager::DestroyGameObject();
 
+	}
+	void Application::SetMenuBar(bool power)
+	{
+		SetMenu(mWindowData.hWnd, mMenu);
+
+		RECT rect = { 0,0,mWindowData.width, mWindowData.height };
+		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, power);
+
+		SetWindowPos(mWindowData.hWnd, nullptr, 0, 0
+			, rect.right - rect.left, rect.bottom - rect.top, 0);
+
+		ShowWindow(mWindowData.hWnd, true);
+
+	}
+
+
+
+	Application::Application()
+	{
+		mWindowData.clear();
+	}
+
+	Application::~Application()
+	{
+		Resources::Release();
+		SceneManager::Release();
+		ReleaseDC(mWindowData.hWnd, mWindowData.hdc);
+		ReleaseDC(mWindowData.hWnd, mWindowData.backBuffer);
+	}
+
+	void Application::InitializeWindow(WindowData data)
+	{
+		mWindowData = data;
+		mWindowData.hdc = GetDC(data.hWnd);
+
+
+		RECT rect = { 0,0,mWindowData.width, mWindowData.height };
+		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
+		SetWindowPos(mWindowData.hWnd, nullptr, 0, 0
+			, rect.right - rect.left, rect.bottom - rect.top, 0);
+		ShowWindow(mWindowData.hWnd, true);
+
+
+		mWindowData.backTexture
+			= CreateCompatibleBitmap(mWindowData.hdc, mWindowData.width, mWindowData.height);
+		mWindowData.backBuffer
+			= CreateCompatibleDC(mWindowData.hdc);
+		HBITMAP defaultBitMap
+			= (HBITMAP)SelectObject(mWindowData.backBuffer, mWindowData.backTexture);
+		DeleteObject(defaultBitMap);
+
+
+		mPens[(UINT)ePenColor::Red] = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
+		mPens[(UINT)ePenColor::Green] = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
+		mPens[(UINT)ePenColor::Blue] = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
+
+		mBrushs[(UINT)eBrushColor::Transparent] = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
+		mBrushs[(UINT)eBrushColor::Black] = (HBRUSH)GetStockObject(BLACK_BRUSH);
+		mBrushs[(UINT)eBrushColor::Gray] = (HBRUSH)GetStockObject(GRAY_BRUSH);
+		mBrushs[(UINT)eBrushColor::White] = (HBRUSH)GetStockObject(WHITE_BRUSH);
+
+		mMenu = LoadMenu(nullptr, MAKEINTRESOURCEW(IDC_WINDOWSAPI));
 	}
 }
 

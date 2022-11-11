@@ -1,6 +1,7 @@
 #include "jsScene.h"
 #include "jsGameObject.h"
 #include "jsSceneManager.h"
+#include "jsCollisionManager.h"
 
 namespace js
 {
@@ -31,8 +32,12 @@ namespace js
 		{
 			for (size_t x = 0; x < mObjects[y].size(); ++x)
 			{
-				if (mObjects[y][x] != nullptr)
-					mObjects[y][x]->Initialize();
+				if (mObjects[y][x] == nullptr)
+					continue;
+				if (mObjects[y][x]->IsDeath())
+					continue;
+				
+				mObjects[y][x]->Initialize();
 			}
 		}
 	}
@@ -67,10 +72,21 @@ namespace js
 		}
 	}
 
+	void Scene::Enter()
+	{
+	}
+
+	void Scene::Exit()
+	{
+		CollisionManager::Clear();
+	}
+
 	void Scene::AddGameObject(GameObject* obj, eColliderLayer type)
 	{
-		if (nullptr != obj)
-			mObjects[(UINT)type].push_back(obj);
+		if (nullptr == obj)
+			return;
+
+		mObjects[(UINT)type].push_back(obj);
 	}
 
 }

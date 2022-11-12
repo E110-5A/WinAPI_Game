@@ -33,7 +33,7 @@ namespace js
 			vec.y = y / value;
 			return vec;
 		}
-		Vector2 operator *(const float value)
+		Vector2 operator *=(const float value)
 		{
 			Vector2 vec;
 			vec.x = x * value;
@@ -42,10 +42,15 @@ namespace js
 		}
 		Vector2 operator *(const Vector2& other)
 		{
-			Vector2 vec;
-			vec.x = x * other.x;
-			vec.y = y * other.y;
-			return vec;
+			x *= other.x;
+			y *= other.y;
+			return *this;
+		}
+		Vector2 operator *(const float value)
+		{
+			x = x * value;
+			y = y * value;
+			return *this;
 		}
 		Vector2 operator +(const Vector2& other)
 		{

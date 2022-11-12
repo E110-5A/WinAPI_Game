@@ -68,6 +68,7 @@ namespace js
 					mKeys[idx].bPressed = false;
 				}
 			}
+			
 			// 마우스
 			POINT mousePos = {};
 			GetCursorPos(&mousePos);
@@ -94,5 +95,21 @@ namespace js
 	eKeyState Input::GetKeyState(eKeyCode _KeyCode)
 	{
 		return mKeys[(UINT)_KeyCode].state;
+	}
+	Vector2 Input::GetMousePos(HWND hWnd)
+	{
+		Pos vMousePos(-1.f,-1.f);
+		if (GetFocus())
+		{
+			// 마우스
+			POINT mousePos = {};
+			GetCursorPos(&mousePos);
+			ScreenToClient(hWnd, &mousePos);
+			vMousePos.x = mousePos.x;
+			vMousePos.y = mousePos.y;
+
+			return vMousePos;
+		}
+		return vMousePos;
 	}
 }

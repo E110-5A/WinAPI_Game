@@ -7,8 +7,8 @@
 namespace js
 {
 	Scene* SceneManager::mScene[(UINT)eSceneType::End] = {};
-	Scene* SceneManager::mCurScene = nullptr;
-	
+	Scene* SceneManager::mPlayScene = nullptr;
+	eSceneType SceneManager::mType = eSceneType::End;
 	void SceneManager::Initialize()
 	{
 		mScene[(UINT)eSceneType::Title] = new TitleScene;
@@ -17,17 +17,17 @@ namespace js
 		mScene[(UINT)eSceneType::Play]->Initialize();
 		mScene[(UINT)eSceneType::Tool] = new ToolScene;
 		mScene[(UINT)eSceneType::Tool]->Initialize();
-		ChangeScene(eSceneType::Tool);
+		ChangeScene(eSceneType::Play);
 	}
 
 	void SceneManager::Tick()
 	{
-		mCurScene->Tick();
+		mPlayScene->Tick();
 	}
 	
 	void SceneManager::Render(HDC _dc)
 	{
-		mCurScene->Render(_dc);
+		mPlayScene->Render(_dc);
 	}
 	void SceneManager::DestroyGameObject()
 	{
@@ -46,12 +46,13 @@ namespace js
 	}
 	void SceneManager::ChangeScene(eSceneType type)
 	{
-		if (nullptr == mCurScene)
+		if (nullptr == mPlayScene)
 			return;
-		
-		mCurScene->Exit();
-		mCurScene = mScene[(UINT)type];
+		mType = type;
 
-		mCurScene->Enter();
+		mPlayScene->Exit();
+		mPlayScene = mScene[(UINT)type];
+
+		mPlayScene->Enter();
 	}
 }

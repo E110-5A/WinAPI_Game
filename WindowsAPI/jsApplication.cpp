@@ -63,13 +63,18 @@ namespace js
 		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, power);
 
 		SetWindowPos(mWindowData.hWnd, nullptr, 0, 0
-			, rect.right - rect.left, rect.bottom - rect.top, 0);
+			, rect.right - rect.left, rect.bottom - rect.top
+			, SWP_NOMOVE | SWP_NOZORDER);
 
 		ShowWindow(mWindowData.hWnd, true);
-
 	}
 
 
+
+	eSceneType Application::GetPlaySceneType()
+	{
+		return SceneManager::GetPlaySceneType();
+	}
 
 	Application::Application()
 	{
@@ -93,7 +98,8 @@ namespace js
 		RECT rect = { 0,0,mWindowData.width, mWindowData.height };
 		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
 		SetWindowPos(mWindowData.hWnd, nullptr, 0, 0
-			, rect.right - rect.left, rect.bottom - rect.top, 0);
+			, rect.right - rect.left, rect.bottom - rect.top
+			, SWP_NOMOVE | SWP_NOZORDER);
 		ShowWindow(mWindowData.hWnd, true);
 
 

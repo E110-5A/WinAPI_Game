@@ -124,7 +124,7 @@ namespace js
 		/*if (KEY_DOWN(eKeyCode::Z))
 		{
 			Projectile* missile = new Projectile;
-			Scene* playScene = SceneManager::GetCurScene();
+			Scene* playScene = SceneManager::GetPlayScene();
 			playScene->AddGameObject(missile, eColliderLayer::Player_Projectile);
 
 

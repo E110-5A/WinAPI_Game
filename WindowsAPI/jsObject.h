@@ -21,7 +21,7 @@ namespace js
 		static __forceinline T* Instantiate(eColliderLayer type, Pos pos)
 		{
 			T* gameObject = new T(pos);
-			Scene* scene = SceneManager::GetCurScene();
+			Scene* scene = SceneManager::GetPlayScene();
 			scene->AddGameObject(dynamic_cast<GameObject*>(gameObject), type);
 
 			return gameObject;
@@ -39,7 +39,7 @@ namespace js
 
 		static __forceinline void Release()
 		{
-			Scene* scene = SceneManager::GetCurScene();
+			Scene* scene = SceneManager::GetPlayScene();
 			GameObjects objects = scene->GetGameObjects();
 			
 			for (size_t y = 0; y < _COLLIDER_LAYER; y++)

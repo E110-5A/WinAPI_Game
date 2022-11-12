@@ -30,8 +30,6 @@ namespace js
 		AddGameObject(g, eColliderLayer::Tile);
 
 		GameObject* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 380.f));		
-		Camera::SetTarget(pPlayer);
-
 		//mObj[0] = object::Instantiate<Monster>(eColliderLayer::Monster, Pos(740.f, 360.f));
 
 
@@ -62,6 +60,13 @@ namespace js
 	void PlayScene::Enter()
 	{
 		Camera::SetCameraEffect(eCameraEffect::FadeIn);
+		Scene* scene = SceneManager::GetPlayScene();
+		std::vector<GameObject*> pPlayer = scene->GetGameObjects(eColliderLayer::Player);
+		// 일단 플레이어 오브젝트 풀을 가져옴 여기서 플레이어를 짚어서 넘겨야함
+
+
+		Camera::SetTarget(pPlayer.at(0));
+
 	}
 	void PlayScene::Exit()
 	{

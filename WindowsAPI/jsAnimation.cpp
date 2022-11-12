@@ -36,6 +36,7 @@ namespace js
 		// 오너 정보를 가져와서 렌더링 좌표 챙기기
 		GameObject* gameObj = mAnimator->GetOwner();
 		Pos pos = gameObj->GetPos();
+		Size scale = gameObj->GetScale();
 
 		if (mAffectedCamera)
 			pos = Camera::CalculatePos(pos);
@@ -51,8 +52,8 @@ namespace js
 		AlphaBlend(hdc,
 			int(pos.x - mSpriteSheet[mSpriteIndex].size.x / 2.f), 
 			int(pos.y - mSpriteSheet[mSpriteIndex].size.y / 2.f),
-			int(mSpriteSheet[mSpriteIndex].size.x),
-			int(mSpriteSheet[mSpriteIndex].size.y),
+			int(mSpriteSheet[mSpriteIndex].size.x * scale.x),
+			int(mSpriteSheet[mSpriteIndex].size.y * scale.y),
 			mImage->GetDC(), 
 			int(mSpriteSheet[mSpriteIndex].leftTop.x),
 			int(mSpriteSheet[mSpriteIndex].leftTop.y),

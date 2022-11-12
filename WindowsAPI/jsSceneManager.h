@@ -14,13 +14,15 @@ namespace js
 		static void Release();
 
 		static void ChangeScene(eSceneType type);
-		static Scene* GetCurScene() { return mCurScene; }
-		static void SetCurScene(Scene* curScene) { mCurScene = curScene; }
+		static Scene* GetPlayScene() { return mPlayScene; }
+		static eSceneType GetPlaySceneType() { return mType; }
+		static void SetPlayScene(Scene* playScene) { mPlayScene = playScene; }
 
 
 	private:
 		static Scene* mScene[(UINT)eSceneType::End];
-		static Scene* mCurScene;
+		static Scene* mPlayScene;
+		static eSceneType mType;
 	};
 
 

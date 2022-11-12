@@ -12,21 +12,20 @@ namespace js
 			return m_Instance;
 		}
 
-		WindowData GetWindowData() { return mWindowData; }
-		WindowData GetAtlasWindowData() { return mAtlasWindowData; }
-		HDC GetHdc() { return mWindowData.hdc; }
-
 
 		void Initialize(WindowData data);
 		void InitializeAtlasWindow(WindowData data);
-
 		void Tick();
 
 		void SetMenuBar(bool power);
 
+		WindowData GetWindowData() { return mWindowData; }
+		WindowData GetAtlasWindowData() { return mAtlasWindowData; }
+		HDC GetHdc() { return mWindowData.hdc; }
+
 		HPEN GetPen(ePenColor color) { return mPens[(UINT)color]; }
 		HBRUSH GetBrush(eBrushColor color) { return mBrushs[(UINT)color]; }
-
+		eSceneType GetPlaySceneType();
 	private:
 		Application();
 		~Application();

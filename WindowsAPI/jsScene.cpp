@@ -9,7 +9,7 @@ namespace js
 	Scene::Scene()
 	{
 		// 초기화용
-		SceneManager::SetCurScene(this);
+		SceneManager::SetPlayScene(this);
 		mObjects.resize(_COLLIDER_LAYER);
 	}
 

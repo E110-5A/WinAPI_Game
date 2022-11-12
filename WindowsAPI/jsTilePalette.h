@@ -13,7 +13,7 @@ namespace js
 		void Tick();
 		void Render(HDC hdc);
 
-		// void CreateTile();
+		void CreateTile(UINT index, Pos pos);
 		// void CreateTiles();
 
 		// void Save();
@@ -22,6 +22,7 @@ namespace js
 		Image* GetImage() { return mAtlas; }
 
 	private:
-		Image* mAtlas;
+		Image*								mAtlas;
+		std::unordered_map<UINT64, Tile*>	mTiles;
 	};
 }

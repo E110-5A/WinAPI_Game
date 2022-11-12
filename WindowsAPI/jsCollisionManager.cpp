@@ -11,7 +11,7 @@ namespace js
 
 	void CollisionManager::Tick()
 	{
-		Scene* playScene = SceneManager::GetCurScene();
+		Scene* playScene = SceneManager::GetPlayScene();
 
 		for (size_t row = 0; row < _COLLIDER_LAYER; row++)
 		{

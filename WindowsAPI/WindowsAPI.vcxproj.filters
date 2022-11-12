@@ -196,9 +196,6 @@
     <ClCompile Include="jsScene.cpp">
       <Filter>1 Engine\Scene\Base</Filter>
     </ClCompile>
-    <ClCompile Include="jsSceneManager.cpp">
-      <Filter>1 Engine\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="jsGameObject.cpp">
       <Filter>1 Engine\GameObject\Base</Filter>
     </ClCompile>
@@ -273,6 +270,9 @@
     </ClCompile>
     <ClCompile Include="jsProjectile.cpp">
       <Filter>1 Engine\GameObject\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="jsSceneManager.cpp">
+      <Filter>1 Engine\Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

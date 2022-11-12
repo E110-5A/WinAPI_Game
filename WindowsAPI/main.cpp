@@ -22,14 +22,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
-    UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_WINDOWSAPI, szWindowClass, MAX_LOADSTRING);
 
     // 메모리 누수 확인
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
     //_CrtSetBreakAlloc(532);
 
     // wndclass 정의 (초기 세팅설정)
@@ -116,11 +113,19 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   SetWindowPos(hWnd, nullptr, -7, 0, windowData.width, windowData.height, 0);
+   SetWindowPos(hWnd, nullptr, 0, 0, windowData.width, windowData.height, 0);
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
    js::Application::GetInstance().Initialize(windowData);
+
+
+
+   eSceneType type = js::Application::GetInstance().GetPlaySceneType();
+   if (type != eSceneType::Tool)
+       return TRUE;
+
+
 
 
    WindowData atlasWindowData;
@@ -143,7 +148,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 #include "jsTilePalette.h"
 #include "jsTile.h"
 #include "jsImage.h"
-
+#include "jsInput.h"
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -189,74 +194,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 
 
-
-LRESULT CALLBACK AtlasWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    switch (message)
-    {
-    case WM_CREATE:
-    {
-        WindowData windowData = js::Application::GetInstance().GetWindowData();
-        WindowData atlasWindowData = js::Application::GetInstance().GetAtlasWindowData();
-
-
-        js::Scene* Scene = js::SceneManager::GetCurScene();
-        js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(Scene);
-        js::Image* atlas = toolScene->GetAtlasImage();
-
-
-        RECT rect = { 0,0,atlas->GetWidth(), atlas->GetHeight() };
-        SetWindowPos(hWnd, nullptr, 
-            windowData.width, 0, atlas->GetWidth(), atlas->GetHeight(), 0);
-        ShowWindow(hWnd, true);
-        UpdateWindow(hWnd);
-    }
-    case WM_COMMAND:
-    {
-        int wmId = LOWORD(wParam);
-        // 메뉴 선택을 구문 분석합니다:
-        switch (wmId)
-        {
-        case IDM_ABOUT:
-            DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-            break;
-        case IDM_EXIT:
-            DestroyWindow(hWnd);
-            break;
-        default:
-            return DefWindowProc(hWnd, message, wParam, lParam);
-        }
-    }
-    break;
-    case WM_PAINT:
-    {
-        PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hWnd, &ps);
-
-        WindowData atlasWindowData = js::Application::GetInstance().GetAtlasWindowData();
-        js::Scene* Scene = js::SceneManager::GetCurScene();
-        js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(Scene);
-        js::Image* atlas = toolScene->GetAtlasImage();
-
-        js::Pos pos(js::Vector2::Zero);
-
-        TransparentBlt(hdc, pos.x, pos.y, atlas->GetWidth(), atlas->GetHeight(),
-            atlas->GetDC(), 0, 0, atlas->GetWidth(), atlas->GetHeight(),
-            RGB(255, 0, 255));
-
-
-        // stockObject를 사용하기 때문에 소멸시킬 대상이 없음
-        EndPaint(hWnd, &ps);
-    }
-    break;
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        break;
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
-    }
-    return 0;
-}
 
 // 정보 대화 상자의 메시지 처리기입니다.
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)

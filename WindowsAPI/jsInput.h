@@ -50,6 +50,7 @@ namespace js
 
 		static eKeyState GetKeyState(eKeyCode _KeyCode);
 		static Vector2 GetMousePos() { return mMousePos; }
+		static Vector2 GetMousePos(HWND hWnd);
 
 	private:
 		static std::vector<Input::Key> mKeys;

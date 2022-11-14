@@ -19,7 +19,7 @@ namespace js
 	{
 		// 내 초기값 세팅
 		SetPos(Pos(100.f, 300.f));
-		SetScale(Size(3.f, 3.f));
+		SetScale(Size(1.f, 1.f));
 
 		Init();
 	}
@@ -29,7 +29,7 @@ namespace js
 		, mDir(Vector2::Right)
 	{
 		SetPos(pos);
-		SetScale(Size(3.f, 3.f));
+		SetScale(Size(1.f, 1.f));
 
 		Init();		
 	}
@@ -73,11 +73,27 @@ namespace js
 		mAnimator->CreateAnimation(L"WalkL", mImage, Pos(0.f, 105.f), Size(18.0f, 33.f)
 			, Vector2(-10.f, 0.f), 8, 0.1f);
 
+		mAnimator->CreateAnimation(L"JumpR", mImage, Pos(0.f, 504.f), Size(18.0f, 33.f)
+			, Vector2(-10.f, 0.f), 1, 0.1f);
+		mAnimator->CreateAnimation(L"JumpL", mImage, Pos(0.f, 537.f), Size(18.0f, 33.f)
+			, Vector2(-10.f, 0.f), 1, 0.1f);
+
+		mAnimator->CreateAnimation(L"Climb", mImage, Pos(0.f, 570.f), Size(18.0f, 36.f)
+			, Vector2(-10.f, 0.f), 2, 0.1f);
+
+		mAnimator->CreateAnimation(L"DeathR", mImage, Pos(0.f, 606.f), Size(54.0f, 27.f)
+			, Vector2(-20.f, 5.f), 5, 0.1f);
+		mAnimator->CreateAnimation(L"DeathL", mImage, Pos(0.f, 633.f), Size(54.0f, 27.f)
+			, Vector2(20.f, 5.f), 5, 0.1f);
+
+
+
+
 
 		mAnimator->CreateAnimation(L"DubleTabR", mImage, Pos(0.f, 138.f), Size(60.f, 36.f)
-			, Vector2(2.f, 0.f), 5, 0.1f);
+			, Vector2(2.f, 0.f), 5, 0.08f);
 		mAnimator->CreateAnimation(L"DubleTabL", mImage, Pos(0.f, 174.f), Size(60.f, 36.f)
-			, Vector2(-25.f, 0.f), 5, 0.1f);
+			, Vector2(-25.f, 0.f), 5, 0.08f);
 
 		mAnimator->CreateAnimation(L"FMJR", mImage, Pos(0.f, 210.f), Size(96.0f, 33.f)
 			, Vector2(23.f, 0.f), 5, 0.1f);
@@ -89,7 +105,28 @@ namespace js
 		mAnimator->CreateAnimation(L"DiveL", mImage, Pos(0.f, 312.f), Size(36.f, 36.f)
 			, Vector2(-8.f, 0.f), 9, 0.1f);
 
+		mAnimator->CreateAnimation(L"SuppressiveFireR", mImage, Pos(0.f, 348.f), Size(114.f, 39.f)
+			, Vector2(0.f, 0.f), 15, 0.08f);
+		mAnimator->CreateAnimation(L"SuppressiveFireL", mImage, Pos(0.f, 387.f), Size(114.f, 39.f)
+			, Vector2(0.f, 0.f), 15, 0.08f);
+		mAnimator->CreateAnimation(L"SuppressiveFireBothR", mImage, Pos(0.f, 426.f), Size(114.f, 39.f)
+			, Vector2(0.f, 0.f), 15, 0.08f);
+		mAnimator->CreateAnimation(L"SuppressiveFireBothL", mImage, Pos(0.f, 465.f), Size(114.f, 39.f)
+			, Vector2(0.f, 0.f), 15, 0.08f);
 
+		mAnimator->GetCompleteEvents(L"DubleTabR") = std::bind(&Player::ReturnIdle, this);
+		mAnimator->GetCompleteEvents(L"DubleTabL") = std::bind(&Player::ReturnIdle, this);
+
+		mAnimator->GetCompleteEvents(L"DiveR") = std::bind(&Player::ReturnIdle, this);
+		mAnimator->GetCompleteEvents(L"DiveL") = std::bind(&Player::ReturnIdle, this);
+
+		mAnimator->GetCompleteEvents(L"FMJR") = std::bind(&Player::ReturnIdle, this);
+		mAnimator->GetCompleteEvents(L"FMJL") = std::bind(&Player::ReturnIdle, this);
+
+		mAnimator->GetCompleteEvents(L"SuppressiveFireR") = std::bind(&Player::ReturnIdle, this);
+		mAnimator->GetCompleteEvents(L"SuppressiveFireL") = std::bind(&Player::ReturnIdle, this);
+		mAnimator->GetCompleteEvents(L"SuppressiveFireBothR") = std::bind(&Player::ReturnIdle, this);
+		mAnimator->GetCompleteEvents(L"SuppressiveFireBothL") = std::bind(&Player::ReturnIdle, this);
 
 	}
 
@@ -134,7 +171,6 @@ namespace js
 			missile->SetPos(missilePos);
 		}*/
 
-		//mAnimator->mCompleteEvent = std::bind(&Player::ActionComplete, this);
 		SetPos(pos);
 	}
 	void Player::Render(HDC hdc)
@@ -164,26 +200,78 @@ namespace js
 		if (KEY_DOWN(eKeyCode::X))
 		{
 			if (mDir == Vector2::Right)
-				mAnimator->Play(L"FMJR", false);
+				mAnimator->Play(L"FMJR");
 			else
-				mAnimator->Play(L"FMJL", false);
+				mAnimator->Play(L"FMJL");
 		}
 		if (KEY_DOWN(eKeyCode::C))
 		{
 			if (mDir == Vector2::Right)
-				mAnimator->Play(L"DiveR", false);
+				mAnimator->Play(L"DiveR");
 			else
-				mAnimator->Play(L"DiveL", false);
+				mAnimator->Play(L"DiveL");
 		}
-
+		if (KEY_DOWN(eKeyCode::V))
+		{
+			if (mDir == Vector2::Right)
+				mAnimator->Play(L"SuppressiveFireR");
+			else
+				mAnimator->Play(L"SuppressiveFireL");
+		}
+		if (KEY_DOWN(eKeyCode::D))
+		{
+			if (mDir == Vector2::Right)
+				mAnimator->Play(L"DeathR", false);
+			else
+				mAnimator->Play(L"DeathL", false);
+		}
 		if (KEY_UP(eKeyCode::RIGHT))
 		{
-			mAnimator->Play(L"IdleR", true);
+			mAnimator->Play(L"IdleR");
 		}
 		if (KEY_UP(eKeyCode::LEFT))
 		{
-			mAnimator->Play(L"IdleL", true);
+			mAnimator->Play(L"IdleL");
 		}
+		if (KEY_DOWN(eKeyCode::UP))
+		{
+			mAnimator->Play(L"Climb");
+		}
+		if (KEY_DOWN(eKeyCode::DOWN))
+		{
+			mAnimator->Play(L"Climb");
+		}
+		if (KEY_DOWN(eKeyCode::SPACE))
+		{
+			if (mDir == Vector2::Right)
+				mAnimator->Play(L"JumpR");
+			else
+				mAnimator->Play(L"JumpL");
+		}
+
+		if (KEY_UP(eKeyCode::SPACE))
+		{
+			if (mDir == Vector2::Right)
+				mAnimator->Play(L"IdleR");
+			else
+				mAnimator->Play(L"IdleL");
+		}
+
+		if (KEY_UP(eKeyCode::UP))
+		{
+			if (mDir == Vector2::Right)
+				mAnimator->Play(L"IdleR");
+			else
+				mAnimator->Play(L"IdleL");
+		}
+		if (KEY_UP(eKeyCode::DOWN))
+		{
+			if (mDir == Vector2::Right)
+				mAnimator->Play(L"IdleR");
+			else
+				mAnimator->Play(L"IdleL");
+		}
+
 	}
 
 
@@ -203,8 +291,11 @@ namespace js
 	{
 		// 걸을때 이팩트를 추가 하던가 말던가
 	}
-	void Player::ActionComplete()
+	void Player::ReturnIdle()
 	{
-		mAnimator->Play(L"IdleR", true);
+		if (mDir == Vector2::Right)
+			mAnimator->Play(L"IdleR");
+		else
+			mAnimator->Play(L"IdleL");
 	}
 }

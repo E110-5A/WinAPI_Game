@@ -39,7 +39,8 @@ namespace js
 		virtual void OnCollisionExit(Collider* other)override;
 
 		void WalkComplete();
-		void ActionComplete();
+		void ReturnIdle();
+
 
 	private:
 		float mSpeed;

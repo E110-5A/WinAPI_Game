@@ -17,6 +17,7 @@ namespace js
 		static Scene* GetPlayScene() { return mPlayScene; }
 		static eSceneType GetPlaySceneType() { return mType; }
 		static void SetPlayScene(Scene* playScene) { mPlayScene = playScene; }
+		static Scene* GetScene(eSceneType type) { return mScene[(UINT)type]; }
 
 
 	private:

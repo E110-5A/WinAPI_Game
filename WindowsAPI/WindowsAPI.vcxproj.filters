@@ -169,6 +169,10 @@
     <ClInclude Include="jsProjectile.h">
       <Filter>1 Engine\GameObject\Game</Filter>
     </ClInclude>
+    <ClInclude Include="jsRigidbody.h">
+      <Filter>1 Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="jsTestScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -274,5 +278,9 @@
     <ClCompile Include="jsSceneManager.cpp">
       <Filter>1 Engine\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="jsRigidbody.cpp">
+      <Filter>1 Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="jsTestScene.cpp" />
   </ItemGroup>
 </Project>

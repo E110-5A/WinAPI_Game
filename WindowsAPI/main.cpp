@@ -13,7 +13,8 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름�
 // 전방선언
 ATOM                MyRegisterClass(HINSTANCE hInstance, WNDPROC wndProc, LPCWSTR wndName);
 BOOL                InitInstance(HINSTANCE, int);
-LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM); 
+LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
+LRESULT CALLBACK    ToolWndProc(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK    AtlasWndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
@@ -105,6 +106,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
+
    windowData.hWnd = hWnd;
    windowData.hdc = nullptr;
 
@@ -119,8 +121,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    js::Application::GetInstance().Initialize(windowData);
 
-
-
    eSceneType type = js::Application::GetInstance().GetPlaySceneType();
    if (type != eSceneType::Tool)
        return TRUE;
@@ -129,12 +129,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 
    WindowData atlasWindowData;
-
    hWnd = CreateWindowW(L"AtlasWindow", szTitle, WS_OVERLAPPEDWINDOW,
        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-
    atlasWindowData.hWnd = hWnd;
-
    js::Application::GetInstance().InitializeAtlasWindow(atlasWindowData);
 
    return TRUE;
@@ -164,6 +161,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // 메뉴 선택을 구문 분석합니다:
             switch (wmId)
             {
+            case ID_TILE_SAVE:
+            {
+                js::Scene* scene = js::SceneManager::GetPlayScene();
+                js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(scene);
+                toolScene->SaveTilePalette();
+            }
+            break;
+            case ID_TILE_LOAD:
+            {
+                js::Scene* scene = js::SceneManager::GetPlayScene();
+                js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(scene);
+                // 툴씬 오브젝트 싹 지우기
+                toolScene->LoadTilePalette();
+            }
+            break;
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;

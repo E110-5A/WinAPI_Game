@@ -16,8 +16,9 @@ namespace js
 		void CreateTile(UINT index, Pos pos);
 		// void CreateTiles();
 
-		// void Save();
-		// void Load();
+		void Save();
+		void Load();
+		void Load(const std::wstring& path);
 
 		Image* GetImage() { return mAtlas; }
 

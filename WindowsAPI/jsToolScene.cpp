@@ -46,7 +46,6 @@ namespace js
 		HPEN greenPen = CreatePen(PS_SOLID, 2, RGB(0, 125, 0));
 		HPEN prevPen = (HPEN)SelectObject(hdc, greenPen);
 
-
 		int maxRow = mainWindow.height / TILE_SIZE + 1;
 		for (int idx = 0; idx < maxRow; idx++)
 		{
@@ -74,6 +73,18 @@ namespace js
 	{
 		Application::GetInstance().SetMenuBar(false);
 	}
+    void ToolScene::SaveTilePalette()
+    {
+        mTilePalette->Save();
+    }
+    void ToolScene::LoadTilePalette()
+    {
+        mTilePalette->Load();
+    }
+    void ToolScene::LoadTilePalette(const std::wstring& path)
+    {
+        mTilePalette->Load(path);
+    }
 }
 
 
@@ -110,6 +121,11 @@ LRESULT CALLBACK AtlasWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
         // 메뉴 선택을 구문 분석합니다:
         switch (wmId)
         {
+        case IDM_ABOUT:
+        {
+            int a = 0;
+        }
+        break;
         default:
             return DefWindowProc(hWnd, message, wParam, lParam);
         }

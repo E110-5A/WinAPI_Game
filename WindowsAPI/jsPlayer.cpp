@@ -18,7 +18,7 @@ namespace js
 		, mDir(Vector2::Right)
 	{
 		// 내 초기값 세팅
-		SetPos(Pos(100.f, 300.f));
+		SetPos(Pos(400.f, 1000.f));
 		SetScale(Size(1.f, 1.f));
 
 		Init();
@@ -82,9 +82,9 @@ namespace js
 			, Vector2(-10.f, 0.f), 2, 0.1f);
 
 		mAnimator->CreateAnimation(L"DeathR", mImage, Pos(0.f, 606.f), Size(54.0f, 27.f)
-			, Vector2(-20.f, 5.f), 5, 0.1f);
+			, Vector2(-25.f, 5.f), 5, 0.1f);
 		mAnimator->CreateAnimation(L"DeathL", mImage, Pos(0.f, 633.f), Size(54.0f, 27.f)
-			, Vector2(20.f, 5.f), 5, 0.1f);
+			, Vector2(25.f, 5.f), 5, 0.1f);
 
 
 

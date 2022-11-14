@@ -2,6 +2,7 @@
 #include "jsTitleScene.h"
 #include "jsPlayScene.h"
 #include "jsToolScene.h"
+#include "jsTestScene.h"
 #include "jsObject.h"
 
 namespace js
@@ -11,13 +12,15 @@ namespace js
 	eSceneType SceneManager::mType = eSceneType::End;
 	void SceneManager::Initialize()
 	{
-		mScene[(UINT)eSceneType::Title] = new TitleScene;
-		mScene[(UINT)eSceneType::Title]->Initialize();
-		mScene[(UINT)eSceneType::Play] = new PlayScene;
-		mScene[(UINT)eSceneType::Play]->Initialize();
-		mScene[(UINT)eSceneType::Tool] = new ToolScene;
+		mScene[(UINT)eSceneType::Tool] = new ToolScene();
 		mScene[(UINT)eSceneType::Tool]->Initialize();
-		ChangeScene(eSceneType::Play);
+		mScene[(UINT)eSceneType::Test] = new TestScene();
+		mScene[(UINT)eSceneType::Test]->Initialize();
+		mScene[(UINT)eSceneType::Title] = new TitleScene();
+		mScene[(UINT)eSceneType::Title]->Initialize();
+		mScene[(UINT)eSceneType::Play] = new PlayScene();
+		mScene[(UINT)eSceneType::Play]->Initialize();
+		ChangeScene(eSceneType::Test);
 	}
 
 	void SceneManager::Tick()

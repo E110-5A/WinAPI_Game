@@ -56,6 +56,9 @@ namespace js
 		void Play(const std::wstring& name, bool bLoop = true);
 
 
+		std::wstring CreateAniamtionKey(std::wstring path);
+
+
 	public:
 		// 키값을 통해 map Event에 저장된 이벤트를 불러옴
 		Events* FindEvents(const std::wstring& key);

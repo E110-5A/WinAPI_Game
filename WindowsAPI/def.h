@@ -7,9 +7,10 @@
 
 enum class eSceneType
 {
+	Tool,
+	Test,
 	Title,
 	Play,
-	Tool,
 	End,
 };
 
@@ -31,8 +32,9 @@ enum class eBrushColor
 
 enum class eComponentType
 {
-	Animator,
+	Rigidbody,
 	Collider,
+	Animator,
 	Sound,
 	End,
 };

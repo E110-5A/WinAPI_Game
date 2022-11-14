@@ -91,9 +91,14 @@ namespace js
 		for (auto& p : std::filesystem::recursive_directory_iterator(path))
 		{
 			std::wstring fileName = p.path().filename();
+			
+
+			std::wstring keyString = CreateAniamtionKey(path);
+			
+
 			std::wstring fullName = path + L"\\" + fileName;
 
-			Image* image = Resources::Load<Image>(fileName, fullName);
+			Image* image = Resources::Load<Image>(keyString, fullName);
 			images.push_back(image);
 
 			if (width < image->GetWidth())
@@ -131,6 +136,26 @@ namespace js
 				events->mEndEvent();
 		}
 	}
+
+	std::wstring Animator::CreateAniamtionKey(std::wstring path)
+	{
+		std::wstring keyString = path;
+		// 애니메이션 폴더 이름 추출
+		auto pos = keyString.find_last_of(L"\\");
+		std::wstring tail = keyString.substr(pos + 1, keyString.length());
+		keyString = keyString.substr(0, pos);
+
+		// 애니메이션 오브젝트 이름 추출
+		pos = keyString.find_last_of(L"\\");
+		std::wstring head = keyString.substr(pos + 1, keyString.length());
+		keyString = head + tail;
+
+		return keyString;
+	}
+
+
+
+
 
 	Animator::Events* Animator::FindEvents(const std::wstring& key)
 	{

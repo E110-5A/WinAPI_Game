@@ -12,7 +12,7 @@ namespace js
 		static __forceinline T* Instantiate(eColliderLayer type)
 		{
 			T* gameObject = new T();
-			Scene* scene = SceneManager::GetCurScene();
+			Scene* scene = SceneManager::GetPlayScene();
 			scene->AddGameObject(dynamic_cast<GameObject*>(gameObject), type);
 
 			return gameObject;

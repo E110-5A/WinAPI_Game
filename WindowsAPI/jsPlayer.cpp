@@ -6,9 +6,12 @@
 #include "jsScene.h"
 #include "jsImage.h"
 #include "jsResources.h"
+#include "jsCamera.h"
+
+
 #include "jsAnimator.h"
 #include "jsCollider.h"
-#include "jsCamera.h"
+#include "jsRigidbody.h"
 
 namespace js
 {
@@ -39,23 +42,23 @@ namespace js
 
 	void Player::Init()
 	{
+		// 이미지 리소스 로딩
 		if (nullptr == mImage)
 		{
 			mImage = Resources::Load<Image>
 				(L"Player", L"..\\Resources\\Image\\Player\\player.bmp");
 		}
-
+		// 애니메이터 설정
+		InitAnim();
+		mAnimator->Play(L"IdleR");
 		// 콜라이더 설정
 		mCollider = new Collider;
 		mCollider->SetPos(GetPos());
 		mCollider->SetScale(Size(7.f, 12.f) * GetScale());
 		mCollider->SetOffset(Vector2(-10.f, 0.f));
 		AddComponent(mCollider);
-
-		// 애니메이터 설정
-		InitAnim();
-
-		mAnimator->Play(L"IdleR");
+		// 강체 설정
+		mRigidbody = AddComponent<Rigidbody>();
 	}
 
 	void Player::InitAnim()
@@ -133,30 +136,28 @@ namespace js
 	void Player::Tick()
 	{
 		GameObject::Tick();
-
-		Pos pos = GetPos();
-		
+	
 		// 애니메이션
 		PlayAnim();
 		
 		// 로직
-		if (KEY_PRESSE(eKeyCode::W))
+		if (KEY_PRESSE(eKeyCode::UP))
 		{
-			pos.y -= mSpeed * Time::GetDeltaTime();
+			GetComponent<Rigidbody>()->AddForce(Vector2(0.0f, -200.0f));
 		}
-		if (KEY_PRESSE(eKeyCode::S))
+		if (KEY_PRESSE(eKeyCode::DOWN))
 		{
-			pos.y += mSpeed * Time::GetDeltaTime();
+			GetComponent<Rigidbody>()->AddForce(Vector2(0.0f, 200.0f));
 		}
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			mDir = Vector2::Left;
-			pos.x -= mSpeed * Time::GetDeltaTime();
+			GetComponent<Rigidbody>()->AddForce(Vector2(-200.0f, 0.0f));
 		}		
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			mDir = Vector2::Right;
-			pos.x += mSpeed * Time::GetDeltaTime();
+			GetComponent<Rigidbody>()->AddForce(Vector2(200.0f, 0.0f));
 		}
 		/*if (KEY_DOWN(eKeyCode::Z))
 		{
@@ -170,8 +171,6 @@ namespace js
 			
 			missile->SetPos(missilePos);
 		}*/
-
-		SetPos(pos);
 	}
 	void Player::Render(HDC hdc)
 	{

@@ -5,8 +5,7 @@
 namespace js
 {
 	class Collider;
-	class GameObject :
-		public Entity
+	class GameObject : public Entity
 	{
 	public:
 		GameObject();
@@ -32,6 +31,15 @@ namespace js
 		void DeathLoop();
 
 		void AddComponent(Component* component);
+		template <typename T>
+		__forceinline T* AddComponent()
+		{
+			T* component = new T();
+			GameObject::AddComponent(component);
+			return component;
+		}
+		
+		
 		template <typename T>
 		__forceinline T* GetComponent()
 		{

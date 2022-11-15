@@ -172,7 +172,9 @@
     <ClInclude Include="jsRigidbody.h">
       <Filter>1 Engine\Component</Filter>
     </ClInclude>
-    <ClInclude Include="jsTestScene.h" />
+    <ClInclude Include="jsTestScene.h">
+      <Filter>1 Engine\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -281,6 +283,8 @@
     <ClCompile Include="jsRigidbody.cpp">
       <Filter>1 Engine\Component</Filter>
     </ClCompile>
-    <ClCompile Include="jsTestScene.cpp" />
+    <ClCompile Include="jsTestScene.cpp">
+      <Filter>1 Engine\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

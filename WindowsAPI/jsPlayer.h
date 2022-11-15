@@ -18,6 +18,7 @@ namespace js
 	class Image;
 	class Animator;
 	class Collider;
+	class Rigidbody;
 	class Player :
 		public GameObject
 	{
@@ -48,6 +49,7 @@ namespace js
 
 		Animator* mAnimator;
 		Collider* mCollider;
+		Rigidbody* mRigidbody;
 
 		Vector2 mDir;
 		PlayerStat mStat;

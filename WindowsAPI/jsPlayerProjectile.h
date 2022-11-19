@@ -3,19 +3,21 @@
 
 namespace js
 {
-	class Ground : public GameObject
+	class PlayerProjectile : public GameObject
 	{
 	public:
-		Ground();
-		~Ground();
+		PlayerProjectile();
+		~PlayerProjectile();
 
 		virtual void Tick() override;
-		virtual void Render(HDC hdc) override;
+		virtual void Render(HDC _hdc) override;
 
 		virtual void OnCollisionEnter(Collider* other)override;
 		virtual void OnCollisionStay(Collider* other)override;
 		virtual void OnCollisionExit(Collider* other)override;
 	private:
-
+		Vector2 mDir;
+		float mRange;
+		float mLifeTime;
 	};
 }

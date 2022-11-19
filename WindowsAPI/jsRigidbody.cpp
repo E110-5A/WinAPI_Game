@@ -10,7 +10,7 @@ namespace js
 		, mForce(Vector2::Zero)
 		, mVelocity(Vector2::Zero)
 		, mAccelation(Vector2::Zero)
-		, mFriction(100.0f)
+		, mFriction(120.0f)
 	{
 		mGravity = Vector2(0.0f, 800.0f);
 		mIsGround = true;
@@ -21,17 +21,41 @@ namespace js
 	}
 	void Rigidbody::Tick()
 	{
-		// F = M * A
-		
-		// A = F / M
+		// 기본 공식 (F = M * A)		
+		// 가속도 구하기 (A = F / M)
 		mAccelation = mForce / mMass;
 
 		// 속도 구하기
 		mVelocity += (mAccelation * Time::GetDeltaTime());
 
-
-
 		// 중력 적용
+		GravityAction();
+		// 마찰력 적용
+		FrictionAction();
+
+		// 이동시키기
+		Pos pos = GetOwner()->GetPos();
+		pos += mVelocity * Time::GetDeltaTime();
+		GetOwner()->SetPos(pos);
+		mForce.Clear();
+	}
+
+
+	void Rigidbody::Render(HDC hdc)
+	{
+		wchar_t szFloat[40] = {};
+		
+		Pos pos = GetOwner()->GetPos();
+		std::wstring postr = std::to_wstring(pos.x);
+		postr += L":" + std::to_wstring(pos.y);
+
+		swprintf_s(szFloat, 40, postr.c_str());
+		int strLen = wcsnlen_s(szFloat, 40);
+		TextOut(hdc, 10, 50, szFloat, strLen);
+	}
+
+	void Rigidbody::GravityAction()
+	{		
 		if (mIsGround)
 		{
 			Vector2 gravity = mGravity;
@@ -61,8 +85,10 @@ namespace js
 			sideVelocity *= mLimitVelocity.x;
 		}
 		mVelocity = gravity + sideVelocity;
+	}
 
-		// 마찰력
+	void Rigidbody::FrictionAction()
+	{
 		if (!(mVelocity == Vector2::Zero))
 		{
 			// 속도에 반대 방향
@@ -79,28 +105,5 @@ namespace js
 				mVelocity += friction;
 			}
 		}
-
-		// 이동시키기
-		Pos pos = GetOwner()->GetPos();
-		pos += mVelocity * Time::GetDeltaTime();
-		GetOwner()->SetPos(pos);
-		mForce.Clear();
-	}
-	void Rigidbody::Render(HDC hdc)
-	{
-		wchar_t szFloat[40] = {};
-		
-		Pos pos = GetOwner()->GetPos();
-		std::wstring postr = std::to_wstring(pos.x);
-		postr += L":" + std::to_wstring(pos.y);
-
-		swprintf_s(szFloat, 40, postr.c_str());
-		int strLen = wcsnlen_s(szFloat, 40);
-		TextOut(hdc, 10, 50, szFloat, strLen);
-	}
-
-	void Rigidbody::AddForce(Vector2 force)
-	{
-		mForce += force;
 	}
 }

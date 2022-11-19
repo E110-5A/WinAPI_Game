@@ -11,8 +11,15 @@ namespace js
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 
-		void AddForce(Vector2 force);
+		void AddForce(Vector2 force) { mForce += force; }
 		void SetMass(float mass) { mMass = mass; }
+		void SetGround(bool isGround) { mIsGround = isGround; }
+		Vector2 GetVelocity() { return mVelocity; }
+		void SetVelocity(Vector2 velocity) { mVelocity = velocity; }
+
+	private:
+		void GravityAction();
+		void FrictionAction();
 
 	private:
 		float	mMass;		// Áú·®

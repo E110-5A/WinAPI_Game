@@ -9,6 +9,8 @@
 #include <map>
 #include <set>
 #include <functional>
+#include <stack>
+#include <queue>
 
 #include "def.h"
 #include "jsMath.h"

@@ -8,6 +8,9 @@
 #include "jsObject.h"
 #include "jsApplication.h"
 #include "jsToolScene.h"
+#include "jsUIManager.h"
+#include "jsHUD.h"
+#include "jsButton.h"
 
 namespace js
 {
@@ -21,14 +24,18 @@ namespace js
 
 	void TestScene::Initialize()
 	{
+
+		//js::Scene* scene = js::SceneManager::GetScene(eSceneType::Tool);
+		//js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(scene);
+		//toolScene->LoadTilePalette(L"..\\Resources\\Tile\\testMap");
+
+
 		GameObject* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 380.f));
 
 		//mons[0] = object::Instantiate<Monster>(eColliderLayer::Monster);
 
-		js::Scene* scene = js::SceneManager::GetScene(eSceneType::Tool);
-		js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(scene);
-		toolScene->LoadTilePalette(L"..\\Resources\\Tile\\ttss");
-
+		UIManager::Push(eUIType::MP);
+		Button* btn = UIManager::GetUIInstant<Button>(eUIType::MP);
 	}
 
 	void TestScene::Tick()

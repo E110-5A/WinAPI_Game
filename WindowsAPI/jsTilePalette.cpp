@@ -11,7 +11,7 @@ namespace js
 {
 	TilePalette::TilePalette()
 	{
-		mAtlas = Resources::Load<Image>(L"TileAtlas", L"..\\Resources\\Image\\Tile\\AtlasTile.bmp");
+		mAtlas = Resources::Load<Image>(L"TileAtlas", L"..\\Resources\\Image\\Tile\\RoRTile.bmp");
 	}
 
 	TilePalette::~TilePalette()

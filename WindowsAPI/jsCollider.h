@@ -16,7 +16,6 @@ namespace js
 		virtual void OnCollisionStay(Collider* other);
 		virtual void OnCollisionExit(Collider* other);
 
-
 		void SetOffset(Vector2 offset) { mOffset = offset; }
 		void SetPos(Pos pos) { mPos = pos; }
 		void SetScale(Scale scale) { mScale = scale; }
@@ -24,7 +23,6 @@ namespace js
 		Vector2 GetOffset() { return mOffset; }
 		Pos GetPos() { return mPos; }
 		Scale GetScale() { return mScale; }
-
 
 	private:
 		Vector2 mOffset;

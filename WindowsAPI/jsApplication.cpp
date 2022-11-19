@@ -9,6 +9,7 @@
 #include "jsResources.h"
 #include "jsCollisionManager.h"
 #include "jsCamera.h"
+#include "jsUIManager.h"
 
 namespace js
 {
@@ -18,6 +19,7 @@ namespace js
 
 		Time::Initialize();
 		Input::Initialize();
+		UIManager::Initialize();
 		SceneManager::Initialize();
 		Camera::Initialize();
 	}
@@ -33,15 +35,17 @@ namespace js
 		Time::Tick();
 		Input::Tick();
 
-		Camera::Tick();
 		SceneManager::Tick();
 		CollisionManager::Tick();
-		
+		UIManager::Tick();
+		Camera::Tick();
+
 
 		Brush brush(mWindowData.backBuffer, mBrushs[(UINT)eBrushColor::Gray]);
 		Rectangle(mWindowData.backBuffer, -1, -1, mWindowData.width + 1, mWindowData.height + 1);
 		// 랜더링 전에 화면 초기화 진행
 		SceneManager::Render(mWindowData.backBuffer);
+		UIManager::Render(mWindowData.backBuffer);
 		Camera::Render(mWindowData.backBuffer);
 		
 		Input::Render(mWindowData.backBuffer);

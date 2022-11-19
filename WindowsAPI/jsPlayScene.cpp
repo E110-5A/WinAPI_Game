@@ -24,7 +24,7 @@ namespace js
 		bg->Initialize();
 		AddGameObject(bg, eColliderLayer::BackGround);
 
-		Ground* g = new Ground();
+		tempGround* g = new tempGround();
 		g->SetImage(L"PlayG", L"Play_Ground.bmp");
 		g->Initialize();
 		AddGameObject(g, eColliderLayer::Tile);

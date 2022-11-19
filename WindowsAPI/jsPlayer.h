@@ -42,6 +42,8 @@ namespace js
 		void WalkComplete();
 		void ReturnIdle();
 
+		void SetHp(int hp) { mHp = hp; }
+		int GetHp() { return mHp; }
 
 	private:
 		float mSpeed;
@@ -54,6 +56,7 @@ namespace js
 		Vector2 mDir;
 		PlayerStat mStat;
 
+		int mHp;
 	};
 }
 

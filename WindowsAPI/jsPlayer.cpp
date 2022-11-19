@@ -109,9 +109,9 @@ namespace js
 			, Vector2(-8.f, 0.f), 9, 0.1f);
 
 		mAnimator->CreateAnimation(L"SuppressiveFireR", mImage, Pos(0.f, 348.f), Size(114.f, 39.f)
-			, Vector2(0.f, 0.f), 15, 0.08f);
+			, Vector2(-10.f, 0.f), 15, 0.08f);
 		mAnimator->CreateAnimation(L"SuppressiveFireL", mImage, Pos(0.f, 387.f), Size(114.f, 39.f)
-			, Vector2(0.f, 0.f), 15, 0.08f);
+			, Vector2(10.f, 0.f), 15, 0.08f);
 		mAnimator->CreateAnimation(L"SuppressiveFireBothR", mImage, Pos(0.f, 426.f), Size(114.f, 39.f)
 			, Vector2(0.f, 0.f), 15, 0.08f);
 		mAnimator->CreateAnimation(L"SuppressiveFireBothL", mImage, Pos(0.f, 465.f), Size(114.f, 39.f)
@@ -159,6 +159,15 @@ namespace js
 			mDir = Vector2::Right;
 			GetComponent<Rigidbody>()->AddForce(Vector2(200.0f, 0.0f));
 		}
+
+		if (KEY_PRESSE(eKeyCode::SPACE))
+		{
+			Vector2 velocity = mRigidbody->GetVelocity();
+			velocity.y = -500.0f;
+			mRigidbody->SetVelocity(velocity);
+			mRigidbody->SetGround(false);
+
+		}
 		/*if (KEY_DOWN(eKeyCode::Z))
 		{
 			Projectile* missile = new Projectile;
@@ -169,7 +178,7 @@ namespace js
 			Pos startPos = GetScale() / 2.f;
 			Pos missilePos = (pos + startPos) - (missile->GetScale() / 2.f);
 			
-			missile->SetPos(missilePos);
+			missile->SetScreenPos(missilePos);
 		}*/
 	}
 	void Player::Render(HDC hdc)
@@ -279,7 +288,9 @@ namespace js
 
 	void Player::OnCollisionEnter(Collider* other)
 	{
+
 	}
+
 	void Player::OnCollisionStay(Collider* other)
 	{
 	}

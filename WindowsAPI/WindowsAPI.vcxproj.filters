@@ -59,6 +59,12 @@
     <Filter Include="1 Engine\GameObject\Game">
       <UniqueIdentifier>{603c99fe-b6af-4003-9837-528785e52388}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1 Engine\GameObject\UI">
+      <UniqueIdentifier>{56ec319f-d07a-49af-943b-da6aa96b4283}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\UI\Base">
+      <UniqueIdentifier>{abb1050b-2a42-4d67-8211-d48f7d231f5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -139,7 +145,7 @@
     <ClInclude Include="jsBGObj.h">
       <Filter>1 Engine\GameObject\BackGround</Filter>
     </ClInclude>
-    <ClInclude Include="jsGround.h">
+    <ClInclude Include="tempGround.h">
       <Filter>1 Engine\GameObject\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="jsObject.h">
@@ -174,6 +180,27 @@
     </ClInclude>
     <ClInclude Include="jsTestScene.h">
       <Filter>1 Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="jsUIBase.h">
+      <Filter>1 Engine\GameObject\UI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="jsUIManager.h">
+      <Filter>1 Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="jsPlayerProjectile.h">
+      <Filter>1 Engine\GameObject\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="jsGround.h">
+      <Filter>1 Engine\GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="jsButton.h">
+      <Filter>1 Engine\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="jsHUD.h">
+      <Filter>1 Engine\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="jsPanel.h">
+      <Filter>1 Engine\GameObject\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -250,7 +277,7 @@
     <ClCompile Include="jsBGObj.cpp">
       <Filter>1 Engine\GameObject\BackGround</Filter>
     </ClCompile>
-    <ClCompile Include="jsGround.cpp">
+    <ClCompile Include="tempGround.cpp">
       <Filter>1 Engine\GameObject\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="jsCamera.cpp">
@@ -285,6 +312,27 @@
     </ClCompile>
     <ClCompile Include="jsTestScene.cpp">
       <Filter>1 Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="jsUIBase.cpp">
+      <Filter>1 Engine\GameObject\UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="jsUIManager.cpp">
+      <Filter>1 Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="jsPlayerProjectile.cpp">
+      <Filter>1 Engine\GameObject\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="jsGround.cpp">
+      <Filter>1 Engine\GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="jsButton.cpp">
+      <Filter>1 Engine\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="jsHUD.cpp">
+      <Filter>1 Engine\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="jsPanel.cpp">
+      <Filter>1 Engine\GameObject\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

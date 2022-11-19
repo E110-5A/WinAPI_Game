@@ -51,9 +51,22 @@ enum class eColliderLayer
 	Monster,
 	Monster_Projectile,
 
-
+	Ground,
 	UI = _COLLIDER_LAYER - 1,
 	End = _COLLIDER_LAYER,
+};
+
+enum class eUIType
+{
+	HP,
+	MP,
+	SHOP,
+	INVENTORY,
+	OPTION,
+
+
+	END,
+	
 };
 
 enum class eCameraEffect
@@ -77,5 +90,5 @@ typedef ColliderID TileID;
 
 #define TILE_SIZE	32
 #define TILE_SCALE	2
-#define TILE_LINE_X 8
-#define TILE_LINE_Y 3
+#define TILE_LINE_X 12
+#define TILE_LINE_Y 6

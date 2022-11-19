@@ -1,50 +1,45 @@
 #include "jsGround.h"
-#include "jsResources.h"
-#include "jsImage.h"
-#include "jsCamera.h"
+#include "jsCollider.h"
+#include "jsRigidbody.h"
 
 namespace js
 {
 	Ground::Ground()
-		: mImage(nullptr)
 	{
-		SetPos(Vector2::Zero);
-		SetScale(Vector2::One);
+		Collider* collider = AddComponent<Collider>();
+		collider->SetScale(Size(600.0f, 50.0f));
 	}
 	Ground::~Ground()
 	{
 	}
-	void Ground::Initialize()
-	{
-
-	}
 	void Ground::Tick()
 	{
+		GameObject::Tick();
 	}
 	void Ground::Render(HDC hdc)
 	{
-		Pos pos = GetPos();
-		Size scale = GetScale();
-
-		Vector2 finalPos = pos;
-		Vector2 rect;
-		rect.x = mImage->GetWidth() * scale.x;
-		rect.y = mImage->GetHeight() * scale.y;
-
-		finalPos = Camera::CalculatePos(finalPos);
-		TransparentBlt(hdc,
-			finalPos.x, finalPos.y,
-			rect.x, rect.y,
-			mImage->GetDC(), 0, 0,
-			mImage->GetWidth(), mImage->GetHeight(), RGB(255, 0, 255));
-
 		GameObject::Render(hdc);
 	}
-	void Ground::SetImage(const std::wstring& key, const std::wstring& fileName)
+	void Ground::OnCollisionEnter(Collider* other)
 	{
-		std::wstring path = L"..\\Resources\\Image\\etc\\";
-		path += fileName;
+		GameObject* playerObj = other->GetOwner();
+		playerObj->GetComponent<Rigidbody>()->SetGround(true);
 
-		mImage = Resources::Load<Image>(key, path);
+		float fLen = fabs(other->GetPos().y - GetComponent<Collider>()->GetPos().y);
+		float fScale = other->GetScale().y / 2.0f + GetComponent<Collider>()->GetScale().y / 2.0f;
+		
+		if (fLen < fScale)
+		{
+			Vector2 playerPos = playerObj->GetPos();
+			playerPos.y -= (fScale - fLen) - 1.0f;
+			playerObj->SetPos(playerPos);
+		}
+
+	}
+	void Ground::OnCollisionStay(Collider* other)
+	{
+	}
+	void Ground::OnCollisionExit(Collider* other)
+	{
 	}
 }

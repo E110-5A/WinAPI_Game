@@ -11,12 +11,32 @@
 #include <functional>
 #include <stack>
 #include <queue>
+#include <assert.h>
 
 #include "def.h"
 #include "jsMath.h"
 
+// 렌더링 라이브러리
 #pragma comment(lib, "Msimg32.lib")
 
+#include <mmsystem.h>
+#include <dsound.h>
+#include <dinput.h>
+
+#pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "dsound.lib")
+
+
+struct Pixel
+{
+	BYTE R;
+	BYTE G;
+	BYTE B;
+	BYTE A;
+	Pixel(BYTE r, BYTE g, BYTE b, BYTE a)
+		: R(r), G(g), B(b), A(a)
+	{}
+};
 struct WindowData
 {
 	HWND	hWnd;

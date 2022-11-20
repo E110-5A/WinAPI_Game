@@ -148,6 +148,8 @@
     <ClInclude Include="jsGround.h" />
     <ClInclude Include="jsHUD.h" />
     <ClInclude Include="jsPanel.h" />
+    <ClInclude Include="jsSound.h" />
+    <ClInclude Include="jsSoundManager.h" />
     <ClInclude Include="jsUIBase.h" />
     <ClInclude Include="jsUIManager.h" />
     <ClInclude Include="tempGround.h" />
@@ -192,6 +194,8 @@
     <ClCompile Include="jsGround.cpp" />
     <ClCompile Include="jsHUD.cpp" />
     <ClCompile Include="jsPanel.cpp" />
+    <ClCompile Include="jsSound.cpp" />
+    <ClCompile Include="jsSoundManager.cpp" />
     <ClCompile Include="jsUIBase.cpp" />
     <ClCompile Include="jsUIManager.cpp" />
     <ClCompile Include="tempGround.cpp" />

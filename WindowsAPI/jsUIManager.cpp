@@ -108,6 +108,15 @@ namespace js
 		mCurrentData = nullptr;
 	}
 
+	void UIManager::Release()
+	{
+		for (auto ui : mUIs)
+		{
+			delete ui.second;
+			ui.second = nullptr;
+		}
+	}
+
 	void UIManager::Push(eUIType type)
 	{
 		mRequestUIQueue.push(type);

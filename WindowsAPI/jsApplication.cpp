@@ -10,7 +10,7 @@
 #include "jsCollisionManager.h"
 #include "jsCamera.h"
 #include "jsUIManager.h"
-
+#include "jsSoundManager.h"
 namespace js
 {
 	void Application::Initialize(WindowData data)
@@ -22,6 +22,7 @@ namespace js
 		UIManager::Initialize();
 		SceneManager::Initialize();
 		Camera::Initialize();
+		SoundManager::Initialize();
 	}
 
 	void Application::InitializeAtlasWindow(WindowData data)
@@ -87,8 +88,10 @@ namespace js
 
 	Application::~Application()
 	{
-		Resources::Release();
 		SceneManager::Release();
+		Resources::Release();
+		UIManager::Release();
+
 		ReleaseDC(mWindowData.hWnd, mWindowData.hdc);
 		ReleaseDC(mWindowData.hWnd, mWindowData.backBuffer);
 	}

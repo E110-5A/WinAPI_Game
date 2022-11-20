@@ -202,6 +202,12 @@
     <ClInclude Include="jsPanel.h">
       <Filter>1 Engine\GameObject\UI</Filter>
     </ClInclude>
+    <ClInclude Include="jsSound.h">
+      <Filter>1 Engine\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="jsSoundManager.h">
+      <Filter>1 Engine\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -333,6 +339,12 @@
     </ClCompile>
     <ClCompile Include="jsPanel.cpp">
       <Filter>1 Engine\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="jsSound.cpp">
+      <Filter>1 Engine\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="jsSoundManager.cpp">
+      <Filter>1 Engine\Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

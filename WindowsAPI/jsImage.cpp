@@ -82,4 +82,23 @@ namespace js
 
 		return S_OK;
 	}
+	Pixel Image::GetPixel(int x, int y)
+	{
+		y = mHeight - (y + 1);
+
+		Pixel* pixel = (Pixel*)mBitmap;
+		pixel += (mWidth * y + x);
+
+		
+		return *pixel;
+	}
+	void Image::SetPixel(int x, int y, Pixel pixel)
+	{
+		// 좌하단이 0,0 // 활용하려면 y를 반대로 적용해야함
+		y = mHeight - (y + 1);
+
+		Pixel* bitmapPixel = (Pixel*)mBitmap;
+		bitmapPixel += (mWidth * y + x);
+		*bitmapPixel = pixel;
+	}
 }

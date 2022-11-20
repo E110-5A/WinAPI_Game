@@ -9,22 +9,28 @@ namespace js
 	std::queue<eUIType> UIManager::mRequestUIQueue;
 	std::stack<UIBase*> UIManager::mUIBases;
 	UIBase* UIManager::mCurrentData = nullptr;
+
 	void UIManager::Initialize()
 	{
 		// 여기서 UI 메모리를 할당하면 된다
+		Button* btn = new Button(eUIType::TEST);
+		mUIs.insert(std::make_pair(eUIType::TEST, btn));
+		btn->SetPos(Vector2(0.0f, 0.0f));
+		btn->ImageLoad(L"HPBAR", L"..\\Resources\\Image\\UI\\HPBAR.bmp");
 
-		//UIBase* newUI = new HUD(eUIType::HP);
-		//mUIs.insert(std::make_pair(eUIType::HP, newUI));
-		//newUI->SetScreenPos(Vector2(100.0f, 100.0f));
-		//newUI->ImageLoad(L"HPBAR", L"..\\Resources\\Image\\HPBAR.bmp");
+		HUD* hud = new HUD(eUIType::PLAYER_INFO);
+		mUIs.insert(std::make_pair(eUIType::PLAYER_INFO, hud));
+		hud->SetPos(Vector2(0.0f, 0.0f));
+		hud->ImageLoad(L"PlayerInfo", L"..\\Resources\\Image\\UI\\PlayerHud.bmp");
 
-
-		UIBase* btn = new Button(eUIType::MP);
-		mUIs.insert(std::make_pair(eUIType::MP, btn));
-		btn->SetScreenPos(Vector2(100.0f, 300.0f));
-		btn->ImageLoad(L"HPBAR", L"..\\Resources\\Image\\HPBAR.bmp");
-
+		Panel* panel = new Panel(eUIType::ITEM_SELECT);
+		mUIs.insert(std::make_pair(eUIType::ITEM_SELECT, panel));
+		panel->SetPos(Vector2(500.0f, 500.0f));
+		panel->ImageLoad(L"BackPack", L"..\\Resources\\Image\\BackPack.bmp");
+		panel->AddChild(btn);
+		panel->AddChild(hud);
 	}
+
 	void UIManager::OnLoad(eUIType type)
 	{
 		std::unordered_map<eUIType, UIBase*>::iterator iter = mUIs.find(type);
@@ -48,6 +54,7 @@ namespace js
 			}
 			uiBases.pop();
 		}
+
 
 		// UI 로드 진행
 		if (mRequestUIQueue.size() > 0)
@@ -73,7 +80,6 @@ namespace js
 		}
 	}
 
-
 	void UIManager::OnComplete(UIBase* addUI)
 	{
 		if (nullptr == addUI)
@@ -96,6 +102,7 @@ namespace js
 		}
 		mUIBases.push(addUI);
 	}
+
 	void UIManager::OnFail()
 	{
 		mCurrentData = nullptr;

@@ -26,7 +26,7 @@ namespace js
 	{
 		if (nullptr == mImage)
 			return;
-		if (mTarget == nullptr)
+		if (nullptr == mTarget)
 			return;
 
 		Player* playerObj = dynamic_cast<Player*>(mTarget);
@@ -43,6 +43,7 @@ namespace js
 			, mImage->GetWidth() * xRatio, mImage->GetHeight()
 			, mImage->GetDC(), 0, 0, mImage->GetWidth(), mImage->GetHeight(), func);
 	}
+
 	void HUD::OnClear()
 	{
 	}

@@ -19,6 +19,13 @@ namespace js
 		static void SetPlayScene(Scene* playScene) { mPlayScene = playScene; }
 		static Scene* GetScene(eSceneType type) { return mScene[(UINT)type]; }
 
+		template <typename T>
+		static void LoadMap(const std::wstring& path, eSceneType type)
+		{
+			js::Scene* scene = js::SceneManager::GetScene(type);
+			T* toolScene = dynamic_cast<T*>(scene);
+			toolScene->LoadTilePalette(path);
+		}
 
 	private:
 		static Scene* mScene[(UINT)eSceneType::End];

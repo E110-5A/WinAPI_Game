@@ -24,18 +24,22 @@ namespace js
 
 	void TestScene::Initialize()
 	{
-
-		//js::Scene* scene = js::SceneManager::GetScene(eSceneType::Tool);
-		//js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(scene);
-		//toolScene->LoadTilePalette(L"..\\Resources\\Tile\\testMap");
+		// 맵 로딩		
+		SceneManager::LoadMap<ToolScene>(L"..\\Resources\\Tile\\testMap",eSceneType::Tool);
 
 
+		// 오브젝트 추가
 		GameObject* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 380.f));
-
 		//mons[0] = object::Instantiate<Monster>(eColliderLayer::Monster);
 
-		UIManager::Push(eUIType::MP);
-		Button* btn = UIManager::GetUIInstant<Button>(eUIType::MP);
+
+
+		// ui 추가
+		UIManager::Push(eUIType::TEST);
+		UIManager::Push(eUIType::PLAYER_INFO);
+		HUD* hud = UIManager::GetUIInstant<HUD>(eUIType::PLAYER_INFO);
+		hud->SetTarget(pPlayer);
+		UIManager::Push(eUIType::ITEM_SELECT);
 	}
 
 	void TestScene::Tick()

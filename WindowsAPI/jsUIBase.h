@@ -34,33 +34,34 @@ namespace js
 		void UIClear();				//	UI가 사라질 때 호출되는 함수
 
 		void ImageLoad(const std::wstring& key, const std::wstring& path);
+		void AddChild(UIBase* uiBase);
 
-		virtual void OnInit() {};
-		virtual void OnActive() {};
-		virtual void OnInActive() {};
-		virtual void OnTick() {};
-		virtual void OnRender(HDC hdc) {};
-		virtual void OnClear() {};
+
 
 		eUIType GetType() { return mType; }
 		bool GetisFullScreen() { return mIsFullScreen; }
 		void SetIsFullScreen(bool enable) { mIsFullScreen = enable; }
 		void SetParent(UIBase* parent) { mParent = parent; }
 
-		void SetScreenPos(Pos pos) { mScreenPos = pos; }
-		Pos GetScreenPos() { return mScreenPos; }
 		void SetPos(Pos pos) { mPos = pos; }
 		Pos GetPos() { return mPos; }
 		void SetSize(Size size) { mSize = size; }
 		Size GetSize() { return mSize; }
 
 	protected:
+		virtual void OnInit() {};
+		virtual void OnActive() {};
+		virtual void OnInActive() {};
+		virtual void OnTick() {};
+		virtual void OnRender(HDC hdc) {};
+		virtual void OnClear() {};
+				
 		UIBase* mParent;
 		Image* mImage;
-		Pos mScreenPos;
 		Pos mPos;
 		Size mSize;
-
+		Pos mScreenPos;
+		
 	private:
 		std::vector<UIBase*> mChilds;
 		eUIType mType;

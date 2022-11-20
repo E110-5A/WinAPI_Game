@@ -42,6 +42,7 @@ namespace js
 
 	void Player::Init()
 	{
+		SetHp(100);
 		// 이미지 리소스 로딩
 		if (nullptr == mImage)
 		{

@@ -23,6 +23,7 @@ namespace js
 		std::vector<GameObject*>& GetGameObjects(eColliderLayer type) { return mObjects[(UINT)type]; }
 		std::vector<std::vector<GameObject*>>& GetGameObjects() { return mObjects; }
 
+
 	private:
 		std::vector<std::vector<GameObject*>> mObjects;
 	};

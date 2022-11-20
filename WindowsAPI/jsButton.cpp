@@ -24,7 +24,7 @@ namespace js
 		UIBase::OnInActive();
 	}
 	void Button::OnTick()
-	{
+		{
 		Pos mousePos = Input::GetMousePos();
 		Size size = GetSize();
 

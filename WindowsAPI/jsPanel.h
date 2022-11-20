@@ -14,11 +14,6 @@ namespace js
 		virtual void OnTick() override;
 		virtual void OnRender(HDC hdc) override;
 		virtual void OnClear() override;
-
-		void AddUIBase(UIBase* uiBase);
-
-	private:
-		std::vector<UIBase*> mChilds;
-
+		
 	};
 }

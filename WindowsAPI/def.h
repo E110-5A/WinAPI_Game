@@ -58,15 +58,12 @@ enum class eColliderLayer
 
 enum class eUIType
 {
-	HP,
-	MP,
-	SHOP,
-	INVENTORY,
+	TEST,
+	PLAYER_INFO,
+	ITEM_SELECT,
 	OPTION,
 
-
-	END,
-	
+	END,	
 };
 
 enum class eCameraEffect

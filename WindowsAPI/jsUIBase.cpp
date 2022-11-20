@@ -34,6 +34,7 @@ namespace js
 		OnActive();
 		for (UIBase* child : mChilds)
 		{
+			child->mIsEnable = true;
 			child->OnActive();
 		}
 	}
@@ -44,8 +45,10 @@ namespace js
 		for (UIBase* child : mChilds)
 		{
 			child->OnInActive();
+			child->mIsEnable = false;
 		}
 		OnInActive();
+		mIsEnable = false;
 	}
 
 	void UIBase::Tick()
@@ -55,14 +58,14 @@ namespace js
 		OnTick();
 
 		if (mParent)
-			mScreenPos = (mParent->GetScreenPos() + mPos);
+			mScreenPos = mParent->GetPos() + mPos;
 		else
-			mScreenPos = (mPos);
+			mScreenPos = mPos;
 
 		for (UIBase* child : mChilds)
 		{
 			if (child->mIsEnable)
-				child->OnTick();
+				child->Tick();
 		}
 	}
 
@@ -71,16 +74,31 @@ namespace js
 		if (false == mIsEnable)
 			return;
 		OnRender(hdc);
-
+		for (UIBase* child : mChilds)
+		{
+			if (child->mIsEnable)
+				child->OnRender(hdc);
+		}
 	}
 
 	void UIBase::UIClear()
 	{
+		for (UIBase* child : mChilds)
+		{
+			if (child->mIsEnable)
+				child->OnClear();
+		}
 		OnClear();
 	}
 	void UIBase::ImageLoad(const std::wstring& key, const std::wstring& path)
 	{
 		mImage = Resources::Load<Image>(key, path);
 		SetSize(Vector2(mImage->GetWidth(), mImage->GetHeight()));
+	}
+
+	void UIBase::AddChild(UIBase* uiBase)
+	{
+		mChilds.push_back(uiBase);
+		uiBase->mParent = this;
 	}
 }

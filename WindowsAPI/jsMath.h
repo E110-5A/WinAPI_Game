@@ -152,5 +152,16 @@ namespace js
 		{
 			return v1.x * v2.x + v1.y * v2.y;
 		}
+		float lerp(float begin, float end, float t)
+		{
+			return (1 - t) * begin + t * end;
+		}
+		Vector2 lerp(Vector2 begin, Vector2 end, float t)
+		{
+			Vector2 temp;
+			temp.x = lerp(begin.x, end.x, t);
+			temp.y = lerp(begin.y, end.y, t);
+			return temp;
+		}
 	}
 }

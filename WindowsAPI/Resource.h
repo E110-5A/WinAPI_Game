@@ -17,6 +17,10 @@
 #define ID_TILE_SAVE                    32773
 #define ID_TILE_Load                    32774
 #define ID_TILE_LOAD                    32775
+#define ID_32776                        32776
+#define ID_32777                        32777
+#define ID_COLLISION_SAVE               32778
+#define ID_COLLISION_LOAD               32779
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -25,7 +29,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        129
-#define _APS_NEXT_COMMAND_VALUE         32776
+#define _APS_NEXT_COMMAND_VALUE         32780
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

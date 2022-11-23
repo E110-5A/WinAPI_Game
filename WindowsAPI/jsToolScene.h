@@ -23,6 +23,10 @@ namespace js
 		void LoadTilePalette();
 		void LoadTilePalette(const std::wstring& path);
 
+		// 추후 스테이지 충돌체정보 저장기능 완성할것
+		void SaveCollision();
+		void LoadCollision();
+
 		Image* GetAtlasImage() { return mTilePalette->GetImage(); }
 		void SetTileIndex(UINT index) { mTileIndex = index; }
 		UINT GetTileIndex() { return mTileIndex; }

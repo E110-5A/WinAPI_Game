@@ -85,6 +85,12 @@ namespace js
     {
         mTilePalette->Load(path);
     }
+    void ToolScene::SaveCollision()
+    {
+    }
+    void ToolScene::LoadCollision()
+    {
+    }
 }
 
 

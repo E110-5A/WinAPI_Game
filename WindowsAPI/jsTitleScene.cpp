@@ -19,7 +19,12 @@ namespace js
 		bg->SetImage(L"TitleBG", L"Title_BG.bmp");
 		bg->Initialize();
 		AddGameObject(bg, eColliderLayer::BackGround);
+		// 회전하는 배경 추가
+		// 이동하는 배경 추가
 
+		// SinglePlay 버튼 추가
+		// Option 버튼 추가
+		// Quit 버튼 추가
 	}
 	void TitleScene::Tick()
 	{

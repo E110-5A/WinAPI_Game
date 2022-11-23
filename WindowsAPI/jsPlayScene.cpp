@@ -19,19 +19,23 @@ namespace js
 	}
 	void PlayScene::Initialize()
 	{
+		// 배경 오브젝트 추가
 		BGObj* bg = new BGObj();
 		bg->SetImage(L"PlayBG", L"Play_BG.bmp");
 		bg->Initialize();
 		AddGameObject(bg, eColliderLayer::BackGround);
 
+		/*
 		tempGround* g = new tempGround();
 		g->SetImage(L"PlayG", L"Play_Ground.bmp");
 		g->Initialize();
-		AddGameObject(g, eColliderLayer::Tile);
+		AddGameObject(g, eColliderLayer::Tile);*/
 
+		// 오브젝트 추가
 		GameObject* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 380.f));		
 		//mObj[0] = object::Instantiate<Monster>(eColliderLayer::Monster, Pos(740.f, 360.f));
 
+		// 게임매니저에서 오브젝트 풀 요청?
 
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Monster, true);
 		CollisionManager::SetLayer(eColliderLayer::Player_Projectile, eColliderLayer::Monster, true);

@@ -26,7 +26,9 @@ namespace js
 
 	private:
 		std::vector<std::vector<GameObject*>> mObjects;
+		WindowData mWindowInfo;
 	};
+
 	typedef std::vector<std::vector<GameObject*>> GameObjects;
 	typedef std::vector<GameObject*>::iterator LayerObjects;
 

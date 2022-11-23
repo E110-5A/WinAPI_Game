@@ -176,6 +176,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 toolScene->LoadTilePalette();
             }
             break;
+            case ID_COLLISION_SAVE:
+            {
+                js::Scene* scene = js::SceneManager::GetPlayScene();
+                js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(scene);
+                toolScene->SaveTilePalette();
+            }
+            break;
+            case ID_COLLISION_LOAD:
+            {
+                js::Scene* scene = js::SceneManager::GetPlayScene();
+                js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(scene);
+                // 툴씬 오브젝트 싹 지우기
+                toolScene->LoadTilePalette();
+            }
+            break;
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;

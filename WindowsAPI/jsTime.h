@@ -11,7 +11,8 @@ namespace js
 		static void Tick();
 		static void Render(HDC _dc);
 
-		static float GetDeltaTime() { return mDeltaTime; }
+		static float GetDeltaTime() { return mDeltaTime* mTimeScale; }
+		static void SetTimeScale(float scale) { mTimeScale = scale; }
 
 	private:
 		static LARGE_INTEGER m_CpuFrequency;
@@ -20,6 +21,7 @@ namespace js
 
 		static float mDeltaTime;
 		static float mTime;
+		static float mTimeScale;
 	};
 
 

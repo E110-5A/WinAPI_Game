@@ -5,6 +5,7 @@
 #include "jsToolScene.h"
 #include "jsSceneManager.h"
 #include "jsObject.h"
+#include "jsApplication.h"
 #include <commdlg.h>
 
 namespace js
@@ -12,6 +13,7 @@ namespace js
 	TilePalette::TilePalette()
 	{
 		mAtlas = Resources::Load<Image>(L"TileAtlas", L"..\\Resources\\Image\\Tile\\RoRTile.bmp");
+		mWindowInfo = Application::GetInstance().GetWindowData();
 	}
 
 	TilePalette::~TilePalette()
@@ -23,8 +25,13 @@ namespace js
 		if (KEY_PRESSE(eKeyCode::LBTN))
 		{
 			if (GetFocus())
-			{
+			{				
 				js::Pos mousePos = js::Input::GetMousePos();
+				if (mousePos.x < 0 || mousePos.y < 0)
+					return;
+				if (mousePos.x > mWindowInfo.width
+					|| mousePos.y > mWindowInfo.height)
+					return;
 
 				int layerX = mousePos.x / (TILE_SIZE * TILE_SCALE);
 				int layerY = mousePos.y / (TILE_SIZE * TILE_SCALE);

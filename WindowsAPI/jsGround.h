@@ -7,8 +7,10 @@ namespace js
 	{
 	public:
 		Ground();
+		Ground(Pos pos);
 		~Ground();
 
+		virtual void Initialize() override;
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 

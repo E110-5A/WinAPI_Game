@@ -36,7 +36,7 @@ namespace js
 		// 콜라이더 설정
 		Collider* monCollider = new Collider();
 		monCollider->SetPos(GetPos());
-		monCollider->SetScale(Size(45.f, 70.f) * GetScale());
+		monCollider->SetSize(Size(45.f, 70.f) * GetScale());
 		// AddComponent(monCollider);
 	}
 

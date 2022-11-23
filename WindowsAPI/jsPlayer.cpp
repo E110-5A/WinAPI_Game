@@ -55,7 +55,7 @@ namespace js
 		// 콜라이더 설정
 		mCollider = new Collider;
 		mCollider->SetPos(GetPos());
-		mCollider->SetScale(Size(7.f, 12.f) * GetScale());
+		mCollider->SetSize(Size(7.f, 12.f) * GetScale());
 		mCollider->SetOffset(Vector2(-10.f, 0.f));
 		AddComponent(mCollider);
 		// 강체 설정
@@ -182,9 +182,9 @@ namespace js
 			missile->SetScreenPos(missilePos);
 		}*/
 	}
+
 	void Player::Render(HDC hdc)
 	{
-
 		GameObject::Render(hdc);
 	}
 
@@ -284,24 +284,16 @@ namespace js
 	}
 
 
-
-
-
 	void Player::OnCollisionEnter(Collider* other)
 	{
-
 	}
-
 	void Player::OnCollisionStay(Collider* other)
 	{
 	}
 	void Player::OnCollisionExit(Collider* other)
 	{
 	}
-	void Player::WalkComplete()
-	{
-		// 걸을때 이팩트를 추가 하던가 말던가
-	}
+	
 	void Player::ReturnIdle()
 	{
 		if (mDir == Vector2::Right)

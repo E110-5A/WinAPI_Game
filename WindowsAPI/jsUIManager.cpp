@@ -13,22 +13,51 @@ namespace js
 	void UIManager::Initialize()
 	{
 		// 여기서 UI 메모리를 할당하면 된다
-		Button* btn = new Button(eUIType::TEST);
-		mUIs.insert(std::make_pair(eUIType::TEST, btn));
-		btn->SetPos(Vector2(0.0f, 0.0f));
-		btn->ImageLoad(L"HPBAR", L"..\\Resources\\Image\\UI\\HPBAR.bmp");
 
-		HUD* hud = new HUD(eUIType::PLAYER_INFO);
-		mUIs.insert(std::make_pair(eUIType::PLAYER_INFO, hud));
-		hud->SetPos(Vector2(0.0f, 0.0f));
-		hud->ImageLoad(L"PlayerInfo", L"..\\Resources\\Image\\UI\\PlayerHud.bmp");
+		//	Title Scene
+		Button* selectBtn = new Button(eUIType::SelectBtn);
+		mUIs.insert(std::make_pair(eUIType::SelectBtn, selectBtn));
+		selectBtn->ImageLoad(L"SelectBtn", L"..\\Resources\\Image\\Button\\Title_Play.bmp");
+		selectBtn->SetPos(Vector2(470.0f, 300.0f));
 
-		Panel* panel = new Panel(eUIType::ITEM_SELECT);
-		mUIs.insert(std::make_pair(eUIType::ITEM_SELECT, panel));
-		panel->SetPos(Vector2(500.0f, 500.0f));
-		panel->ImageLoad(L"BackPack", L"..\\Resources\\Image\\BackPack.bmp");
-		panel->AddChild(btn);
-		panel->AddChild(hud);
+		Button* optionBtn = new Button(eUIType::OptionBtn);
+		mUIs.insert(std::make_pair(eUIType::OptionBtn, optionBtn));
+		optionBtn->ImageLoad(L"OptionBtn", L"..\\Resources\\Image\\Button\\Title_Options.bmp");
+		optionBtn->SetPos(Vector2(470.0f, 370.0f));
+
+		Button* quitBtn = new Button(eUIType::QuitBtn);
+		mUIs.insert(std::make_pair(eUIType::QuitBtn, quitBtn));
+		quitBtn->ImageLoad(L"QuitBtn", L"..\\Resources\\Image\\Button\\Title_Quit.bmp");
+		quitBtn->SetPos(Vector2(470.0f, 440.0f));
+
+
+
+		// Select Scene
+		Button* playBtn = new Button(eUIType::PlayBtn);
+		mUIs.insert(std::make_pair(eUIType::PlayBtn, playBtn));
+		playBtn->ImageLoad(L"PlayBtn", L"..\\Resources\\Image\\Button\\Select_Play.bmp");
+		playBtn->SetPos(Vector2(560.0f, 620.0f));
+
+
+
+		//// UI 테스트
+		//Button* btn = new Button(eUIType::TEST);
+		//mUIs.insert(std::make_pair(eUIType::TEST, btn));
+		//btn->SetPos(Vector2(0.0f, 0.0f));
+		//btn->ImageLoad(L"HPBAR", L"..\\Resources\\Image\\UI\\HPBAR.bmp");
+
+		//HUD* hud = new HUD(eUIType::PLAYER_INFO);
+		//mUIs.insert(std::make_pair(eUIType::PLAYER_INFO, hud));
+		//hud->SetPos(Vector2(0.0f, 0.0f));
+		//hud->ImageLoad(L"PlayerInfo", L"..\\Resources\\Image\\UI\\PlayerHud.bmp");
+
+		//Panel* panel = new Panel(eUIType::ITEM_SELECT);
+		//mUIs.insert(std::make_pair(eUIType::ITEM_SELECT, panel));
+		//panel->SetPos(Vector2(500.0f, 500.0f));
+		//panel->ImageLoad(L"BackPack", L"..\\Resources\\Image\\BackPack.bmp");
+		//panel->AddChild(btn);
+		//panel->AddChild(hud);
+
 	}
 
 	void UIManager::OnLoad(eUIType type)
@@ -69,14 +98,25 @@ namespace js
 	void UIManager::Render(HDC hdc)
 	{
 		std::stack<UIBase*> uiBases = mUIBases;
+		std::stack<UIBase*> tempStack = mUIBases;
+
+		// ui 스택 뒤집기
 		while (!uiBases.empty())
 		{
 			UIBase* uiBase = uiBases.top();
+			tempStack.push(uiBase);
+			uiBases.pop();
+		}
+
+		// ui 메시지 순차적으로 재생
+		while (!tempStack.empty())
+		{
+			UIBase* uiBase = tempStack.top();
 
 			if (nullptr != uiBase)
 				uiBase->Render(hdc);
 
-			uiBases.pop();
+			tempStack.pop();
 		}
 	}
 
@@ -134,6 +174,7 @@ namespace js
 		{
 			uiBase = mUIBases.top();
 			mUIBases.pop();
+			uiBase->InActive();
 
 			if (uiBase->GetType() == type)
 			{

@@ -33,13 +33,14 @@ namespace js
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 
+		// 애니메이션 재생 로직
 		void PlayAnim();
 
 		virtual void OnCollisionEnter(Collider* other)override;
 		virtual void OnCollisionStay(Collider* other)override;
 		virtual void OnCollisionExit(Collider* other)override;
 
-		void WalkComplete();
+		// 애니메이션 종료시 기본상태로 돌리기
 		void ReturnIdle();
 
 		void SetHp(int hp) { mHp = hp; }

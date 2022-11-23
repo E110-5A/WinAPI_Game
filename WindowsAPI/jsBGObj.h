@@ -7,12 +7,12 @@ namespace js
 	{
 	public:
 		BGObj();
+		BGObj(Pos pos);
 		~BGObj();
 
-		virtual void Initialize() override;
-		virtual void Tick() override;
+		// 이미지 출력
 		virtual void Render(HDC hdc) override;
-
+		// 이미지 연결
 		void SetImage(const std::wstring& key, const std::wstring& fileName);
 
 	private:

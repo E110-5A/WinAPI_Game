@@ -96,6 +96,12 @@ namespace js
 		SetSize(Vector2(mImage->GetWidth(), mImage->GetHeight()));
 	}
 
+	void UIBase::ImageLoad(const std::wstring& key)
+	{
+		mImage = Resources::Find<Image>(key);
+		SetSize(Vector2(mImage->GetWidth(), mImage->GetHeight()));
+	}
+
 	void UIBase::AddChild(UIBase* uiBase)
 	{
 		mChilds.push_back(uiBase);

@@ -10,15 +10,15 @@ namespace js
 		SetPos(Vector2::Zero);
 		SetScale(Vector2::One);
 	}
+	BGObj::BGObj(Pos pos)
+		: mImage(nullptr)
+	{
+		SetPos(pos);
+		SetScale(Vector2::One);
+	}
+
 	BGObj::~BGObj()
-	{
-	}
-	void BGObj::Initialize()
-	{
-		
-	}
-	void BGObj::Tick()
-	{
+	{		
 	}
 	void BGObj::Render(HDC hdc)
 	{

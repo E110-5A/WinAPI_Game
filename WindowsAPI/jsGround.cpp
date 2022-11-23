@@ -6,11 +6,21 @@ namespace js
 {
 	Ground::Ground()
 	{
-		Collider* collider = AddComponent<Collider>();
-		collider->SetScale(Size(600.0f, 50.0f));
+		Initialize();
+	}
+	Ground::Ground(Pos pos)
+	{
+		Initialize();
+		SetPos(pos);
 	}
 	Ground::~Ground()
 	{
+	}
+
+	void Ground::Initialize()
+	{
+		Collider* collider = AddComponent<Collider>();
+		collider->SetSize(Size(600.0f, 50.0f));
 	}
 	void Ground::Tick()
 	{

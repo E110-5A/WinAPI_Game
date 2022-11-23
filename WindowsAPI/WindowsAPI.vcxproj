@@ -136,6 +136,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="jsAnimation.h" />
     <ClInclude Include="jsAnimator.h" />
+    <ClInclude Include="jsCommandoRun.h" />
     <ClInclude Include="jsApplication.h" />
     <ClInclude Include="jsBGObj.h" />
     <ClInclude Include="jsButton.h" />
@@ -147,7 +148,9 @@
     <ClInclude Include="jsGameObject.h" />
     <ClInclude Include="jsGround.h" />
     <ClInclude Include="jsHUD.h" />
+    <ClInclude Include="jsOptionScene.h" />
     <ClInclude Include="jsPanel.h" />
+    <ClInclude Include="jsSelectScene.h" />
     <ClInclude Include="jsSound.h" />
     <ClInclude Include="jsSoundManager.h" />
     <ClInclude Include="jsUIBase.h" />
@@ -182,6 +185,7 @@
   <ItemGroup>
     <ClCompile Include="jsAnimation.cpp" />
     <ClCompile Include="jsAnimator.cpp" />
+    <ClCompile Include="jsCommandoRun.cpp" />
     <ClCompile Include="jsApplication.cpp" />
     <ClCompile Include="jsBGObj.cpp" />
     <ClCompile Include="jsButton.cpp" />
@@ -193,7 +197,9 @@
     <ClCompile Include="jsGameObject.cpp" />
     <ClCompile Include="jsGround.cpp" />
     <ClCompile Include="jsHUD.cpp" />
+    <ClCompile Include="jsOption.cpp" />
     <ClCompile Include="jsPanel.cpp" />
+    <ClCompile Include="jsSelectScene.cpp" />
     <ClCompile Include="jsSound.cpp" />
     <ClCompile Include="jsSoundManager.cpp" />
     <ClCompile Include="jsUIBase.cpp" />

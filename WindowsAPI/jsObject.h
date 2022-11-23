@@ -29,11 +29,15 @@ namespace js
 
 		static __forceinline void Destroy(GameObject* target)
 		{
+			if (nullptr == target)
+				return;
 			target->Death();
 		}
 
 		static __forceinline void Destroy(GameObject* target, float time)
 		{
+			if (nullptr == target)
+				return;
 			target->SetDeath(time);
 		}
 

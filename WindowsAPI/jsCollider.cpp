@@ -8,9 +8,9 @@ namespace js
 		:Component(eComponentType::Collider)
 		, mOffset(Vector2::Zero)
 		, mPos(Vector2::Zero)
-		, mScale(Vector2::One)
+		, mSize(Vector2::One)
 	{
-		SetScale(Size(50.f, 50.f));
+		SetSize(Size(50.f, 50.f));
 	}
 	Collider::~Collider()
 	{
@@ -44,8 +44,8 @@ namespace js
 		
 		mPos = Camera::CalculatePos(mPos);
 
-		Rectangle(hdc, (mPos.x - mScale.x / 2.f), (mPos.y - mScale.y / 2.f),
-			(mPos.x + mScale.x / 2.f), (mPos.y + mScale.y / 2.f));
+		Rectangle(hdc, (mPos.x - mSize.x / 2.f), (mPos.y - mSize.y / 2.f),
+			(mPos.x + mSize.x / 2.f), (mPos.y + mSize.y / 2.f));
 		
 		SelectObject(hdc, prevPen);
 		DeleteObject(red);

@@ -34,6 +34,7 @@ namespace js
 		void UIClear();				//	UI가 사라질 때 호출되는 함수
 
 		void ImageLoad(const std::wstring& key, const std::wstring& path);
+		void ImageLoad(const std::wstring& key);
 		void AddChild(UIBase* uiBase);
 
 

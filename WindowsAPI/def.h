@@ -1,5 +1,9 @@
 #pragma once
 
+#define Window_Width    1280
+#define Window_Height   720
+
+
 #define KEY_PRESSE(KEY) js::Input::GetKeyState(KEY) == js::eKeyState::PRESSED
 #define KEY_DOWN(KEY) js::Input::GetKeyState(KEY) == js::eKeyState::DOWN
 #define KEY_UP(KEY) js::Input::GetKeyState(KEY) == js::eKeyState::UP
@@ -10,7 +14,61 @@ enum class eSceneType
 	Tool,
 	Test,
 	Title,
+	Select,
 	Play,
+	Option,
+	End,
+};
+enum class eUIType
+{
+	TEST,
+	SelectBtn,		// title
+	OptionBtn,		// title
+	QuitBtn,		// title
+
+	PlayBtn,		// select
+
+	PLAYER_INFO,	// 인게임 HUD
+	ITEM_SELECT,	// 인게임 HUD
+	OPTION,			// 
+
+	END,
+};
+
+
+enum class eComponentType
+{
+	Rigidbody,
+	Collider,
+	Animator,
+	Sound,
+	End,
+};
+
+#define _COLLIDER_LAYER 16
+enum class eColliderLayer
+{
+	Default,					//	0
+	BackGround,					//	1
+	Tile,						//	2
+	BGObj,						//	3
+	Player,						//	4
+	Player_Projectile,			//	5
+	Monster,					//	6
+	Monster_Projectile,			//	7
+
+	Ground,						//	13
+	UI = _COLLIDER_LAYER - 1,	//	14
+	End = _COLLIDER_LAYER,		//	15
+};
+
+
+
+enum class eCameraEffect
+{
+	FadeIn,
+	FadeOut,
+	None,
 	End,
 };
 
@@ -30,49 +88,6 @@ enum class eBrushColor
 	End,
 };
 
-enum class eComponentType
-{
-	Rigidbody,
-	Collider,
-	Animator,
-	Sound,
-	End,
-};
-
-#define _COLLIDER_LAYER 16
-enum class eColliderLayer
-{
-	Default,
-	BackGround,
-	Tile,
-
-	Player,
-	Player_Projectile,
-	Monster,
-	Monster_Projectile,
-
-	Ground,
-	UI = _COLLIDER_LAYER - 1,
-	End = _COLLIDER_LAYER,
-};
-
-enum class eUIType
-{
-	TEST,
-	PLAYER_INFO,
-	ITEM_SELECT,
-	OPTION,
-
-	END,	
-};
-
-enum class eCameraEffect
-{
-	FadeIn,
-	FadeOut,
-	None,
-	End,
-};
 
 union ColliderID
 {

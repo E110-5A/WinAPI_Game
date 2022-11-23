@@ -13,7 +13,7 @@ namespace js
 		SetScale(Size(60.f, 20.f));
 		Collider* myCollider = new Collider();
 
-		myCollider->SetScale(Size(60.f, 20.f));
+		myCollider->SetSize(Size(60.f, 20.f));
 		AddComponent(myCollider);
 
 

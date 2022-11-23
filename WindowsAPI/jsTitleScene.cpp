@@ -1,9 +1,17 @@
 #include "jsTitleScene.h"
+#include "jsApplication.h"
+
+// 매니저
 #include "jsInput.h"
 #include "jsSceneManager.h"
-#include "jsBGObj.h"
 #include "jsCamera.h"
-#include "jsApplication.h"
+#include "jsUIManager.h"
+
+// 오브젝트
+#include "jsObject.h"
+#include "jsBGObj.h"
+#include "jsCommandoRun.h"
+
 
 namespace js
 {
@@ -15,14 +23,32 @@ namespace js
 	}
 	void TitleScene::Initialize()
 	{
-		BGObj* bg = new BGObj();
-		bg->SetImage(L"TitleBG", L"Title_BG.bmp");
-		bg->Initialize();
-		AddGameObject(bg, eColliderLayer::BackGround);
-		// 회전하는 배경 추가
-		// 이동하는 배경 추가
+		// 배경 오브젝트
+		//BGObj* title = new BGObj();
+		//AddGameObject(title, eColliderLayer::BackGround);
+		BGObj* title = object::Instantiate<BGObj>(eColliderLayer::BackGround);
+		title->SetImage(L"TitleBG", L"Title_BG.bmp");
 
+		// 회전하는 행성 배경 추가
+		BGObj* ground = object::Instantiate<BGObj>(eColliderLayer::BackGround, Vector2(380.0f, 560.0f));
+		ground->SetImage(L"TitleGround", L"ground.bmp");
+		// 이동하는 플레이어 배경 추가
+		CommandoRun* pObj = object::Instantiate<CommandoRun>(eColliderLayer::BGObj, Vector2(640.0f, 618.0f));
+
+
+		// ui 오브젝트
+		 
+		UIManager::Push(eUIType::SelectBtn);
+		UIManager::Push(eUIType::QuitBtn);
+		UIManager::Push(eUIType::OptionBtn);
+		/*UIManager::Push(eUIType::TEST);
+		UIManager::Push(eUIType::PLAYER_INFO);
+		HUD* hud = UIManager::GetUIInstant<HUD>(eUIType::PLAYER_INFO);
+		hud->SetTarget(pPlayer);
+		UIManager::Push(eUIType::ITEM_SELECT);*/
+		
 		// SinglePlay 버튼 추가
+		
 		// Option 버튼 추가
 		// Quit 버튼 추가
 	}
@@ -31,7 +57,7 @@ namespace js
 		Scene::Tick();
 		if (KEY_DOWN(eKeyCode::N))
 		{
-			SceneManager::ChangeScene(eSceneType::Play);
+			SceneManager::ChangeScene(eSceneType::Select);
 		}
 	}
 	void TitleScene::Render(HDC hdc)
@@ -48,5 +74,6 @@ namespace js
 	}
 	void TitleScene::Exit()
 	{
+		// UI 지워주기?
 	}
 }

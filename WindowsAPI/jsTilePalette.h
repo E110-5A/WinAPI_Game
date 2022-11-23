@@ -25,5 +25,6 @@ namespace js
 	private:
 		Image*								mAtlas;
 		std::unordered_map<UINT64, Tile*>	mTiles;
+		WindowData							mWindowInfo;
 	};
 }

@@ -18,16 +18,16 @@ namespace js
 
 		void SetOffset(Vector2 offset) { mOffset = offset; }
 		void SetPos(Pos pos) { mPos = pos; }
-		void SetScale(Scale scale) { mScale = scale; }
+		void SetSize(Size size) { mSize = size; }
 
 		Vector2 GetOffset() { return mOffset; }
 		Pos GetPos() { return mPos; }
-		Scale GetScale() { return mScale; }
+		Scale GetScale() { return mSize; }
 
 	private:
 		Vector2 mOffset;
 		Pos mPos;
-		Scale mScale;
+		Size mSize;
 
 		size_t mCollisionCount;
 	};

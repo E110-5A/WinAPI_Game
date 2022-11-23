@@ -8,6 +8,7 @@ namespace js
 	LARGE_INTEGER Time::m_CurFrequency;
 	float Time::mDeltaTime = 0.f;
 	float Time::mTime = 0.f;
+	float Time::mTimeScale = 1.0f;
 
 	void Time::Initialize()
 	{

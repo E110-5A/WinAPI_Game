@@ -141,6 +141,45 @@ namespace js
 		// 애니메이션
 		PlayAnim();
 		
+		switch (mState)
+		{
+		case eState::Idle:
+		{
+			Idle();
+		}
+		break;
+		case eState::Move:
+		{
+			Move();
+		}
+		break;
+		case eState::Jump:
+		{
+			Jump();
+		}
+		break;
+		case eState::Climb:
+		{
+			Climb();
+		}
+		break;
+		case eState::Attack:
+		{
+			Attack();
+		}
+		break;
+		case eState::Dodge:
+		{
+			Dodge();
+		}
+		break;
+		case eState::Die:
+		{
+			Die();
+		}
+		break;
+		}
+
 		// 로직
 		if (KEY_PRESSE(eKeyCode::UP))
 		{
@@ -300,5 +339,36 @@ namespace js
 			mAnimator->Play(L"IdleR");
 		else
 			mAnimator->Play(L"IdleL");
+	}
+	void Player::Idle()
+	{
+		// 상태 변환 로직
+	}
+	void Player::Move()
+	{
+		// 상태 변환 로직
+	}
+	void Player::Jump()
+	{
+		// 만약 IsGround = true라면
+		// Idle 상태로 변환
+	}
+	void Player::Climb()
+	{
+		// 사다리와 충돌중이 아니라면 Idle 상태로 변환 <- 이거 애매함 안하는게 나을듯
+		// 점프 키를 누른 경우 Jump 상태로 변환
+	}
+	void Player::Attack()
+	{
+		// 상태 변환 로직
+	}
+	void Player::Dodge()
+	{
+		// 회피가 끝나면 Idle 상태로 변환
+	}
+	void Player::Die()
+	{
+		// ..?
+		// 게임 종료 UI 불러오기
 	}
 }

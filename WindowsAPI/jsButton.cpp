@@ -58,4 +58,13 @@ namespace js
 	{
 		int a = 0;
 	}
+	void Button::GoToSelectScene()
+	{
+	}
+	void Button::GoToPlayScene()
+	{
+	}
+	void Button::GoToTitleScene()
+	{
+	}
 }

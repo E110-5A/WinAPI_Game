@@ -36,21 +36,6 @@ namespace js
 		CommandoRun* pObj = object::Instantiate<CommandoRun>(eColliderLayer::BGObj, Vector2(640.0f, 618.0f));
 
 
-		// ui 오브젝트
-		 
-		UIManager::Push(eUIType::SelectBtn);
-		UIManager::Push(eUIType::QuitBtn);
-		UIManager::Push(eUIType::OptionBtn);
-		/*UIManager::Push(eUIType::TEST);
-		UIManager::Push(eUIType::PLAYER_INFO);
-		HUD* hud = UIManager::GetUIInstant<HUD>(eUIType::PLAYER_INFO);
-		hud->SetTarget(pPlayer);
-		UIManager::Push(eUIType::ITEM_SELECT);*/
-		
-		// SinglePlay 버튼 추가
-		
-		// Option 버튼 추가
-		// Quit 버튼 추가
 	}
 	void TitleScene::Tick()
 	{
@@ -71,9 +56,16 @@ namespace js
 	void TitleScene::Enter()
 	{
 		Camera::SetCameraEffect(eCameraEffect::FadeIn);
+		// UI 로딩
+		UIManager::Push(eUIType::SelectBtn);
+		UIManager::Push(eUIType::OptionBtn);
+		UIManager::Push(eUIType::QuitBtn);
 	}
 	void TitleScene::Exit()
 	{
 		// UI 지워주기?
+		UIManager::Pop(eUIType::SelectBtn);
+		UIManager::Pop(eUIType::OptionBtn);
+		UIManager::Pop(eUIType::QuitBtn);
 	}
 }

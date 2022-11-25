@@ -23,6 +23,17 @@ namespace js
 		public GameObject
 	{
 	public:
+		enum class eState
+		{
+			Idle,		// 아무 상태로 변환 가능
+			Move,		// 아무 상태로 변환 가능
+			Jump,		// 아무 상태로 변환 가능
+			Climb,		
+			Attack,		
+			Dodge,		
+			Die,		
+		};
+
 		Player();
 		Player(Pos pos);
 		~Player();
@@ -36,28 +47,53 @@ namespace js
 		// 애니메이션 재생 로직
 		void PlayAnim();
 
-		virtual void OnCollisionEnter(Collider* other)override;
-		virtual void OnCollisionStay(Collider* other)override;
-		virtual void OnCollisionExit(Collider* other)override;
-
-		// 애니메이션 종료시 기본상태로 돌리기
+		
+		// 애니메이션 이벤트
 		void ReturnIdle();
+
 
 		void SetHp(int hp) { mHp = hp; }
 		int GetHp() { return mHp; }
 
+
+
+		// 충돌관련 설정
+	public:
+		virtual void OnCollisionEnter(Collider* other)override;
+		virtual void OnCollisionStay(Collider* other)override;
+		virtual void OnCollisionExit(Collider* other)override;
+		
+
+		// 상태
+	public:
+		void SetState(eState state) { mState = state; }
+		eState GetState() { return mState; }
+
+		void Idle();
+		void Move();
+		void Jump();
+		void Climb();
+		void Attack();
+		void Dodge();
+		void Die();
+
+		// 컴포넌트
 	private:
-		float mSpeed;
-		Image* mImage;
+		Animator*	mAnimator;
+		Collider*	mCollider;
+		Rigidbody*	mRigidbody;
 
-		Animator* mAnimator;
-		Collider* mCollider;
-		Rigidbody* mRigidbody;
 
-		Vector2 mDir;
-		PlayerStat mStat;
+	private:
+		Image*		mImage;
+		Vector2		mDir;
+		eState		mState;
+		PlayerStat	mStat;
 
-		int mHp;
+		// 임시
+	private:
+		float	mSpeed;
+		int		mHp;
 	};
 }
 

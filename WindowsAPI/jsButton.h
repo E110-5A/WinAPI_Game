@@ -18,6 +18,10 @@ namespace js
 
 		virtual void Click();
 
+		void GoToSelectScene();
+		void GoToPlayScene();
+		void GoToTitleScene();
+
 	private:
 		Event mOnClick;
 		bool mIsMouseOn;

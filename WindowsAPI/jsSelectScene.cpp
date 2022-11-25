@@ -23,10 +23,15 @@ namespace js
 	void SelectScene::Initialize()
 	{
 		// 배경 오브젝트
-		
+		BGObj* selectBG = object::Instantiate<BGObj>(eColliderLayer::BackGround);
+		selectBG->SetImage(L"SelectBG", L"SelectBG.bmp");
 
-		// 버튼 UI
-		UIManager::Push(eUIType::PlayBtn);
+		BGObj* selectInfo = object::Instantiate<BGObj>(eColliderLayer::BackGround,Vector2(60.0f, 100.0f));
+		selectInfo->SetImage(L"select_Info", L"select_Info.bmp");
+
+		BGObj* selectList = object::Instantiate<BGObj>(eColliderLayer::BackGround, Vector2(1000.0f, 80.0f));
+		selectList->SetImage(L"select_list", L"select_list.bmp");
+				
 	}
 	void SelectScene::Tick()
 	{
@@ -47,8 +52,13 @@ namespace js
 	void SelectScene::Enter()
 	{
 		Camera::SetCameraEffect(eCameraEffect::FadeIn);
+
+		// UI 로딩
+		UIManager::Push(eUIType::PlayBtn);
 	}
 	void SelectScene::Exit()
 	{
+		// UI 없애기
+		UIManager::Pop(eUIType::PlayBtn);
 	}
 }

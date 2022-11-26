@@ -65,7 +65,17 @@ namespace js
 		// 오브젝트 tick 을 호출한다.
 		Scene::Tick();
 
-		//js::object::Destroy(mons[0], 3.0f);
+		// ESC 누를경우
+		/*
+		*  - 시간 진행 멈추기
+		*  - 메뉴 UI 불러오기
+		*
+		*/
+
+		if (KEY_DOWN(eKeyCode::N))
+		{
+			SceneManager::ChangeScene(eSceneType::Title);
+		}
 	}
 
 	void TestScene::Render(HDC hdc)

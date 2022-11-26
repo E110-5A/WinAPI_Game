@@ -38,7 +38,7 @@ namespace js
 		Scene::Tick();
 		if (KEY_DOWN(eKeyCode::N))
 		{
-			SceneManager::ChangeScene(eSceneType::Select);
+			SceneManager::ChangeScene(eSceneType::Test);
 		}
 	}
 	void SelectScene::Render(HDC hdc)

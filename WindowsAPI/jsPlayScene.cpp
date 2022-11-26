@@ -52,6 +52,13 @@ namespace js
 		{
 			SceneManager::ChangeScene(eSceneType::Title);
 		}
+
+		// ESC 누를경우
+		/*
+		*  - 시간 진행 멈추기
+		*  - 메뉴 UI 불러오기
+		* 
+		*/
 	}
 	void PlayScene::Render(HDC hdc)
 	{

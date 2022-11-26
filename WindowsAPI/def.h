@@ -35,6 +35,14 @@ enum class eUIType
 	END,
 };
 
+enum class eBtnType
+{
+	GoToSelectScene,
+	GoToOption,
+	GoToPlayScene,
+	GoToTitleScene,
+	End,
+};
 
 enum class eComponentType
 {

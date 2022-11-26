@@ -15,28 +15,37 @@ namespace js
 		// 여기서 UI 메모리를 할당하면 된다
 
 		//	Title Scene
+
 		Button* selectBtn = new Button(eUIType::SelectBtn);
 		mUIs.insert(std::make_pair(eUIType::SelectBtn, selectBtn));
 		selectBtn->ImageLoad(L"SelectBtn", L"..\\Resources\\Image\\Button\\Title_Play.bmp");
 		selectBtn->SetPos(Vector2(470.0f, 300.0f));
+		selectBtn->SetFunc(eBtnType::GoToSelectScene);
 
 		Button* optionBtn = new Button(eUIType::OptionBtn);
 		mUIs.insert(std::make_pair(eUIType::OptionBtn, optionBtn));
 		optionBtn->ImageLoad(L"OptionBtn", L"..\\Resources\\Image\\Button\\Title_Options.bmp");
 		optionBtn->SetPos(Vector2(470.0f, 370.0f));
+		optionBtn->SetFunc(eBtnType::GoToOption);
 
 		Button* quitBtn = new Button(eUIType::QuitBtn);
 		mUIs.insert(std::make_pair(eUIType::QuitBtn, quitBtn));
 		quitBtn->ImageLoad(L"QuitBtn", L"..\\Resources\\Image\\Button\\Title_Quit.bmp");
 		quitBtn->SetPos(Vector2(470.0f, 440.0f));
+		quitBtn->SetFunc(eBtnType::GoToTitleScene);
+
+
+
 
 
 
 		// Select Scene
+
 		Button* playBtn = new Button(eUIType::PlayBtn);
 		mUIs.insert(std::make_pair(eUIType::PlayBtn, playBtn));
 		playBtn->ImageLoad(L"PlayBtn", L"..\\Resources\\Image\\Button\\Select_Play.bmp");
 		playBtn->SetPos(Vector2(560.0f, 620.0f));
+		playBtn->SetFunc(eBtnType::GoToPlayScene);
 
 
 

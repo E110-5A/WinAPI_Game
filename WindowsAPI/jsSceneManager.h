@@ -32,6 +32,4 @@ namespace js
 		static Scene* mPlayScene;
 		static eSceneType mType;
 	};
-
-
 }

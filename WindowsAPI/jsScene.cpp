@@ -71,15 +71,15 @@ namespace js
 				if (mObjects[y][x]->IsDeath())
 					continue;
 
-				Pos pos = mObjects[y][x]->GetPos();
-				pos = Camera::CalculatePos(pos);
+				//Pos pos = mObjects[y][x]->GetPos();
+				//pos = Camera::CalculatePos(pos);
 
-				// 화면 밖이면 스킵
-				if (pos.x < -100 || pos.y < -100)
-					continue;
-				if (pos.x > mWindowInfo.width + 100
-					|| pos.y > mWindowInfo.height + 100)
-					continue;
+				//// 화면 밖이면 스킵
+				//if (pos.x < -100 || pos.y < -100)
+				//	continue;
+				//if (pos.x > mWindowInfo.width + 100
+				//	|| pos.y > mWindowInfo.height + 100)
+				//	continue;
 
 				mObjects[y][x]->Render(hdc);
 			}
@@ -93,6 +93,11 @@ namespace js
 	void Scene::Exit()
 	{
 		CollisionManager::Clear();
+	}
+
+	void Scene::Culling(int x, int y)
+	{
+		
 	}
 
 	void Scene::AddGameObject(GameObject* obj, eColliderLayer type)

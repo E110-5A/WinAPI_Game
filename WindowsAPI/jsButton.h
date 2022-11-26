@@ -6,6 +6,7 @@ namespace js
 	class Button : public UIBase
 	{
 	public:
+		
 		Button(eUIType type);
 		~Button();
 
@@ -18,12 +19,15 @@ namespace js
 
 		virtual void Click();
 
+		void SetFunc(eBtnType type) { mFunc = type; }
+
+		void GoToTitleScene();
 		void GoToSelectScene();
 		void GoToPlayScene();
-		void GoToTitleScene();
 
 	private:
 		Event mOnClick;
 		bool mIsMouseOn;
+		eBtnType mFunc;
 	};
 }

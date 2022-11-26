@@ -2,6 +2,8 @@
 #include "jsImage.h"
 #include "jsInput.h"
 
+#include "jsSceneManager.h"
+
 namespace js
 {
 	Button::Button(eUIType type)
@@ -56,15 +58,36 @@ namespace js
 	}
 	void Button::Click()
 	{
-		int a = 0;
+		switch (mFunc)
+		{
+		case eBtnType::GoToSelectScene:
+		{
+			GoToSelectScene();
+		}
+		break;
+		case eBtnType::GoToPlayScene:
+		{
+			GoToPlayScene();
+		}
+		break;
+		case eBtnType::GoToTitleScene:
+		{
+			GoToTitleScene();
+		}
+		break;
+		}
 	}
+	
 	void Button::GoToSelectScene()
 	{
+		SceneManager::ChangeScene(eSceneType::Select);
 	}
 	void Button::GoToPlayScene()
 	{
+		SceneManager::ChangeScene(eSceneType::Test);
 	}
 	void Button::GoToTitleScene()
 	{
+		SceneManager::ChangeScene(eSceneType::Title);
 	}
 }

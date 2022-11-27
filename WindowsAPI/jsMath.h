@@ -110,6 +110,7 @@ namespace js
 				return true;
 			return false;
 		}
+
 		float Length()
 		{
 			return sqrtf(x * x + y * y);

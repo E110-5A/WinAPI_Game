@@ -16,7 +16,7 @@
 namespace js
 {
 	Player::Player()
-		: mSpeed(300.f)
+		: mSpeed(0.f)
 		, mImage(nullptr)
 		, mDir(Vector2::Right)
 	{
@@ -27,7 +27,7 @@ namespace js
 		Init();
 	}
 	Player::Player(Pos pos)
-		: mSpeed(300.f)
+		: mSpeed(0.f)
 		, mImage(nullptr)
 		, mDir(Vector2::Right)
 	{
@@ -42,7 +42,10 @@ namespace js
 
 	void Player::Init()
 	{
+		// 스텟 설정
+		SetSpeed(1.3f);
 		SetHp(100);
+
 		// 이미지 리소스 로딩
 		if (nullptr == mImage)
 		{
@@ -181,26 +184,45 @@ namespace js
 		}
 
 		// 로직
+		if (KEY_DOWN(eKeyCode::Z))
+		{
+			
+		}
+		if (KEY_DOWN(eKeyCode::X))
+		{
+			
+		}
+		if (KEY_DOWN(eKeyCode::C))
+		{
+			Vector2 velocity = mRigidbody->GetVelocity();
+
+			velocity.x = mDir.x * 300.0f * mSpeed;
+			mRigidbody->SetVelocity(velocity);
+		}
+		if (KEY_DOWN(eKeyCode::V))
+		{
+			
+		}
 		if (KEY_PRESSE(eKeyCode::UP))
 		{
-			GetComponent<Rigidbody>()->AddForce(Vector2(0.0f, -200.0f));
+			GetComponent<Rigidbody>()->AddForce(Vector2::Up * mSpeed);
 		}
 		if (KEY_PRESSE(eKeyCode::DOWN))
 		{
-			GetComponent<Rigidbody>()->AddForce(Vector2(0.0f, 200.0f));
+			GetComponent<Rigidbody>()->AddForce(Vector2::Down * mSpeed);
 		}
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			mDir = Vector2::Left;
-			GetComponent<Rigidbody>()->AddForce(Vector2(-200.0f, 0.0f));
+			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mSpeed);
 		}		
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			mDir = Vector2::Right;
-			GetComponent<Rigidbody>()->AddForce(Vector2(200.0f, 0.0f));
+			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mSpeed);
 		}
 
-		if (KEY_PRESSE(eKeyCode::SPACE))
+		if (KEY_DOWN(eKeyCode::SPACE))
 		{
 			Vector2 velocity = mRigidbody->GetVelocity();
 			velocity.y = -500.0f;
@@ -208,6 +230,7 @@ namespace js
 			mRigidbody->SetGround(false);
 
 		}
+		
 		/*if (KEY_DOWN(eKeyCode::Z))
 		{
 			Projectile* missile = new Projectile;

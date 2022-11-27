@@ -70,7 +70,16 @@ enum class eColliderLayer
 	End = _COLLIDER_LAYER,		//	15
 };
 
-
+enum class eState
+{
+	Idle,		// 아무 상태로 변환 가능
+	Move,		// 아무 상태로 변환 가능
+	Jump,		// 아무 상태로 변환 가능
+	Climb,
+	Attack,
+	Dodge,
+	Die,
+};
 
 enum class eCameraEffect
 {

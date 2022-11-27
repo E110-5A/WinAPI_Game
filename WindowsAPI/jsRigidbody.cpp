@@ -10,11 +10,11 @@ namespace js
 		, mForce(Vector2::Zero)
 		, mVelocity(Vector2::Zero)
 		, mAccelation(Vector2::Zero)
-		, mFriction(120.0f)
+		, mFriction(150.f)
 	{
 		mGravity = Vector2(0.0f, 800.0f);
 		mIsGround = true;
-		mLimitVelocity = Vector2(800.0f, 1400.0f);
+		mLimitVelocity = Vector2(1000.0f, 1400.0f);
 	}
 	Rigidbody::~Rigidbody()
 	{
@@ -24,14 +24,15 @@ namespace js
 		// 기본 공식 (F = M * A)		
 		// 가속도 구하기 (A = F / M)
 		mAccelation = mForce / mMass;
-
-		// 속도 구하기
-		mVelocity += (mAccelation * Time::GetDeltaTime());
+		// 속도 구하기 (A * T * Default)
+		mVelocity += (mAccelation * Time::GetDeltaTime()) * 300.0f;
 
 		// 중력 적용
 		GravityAction();
 		// 마찰력 적용
 		FrictionAction();
+		// 속도 제한
+		LimitVelocityAction();
 
 		// 이동시키기
 		Pos pos = GetOwner()->GetPos();
@@ -39,8 +40,6 @@ namespace js
 		GetOwner()->SetPos(pos);
 		mForce.Clear();
 	}
-
-
 	void Rigidbody::Render(HDC hdc)
 	{
 		wchar_t szFloat[40] = {};
@@ -55,7 +54,8 @@ namespace js
 	}
 
 	void Rigidbody::GravityAction()
-	{		
+	{
+		// 중력 적용
 		if (mIsGround)
 		{
 			Vector2 gravity = mGravity;
@@ -65,26 +65,8 @@ namespace js
 		}
 		else
 		{
-			mVelocity += mGravity * Time::GetDeltaTime();
+			mVelocity += mGravity * Time::GetDeltaTime() * 2.0f;
 		}
-
-		Vector2 gravity = mGravity;
-		gravity.Normalize();
-		float dot = math::Dot(mVelocity, gravity);
-		gravity *= dot;
-		Vector2 sideVelocity = mVelocity - gravity;
-		// 중력이 제한속도를 벗어나면
-		if (gravity.Length() > mLimitVelocity.y)
-		{
-			gravity.Normalize();
-			gravity *= mLimitVelocity.y;
-		}
-		if (sideVelocity.Length() > mLimitVelocity.x)
-		{
-			sideVelocity.Normalize();
-			sideVelocity *= mLimitVelocity.x;
-		}
-		mVelocity = gravity + sideVelocity;
 	}
 
 	void Rigidbody::FrictionAction()
@@ -94,6 +76,12 @@ namespace js
 			// 속도에 반대 방향
 			Vector2 friction = -mVelocity;
 			friction = friction.Normalize() * mFriction * mMass * Time::GetDeltaTime();
+
+			// 급제동을 위한 코드
+			if (mForce == Vector2::Zero)
+				friction += friction * 3;
+
+
 
 			// 마찰력이 속도를 넘기면
 			if (friction.Length() > mVelocity.Length())
@@ -105,5 +93,28 @@ namespace js
 				mVelocity += friction;
 			}
 		}
+	}
+	void Rigidbody::LimitVelocityAction()
+	{
+		// 속도 성분 분리 (수직, 수평)
+		Vector2 gravity = mGravity;
+		gravity.Normalize();
+		float dot = math::Dot(mVelocity, gravity);
+		gravity *= dot;
+		Vector2 sideVelocity = mVelocity - gravity;
+
+		// 수직 속도 제한
+		if (gravity.Length() > mLimitVelocity.y)
+		{
+			gravity.Normalize();
+			gravity *= mLimitVelocity.y;
+		}
+		// 수평 속도 제한
+		if (sideVelocity.Length() > mLimitVelocity.x)
+		{
+			sideVelocity.Normalize();
+			sideVelocity *= mLimitVelocity.x;
+		}
+		mVelocity = gravity + sideVelocity;
 	}
 }

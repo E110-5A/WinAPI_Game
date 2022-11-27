@@ -23,17 +23,6 @@ namespace js
 		public GameObject
 	{
 	public:
-		enum class eState
-		{
-			Idle,		// 아무 상태로 변환 가능
-			Move,		// 아무 상태로 변환 가능
-			Jump,		// 아무 상태로 변환 가능
-			Climb,		
-			Attack,		
-			Dodge,		
-			Die,		
-		};
-
 		Player();
 		Player(Pos pos);
 		~Player();
@@ -54,7 +43,7 @@ namespace js
 
 		void SetHp(int hp) { mHp = hp; }
 		int GetHp() { return mHp; }
-
+		void SetSpeed(float value) { mSpeed = value; }
 
 
 		// 충돌관련 설정

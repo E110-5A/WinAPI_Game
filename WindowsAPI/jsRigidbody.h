@@ -17,9 +17,11 @@ namespace js
 		Vector2 GetVelocity() { return mVelocity; }
 		void SetVelocity(Vector2 velocity) { mVelocity = velocity; }
 
+
 	private:
 		void GravityAction();
 		void FrictionAction();
+		void LimitVelocityAction();
 
 	private:
 		float	mMass;		// 질량
@@ -30,6 +32,7 @@ namespace js
 
 		Vector2 mGravity;
 		bool	mIsGround;
-		Vector2	mLimitVelocity;	// 최대 중력 속도
+		Vector2	mLimitVelocity;	// 최대 제한속도
+
 	};
 }

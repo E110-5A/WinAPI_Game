@@ -95,11 +95,6 @@ namespace js
 		CollisionManager::Clear();
 	}
 
-	void Scene::Culling(int x, int y)
-	{
-		
-	}
-
 	void Scene::AddGameObject(GameObject* obj, eColliderLayer type)
 	{
 		if (nullptr == obj)

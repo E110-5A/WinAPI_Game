@@ -144,10 +144,10 @@ namespace js
 
 
 		Pos leftPos = left->GetPos();
-		Scale leftScale = left->GetScale();
+		Scale leftScale = left->GetSize();
 
 		Pos rightPos = right->GetPos();
-		Scale rightScale = right->GetScale();
+		Scale rightScale = right->GetSize();
 
 		float xGap = leftPos.x - rightPos.x;
 		float yGap = leftPos.y - rightPos.y;

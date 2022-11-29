@@ -36,7 +36,7 @@ namespace js
 		playerObj->GetComponent<Rigidbody>()->SetGround(true);
 
 		float fLen = fabs(other->GetPos().y - GetComponent<Collider>()->GetPos().y);
-		float fScale = other->GetScale().y / 2.0f + GetComponent<Collider>()->GetScale().y / 2.0f;
+		float fScale = other->GetSize().y / 2.0f + GetComponent<Collider>()->GetSize().y / 2.0f;
 		
 		if (fLen < fScale)
 		{

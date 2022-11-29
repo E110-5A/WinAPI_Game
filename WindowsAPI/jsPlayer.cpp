@@ -1,39 +1,44 @@
 #include "jsPlayer.h"
+
+// 매니저
 #include "jsTime.h"
 #include "jsInput.h"
-#include "jsProjectile.h"
 #include "jsSceneManager.h"
-#include "jsScene.h"
-#include "jsImage.h"
-#include "jsResources.h"
 #include "jsCamera.h"
 
+#include "jsImage.h"
+#include "jsResources.h"
+#include "jsScene.h"
 
+// 콜라이더
 #include "jsAnimator.h"
 #include "jsCollider.h"
 #include "jsRigidbody.h"
+
+// 오브젝트
+#include "jsProjectile.h"
+#include "jsPlayerProjectile.h"
+
 
 namespace js
 {
 	Player::Player()
 		: mSpeed(0.f)
 		, mImage(nullptr)
-		, mDir(Vector2::Right)
 	{
 		// 내 초기값 세팅
 		SetPos(Pos(400.f, 1000.f));
 		SetScale(Size(1.f, 1.f));
-
+		SetDir(Vector2::Right);
 		Init();
 	}
 	Player::Player(Pos pos)
 		: mSpeed(0.f)
 		, mImage(nullptr)
-		, mDir(Vector2::Right)
 	{
 		SetPos(pos);
 		SetScale(Size(1.f, 1.f));
-
+		SetDir(Vector2::Right);
 		Init();		
 	}
 	Player::~Player()
@@ -52,19 +57,31 @@ namespace js
 			mImage = Resources::Load<Image>
 				(L"Player", L"..\\Resources\\Image\\Player\\player.bmp");
 		}
+		// 스텟 초기화
+		InitStat();
 		// 애니메이터 설정
 		InitAnim();
 		mAnimator->Play(L"IdleR");
 		// 콜라이더 설정
 		mCollider = new Collider;
 		mCollider->SetPos(GetPos());
-		mCollider->SetSize(Size(7.f, 12.f) * GetScale());
+		mCollider->SetSize(Size(25.f, 40.f) * GetScale());
 		mCollider->SetOffset(Vector2(-10.f, 0.f));
 		AddComponent(mCollider);
 		// 강체 설정
 		mRigidbody = AddComponent<Rigidbody>();
 	}
-
+	void Player::InitStat()
+	{
+		mStat.maxHp = 110;
+		mStat.curHp = 110;
+		mStat.regenHp = 0.6;
+		mStat.def = 0;
+		mStat.moveSpeed = 1.3;
+		mStat.att = 12;
+		mStat.attSpeed = 1;
+		mStat.range = 700;
+	}
 	void Player::InitAnim()
 	{
 		mAnimator = new Animator;
@@ -95,8 +112,6 @@ namespace js
 
 
 
-
-
 		mAnimator->CreateAnimation(L"DubleTabR", mImage, Pos(0.f, 138.f), Size(60.f, 36.f)
 			, Vector2(2.f, 0.f), 5, 0.08f);
 		mAnimator->CreateAnimation(L"DubleTabL", mImage, Pos(0.f, 174.f), Size(60.f, 36.f)
@@ -115,7 +130,7 @@ namespace js
 		mAnimator->CreateAnimation(L"SuppressiveFireR", mImage, Pos(0.f, 348.f), Size(114.f, 39.f)
 			, Vector2(-10.f, 0.f), 15, 0.08f);
 		mAnimator->CreateAnimation(L"SuppressiveFireL", mImage, Pos(0.f, 387.f), Size(114.f, 39.f)
-			, Vector2(10.f, 0.f), 15, 0.08f);
+			, Vector2(-10.f, 0.f), 15, 0.08f);
 		mAnimator->CreateAnimation(L"SuppressiveFireBothR", mImage, Pos(0.f, 426.f), Size(114.f, 39.f)
 			, Vector2(0.f, 0.f), 15, 0.08f);
 		mAnimator->CreateAnimation(L"SuppressiveFireBothL", mImage, Pos(0.f, 465.f), Size(114.f, 39.f)
@@ -146,37 +161,37 @@ namespace js
 		
 		switch (mState)
 		{
-		case eState::Idle:
+		case ePlayerState::Idle:
 		{
 			Idle();
 		}
 		break;
-		case eState::Move:
+		case ePlayerState::Move:
 		{
 			Move();
 		}
 		break;
-		case eState::Jump:
+		case ePlayerState::Jump:
 		{
 			Jump();
 		}
 		break;
-		case eState::Climb:
+		case ePlayerState::Climb:
 		{
 			Climb();
 		}
 		break;
-		case eState::Attack:
+		case ePlayerState::Attack:
 		{
 			Attack();
 		}
 		break;
-		case eState::Dodge:
+		case ePlayerState::Dodge:
 		{
 			Dodge();
 		}
 		break;
-		case eState::Die:
+		case ePlayerState::Die:
 		{
 			Die();
 		}
@@ -186,23 +201,24 @@ namespace js
 		// 로직
 		if (KEY_DOWN(eKeyCode::Z))
 		{
-			
+			mWeapon->Active(ePlayerAttackType::DubleTab);
 		}
 		if (KEY_DOWN(eKeyCode::X))
 		{
-			
+			mWeapon->Active(ePlayerAttackType::FMJ);
 		}
 		if (KEY_DOWN(eKeyCode::C))
 		{
 			Vector2 velocity = mRigidbody->GetVelocity();
 
-			velocity.x = mDir.x * 300.0f * mSpeed;
+			velocity.x = GetDir().x * 300.0f * mSpeed;
 			mRigidbody->SetVelocity(velocity);
 		}
 		if (KEY_DOWN(eKeyCode::V))
 		{
-			
+			mWeapon->Active(ePlayerAttackType::SuppresiveFire);
 		}
+
 		if (KEY_PRESSE(eKeyCode::UP))
 		{
 			GetComponent<Rigidbody>()->AddForce(Vector2::Up * mSpeed);
@@ -213,12 +229,12 @@ namespace js
 		}
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
-			mDir = Vector2::Left;
+			SetDir(Vector2::Left);
 			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mSpeed);
 		}		
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
-			mDir = Vector2::Right;
+			SetDir(Vector2::Right);
 			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mSpeed);
 		}
 
@@ -228,21 +244,7 @@ namespace js
 			velocity.y = -500.0f;
 			mRigidbody->SetVelocity(velocity);
 			mRigidbody->SetGround(false);
-
 		}
-		
-		/*if (KEY_DOWN(eKeyCode::Z))
-		{
-			Projectile* missile = new Projectile;
-			Scene* playScene = SceneManager::GetPlayScene();
-			playScene->AddGameObject(missile, eColliderLayer::Player_Projectile);
-
-
-			Pos startPos = GetScale() / 2.f;
-			Pos missilePos = (pos + startPos) - (missile->GetScale() / 2.f);
-			
-			missile->SetScreenPos(missilePos);
-		}*/
 	}
 
 	void Player::Render(HDC hdc)
@@ -263,35 +265,40 @@ namespace js
 		}
 		if (KEY_DOWN(eKeyCode::Z))
 		{
-			if (mDir == Vector2::Right)
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
 				mAnimator->Play(L"DubleTabR");
 			else
 				mAnimator->Play(L"DubleTabL");
 		}
 		if (KEY_DOWN(eKeyCode::X))
 		{
-			if (mDir == Vector2::Right)
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
 				mAnimator->Play(L"FMJR");
 			else
 				mAnimator->Play(L"FMJL");
 		}
 		if (KEY_DOWN(eKeyCode::C))
 		{
-			if (mDir == Vector2::Right)
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
 				mAnimator->Play(L"DiveR");
 			else
 				mAnimator->Play(L"DiveL");
 		}
 		if (KEY_DOWN(eKeyCode::V))
 		{
-			if (mDir == Vector2::Right)
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
 				mAnimator->Play(L"SuppressiveFireR");
 			else
 				mAnimator->Play(L"SuppressiveFireL");
 		}
 		if (KEY_DOWN(eKeyCode::D))
 		{
-			if (mDir == Vector2::Right)
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
 				mAnimator->Play(L"DeathR", false);
 			else
 				mAnimator->Play(L"DeathL", false);
@@ -314,7 +321,8 @@ namespace js
 		}
 		if (KEY_DOWN(eKeyCode::SPACE))
 		{
-			if (mDir == Vector2::Right)
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
 				mAnimator->Play(L"JumpR");
 			else
 				mAnimator->Play(L"JumpL");
@@ -322,7 +330,8 @@ namespace js
 
 		if (KEY_UP(eKeyCode::SPACE))
 		{
-			if (mDir == Vector2::Right)
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
 				mAnimator->Play(L"IdleR");
 			else
 				mAnimator->Play(L"IdleL");
@@ -330,14 +339,16 @@ namespace js
 
 		if (KEY_UP(eKeyCode::UP))
 		{
-			if (mDir == Vector2::Right)
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
 				mAnimator->Play(L"IdleR");
 			else
 				mAnimator->Play(L"IdleL");
 		}
 		if (KEY_UP(eKeyCode::DOWN))
 		{
-			if (mDir == Vector2::Right)
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
 				mAnimator->Play(L"IdleR");
 			else
 				mAnimator->Play(L"IdleL");
@@ -358,7 +369,8 @@ namespace js
 	
 	void Player::ReturnIdle()
 	{
-		if (mDir == Vector2::Right)
+		Vector2 dir = GetDir();
+		if (dir == Vector2::Right)
 			mAnimator->Play(L"IdleR");
 		else
 			mAnimator->Play(L"IdleL");

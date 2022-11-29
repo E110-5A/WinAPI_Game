@@ -19,6 +19,12 @@ namespace js
 		virtual void OnCollisionStay(Collider* other)override;
 		virtual void OnCollisionExit(Collider* other)override;
 
+		// 몬스터 rigidbody를 통해서 뒤로 밀리도록 한다
+		void KnockBack() {};
+
+		// 피해량 입력
+		void Hit(float value) {};
+
 	private:
 		Image* mImage;
 	};

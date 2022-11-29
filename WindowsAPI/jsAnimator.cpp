@@ -7,7 +7,7 @@
 
 namespace js
 {
-	Animator::Animator()
+	Animator::Animator(eMode mode)
 		: Component(eComponentType::Animator)
 		, mCurAnimation(nullptr)
 		, mIsLoop (true)

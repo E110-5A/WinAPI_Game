@@ -21,7 +21,6 @@ namespace js
 		if (owner->IsDeath())
 			return;
 		mPos = owner->GetPos() + mOffset;
-
 	}
 	void Collider::Render(HDC hdc)
 	{

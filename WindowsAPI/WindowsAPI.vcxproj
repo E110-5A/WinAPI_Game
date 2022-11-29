@@ -154,6 +154,7 @@
     <ClInclude Include="jsSound.h" />
     <ClInclude Include="jsSoundManager.h" />
     <ClInclude Include="jsUIBase.h" />
+    <ClInclude Include="jsUIGameObject.h" />
     <ClInclude Include="jsUIManager.h" />
     <ClInclude Include="tempGround.h" />
     <ClInclude Include="jsImage.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="jsSound.cpp" />
     <ClCompile Include="jsSoundManager.cpp" />
     <ClCompile Include="jsUIBase.cpp" />
+    <ClCompile Include="jsUIGameObject.cpp" />
     <ClCompile Include="jsUIManager.cpp" />
     <ClCompile Include="tempGround.cpp" />
     <ClCompile Include="jsImage.cpp" />

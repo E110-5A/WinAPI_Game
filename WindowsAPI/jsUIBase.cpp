@@ -1,6 +1,7 @@
 #include "jsUIBase.h"
 #include "jsResources.h"
 #include "jsImage.h"
+#include "jsGameObject.h"
 
 namespace js
 {
@@ -35,7 +36,7 @@ namespace js
 		for (UIBase* child : mChilds)
 		{
 			child->mIsEnable = true;
-			child->OnActive();
+			child->Active();
 		}
 	}
 
@@ -77,7 +78,7 @@ namespace js
 		for (UIBase* child : mChilds)
 		{
 			if (child->mIsEnable)
-				child->OnRender(hdc);
+				child->Render(hdc);
 		}
 	}
 
@@ -86,7 +87,7 @@ namespace js
 		for (UIBase* child : mChilds)
 		{
 			if (child->mIsEnable)
-				child->OnClear();
+				child->UIClear();
 		}
 		OnClear();
 	}

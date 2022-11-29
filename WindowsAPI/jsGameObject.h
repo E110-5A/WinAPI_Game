@@ -22,8 +22,14 @@ namespace js
 
 		void SetPos(Pos pos) { mPos = pos; }
 		Pos GetPos() { return mPos; }
+		
 		void SetScale(Size scale) { mScale = scale; }
 		Size GetScale() { return mScale; }
+
+		void SetDir(Vector2 dir) { mDir = dir; }
+		Vector2 GetDir() { return mDir; }
+
+
 
 		void Death() { mDead = true; }
 		bool IsDeath() { return mDead; }
@@ -58,6 +64,8 @@ namespace js
 		std::vector<Component*> mComponents;
 		Pos		mPos;
 		Size	mScale;
+		Vector2 mDir;
+
 		bool	mDead;
 		float	mDeathTime;
 		bool	mBeDeath;

@@ -49,7 +49,7 @@ namespace js
 		{
 			Vector2 temp;
 			temp.x = x * other.x;
-			temp.y = x * other.y;
+			temp.y = y * other.y;
 			return temp;
 		}
 		Vector2 operator *(const float value)

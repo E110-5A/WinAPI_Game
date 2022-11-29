@@ -1,8 +1,15 @@
 #include "jsMonster.h"
-#include "jsResources.h"
-#include "jsCollider.h"
-#include "jsImage.h"
+
+// 매니저
 #include "jsCamera.h"
+// 리소스
+#include "jsResources.h"
+#include "jsImage.h"
+
+// 컴포넌트
+#include "jsCollider.h"
+#include "jsAnimator.h"
+#include "jsRigidbody.h"
 
 namespace js
 {
@@ -34,10 +41,10 @@ namespace js
 				(L"Mon", L"..\\Resources\\Image\\Enemy\\testMonster.bmp");
 		}
 		// 콜라이더 설정
-		Collider* monCollider = new Collider();
-		monCollider->SetPos(GetPos());
+		Collider* monCollider = AddComponent<Collider>();
 		monCollider->SetSize(Size(45.f, 70.f) * GetScale());
-		// AddComponent(monCollider);
+		AddComponent<Animator>();
+		AddComponent<Rigidbody>();
 	}
 
 	void Monster::Tick()

@@ -71,6 +71,9 @@
     <Filter Include="1 Engine\GameObject\TitleSceneObj">
       <UniqueIdentifier>{9fcee474-a63c-47b1-9774-6fedfdd76b88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1 Engine\GameObject\Game\Player">
+      <UniqueIdentifier>{118a1d99-fdc6-4f75-9b17-ae93e2ff5083}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -175,9 +178,6 @@
     <ClInclude Include="jsMonster.h">
       <Filter>1 Engine\GameObject\Game</Filter>
     </ClInclude>
-    <ClInclude Include="jsPlayer.h">
-      <Filter>1 Engine\GameObject\Game</Filter>
-    </ClInclude>
     <ClInclude Include="jsProjectile.h">
       <Filter>1 Engine\GameObject\Game</Filter>
     </ClInclude>
@@ -192,9 +192,6 @@
     </ClInclude>
     <ClInclude Include="jsUIManager.h">
       <Filter>1 Engine\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="jsPlayerProjectile.h">
-      <Filter>1 Engine\GameObject\Game</Filter>
     </ClInclude>
     <ClInclude Include="jsButton.h">
       <Filter>1 Engine\GameObject\UI</Filter>
@@ -222,6 +219,15 @@
     </ClInclude>
     <ClInclude Include="jsCommandoRun.h">
       <Filter>1 Engine\GameObject\TitleSceneObj</Filter>
+    </ClInclude>
+    <ClInclude Include="jsPlayer.h">
+      <Filter>1 Engine\GameObject\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="jsPlayerProjectile.h">
+      <Filter>1 Engine\GameObject\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="jsUIGameObject.h">
+      <Filter>1 Engine\GameObject\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -319,9 +325,6 @@
     <ClCompile Include="jsMonster.cpp">
       <Filter>1 Engine\GameObject\Game</Filter>
     </ClCompile>
-    <ClCompile Include="jsPlayer.cpp">
-      <Filter>1 Engine\GameObject\Game</Filter>
-    </ClCompile>
     <ClCompile Include="jsProjectile.cpp">
       <Filter>1 Engine\GameObject\Game</Filter>
     </ClCompile>
@@ -339,9 +342,6 @@
     </ClCompile>
     <ClCompile Include="jsUIManager.cpp">
       <Filter>1 Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="jsPlayerProjectile.cpp">
-      <Filter>1 Engine\GameObject\Game</Filter>
     </ClCompile>
     <ClCompile Include="jsButton.cpp">
       <Filter>1 Engine\GameObject\UI</Filter>
@@ -369,6 +369,15 @@
     </ClCompile>
     <ClCompile Include="jsCommandoRun.cpp">
       <Filter>1 Engine\GameObject\TitleSceneObj</Filter>
+    </ClCompile>
+    <ClCompile Include="jsPlayer.cpp">
+      <Filter>1 Engine\GameObject\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="jsPlayerProjectile.cpp">
+      <Filter>1 Engine\GameObject\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="jsUIGameObject.cpp">
+      <Filter>1 Engine\GameObject\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

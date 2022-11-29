@@ -8,6 +8,11 @@ namespace js
 	class Animator : public Component
 	{
 	public:
+		enum class eMode
+		{
+			GameObject,
+			UIObject,
+		};
 
 		// 콜백같은 기능 (델리게이트?)
 		struct Event
@@ -35,7 +40,7 @@ namespace js
 			Event		mEndEvent;
 		};
 
-		Animator();
+		Animator(eMode mode = eMode::GameObject);
 		~Animator();
 
 		virtual void Tick() override;
@@ -67,14 +72,14 @@ namespace js
 		std::function<void()>& GetCompleteEvents(const std::wstring& key);
 		std::function<void()>& GetEndEvents(const std::wstring& key);
 
-
+		eMode GetMode() { return mMode; }
 
 
 	private:
 		std::map<std::wstring, Animation*>	mAnimations;
-
 		// 애니메이션의 이름을 키값으로 각 애니메이션마다 3가지 이벤트를 가짐
 		std::map<std::wstring, Events*>		mEvents;
+		eMode								mMode = eMode::GameObject;
 
 		Animation*							mCurAnimation;
 		bool								mIsLoop;

@@ -4,6 +4,7 @@
 namespace js
 {
 	class Image;
+	class GameObject;
 	class UIBase : public Entity
 	{
 	public:
@@ -48,6 +49,8 @@ namespace js
 		Pos GetPos() { return mPos; }
 		void SetSize(Size size) { mSize = size; }
 		Size GetSize() { return mSize; }
+
+
 
 	protected:
 		virtual void OnInit() {};

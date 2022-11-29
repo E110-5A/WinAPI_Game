@@ -22,7 +22,7 @@ namespace js
 
 		Vector2 GetOffset() { return mOffset; }
 		Pos GetPos() { return mPos; }
-		Scale GetScale() { return mSize; }
+		Scale GetSize() { return mSize; }
 
 	private:
 		Vector2 mOffset;

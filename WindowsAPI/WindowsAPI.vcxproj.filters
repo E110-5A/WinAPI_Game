@@ -74,6 +74,9 @@
     <Filter Include="1 Engine\GameObject\Game\Player">
       <UniqueIdentifier>{118a1d99-fdc6-4f75-9b17-ae93e2ff5083}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1 Engine\GameObject\Game\Monster">
+      <UniqueIdentifier>{a1adc797-2a83-4b48-b5f3-25dbf8a71f22}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -175,9 +178,6 @@
     <ClInclude Include="jsToolScene.h">
       <Filter>1 Engine\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="jsMonster.h">
-      <Filter>1 Engine\GameObject\Game</Filter>
-    </ClInclude>
     <ClInclude Include="jsProjectile.h">
       <Filter>1 Engine\GameObject\Game</Filter>
     </ClInclude>
@@ -228,6 +228,15 @@
     </ClInclude>
     <ClInclude Include="jsUIGameObject.h">
       <Filter>1 Engine\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="jsMonster.h">
+      <Filter>1 Engine\GameObject\Game\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="jsImp.h">
+      <Filter>1 Engine\GameObject\Game\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="jsMonsterAttack.h">
+      <Filter>1 Engine\GameObject\Game\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -322,9 +331,6 @@
     <ClCompile Include="jsTilePalette.cpp">
       <Filter>1 Engine\GameObject\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="jsMonster.cpp">
-      <Filter>1 Engine\GameObject\Game</Filter>
-    </ClCompile>
     <ClCompile Include="jsProjectile.cpp">
       <Filter>1 Engine\GameObject\Game</Filter>
     </ClCompile>
@@ -378,6 +384,15 @@
     </ClCompile>
     <ClCompile Include="jsUIGameObject.cpp">
       <Filter>1 Engine\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="jsMonster.cpp">
+      <Filter>1 Engine\GameObject\Game\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="jsImp.cpp">
+      <Filter>1 Engine\GameObject\Game\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="jsMonsterAttack.cpp">
+      <Filter>1 Engine\GameObject\Game\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

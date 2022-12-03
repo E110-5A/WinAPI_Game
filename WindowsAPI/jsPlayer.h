@@ -15,11 +15,22 @@ namespace js
 		float range;		// 700
 	};
 
+	struct SkillInfo
+	{
+		float damage;
+		float castDelay;
+		int hitCount;
+		float coolDown;
+		bool unable;
+		float deletaTime;
+	};
+
 	class Image;
 	class Animator;
 	class Collider;
 	class Rigidbody;
 	class PlayerProjectile;
+
 	class Player : public GameObject
 	{
 	public:
@@ -30,6 +41,7 @@ namespace js
 		void Init();
 		void InitStat();
 		void InitAnim();
+		void InitSkill();
 
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
@@ -41,12 +53,21 @@ namespace js
 		
 		// 변수
 		PlayerStat GetInfo() { return mStat; }
-		void SetWeapon(PlayerProjectile* weapon) { mWeapon = weapon; }
+		void SetWeapon(PlayerProjectile* weapon) 
+		{
+			if (6 == mWeaponID)
+				return;
+			mWeapon[mWeaponID] == nullptr;
+			mWeapon[mWeaponID] = weapon;
+			mWeaponID++;
+		}
 		void SetHp(int hp) { mHp = hp; }
 		int GetHp() { return mHp; }
 		void SetSpeed(float value) { mSpeed = value; }
 
-
+		// 기능
+		void Cooldown();
+		void Attack(ePlayerAttackType type);	
 
 	public:
 		// 충돌관련 설정
@@ -77,14 +98,25 @@ namespace js
 
 	private:
 		Image*				mImage;
-		ePlayerState		mState;
 		PlayerStat			mStat;
-		PlayerProjectile*	mWeapon;
+		ePlayerState		mState;
+
+
+
+	private:
+		PlayerProjectile*	mWeapon[WEAPON_POOL];
+		int					mWeaponID;
+
+		SkillInfo			mDubleTab;
+		SkillInfo			mFMJ;
+		SkillInfo			mSupressiveFire;
+		SkillInfo			mTacticalDive;
 
 		// 임시
 	private:
 		float	mSpeed;
 		int		mHp;
+		float				mDelayTime;
+		int					mFireCount;
 	};
 }
-

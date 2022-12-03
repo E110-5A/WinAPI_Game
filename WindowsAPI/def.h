@@ -120,15 +120,17 @@ enum class ePlayerState
 	Idle,		// 아무 상태로 변환 가능
 	Move,		// 아무 상태로 변환 가능
 	Jump,		// 아무 상태로 변환 가능
-	Climb,
-	Attack,
-	Dodge,
-	Die,
+	Climb,		// 점프만 사용가능
+	Attack,		// 끝나기 전까지 변환 불가
+	Dodge,		// 끝나기 전까지 변환 불가
+	Die,		// 끝?
 };
 enum class ePlayerAttackType
 {
-	DubleTab,
-	FMJ,
-	SuppresiveFire,
+	DubleTab,			// 1번 기술
+	FMJ,				// 2번 기술
+	SuppresiveFire,		// 4번 기술
 	End,
 };
+
+#define WEAPON_POOL 12

@@ -15,11 +15,11 @@
 
 // obj
 #include "jsPlayer.h"
-#include "jsMonster.h"
 #include "jsBGObj.h"
 #include "jsObject.h"
 #include "jsGround.h"
 #include "jsPlayerProjectile.h"
+#include "jsImp.h"
 
 // component
 #include "jsCollider.h"
@@ -41,26 +41,27 @@ namespace js
 		// 720
 		
 		// 맵 로딩		
-		SceneManager::LoadMap<ToolScene>(L"..\\Resources\\Tile\\testMap",eSceneType::Tool);
+		//SceneManager::LoadMap<ToolScene>(L"..\\Resources\\Tile\\testMap",eSceneType::Tool);
+
+		// 배경 오브젝트
+		GameObject* testGround = object::Instantiate<Ground>(eColliderLayer::Ground, Pos(600.0f, 600.0f));
+		Collider* gCollider = testGround->GetComponent<Collider>();
+		gCollider->SetSize(Vector2(6600.0f, 50.0f));
 
 
 		// 오브젝트 추가
 		Player* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 480.f));
-		PlayerProjectile* pProjectile = object::Instantiate<PlayerProjectile>(eColliderLayer::Player_Projectile);
+		/*PlayerProjectile* pProjectile = object::Instantiate<PlayerProjectile>(eColliderLayer::Player_Projectile);
+		pProjectile->SetOwner(pPlayer);*/
 
-		GameObject* testMonster = object::Instantiate<Monster>(eColliderLayer::Monster, Pos(900.f, 480.f));
+		for (int idx = 0; idx < WEAPON_POOL; ++idx)
+		{
+			mPlayerAttack[idx] = object::Instantiate<PlayerProjectile>(eColliderLayer::Player_Projectile);
+			mPlayerAttack[idx]->SetOwner(pPlayer);
+		}
 
+		GameObject* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 480.f));
 
-
-		GameObject* testGround = object::Instantiate<Ground>(eColliderLayer::Ground, Pos(600.0f, 600.0f));
-		Collider* gCollider = testGround->GetComponent<Collider>();
-		gCollider->SetSize(Vector2(6600.0f, 50.0f));
-		//mons[0] = object::Instantiate<Monster>(eColliderLayer::Monster);
-
-
-
-		// 필요한 초기설정
-		pProjectile->SetOwner(pPlayer);
 
 
 		// ui 추가

@@ -3,7 +3,7 @@
 
 namespace js
 {
-	class Monster;
+	class PlayerProjectile;
 	class TestScene : public Scene
 	{
 	public:
@@ -18,6 +18,6 @@ namespace js
 		virtual void Exit();
 
 	private:
-		Monster* mons[2];
+		PlayerProjectile* mPlayerAttack[WEAPON_POOL];
 	};
 }

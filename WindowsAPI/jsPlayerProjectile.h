@@ -8,7 +8,7 @@ namespace js
 		Vector2				dir;		// 매번
 		float				range;		// 한번만
 		ePlayerAttackType	type;		// 매번
-		bool				isActive;	// 매번
+		bool				unable;	// 매번
 	};
 
 	class Collider;
@@ -30,29 +30,19 @@ namespace js
 
 		// 한번만 호출됨~!
 		void SetOwner(Player* owner);
+		void SetInfo();
 
+		bool IsActive() { return mInfo.unable; }
 
-		bool IsActive() { return mInfo.isActive; }
-
-		void Active(ePlayerAttackType type);
-		void InActive() { mInfo.isActive = false; }
+		void Active(ePlayerAttackType type, int damage);
+		void InActive() { mInfo.unable = false; }
 
 	private:
-		bool AmIDie()
-		{
-			// 시작위치 + X방향 * 700거리 = 목적지
-			Vector2 curPos = mCollider->GetPos();
-			float curDistance = fabs(mStartPos.x - curPos.x);
-			if (mInfo.range <= curDistance)
-			{
-				return true;
-			}
-			return false;
-		}
+		
 
 	private:
 		Collider* mCollider;
-		GameObject* mOwner;
+		Player* mOwner;
 		ProjectileInfo mInfo;
 
 		Pos mStartPos;

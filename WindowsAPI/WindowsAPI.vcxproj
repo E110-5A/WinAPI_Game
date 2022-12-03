@@ -148,6 +148,8 @@
     <ClInclude Include="jsGameObject.h" />
     <ClInclude Include="jsGround.h" />
     <ClInclude Include="jsHUD.h" />
+    <ClInclude Include="jsImp.h" />
+    <ClInclude Include="jsMonsterAttack.h" />
     <ClInclude Include="jsOptionScene.h" />
     <ClInclude Include="jsPanel.h" />
     <ClInclude Include="jsSelectScene.h" />
@@ -198,6 +200,8 @@
     <ClCompile Include="jsGameObject.cpp" />
     <ClCompile Include="jsGround.cpp" />
     <ClCompile Include="jsHUD.cpp" />
+    <ClCompile Include="jsImp.cpp" />
+    <ClCompile Include="jsMonsterAttack.cpp" />
     <ClCompile Include="jsOption.cpp" />
     <ClCompile Include="jsPanel.cpp" />
     <ClCompile Include="jsSelectScene.cpp" />

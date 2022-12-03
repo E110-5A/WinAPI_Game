@@ -25,7 +25,7 @@ void js::PlayerProjectile::Init()
 	mInfo.dir = Vector2::Right;
 	mInfo.range = 700;
 	mInfo.type = ePlayerAttackType::DubleTab;
-	mInfo.isActive = false;
+	mInfo.unable = false;
 	// 충돌체 설정
 	mCollider = new Collider();
 	AddComponent(mCollider);
@@ -36,7 +36,7 @@ void js::PlayerProjectile::Init()
 void js::PlayerProjectile::Tick()
 {
 	// 활성화 아니면 종료
-	if (mInfo.isActive == false)
+	if (mInfo.unable == false)
 		return;
 
 	// 충돌확인
@@ -44,7 +44,7 @@ void js::PlayerProjectile::Tick()
 
 	// 투사체 이동
 	Pos destPos = GetPos();
-	destPos.x += mInfo.dir.x * 13000.0f * Time::GetDeltaTime();
+	destPos.x += mInfo.dir.x * 9300.0f * Time::GetDeltaTime();
 	SetPos(destPos);
 
 	// 종료 조건 확인
@@ -65,7 +65,7 @@ void js::PlayerProjectile::Tick()
 
 void js::PlayerProjectile::Render(HDC hdc)
 {
-	if (mInfo.isActive == false)
+	if (mInfo.unable == false)
 		return;
 	GameObject::Render(hdc);
 }
@@ -82,7 +82,7 @@ void js::PlayerProjectile::OnCollisionEnter(Collider* other)
 	// 내가 FMJ 타입이 아니라면 삭제하기
 	if (!(mInfo.type == ePlayerAttackType::FMJ))
 	{
-		object::Destroy(this);
+		mInfo.unable = false;
 	}
 }
 void js::PlayerProjectile::OnCollisionStay(Collider* other)
@@ -97,9 +97,13 @@ void js::PlayerProjectile::SetOwner(Player* owner)
 	// 오너 설정
 	mOwner = owner;
 	owner->SetWeapon(this);
+	SetInfo();
+}
 
+void js::PlayerProjectile::SetInfo()
+{
 	// info 설정
-	mInfo.range = owner->GetInfo().range;
+	mInfo.range = mOwner->GetInfo().range;
 
 	// 충돌체 크기 설정
 	Collider* playerCollider = mOwner->GetComponent<Collider>();
@@ -108,10 +112,10 @@ void js::PlayerProjectile::SetOwner(Player* owner)
 }
 
 
-void js::PlayerProjectile::Active(ePlayerAttackType type)
+void js::PlayerProjectile::Active(ePlayerAttackType type, int damage)
 {
 	// 활성화
-	mInfo.isActive = true;
+	mInfo.unable = true;
 	// 방향 갱신
 	mInfo.dir = mOwner->GetDir();
 	// 타입 갱신
@@ -121,6 +125,6 @@ void js::PlayerProjectile::Active(ePlayerAttackType type)
 	// 위치 갱신
 	Pos pos = mOwner->GetPos();
 	SetPos(pos);
-	mStartPos = pos;			// 시작지점 기록
+	mStartPos = pos;				// 시작지점 기록
 }
 

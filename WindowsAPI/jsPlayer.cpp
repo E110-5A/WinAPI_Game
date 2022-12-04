@@ -145,18 +145,14 @@ namespace js
 
 		//mAnimator->GetCompleteEvents(L"PDubleTabR") = std::bind(&Player::ReturnIdle, this);
 		//mAnimator->GetCompleteEvents(L"PDubleTabL") = std::bind(&Player::ReturnIdle, this);
-
 		//mAnimator->GetCompleteEvents(L"PDiveR") = std::bind(&Player::ReturnIdle, this);
 		//mAnimator->GetCompleteEvents(L"PDiveL") = std::bind(&Player::ReturnIdle, this);
-
 		//mAnimator->GetCompleteEvents(L"PFMJR") = std::bind(&Player::ReturnIdle, this);
 		//mAnimator->GetCompleteEvents(L"PFMJL") = std::bind(&Player::ReturnIdle, this);
-
 		//mAnimator->GetCompleteEvents(L"PSuppressiveFireR") = std::bind(&Player::ReturnIdle, this);
 		//mAnimator->GetCompleteEvents(L"PSuppressiveFireL") = std::bind(&Player::ReturnIdle, this);
 		//mAnimator->GetCompleteEvents(L"PSuppressiveFireBothR") = std::bind(&Player::ReturnIdle, this);
 		//mAnimator->GetCompleteEvents(L"PSuppressiveFireBothL") = std::bind(&Player::ReturnIdle, this);
-
 	}
 	void Player::InitSkill()
 	{
@@ -208,11 +204,7 @@ namespace js
 	void Player::Tick()
 	{
 		GameObject::Tick();
-
-		// 애니메이션
-		PlayAnim();
 		
-
 		Cooldown();
 		SkillProcess();
 
@@ -264,80 +256,6 @@ namespace js
 		}
 		break;
 		}
-		//if (KEY_DOWN(eKeyCode::Z))
-		//{
-		//	// 비활성 상태면 return
-		//	if (true == mDubleTab.unable)
-		//		return;
-		//	else
-		//	{
-		//		Skill(ePlayerSkillType::DoubleTab);
-		//		mDubleTab.unable = true;
-		//		mDubleTab.on = true;
-		//	}
-		//}
-		//if (KEY_DOWN(eKeyCode::X))
-		//{
-		//	if (true == mFMJ.unable)
-		//		return;
-		//	else
-		//	{
-		//		Skill(ePlayerSkillType::FMJ);
-		//		mFMJ.unable = true;
-		//		mFMJ.on = true;
-		//	}
-		//}
-		//if (KEY_DOWN(eKeyCode::C))
-		//{
-		//	if (mTacticalDive.unable)
-		//		return;
-		//	else
-		//	{
-		//		Vector2 velocity = mRigidbody->GetVelocity();
-		//		velocity.x = GetDir().x * 300.0f * mSpeed;
-		//		mRigidbody->SetVelocity(velocity);
-		//		mTacticalDive.unable = true;
-		//	}
-		//}
-
-		//if (KEY_DOWN(eKeyCode::V))
-		//{
-		//	if (mSupressiveFire.unable)
-		//		return;
-		//	else
-		//	{
-		//		Skill(ePlayerSkillType::SuppresiveFire);
-		//		mSupressiveFire.unable = true;
-		//		mSupressiveFire.on = true;
-		//	}
-		//}
-
-		//if (KEY_PRESSE(eKeyCode::UP))
-		//{
-		//	GetComponent<Rigidbody>()->AddForce(Vector2::Up * mSpeed);
-		//}
-		//if (KEY_PRESSE(eKeyCode::DOWN))
-		//{
-		//	GetComponent<Rigidbody>()->AddForce(Vector2::Down * mSpeed);
-		//}
-		//if (KEY_PRESSE(eKeyCode::LEFT))
-		//{
-		//	SetDir(Vector2::Left);
-		//	GetComponent<Rigidbody>()->AddForce(Vector2::Left * mSpeed);
-		//}		
-		//if (KEY_PRESSE(eKeyCode::RIGHT))
-		//{
-		//	SetDir(Vector2::Right);
-		//	GetComponent<Rigidbody>()->AddForce(Vector2::Right * mSpeed);
-		//}
-
-		//if (KEY_DOWN(eKeyCode::SPACE))
-		//{
-		//	Vector2 velocity = mRigidbody->GetVelocity();
-		//	velocity.y = -500.0f;
-		//	mRigidbody->SetVelocity(velocity);
-		//	mRigidbody->SetGround(false);
-		//}
 	}
 
 	// State 시각적 디버깅
@@ -355,109 +273,6 @@ namespace js
 		TextOut(hdc, 10, 50, szFloat, strLen);
 	}
 
-	// 애니메이션 재생 로직
-	void Player::PlayAnim()
-	{
-		if (KEY_DOWN(eKeyCode::RIGHT))
-		{
-			mAnimator->Play(L"PWalkR");
-		}
-		if (KEY_DOWN(eKeyCode::LEFT))
-		{
-			mAnimator->Play(L"PWalkL");
-		}
-		if (KEY_DOWN(eKeyCode::Z))
-		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
-				mAnimator->Play(L"PDubleTabR");
-			else
-				mAnimator->Play(L"PDubleTabL");
-		}
-		if (KEY_DOWN(eKeyCode::X))
-		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
-				mAnimator->Play(L"PFMJR");
-			else
-				mAnimator->Play(L"PFMJL");
-		}
-		if (KEY_DOWN(eKeyCode::C))
-		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
-				mAnimator->Play(L"PDiveR");
-			else
-				mAnimator->Play(L"PDiveL");
-		}
-		if (KEY_DOWN(eKeyCode::V))
-		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
-				mAnimator->Play(L"PSuppressiveFireR");
-			else
-				mAnimator->Play(L"PSuppressiveFireL");
-		}
-		if (KEY_DOWN(eKeyCode::D))
-		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
-				mAnimator->Play(L"PDeathR", false);
-			else
-				mAnimator->Play(L"PDeathL", false);
-		}
-		if (KEY_UP(eKeyCode::RIGHT))
-		{
-			mAnimator->Play(L"PIdleR");
-		}
-		if (KEY_UP(eKeyCode::LEFT))
-		{
-			mAnimator->Play(L"PIdleL");
-		}
-		if (KEY_DOWN(eKeyCode::UP))
-		{
-			mAnimator->Play(L"PClimb");
-		}
-		if (KEY_DOWN(eKeyCode::DOWN))
-		{
-			mAnimator->Play(L"PClimb");
-		}
-		if (KEY_DOWN(eKeyCode::SPACE))
-		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
-				mAnimator->Play(L"PJumpR");
-			else
-				mAnimator->Play(L"PJumpL");
-		}
-
-		if (KEY_UP(eKeyCode::SPACE))
-		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
-				mAnimator->Play(L"PIdleR");
-			else
-				mAnimator->Play(L"PIdleL");
-		}
-
-		if (KEY_UP(eKeyCode::UP))
-		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
-				mAnimator->Play(L"PIdleR");
-			else
-				mAnimator->Play(L"PIdleL");
-		}
-		if (KEY_UP(eKeyCode::DOWN))
-		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
-				mAnimator->Play(L"PIdleR");
-			else
-				mAnimator->Play(L"PIdleL");
-		}
-
-	}
 	// Done
 	void Player::Cooldown()
 	{
@@ -672,6 +487,7 @@ namespace js
 	{
 	}
 	
+	// 필요없음
 	void Player::ReturnIdle()
 	{
 		Vector2 dir = GetDir();
@@ -683,47 +499,98 @@ namespace js
 
 	void Player::Idle()
 	{
-		// 애니메이션
+		// 이동 애니메이션
+		if (KEY_PRESSE(eKeyCode::RIGHT))
+		{
+			mAnimator->Play(L"PWalkR");
+		}
+		if (KEY_PRESSE(eKeyCode::LEFT))
+		{
+			mAnimator->Play(L"PWalkL");
+		}		
 
-
-		// 상태 전환
+		// Move 상태 (애니메이션 X)
 		if (KEY_PRESSE(eKeyCode::LEFT) || KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			mState = ePlayerState::Move;
 		}
-
+		// Jump 상태 (애니메이션 O)
 		if (KEY_DOWN(eKeyCode::SPACE))
 		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"PJumpR");
+			else
+				mAnimator->Play(L"PJumpL");
 			mState = ePlayerState::Jump;
-
 		}
 
+		// DoubleTab 상태 (애니 O)
 		if (KEY_PRESSE(eKeyCode::Z))
 		{
 			if (false == mDubleTab.unable)
+			{
+				Vector2 dir = GetDir();
+				if (dir == Vector2::Right)
+					mAnimator->Play(L"PDubleTabR", false);
+				else
+					mAnimator->Play(L"PDubleTabL", false);
 				mState = ePlayerState::DoubleTab;
+			}
 		}
+		// FMJ 상태 (애니 O)
 		if (KEY_DOWN(eKeyCode::X))
 		{
 			if (false == mFMJ.unable)
+			{
+				Vector2 dir = GetDir();
+				if (dir == Vector2::Right)
+					mAnimator->Play(L"PFMJR", false);
+				else
+					mAnimator->Play(L"PFMJL", false);
 				mState = ePlayerState::FMJ;
+			}
 		}
+		// SupressiveFire 상태 (애니 O)
 		if (KEY_DOWN(eKeyCode::V))
 		{
 			if (false == mSupressiveFire.unable)
+			{
+				Vector2 dir = GetDir();
+				if (dir == Vector2::Right)
+					mAnimator->Play(L"PSuppressiveFireR", false);
+				else
+					mAnimator->Play(L"PSuppressiveFireL", false);
 				mState = ePlayerState::SupressiveFire;
+			}
 		}
+		// TacticalDive 상태 (애니 O)
 		if (KEY_DOWN(eKeyCode::C))
 		{
 			if (false == mTacticalDive.unable)
+			{
+				Vector2 dir = GetDir();
+				if (dir == Vector2::Right)
+					mAnimator->Play(L"PDiveR", false);
+				else
+					mAnimator->Play(L"PDiveL", false);
 				mState = ePlayerState::TacticalDive;
+			}
 		}
 	}
 	void Player::Move()
 	{
-		// 애니메이션
-		
-		
+		// 대기 애니메이션
+		if (KEY_UP(eKeyCode::RIGHT))
+		{
+			mAnimator->Play(L"PIdleR");
+		}
+		if (KEY_UP(eKeyCode::LEFT))
+		{
+			mAnimator->Play(L"PIdleL");
+		}
+
+
 		// 로직
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
@@ -736,41 +603,87 @@ namespace js
 			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mSpeed);
 		}
 
-		// 상태 전환
+		// Idle 상태 (애니메이션 X)
 		if (KEY_UP(eKeyCode::LEFT) || KEY_UP(eKeyCode::RIGHT))
 		{
 			mState = ePlayerState::Idle;
 		}
+		// Jump 상태 (애니메이션 O)
 		if (KEY_DOWN(eKeyCode::SPACE))
 		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"PJumpR");
+			else
+				mAnimator->Play(L"PJumpL");
 			mState = ePlayerState::Jump;
 		}
 
+		// DoubleTab 상태 (애니 O)
 		if (KEY_PRESSE(eKeyCode::Z))
 		{
 			if (false == mDubleTab.unable)
+			{
+				Vector2 dir = GetDir();
+				if (dir == Vector2::Right)
+					mAnimator->Play(L"PDubleTabR", false);
+				else
+					mAnimator->Play(L"PDubleTabL", false);
 				mState = ePlayerState::DoubleTab;
+			}
 		}
+		// FMJ 상태 (애니 O)
 		if (KEY_DOWN(eKeyCode::X))
 		{
 			if (false == mFMJ.unable)
+			{
+				Vector2 dir = GetDir();
+				if (dir == Vector2::Right)
+					mAnimator->Play(L"PFMJR", false);
+				else
+					mAnimator->Play(L"PFMJL", false);
 				mState = ePlayerState::FMJ;
+			}
 		}
+		// SupressiveFire 상태 (애니 O)
 		if (KEY_DOWN(eKeyCode::V))
 		{
 			if (false == mSupressiveFire.unable)
+			{
+				Vector2 dir = GetDir();
+				if (dir == Vector2::Right)
+					mAnimator->Play(L"PSuppressiveFireR", false);
+				else
+					mAnimator->Play(L"PSuppressiveFireL", false);
 				mState = ePlayerState::SupressiveFire;
+			}
 		}
+		// TacticalDive 상태 (애니 O)
 		if (KEY_DOWN(eKeyCode::C))
 		{
 			if (false == mTacticalDive.unable)
+			{
+				Vector2 dir = GetDir();
+				if (dir == Vector2::Right)
+					mAnimator->Play(L"PDiveR", false);
+				else
+					mAnimator->Play(L"PDiveL", false);
 				mState = ePlayerState::TacticalDive;
+			}
 		}
 	}
 	void Player::Jump()
 	{
-		// 애니메이션
-		
+		// 점프 애니메이션
+		if (KEY_DOWN(eKeyCode::RIGHT))
+		{
+			mAnimator->Play(L"PJumpR");
+		}
+		if (KEY_DOWN(eKeyCode::LEFT))
+		{
+			mAnimator->Play(L"PJumpL");
+		}
+
 		// 로직
 		if (KEY_PRESSE(eKeyCode::SPACE) && true == mRigidbody->IsGrounded())
 		{
@@ -791,31 +704,68 @@ namespace js
 		}
 
 
-		// 상태 전환
+		// Idle 상태 (애니메이션 O)
 		if (true == mRigidbody->IsGrounded())
 		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"PIdleR");
+			else
+				mAnimator->Play(L"PIdleL");
 			mState = ePlayerState::Idle;
 		}
 		
+		// DoubleTab 상태 (애니 O)
 		if (KEY_PRESSE(eKeyCode::Z))
 		{
 			if (false == mDubleTab.unable)
+			{
+				Vector2 dir = GetDir();
+				if (dir == Vector2::Right)
+					mAnimator->Play(L"PDubleTabR", false);
+				else
+					mAnimator->Play(L"PDubleTabL", false);
 				mState = ePlayerState::DoubleTab;
+			}
 		}
+		// FMJ 상태 (애니 O)
 		if (KEY_DOWN(eKeyCode::X))
 		{
 			if (false == mFMJ.unable)
+			{
+				Vector2 dir = GetDir();
+				if (dir == Vector2::Right)
+					mAnimator->Play(L"PFMJR", false);
+				else
+					mAnimator->Play(L"PFMJL", false);
 				mState = ePlayerState::FMJ;
+			}
 		}
+		// SupressiveFire 상태 (애니 O)
 		if (KEY_DOWN(eKeyCode::V))
 		{
 			if (false == mSupressiveFire.unable)
+			{
+				Vector2 dir = GetDir();
+				if (dir == Vector2::Right)
+					mAnimator->Play(L"PSuppressiveFireR", false);
+				else
+					mAnimator->Play(L"PSuppressiveFireL", false);
 				mState = ePlayerState::SupressiveFire;
+			}
 		}
+		// TacticalDive 상태 (애니 O)
 		if (KEY_DOWN(eKeyCode::C))
 		{
 			if (false == mTacticalDive.unable)
+			{
+				Vector2 dir = GetDir();
+				if (dir == Vector2::Right)
+					mAnimator->Play(L"PDiveR", false);
+				else
+					mAnimator->Play(L"PDiveL", false);
 				mState = ePlayerState::TacticalDive;
+			}
 		}
 	}
 	// 사다리는 나중에 구현
@@ -835,9 +785,7 @@ namespace js
 	}
 	
 	void Player::DoubleTab()
-	{
-		// 애니메이션
-		
+	{		
 		// 로직
 		if (KEY_PRESSE(eKeyCode::Z))
 		{
@@ -847,25 +795,34 @@ namespace js
 			}
 		}
 		
-		// 상태 전환
+		// Idle 상태 (애니메이션 O)
 		if (true == mDubleTab.finish)
 		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"PIdleR");
+			else
+				mAnimator->Play(L"PIdleL");
 			mState = ePlayerState::Idle;
 			mDubleTab.finish = false;
 		}
 	}
 	void Player::FMJ()
 	{
-		// 애니메이션
-
 		// 로직
 		if (false == mFMJ.unable)
 		{
 			Skill(ePlayerSkillType::FMJ);
 		}
-		// 상태 전환
+
+		// Idle 상태 (애니메이션 O)
 		if (true == mFMJ.finish)
 		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"PIdleR");
+			else
+				mAnimator->Play(L"PIdleL");
 			mState = ePlayerState::Idle;
 			mFMJ.finish = false;
 		}
@@ -877,9 +834,15 @@ namespace js
 		{
 			Skill(ePlayerSkillType::TacticalDive);
 		}
-		// 회피가 끝나면 Idle 상태로 변환
+		
+		// Idle 상태 (애니메이션 O)
 		if (true == mTacticalDive.finish)
 		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"PIdleR");
+			else
+				mAnimator->Play(L"PIdleL");
 			mState = ePlayerState::Idle;
 			mTacticalDive.finish = false;
 		}
@@ -890,8 +853,15 @@ namespace js
 		{
 			Skill(ePlayerSkillType::SuppresiveFire);
 		}
+
+		// Idle 상태 (애니메이션 O)
 		if (true == mSupressiveFire.finish)
 		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"PIdleR");
+			else
+				mAnimator->Play(L"PIdleL");
 			mState = ePlayerState::Idle;
 			mSupressiveFire.finish = false;
 		}

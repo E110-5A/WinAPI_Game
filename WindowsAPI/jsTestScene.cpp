@@ -43,6 +43,8 @@ namespace js
 		// 맵 로딩		
 		//SceneManager::LoadMap<ToolScene>(L"..\\Resources\\Tile\\testMap",eSceneType::Tool);
 
+
+
 		// 배경 오브젝트
 		GameObject* testGround = object::Instantiate<Ground>(eColliderLayer::Ground, Pos(600.0f, 600.0f));
 		Collider* gCollider = testGround->GetComponent<Collider>();
@@ -51,16 +53,16 @@ namespace js
 
 		// 오브젝트 추가
 		Player* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 480.f));
-		/*PlayerProjectile* pProjectile = object::Instantiate<PlayerProjectile>(eColliderLayer::Player_Projectile);
-		pProjectile->SetOwner(pPlayer);*/
-
+		
 		for (int idx = 0; idx < WEAPON_POOL; ++idx)
 		{
 			mPlayerAttack[idx] = object::Instantiate<PlayerProjectile>(eColliderLayer::Player_Projectile);
 			mPlayerAttack[idx]->SetOwner(pPlayer);
 		}
 
-		GameObject* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 480.f));
+		//GameObject* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 480.f));
+
+
 
 
 

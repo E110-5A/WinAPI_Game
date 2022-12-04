@@ -14,6 +14,7 @@ namespace js
 		void AddForce(Vector2 force) { mForce += force; }
 		void SetMass(float mass) { mMass = mass; }
 		void SetGround(bool isGround) { mIsGround = isGround; }
+		bool IsGrounded() { return mIsGround; }
 		Vector2 GetVelocity() { return mVelocity; }
 		void SetVelocity(Vector2 velocity) { mVelocity = velocity; }
 

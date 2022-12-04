@@ -24,7 +24,7 @@ void js::PlayerProjectile::Init()
 
 	mInfo.dir = Vector2::Right;
 	mInfo.range = 700;
-	mInfo.type = ePlayerAttackType::DubleTab;
+	mInfo.type = ePlayerSkillType::DoubleTab;
 	mInfo.unable = false;
 	// 충돌체 설정
 	mCollider = new Collider();
@@ -80,7 +80,7 @@ void js::PlayerProjectile::OnCollisionEnter(Collider* other)
 
 
 	// 내가 FMJ 타입이 아니라면 삭제하기
-	if (!(mInfo.type == ePlayerAttackType::FMJ))
+	if (!(mInfo.type == ePlayerSkillType::FMJ))
 	{
 		mInfo.unable = false;
 	}
@@ -113,7 +113,7 @@ void js::PlayerProjectile::SetInfo()
 
 
 
-void js::PlayerProjectile::Active(ePlayerAttackType type, int damage)
+void js::PlayerProjectile::Active(ePlayerSkillType type, int damage)
 {
 	// 활성화
 	mInfo.unable = true;

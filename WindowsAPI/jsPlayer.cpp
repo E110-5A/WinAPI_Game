@@ -143,62 +143,66 @@ namespace js
 		mAnimator->CreateAnimation(L"PSuppressiveFireBothL", mImage, Pos(0.f, 465.f), Size(114.f, 39.f)
 			, Vector2(0.f, 0.f), 15, 0.08f);
 
-		mAnimator->GetCompleteEvents(L"PDubleTabR") = std::bind(&Player::ReturnIdle, this);
-		mAnimator->GetCompleteEvents(L"PDubleTabL") = std::bind(&Player::ReturnIdle, this);
+		//mAnimator->GetCompleteEvents(L"PDubleTabR") = std::bind(&Player::ReturnIdle, this);
+		//mAnimator->GetCompleteEvents(L"PDubleTabL") = std::bind(&Player::ReturnIdle, this);
 
-		mAnimator->GetCompleteEvents(L"PDiveR") = std::bind(&Player::ReturnIdle, this);
-		mAnimator->GetCompleteEvents(L"PDiveL") = std::bind(&Player::ReturnIdle, this);
+		//mAnimator->GetCompleteEvents(L"PDiveR") = std::bind(&Player::ReturnIdle, this);
+		//mAnimator->GetCompleteEvents(L"PDiveL") = std::bind(&Player::ReturnIdle, this);
 
-		mAnimator->GetCompleteEvents(L"PFMJR") = std::bind(&Player::ReturnIdle, this);
-		mAnimator->GetCompleteEvents(L"PFMJL") = std::bind(&Player::ReturnIdle, this);
+		//mAnimator->GetCompleteEvents(L"PFMJR") = std::bind(&Player::ReturnIdle, this);
+		//mAnimator->GetCompleteEvents(L"PFMJL") = std::bind(&Player::ReturnIdle, this);
 
-		mAnimator->GetCompleteEvents(L"PSuppressiveFireR") = std::bind(&Player::ReturnIdle, this);
-		mAnimator->GetCompleteEvents(L"PSuppressiveFireL") = std::bind(&Player::ReturnIdle, this);
-		mAnimator->GetCompleteEvents(L"PSuppressiveFireBothR") = std::bind(&Player::ReturnIdle, this);
-		mAnimator->GetCompleteEvents(L"PSuppressiveFireBothL") = std::bind(&Player::ReturnIdle, this);
+		//mAnimator->GetCompleteEvents(L"PSuppressiveFireR") = std::bind(&Player::ReturnIdle, this);
+		//mAnimator->GetCompleteEvents(L"PSuppressiveFireL") = std::bind(&Player::ReturnIdle, this);
+		//mAnimator->GetCompleteEvents(L"PSuppressiveFireBothR") = std::bind(&Player::ReturnIdle, this);
+		//mAnimator->GetCompleteEvents(L"PSuppressiveFireBothL") = std::bind(&Player::ReturnIdle, this);
 
 	}
 	void Player::InitSkill()
 	{
 		mDubleTab.damage = 60.f;
-		mDubleTab.maxHit = 2;
-		mDubleTab.curHit = 2;
+		mDubleTab.maxCount = 2;
+		mDubleTab.curCount = 0;
 		mDubleTab.castDelay = mStat.attSpeed * 0.14f;
 		mDubleTab.castDelayTime = 0.0f;
 		mDubleTab.coolDown = mStat.attSpeed * 0.4f;
 		mDubleTab.coolDownTime = 0.0f;
 		mDubleTab.unable = false;
 		mDubleTab.on = false;
+		mDubleTab.finish = false;
 
 		mFMJ.damage = 230.f;
-		mFMJ.maxHit = 1;
-		mFMJ.curHit = 1;
-		mFMJ.castDelay = mStat.attSpeed * 0.8;
+		mFMJ.maxCount = 1;
+		mFMJ.curCount = 0;
+		mFMJ.castDelay = 0.60f;
 		mFMJ.castDelayTime = 0.0f;
 		mFMJ.coolDown = 3.0f;
 		mFMJ.coolDownTime = 0.0f;
 		mFMJ.unable = false;
 		mFMJ.on = false;
+		mFMJ.finish = false;
 
 		mTacticalDive.damage = 0.f;
-		mTacticalDive.maxHit = 0;
-		mTacticalDive.curHit = 0;
-		mTacticalDive.castDelay = 1.f;
+		mTacticalDive.maxCount = 1;
+		mTacticalDive.curCount = 0;
+		mTacticalDive.castDelay = 0.70f;
 		mTacticalDive.castDelayTime = 0.0f;
 		mTacticalDive.coolDown = 5.0f;
 		mTacticalDive.coolDownTime = 0.0f;
 		mTacticalDive.unable = false;
 		mTacticalDive.on = false;
+		mTacticalDive.finish = false;
 
 		mSupressiveFire.damage = 60.f;
-		mSupressiveFire.maxHit = 6;
-		mSupressiveFire.curHit = 0;
+		mSupressiveFire.maxCount = 6;
+		mSupressiveFire.curCount = 0;
 		mSupressiveFire.castDelay = mStat.attSpeed * 0.14f;
 		mSupressiveFire.castDelayTime = 0.0f;
 		mSupressiveFire.coolDown = 5.0f;
 		mSupressiveFire.coolDownTime = 0.0f;
 		mSupressiveFire.unable = false;
 		mSupressiveFire.on = false;
+		mSupressiveFire.finish = false;
 	}
 
 	void Player::Tick()
@@ -208,6 +212,10 @@ namespace js
 		// 애니메이션
 		PlayAnim();
 		
+
+		Cooldown();
+		SkillProcess();
+
 		switch (mState)
 		{
 		case ePlayerState::Idle:
@@ -230,109 +238,124 @@ namespace js
 			Climb();
 		}
 		break;
-		case ePlayerState::Attack:
+		case ePlayerState::DoubleTab:
 		{
-			Attack();
+			DoubleTab();
 		}
 		break;
-		case ePlayerState::Dodge:
+		case ePlayerState::FMJ:
 		{
-			Dodge();
+			FMJ();
 		}
 		break;
-		case ePlayerState::Die:
+		case ePlayerState::SupressiveFire:
 		{
-			Die();
+			SupressiveFire();
+		}
+		break;
+		case ePlayerState::TacticalDive:
+		{
+			TacticalDive();
+		}
+		break;
+		case ePlayerState::Death:
+		{
+			Death();
 		}
 		break;
 		}
+		//if (KEY_DOWN(eKeyCode::Z))
+		//{
+		//	// 비활성 상태면 return
+		//	if (true == mDubleTab.unable)
+		//		return;
+		//	else
+		//	{
+		//		Skill(ePlayerSkillType::DoubleTab);
+		//		mDubleTab.unable = true;
+		//		mDubleTab.on = true;
+		//	}
+		//}
+		//if (KEY_DOWN(eKeyCode::X))
+		//{
+		//	if (true == mFMJ.unable)
+		//		return;
+		//	else
+		//	{
+		//		Skill(ePlayerSkillType::FMJ);
+		//		mFMJ.unable = true;
+		//		mFMJ.on = true;
+		//	}
+		//}
+		//if (KEY_DOWN(eKeyCode::C))
+		//{
+		//	if (mTacticalDive.unable)
+		//		return;
+		//	else
+		//	{
+		//		Vector2 velocity = mRigidbody->GetVelocity();
+		//		velocity.x = GetDir().x * 300.0f * mSpeed;
+		//		mRigidbody->SetVelocity(velocity);
+		//		mTacticalDive.unable = true;
+		//	}
+		//}
 
+		//if (KEY_DOWN(eKeyCode::V))
+		//{
+		//	if (mSupressiveFire.unable)
+		//		return;
+		//	else
+		//	{
+		//		Skill(ePlayerSkillType::SuppresiveFire);
+		//		mSupressiveFire.unable = true;
+		//		mSupressiveFire.on = true;
+		//	}
+		//}
 
-		Cooldown();
-		SkillProcess();
+		//if (KEY_PRESSE(eKeyCode::UP))
+		//{
+		//	GetComponent<Rigidbody>()->AddForce(Vector2::Up * mSpeed);
+		//}
+		//if (KEY_PRESSE(eKeyCode::DOWN))
+		//{
+		//	GetComponent<Rigidbody>()->AddForce(Vector2::Down * mSpeed);
+		//}
+		//if (KEY_PRESSE(eKeyCode::LEFT))
+		//{
+		//	SetDir(Vector2::Left);
+		//	GetComponent<Rigidbody>()->AddForce(Vector2::Left * mSpeed);
+		//}		
+		//if (KEY_PRESSE(eKeyCode::RIGHT))
+		//{
+		//	SetDir(Vector2::Right);
+		//	GetComponent<Rigidbody>()->AddForce(Vector2::Right * mSpeed);
+		//}
 
-		if (KEY_DOWN(eKeyCode::Z))
-		{
-			// 비활성 상태면 return
-			if (true == mDubleTab.unable)
-				return;
-			else
-			{
-				Attack(ePlayerAttackType::DubleTab);
-				mDubleTab.unable = true;
-				mDubleTab.on = true;
-			}
-		}
-		if (KEY_DOWN(eKeyCode::X))
-		{
-			if (true == mFMJ.unable)
-				return;
-			else
-			{
-				Attack(ePlayerAttackType::FMJ);
-				mFMJ.unable = true;
-				mFMJ.on = true;
-			}
-		}
-		if (KEY_DOWN(eKeyCode::C))
-		{
-			if (mTacticalDive.unable)
-				return;
-			else
-			{
-				Vector2 velocity = mRigidbody->GetVelocity();
-
-				velocity.x = GetDir().x * 300.0f * mSpeed;
-				mRigidbody->SetVelocity(velocity);
-				mTacticalDive.unable = true;
-			}
-		}
-		if (KEY_DOWN(eKeyCode::V))
-		{
-			if (mSupressiveFire.unable)
-				return;
-			else
-			{
-				Attack(ePlayerAttackType::SuppresiveFire);
-				mSupressiveFire.unable = true;
-				mSupressiveFire.on = true;
-			}
-		}
-
-		if (KEY_PRESSE(eKeyCode::UP))
-		{
-			GetComponent<Rigidbody>()->AddForce(Vector2::Up * mSpeed);
-		}
-		if (KEY_PRESSE(eKeyCode::DOWN))
-		{
-			GetComponent<Rigidbody>()->AddForce(Vector2::Down * mSpeed);
-		}
-		if (KEY_PRESSE(eKeyCode::LEFT))
-		{
-			SetDir(Vector2::Left);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mSpeed);
-		}		
-		if (KEY_PRESSE(eKeyCode::RIGHT))
-		{
-			SetDir(Vector2::Right);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mSpeed);
-		}
-
-		if (KEY_DOWN(eKeyCode::SPACE))
-		{
-			Vector2 velocity = mRigidbody->GetVelocity();
-			velocity.y = -500.0f;
-			mRigidbody->SetVelocity(velocity);
-			mRigidbody->SetGround(false);
-		}
-
-
+		//if (KEY_DOWN(eKeyCode::SPACE))
+		//{
+		//	Vector2 velocity = mRigidbody->GetVelocity();
+		//	velocity.y = -500.0f;
+		//	mRigidbody->SetVelocity(velocity);
+		//	mRigidbody->SetGround(false);
+		//}
 	}
 
+	// State 시각적 디버깅
 	void Player::Render(HDC hdc)
 	{
 		GameObject::Render(hdc);
+
+		wchar_t szFloat[40] = {};
+
+		std::wstring stateStr = L"현재 State :";
+		stateStr += std::to_wstring((int)mState);
+
+		swprintf_s(szFloat, 40, stateStr.c_str());
+		int strLen = wcsnlen_s(szFloat, 40);
+		TextOut(hdc, 10, 50, szFloat, strLen);
 	}
+
+	// 애니메이션 재생 로직
 	void Player::PlayAnim()
 	{
 		if (KEY_DOWN(eKeyCode::RIGHT))
@@ -435,7 +458,6 @@ namespace js
 		}
 
 	}
-
 	// Done
 	void Player::Cooldown()
 	{
@@ -476,8 +498,7 @@ namespace js
 			}
 		}
 	}
-
-	// 테스트 진행중
+	// Done
 	void Player::SkillProcess()
 	{
 		// 시간을 재서 여러 호출간 딜레이를 넣어줌
@@ -490,22 +511,71 @@ namespace js
 			// 딜레이 계산
 			mDubleTab.castDelayTime += Time::GetDeltaTime();
 
-			// while문 잘못씀
 			// 스킬 카운트가 유효하다면 반복
-			if (mDubleTab.curHit < mDubleTab.maxHit)
+			if (mDubleTab.curCount < mDubleTab.maxCount)
 			{
 				// 시전 준비가 되면 발사
 				if (mDubleTab.castDelayTime >= mDubleTab.castDelay)
 				{
-					Attack(ePlayerAttackType::DubleTab);
+					Skill(ePlayerSkillType::DoubleTab);
 					mDubleTab.castDelayTime = 0.0f;
-					++mDubleTab.curHit;
+					++mDubleTab.curCount;
 				}
 			}
 			else
 			{
-				mDubleTab.curHit = 0;
+				mDubleTab.curCount = 0;
 				mDubleTab.on = false;
+				mDubleTab.finish = true;
+			}
+		}
+
+		// 스킬을 사용중이라면
+		if (true == mFMJ.on)
+		{
+			// 딜레이 계산
+			mFMJ.castDelayTime += Time::GetDeltaTime();
+
+			// 횟수 제한
+			if (mFMJ.curCount < mFMJ.maxCount)
+			{
+				Skill(ePlayerSkillType::FMJ);
+				++mFMJ.curCount;
+			}
+			
+			// 딜레이 진행
+			if (mFMJ.castDelayTime >= mFMJ.castDelay)
+			{
+				mFMJ.castDelayTime = 0.0f;
+				mFMJ.curCount = 0;
+				mFMJ.on = false;
+				mFMJ.finish = true;
+			}
+		}
+
+		if (true == mTacticalDive.on)
+		{
+			// 딜레이 계산
+			mTacticalDive.castDelayTime += Time::GetDeltaTime();
+
+			// 횟수 제한
+			if (mTacticalDive.curCount < mTacticalDive.maxCount)
+			{
+				Vector2 velocity = mRigidbody->GetVelocity();
+				velocity.x = GetDir().x * 300.0f * mSpeed;
+				mRigidbody->SetVelocity(velocity);
+				++mTacticalDive.curCount;
+			}
+			// 회피 로직
+			
+
+			// 딜레이 진행
+			if (mTacticalDive.castDelayTime >= mTacticalDive.castDelay)
+			{
+				mTacticalDive.castDelayTime = 0.0f;
+				mTacticalDive.curCount = 0;
+				mTacticalDive.on = false;
+				mTacticalDive.finish = true;
 			}
 		}
 		if (true == mSupressiveFire.on)
@@ -513,63 +583,76 @@ namespace js
 			// 딜레이 계산
 			mSupressiveFire.castDelayTime += Time::GetDeltaTime();
 
-			// while문 잘못씀
 			// 스킬 카운트가 유효하다면 반복
-			if (mSupressiveFire.curHit < mSupressiveFire.maxHit)
+			if (mSupressiveFire.curCount < mSupressiveFire.maxCount)
 			{
 				// 시전 준비가 되면 발사
 				if (mSupressiveFire.castDelayTime >= mSupressiveFire.castDelay)
 				{
-					Attack(ePlayerAttackType::SuppresiveFire);
+					Skill(ePlayerSkillType::SuppresiveFire);
 					mSupressiveFire.castDelayTime = 0.0f;
-					++mSupressiveFire.curHit;
+					++mSupressiveFire.curCount;
 				}
 			}
 			else
 			{
-				mSupressiveFire.curHit = 0;
+				mSupressiveFire.curCount = 0;
 				mSupressiveFire.on = false;
+				mSupressiveFire.finish = true;
 			}
 		}
 	}
-
-	// 추후 수정해야함
-	void Player::Attack(ePlayerAttackType type)
+	// Done
+	void Player::Skill(ePlayerSkillType type)
 	{
 		switch (type)
 		{
-		case ePlayerAttackType::DubleTab:
+		case ePlayerSkillType::DoubleTab:
 		{
 			// 투사체 풀에서 끌어다가 사용
 			for (int idx = 0; idx < WEAPON_POOL; ++idx)
 			{
+				// 사용 대기중인 투사체 찾으면
 				if (mWeapon[idx]->IsActive() == false)
 				{
+					// Active상태로 만들고
 					mWeapon[idx]->Active(type, mDubleTab.damage);
+					mDubleTab.unable = true;
+					mDubleTab.on = true;
 					break;
 				}
 			}
 		}
 		break;
-		case ePlayerAttackType::FMJ:
+		case ePlayerSkillType::FMJ:
 		{
 			for (int idx = 0; idx < WEAPON_POOL; ++idx)
 			{
 				if (mWeapon[idx]->IsActive() == false)
 				{
 					mWeapon[idx]->Active(type, mFMJ.damage);
+					mFMJ.unable = true;
+					mFMJ.on = true;
 					break;
 				}
 			}
 		}
 		break;
-		case ePlayerAttackType::SuppresiveFire:
+		case ePlayerSkillType::TacticalDive:
+		{
+			mTacticalDive.unable = true;
+			mTacticalDive.on = true;
+		}
+		break;
+		case ePlayerSkillType::SuppresiveFire:
 		{
 			for (int idx = 0; idx < WEAPON_POOL; ++idx)
 			{
 				if (mWeapon[idx]->IsActive() == false)
 				{
 					mWeapon[idx]->Active(type, mSupressiveFire.damage);
+					mSupressiveFire.unable = true;
+					mSupressiveFire.on = true;
 					break;
 				}
 			}
@@ -578,6 +661,7 @@ namespace js
 		}
 	}
 
+	// nothing
 	void Player::OnCollisionEnter(Collider* other)
 	{
 	}
@@ -596,63 +680,226 @@ namespace js
 		else
 			mAnimator->Play(L"PIdleL");
 	}
+
 	void Player::Idle()
 	{
-		// 상태 변환 로직
+		// 애니메이션
+
+
+		// 상태 전환
+		if (KEY_PRESSE(eKeyCode::LEFT) || KEY_PRESSE(eKeyCode::RIGHT))
+		{
+			mState = ePlayerState::Move;
+		}
+
+		if (KEY_DOWN(eKeyCode::SPACE))
+		{
+			mState = ePlayerState::Jump;
+
+		}
+
+		if (KEY_PRESSE(eKeyCode::Z))
+		{
+			if (false == mDubleTab.unable)
+				mState = ePlayerState::DoubleTab;
+		}
+		if (KEY_DOWN(eKeyCode::X))
+		{
+			if (false == mFMJ.unable)
+				mState = ePlayerState::FMJ;
+		}
+		if (KEY_DOWN(eKeyCode::V))
+		{
+			if (false == mSupressiveFire.unable)
+				mState = ePlayerState::SupressiveFire;
+		}
+		if (KEY_DOWN(eKeyCode::C))
+		{
+			if (false == mTacticalDive.unable)
+				mState = ePlayerState::TacticalDive;
+		}
 	}
 	void Player::Move()
 	{
-		// 상태 변환 로직
+		// 애니메이션
+		
+		
+		// 로직
+		if (KEY_PRESSE(eKeyCode::LEFT))
+		{
+			SetDir(Vector2::Left);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mSpeed);
+		}
+		if (KEY_PRESSE(eKeyCode::RIGHT))
+		{
+			SetDir(Vector2::Right);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mSpeed);
+		}
+
+		// 상태 전환
+		if (KEY_UP(eKeyCode::LEFT) || KEY_UP(eKeyCode::RIGHT))
+		{
+			mState = ePlayerState::Idle;
+		}
+		if (KEY_DOWN(eKeyCode::SPACE))
+		{
+			mState = ePlayerState::Jump;
+		}
+
+		if (KEY_PRESSE(eKeyCode::Z))
+		{
+			if (false == mDubleTab.unable)
+				mState = ePlayerState::DoubleTab;
+		}
+		if (KEY_DOWN(eKeyCode::X))
+		{
+			if (false == mFMJ.unable)
+				mState = ePlayerState::FMJ;
+		}
+		if (KEY_DOWN(eKeyCode::V))
+		{
+			if (false == mSupressiveFire.unable)
+				mState = ePlayerState::SupressiveFire;
+		}
+		if (KEY_DOWN(eKeyCode::C))
+		{
+			if (false == mTacticalDive.unable)
+				mState = ePlayerState::TacticalDive;
+		}
 	}
 	void Player::Jump()
 	{
-		// 만약 IsGround = true라면
-		// Idle 상태로 변환
+		// 애니메이션
+		
+		// 로직
+		if (KEY_PRESSE(eKeyCode::SPACE) && true == mRigidbody->IsGrounded())
+		{
+			Vector2 velocity = mRigidbody->GetVelocity();
+			velocity.y = -500.0f;
+			mRigidbody->SetVelocity(velocity);
+			mRigidbody->SetGround(false);
+		}
+		if (KEY_PRESSE(eKeyCode::LEFT))
+		{
+			SetDir(Vector2::Left);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mSpeed);
+		}
+		if (KEY_PRESSE(eKeyCode::RIGHT))
+		{
+			SetDir(Vector2::Right);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mSpeed);
+		}
+
+
+		// 상태 전환
+		if (true == mRigidbody->IsGrounded())
+		{
+			mState = ePlayerState::Idle;
+		}
+		
+		if (KEY_PRESSE(eKeyCode::Z))
+		{
+			if (false == mDubleTab.unable)
+				mState = ePlayerState::DoubleTab;
+		}
+		if (KEY_DOWN(eKeyCode::X))
+		{
+			if (false == mFMJ.unable)
+				mState = ePlayerState::FMJ;
+		}
+		if (KEY_DOWN(eKeyCode::V))
+		{
+			if (false == mSupressiveFire.unable)
+				mState = ePlayerState::SupressiveFire;
+		}
+		if (KEY_DOWN(eKeyCode::C))
+		{
+			if (false == mTacticalDive.unable)
+				mState = ePlayerState::TacticalDive;
+		}
 	}
+	// 사다리는 나중에 구현
 	void Player::Climb()
 	{
-		// 사다리와 충돌중이 아니라면 Idle 상태로 변환 <- 이거 애매함 안하는게 나을듯
-		// 점프 키를 누른 경우 Jump 상태로 변환
+		// 로직
+		
+		// 상태 전환
+		if (KEY_DOWN(eKeyCode::SPACE))
+		{
+			mState = ePlayerState::Jump;
+		}
+		if (KEY_DOWN(eKeyCode::C))
+		{
+			mState = ePlayerState::TacticalDive;
+		}
 	}
-	void Player::Attack()
+	
+	void Player::DoubleTab()
 	{
-		// 상태 변환 로직
+		// 애니메이션
+		
+		// 로직
+		if (KEY_PRESSE(eKeyCode::Z))
+		{
+			if (false == mDubleTab.unable)
+			{
+				Skill(ePlayerSkillType::DoubleTab);
+			}
+		}
+		
+		// 상태 전환
+		if (true == mDubleTab.finish)
+		{
+			mState = ePlayerState::Idle;
+			mDubleTab.finish = false;
+		}
 	}
-	void Player::Dodge()
+	void Player::FMJ()
 	{
+		// 애니메이션
+
+		// 로직
+		if (false == mFMJ.unable)
+		{
+			Skill(ePlayerSkillType::FMJ);
+		}
+		// 상태 전환
+		if (true == mFMJ.finish)
+		{
+			mState = ePlayerState::Idle;
+			mFMJ.finish = false;
+		}
+	}
+	void Player::TacticalDive()
+	{
+		// 로직		
+		if (false == mTacticalDive.unable)
+		{
+			Skill(ePlayerSkillType::TacticalDive);
+		}
 		// 회피가 끝나면 Idle 상태로 변환
+		if (true == mTacticalDive.finish)
+		{
+			mState = ePlayerState::Idle;
+			mTacticalDive.finish = false;
+		}
 	}
-	void Player::Die()
+	void Player::SupressiveFire()
+	{
+		if (false == mSupressiveFire.unable)
+		{
+			Skill(ePlayerSkillType::SuppresiveFire);
+		}
+		if (true == mSupressiveFire.finish)
+		{
+			mState = ePlayerState::Idle;
+			mSupressiveFire.finish = false;
+		}
+	}
+
+	void Player::Death()
 	{
 		// ..?
 		// 게임 종료 UI 불러오기
 	}
 }
-/*
-몬스터 Anim
-
-Idle R,L
-lt	size	length
-0.0	17.21	1
-0.21	=	=
-
-Move R,L
-lt	size	length
-0.42	18.25	6
-0.67	=	=
-
-Teleport R,L
-lt	size	length
-0.92	17.21	3
-0.113	=	=
-
-Attack R,L
-lt	size	length
-0.134	33.21	11
-0.155	=	=
-
-Death R,L
-lt	size	length
-0.176	26.21	8
-0.197	=	=
-*/

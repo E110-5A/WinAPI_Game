@@ -16,7 +16,7 @@ namespace js
 	{
 		Idle,
 		Move,
-		Attack,
+		Skill,
 		Death,
 	};
 

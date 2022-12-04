@@ -42,7 +42,7 @@ namespace js
 	}
 	void Rigidbody::Render(HDC hdc)
 	{
-		wchar_t szFloat[40] = {};
+		/*wchar_t szFloat[40] = {};
 		
 		Pos pos = GetOwner()->GetPos();
 		std::wstring postr = std::to_wstring(pos.x);
@@ -50,7 +50,7 @@ namespace js
 
 		swprintf_s(szFloat, 40, postr.c_str());
 		int strLen = wcsnlen_s(szFloat, 40);
-		TextOut(hdc, 10, 50, szFloat, strLen);
+		TextOut(hdc, 10, 50, szFloat, strLen);*/
 	}
 
 	void Rigidbody::GravityAction()

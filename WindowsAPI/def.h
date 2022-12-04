@@ -121,14 +121,17 @@ enum class ePlayerState
 	Move,		// 아무 상태로 변환 가능
 	Jump,		// 아무 상태로 변환 가능
 	Climb,		// 점프만 사용가능
-	Attack,		// 끝나기 전까지 변환 불가
-	Dodge,		// 끝나기 전까지 변환 불가
-	Die,		// 끝?
+	DoubleTab,
+	FMJ,
+	TacticalDive,		
+	SupressiveFire,
+	Death,		// 끝?
 };
-enum class ePlayerAttackType
+enum class ePlayerSkillType
 {
-	DubleTab,			// 1번 기술
+	DoubleTab,			// 1번 기술
 	FMJ,				// 2번 기술
+	TacticalDive,		// 3번 기술
 	SuppresiveFire,		// 4번 기술
 	End,
 };

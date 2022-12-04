@@ -18,14 +18,15 @@ namespace js
 	struct SkillInfo
 	{
 		float damage;
-		float castDelay;
+		float castDelay;			// 스킬 지연시간
 		float castDelayTime;
-		int maxHit;
-		int curHit;
-		float coolDown;
+		int maxCount;					// 반복 횟수
+		int curCount;
+		float coolDown;				// 스킬 재사용 대기시간
 		float coolDownTime;
-		bool unable;
-		bool on;
+		bool unable;				// 사용불가 상태		: 쿨다운 대기
+		bool on;					// 진행중 상태		: 스킬 내부로직 조건용
+		bool finish;				// 끝난 상태			: 상태 종료 조건
 	};
 
 	class Image;
@@ -71,7 +72,7 @@ namespace js
 		// 기능
 		void Cooldown();
 		void SkillProcess();
-		void Attack(ePlayerAttackType type);	
+		void Skill(ePlayerSkillType type);
 
 	public:
 		// 충돌관련 설정
@@ -89,9 +90,11 @@ namespace js
 		void Move();
 		void Jump();
 		void Climb();
-		void Attack();
-		void Dodge();
-		void Die();
+		void DoubleTab();
+		void FMJ();
+		void TacticalDive();
+		void SupressiveFire();
+		void Death();
 
 		// 컴포넌트
 	private:

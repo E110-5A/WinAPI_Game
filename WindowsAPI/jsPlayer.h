@@ -19,10 +19,13 @@ namespace js
 	{
 		float damage;
 		float castDelay;
-		int hitCount;
+		float castDelayTime;
+		int maxHit;
+		int curHit;
 		float coolDown;
+		float coolDownTime;
 		bool unable;
-		float deletaTime;
+		bool on;
 	};
 
 	class Image;
@@ -55,11 +58,11 @@ namespace js
 		PlayerStat GetInfo() { return mStat; }
 		void SetWeapon(PlayerProjectile* weapon) 
 		{
-			if (6 == mWeaponID)
+			if (WEAPON_POOL == mWeaponID)
 				return;
 			mWeapon[mWeaponID] == nullptr;
 			mWeapon[mWeaponID] = weapon;
-			mWeaponID++;
+			++mWeaponID;
 		}
 		void SetHp(int hp) { mHp = hp; }
 		int GetHp() { return mHp; }
@@ -67,6 +70,7 @@ namespace js
 
 		// 기능
 		void Cooldown();
+		void SkillProcess();
 		void Attack(ePlayerAttackType type);	
 
 	public:
@@ -114,9 +118,7 @@ namespace js
 
 		// 임시
 	private:
-		float	mSpeed;
-		int		mHp;
-		float				mDelayTime;
-		int					mFireCount;
+		float				mSpeed;
+		int					mHp;
 	};
 }

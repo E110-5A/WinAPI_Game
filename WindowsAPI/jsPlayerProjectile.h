@@ -34,6 +34,8 @@ namespace js
 
 		bool IsActive() { return mInfo.unable; }
 
+		// SkillInfo를 인자로 받아서 스킬에서 필요하는 기능을 각각 구현해주면 될거같음
+		// 아 ㄴㄴ 이건 플레이어에서 알아서 해결해야하는 부분
 		void Active(ePlayerAttackType type, int damage);
 		void InActive() { mInfo.unable = false; }
 

@@ -161,28 +161,44 @@ namespace js
 	void Player::InitSkill()
 	{
 		mDubleTab.damage = 60.f;
-		mDubleTab.hitCount = 2;
-		mDubleTab.castDelay = mStat.attSpeed * 0.1;
-		mDubleTab.coolDown = mStat.attSpeed * 0.4;
+		mDubleTab.maxHit = 2;
+		mDubleTab.curHit = 2;
+		mDubleTab.castDelay = mStat.attSpeed * 0.14f;
+		mDubleTab.castDelayTime = 0.0f;
+		mDubleTab.coolDown = mStat.attSpeed * 0.4f;
+		mDubleTab.coolDownTime = 0.0f;
 		mDubleTab.unable = false;
+		mDubleTab.on = false;
 
 		mFMJ.damage = 230.f;
-		mFMJ.hitCount = 1;
+		mFMJ.maxHit = 1;
+		mFMJ.curHit = 1;
 		mFMJ.castDelay = mStat.attSpeed * 0.8;
+		mFMJ.castDelayTime = 0.0f;
 		mFMJ.coolDown = 3.0f;
+		mFMJ.coolDownTime = 0.0f;
 		mFMJ.unable = false;
+		mFMJ.on = false;
 
 		mTacticalDive.damage = 0.f;
-		mTacticalDive.hitCount = 0;
+		mTacticalDive.maxHit = 0;
+		mTacticalDive.curHit = 0;
 		mTacticalDive.castDelay = 1.f;
+		mTacticalDive.castDelayTime = 0.0f;
 		mTacticalDive.coolDown = 5.0f;
+		mTacticalDive.coolDownTime = 0.0f;
 		mTacticalDive.unable = false;
+		mTacticalDive.on = false;
 
 		mSupressiveFire.damage = 60.f;
-		mSupressiveFire.hitCount = 6;
-		mSupressiveFire.castDelay = mStat.attSpeed * 0.06;
+		mSupressiveFire.maxHit = 6;
+		mSupressiveFire.curHit = 0;
+		mSupressiveFire.castDelay = mStat.attSpeed * 0.14f;
+		mSupressiveFire.castDelayTime = 0.0f;
 		mSupressiveFire.coolDown = 5.0f;
+		mSupressiveFire.coolDownTime = 0.0f;
 		mSupressiveFire.unable = false;
+		mSupressiveFire.on = false;
 	}
 
 	void Player::Tick()
@@ -233,6 +249,7 @@ namespace js
 
 
 		Cooldown();
+		SkillProcess();
 
 		if (KEY_DOWN(eKeyCode::Z))
 		{
@@ -243,6 +260,7 @@ namespace js
 			{
 				Attack(ePlayerAttackType::DubleTab);
 				mDubleTab.unable = true;
+				mDubleTab.on = true;
 			}
 		}
 		if (KEY_DOWN(eKeyCode::X))
@@ -253,6 +271,7 @@ namespace js
 			{
 				Attack(ePlayerAttackType::FMJ);
 				mFMJ.unable = true;
+				mFMJ.on = true;
 			}
 		}
 		if (KEY_DOWN(eKeyCode::C))
@@ -272,9 +291,11 @@ namespace js
 		{
 			if (mSupressiveFire.unable)
 				return;
+			else
 			{
 				Attack(ePlayerAttackType::SuppresiveFire);
 				mSupressiveFire.unable = true;
+				mSupressiveFire.on = true;
 			}
 		}
 
@@ -306,16 +327,12 @@ namespace js
 		}
 
 
-
-
 	}
 
 	void Player::Render(HDC hdc)
 	{
 		GameObject::Render(hdc);
 	}
-
-
 	void Player::PlayAnim()
 	{
 		if (KEY_DOWN(eKeyCode::RIGHT))
@@ -419,95 +436,141 @@ namespace js
 
 	}
 
-
+	// Done
 	void Player::Cooldown()
 	{
 		if (true == mDubleTab.unable)
 		{
-			mDubleTab.deletaTime += Time::GetDeltaTime();
-			if (mDubleTab.deletaTime > mDubleTab.coolDown)
+			mDubleTab.coolDownTime += Time::GetDeltaTime();
+			if (mDubleTab.coolDownTime > mDubleTab.coolDown)
 			{
 				mDubleTab.unable = false;
-				mDubleTab.deletaTime = 0.0f;
+				mDubleTab.coolDownTime = 0.0f;
 			}
 		}
 		if (true == mFMJ.unable)
 		{
-			mFMJ.deletaTime += Time::GetDeltaTime();
-			if (mFMJ.deletaTime > mFMJ.coolDown)
+			mFMJ.coolDownTime += Time::GetDeltaTime();
+			if (mFMJ.coolDownTime > mFMJ.coolDown)
 			{
 				mFMJ.unable = false;
-				mFMJ.deletaTime = 0.0f;
+				mFMJ.coolDownTime = 0.0f;
 			}
 		}
-		if (mTacticalDive.unable)
+		if (true == mTacticalDive.unable)
 		{
-			mTacticalDive.deletaTime += Time::GetDeltaTime();
-			if (mTacticalDive.deletaTime > mTacticalDive.coolDown)
+			mTacticalDive.coolDownTime += Time::GetDeltaTime();
+			if (mTacticalDive.coolDownTime > mTacticalDive.coolDown)
 			{
 				mTacticalDive.unable = false;
-				mTacticalDive.deletaTime = 0.0f;
+				mTacticalDive.coolDownTime = 0.0f;
 			}
 		}
-		if (mSupressiveFire.unable)
+		if (true == mSupressiveFire.unable)
 		{
-			mSupressiveFire.deletaTime += Time::GetDeltaTime();
-			if (mSupressiveFire.deletaTime > mSupressiveFire.coolDown)
+			mSupressiveFire.coolDownTime += Time::GetDeltaTime();
+			if (mSupressiveFire.coolDownTime > mSupressiveFire.coolDown)
 			{
 				mSupressiveFire.unable = false;
-				mSupressiveFire.deletaTime = 0.0f;
+				mSupressiveFire.coolDownTime = 0.0f;
 			}
 		}
 	}
 
+	// 테스트 진행중
+	void Player::SkillProcess()
+	{
+		// 시간을 재서 여러 호출간 딜레이를 넣어줌
+		// 오브젝트 풀 호출
+		// 해당 스킬이 on 일 경우에만 작동함
+		
+		// 스킬 시전 on
+		if (true == mDubleTab.on)
+		{
+			// 딜레이 계산
+			mDubleTab.castDelayTime += Time::GetDeltaTime();
+
+			// while문 잘못씀
+			// 스킬 카운트가 유효하다면 반복
+			if (mDubleTab.curHit < mDubleTab.maxHit)
+			{
+				// 시전 준비가 되면 발사
+				if (mDubleTab.castDelayTime >= mDubleTab.castDelay)
+				{
+					Attack(ePlayerAttackType::DubleTab);
+					mDubleTab.castDelayTime = 0.0f;
+					++mDubleTab.curHit;
+				}
+			}
+			else
+			{
+				mDubleTab.curHit = 0;
+				mDubleTab.on = false;
+			}
+		}
+		if (true == mSupressiveFire.on)
+		{
+			// 딜레이 계산
+			mSupressiveFire.castDelayTime += Time::GetDeltaTime();
+
+			// while문 잘못씀
+			// 스킬 카운트가 유효하다면 반복
+			if (mSupressiveFire.curHit < mSupressiveFire.maxHit)
+			{
+				// 시전 준비가 되면 발사
+				if (mSupressiveFire.castDelayTime >= mSupressiveFire.castDelay)
+				{
+					Attack(ePlayerAttackType::SuppresiveFire);
+					mSupressiveFire.castDelayTime = 0.0f;
+					++mSupressiveFire.curHit;
+				}
+			}
+			else
+			{
+				mSupressiveFire.curHit = 0;
+				mSupressiveFire.on = false;
+			}
+		}
+	}
+
+	// 추후 수정해야함
 	void Player::Attack(ePlayerAttackType type)
 	{
 		switch (type)
 		{
 		case ePlayerAttackType::DubleTab:
 		{
-			int count = 0;
+			// 투사체 풀에서 끌어다가 사용
 			for (int idx = 0; idx < WEAPON_POOL; ++idx)
 			{
-				if (mDubleTab.hitCount == count)
-					break;
-
 				if (mWeapon[idx]->IsActive() == false)
 				{
 					mWeapon[idx]->Active(type, mDubleTab.damage);
-					++count;
+					break;
 				}
 			}
 		}
 		break;
 		case ePlayerAttackType::FMJ:
 		{
-			int count = 0;
 			for (int idx = 0; idx < WEAPON_POOL; ++idx)
 			{
-				if (mFMJ.hitCount == count)
-					break;
-
 				if (mWeapon[idx]->IsActive() == false)
 				{
 					mWeapon[idx]->Active(type, mFMJ.damage);
-					++count;
+					break;
 				}
 			}
 		}
 		break;
 		case ePlayerAttackType::SuppresiveFire:
 		{
-			int count = 0;
 			for (int idx = 0; idx < WEAPON_POOL; ++idx)
 			{
-				if (mSupressiveFire.hitCount == count)
-					break;
-
 				if (mWeapon[idx]->IsActive() == false)
 				{
 					mWeapon[idx]->Active(type, mSupressiveFire.damage);
-					++count;
+					break;
 				}
 			}
 		}

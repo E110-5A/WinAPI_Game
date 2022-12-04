@@ -112,6 +112,7 @@ void js::PlayerProjectile::SetInfo()
 }
 
 
+
 void js::PlayerProjectile::Active(ePlayerAttackType type, int damage)
 {
 	// È°¼ºÈ­

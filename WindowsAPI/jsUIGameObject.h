@@ -11,7 +11,7 @@ namespace js
 		UIGameObject();
 		~UIGameObject();
 
-		void Init();
+		void Initialize();
 
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;

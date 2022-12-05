@@ -127,7 +127,7 @@ enum class ePlayerState
 	SupressiveFire,
 	Death,		// 끝?
 };
-enum class ePlayerSkillType
+enum class eProjectileType
 {
 	DoubleTab,			// 1번 기술
 	FMJ,				// 2번 기술

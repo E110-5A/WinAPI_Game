@@ -29,6 +29,8 @@ namespace js
 		void SetDir(Vector2 dir) { mDir = dir; }
 		Vector2 GetDir() { return mDir; }
 
+		void SetType(eColliderLayer type) { mType = type; }
+		eColliderLayer GetType() { return mType; }
 
 
 		void Death() { mDead = true; }
@@ -65,6 +67,7 @@ namespace js
 		Pos		mPos;
 		Size	mScale;
 		Vector2 mDir;
+		eColliderLayer mType;
 
 		bool	mDead;
 		float	mDeathTime;

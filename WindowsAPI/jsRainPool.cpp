@@ -6,7 +6,7 @@ namespace js
 {
 	jsRain* jsRainPool::rain[RAIN] = {};
 
-	void jsRainPool::Init(Scene* _target)
+	void jsRainPool::Initialize(Scene* _target)
 	{
 		for (size_t i = 0; i < RAIN; i++)
 		{

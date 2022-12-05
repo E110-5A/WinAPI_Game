@@ -31,8 +31,6 @@ namespace js
 			this->Death();
 		}
 
-
-
 		Pos pos = GetPos();
 		Pos mousePos = Input::GetMousePos();
 
@@ -42,11 +40,6 @@ namespace js
 
 		pos.x += mDir.x * mSpeed * Time::GetDeltaTime();
 		pos.y += mDir.y * mSpeed * Time::GetDeltaTime();
-
-
-
-
-
 
 
 		SetPos(pos);

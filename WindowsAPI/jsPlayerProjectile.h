@@ -5,10 +5,9 @@ namespace js
 {
 	struct ProjectileInfo
 	{
-		Vector2				dir;		// 매번
-		float				range;		// 한번만
-		ePlayerSkillType	type;		// 매번
-		bool				unable;	// 매번
+		eProjectileType		type;		// 투사체 종류 (스킬 + 아이템)
+		float				range;		// 투사체 사거리
+		bool				unable;		// 투사체 활성화 On Off 여부
 	};
 
 	class Collider;
@@ -20,33 +19,36 @@ namespace js
 		PlayerProjectile(Pos pos);
 		~PlayerProjectile();
 
-		virtual void Init();
+		virtual void Initialize() override;
+		
 		virtual void Tick() override;
+		void Process();
+		void Shutdown();
+
+
 		virtual void Render(HDC _hdc) override;
 
+		// 씬에서 오너 세팅
+		void SetOwner(Player* owner);
+		// 오너 정보를 받아서 세팅
+		void SetInfo();
+
+
+		void Active(eProjectileType type, int damage);
+		void InActive() { mInfo.unable = false; }
+
+		bool IsActive() { return mInfo.unable; }
+
+		// 타격 대상의 함수 호출
 		virtual void OnCollisionEnter(Collider* other)override;
 		virtual void OnCollisionStay(Collider* other)override;
 		virtual void OnCollisionExit(Collider* other)override;
 
-		// 한번만 호출됨~!
-		void SetOwner(Player* owner);
-		void SetInfo();
-
-		bool IsActive() { return mInfo.unable; }
-
-		// SkillInfo를 인자로 받아서 스킬에서 필요하는 기능을 각각 구현해주면 될거같음
-		// 아 ㄴㄴ 이건 플레이어에서 알아서 해결해야하는 부분
-		void Active(ePlayerSkillType type, int damage);
-		void InActive() { mInfo.unable = false; }
-
-	private:
-		
 
 	private:
 		Collider* mCollider;
 		Player* mOwner;
 		ProjectileInfo mInfo;
-
 		Pos mStartPos;
 	};
 }

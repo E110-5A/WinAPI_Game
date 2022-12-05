@@ -10,7 +10,7 @@ namespace js
 	class jsRainPool
 	{
 	public:
-		static void Init(Scene* _target);
+		static void Initialize(Scene* _target);
 
 	private:
 		static jsRain* rain[RAIN];

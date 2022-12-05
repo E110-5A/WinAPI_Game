@@ -60,7 +60,7 @@ namespace js
 			mPlayerAttack[idx]->SetOwner(pPlayer);
 		}
 
-		//GameObject* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 480.f));
+		GameObject* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 480.f));
 
 
 
@@ -105,7 +105,8 @@ namespace js
 	void TestScene::Enter()
 	{
 		CollisionManager::SetLayer(eColliderLayer::Ground, eColliderLayer::Player, true);
-		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player, true);
+		CollisionManager::SetLayer(eColliderLayer::Ground, eColliderLayer::Monster, true);
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Monster_Projectile, true);
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player_Projectile, true);
 	}
 

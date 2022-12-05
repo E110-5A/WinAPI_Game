@@ -10,7 +10,7 @@ namespace js
 	UIGameObject::~UIGameObject()
 	{
 	}
-	void UIGameObject::Init()
+	void UIGameObject::Initialize()
 	{
 	}
 	void UIGameObject::Tick()

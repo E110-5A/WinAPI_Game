@@ -34,7 +34,7 @@ namespace js
 	class Collider;
 	class Rigidbody;
 	class PlayerProjectile;
-
+	class Monster;
 	class Player : public GameObject
 	{
 	public:
@@ -42,17 +42,17 @@ namespace js
 		Player(Pos pos);
 		~Player();
 
-		void Init();
 		void InitStat();
+		void SetComponent();
 		void InitAnim();
 		void InitSkill();
 
+		virtual void Initialize() override;
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 
 		// 애니메이션
-		void PlayAnim();				
-		void ReturnIdle();
+		//void ReturnIdle();
 
 		
 		// 변수
@@ -65,17 +65,19 @@ namespace js
 			mWeapon[mWeaponID] = weapon;
 			++mWeaponID;
 		}
-		void SetHp(int hp) { mHp = hp; }
-		int GetHp() { return mHp; }
-		void SetSpeed(float value) { mSpeed = value; }
+
 
 		// 기능
 		void Cooldown();
 		void SkillProcess();
-		void Skill(ePlayerSkillType type);
+		void Skill(eProjectileType type);
+
+		void SelfDamaged(Monster* other);
+
+		float GetHp() { return mStat.curHp; }
 
 	public:
-		// 충돌관련 설정
+		// 스스로 함수 호출
 		virtual void OnCollisionEnter(Collider* other)override;
 		virtual void OnCollisionStay(Collider* other)override;
 		virtual void OnCollisionExit(Collider* other)override;

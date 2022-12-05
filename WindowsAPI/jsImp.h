@@ -22,18 +22,12 @@ namespace js
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 
+		// None
 		virtual void OnCollisionEnter(Collider* other);
 		virtual void OnCollisionStay(Collider* other);
 		virtual void OnCollisionExit(Collider* other);
 
 	private:
-		Collider*	mCollider;
-		Animator*	mAnimator;
-		Rigidbody*	mRigidbody;
-
-	private:
-		Image*			mImage;
-		MonsterStat		mStat;
 		eMonsterState	mState;
 	};
 }

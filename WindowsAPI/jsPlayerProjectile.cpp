@@ -1,30 +1,35 @@
 #include "jsPlayerProjectile.h"
+
+// 매니저
+#include "jsTime.h"
+
+// 컴포넌트
 #include "jsCollider.h"
+
+// 오브젝트
 #include "jsPlayer.h"
 #include "jsObject.h"
-#include "jsTime.h"
+#include "jsMonster.h"
 
 js::PlayerProjectile::PlayerProjectile()
 {
-	Init();
+	Initialize();
 }
-
 js::PlayerProjectile::PlayerProjectile(Pos pos)
 {
-	Init();
+	Initialize();
 }
-
 js::PlayerProjectile::~PlayerProjectile()
 {
 }
 
-void js::PlayerProjectile::Init()
+void js::PlayerProjectile::Initialize()
 {
+	SetType(eColliderLayer::Player_Projectile);
 	mOwner = nullptr;
 
-	mInfo.dir = Vector2::Right;
 	mInfo.range = 700;
-	mInfo.type = ePlayerSkillType::DoubleTab;
+	mInfo.type = eProjectileType::DoubleTab;
 	mInfo.unable = false;
 	// 충돌체 설정
 	mCollider = new Collider();
@@ -32,66 +37,6 @@ void js::PlayerProjectile::Init()
 	mCollider->SetPos(Vector2::Zero);
 	mCollider->SetSize(Vector2::One);
 }
-
-void js::PlayerProjectile::Tick()
-{
-	// 활성화 아니면 종료
-	if (mInfo.unable == false)
-		return;
-
-	// 충돌확인
-	GameObject::Tick();
-
-	// 투사체 이동
-	Pos destPos = GetPos();
-	destPos.x += mInfo.dir.x * 9300.0f * Time::GetDeltaTime();
-	SetPos(destPos);
-
-	// 종료 조건 확인
-	Vector2 curPos = mCollider->GetPos();
-	float curDistance = fabs(mStartPos.x - curPos.x);
-
-	if (mInfo.dir == Vector2::Right)
-	{
-		if (mStartPos.x + mInfo.range <= curPos.x)
-			InActive();
-	}
-	else
-	{
-		if (mStartPos.x - mInfo.range >= curPos.x)
-			InActive();
-	}		
-}
-
-void js::PlayerProjectile::Render(HDC hdc)
-{
-	if (mInfo.unable == false)
-		return;
-	GameObject::Render(hdc);
-}
-
-void js::PlayerProjectile::OnCollisionEnter(Collider* other)
-{
-	// 몬스터 객체에 있는 Hit 호출
-	
-	// 몬스터 객체 Rigidbody에서 SetVelocity값으로 방향 + 넉백거리 넣어줌
-
-
-
-
-	// 내가 FMJ 타입이 아니라면 삭제하기
-	if (!(mInfo.type == ePlayerSkillType::FMJ))
-	{
-		mInfo.unable = false;
-	}
-}
-void js::PlayerProjectile::OnCollisionStay(Collider* other)
-{
-}
-void js::PlayerProjectile::OnCollisionExit(Collider* other)
-{
-}
-
 void js::PlayerProjectile::SetOwner(Player* owner)
 {
 	// 오너 설정
@@ -99,7 +44,6 @@ void js::PlayerProjectile::SetOwner(Player* owner)
 	owner->SetWeapon(this);
 	SetInfo();
 }
-
 void js::PlayerProjectile::SetInfo()
 {
 	// info 설정
@@ -112,20 +56,85 @@ void js::PlayerProjectile::SetInfo()
 }
 
 
-
-void js::PlayerProjectile::Active(ePlayerSkillType type, int damage)
+void js::PlayerProjectile::Tick()
 {
-	// 활성화
-	mInfo.unable = true;
-	// 방향 갱신
-	mInfo.dir = mOwner->GetDir();
-	// 타입 갱신
-	mInfo.type = type;
+	// 비활성화 상태인 경우 종료
+	if (mInfo.unable == false)
+		return;
 
+	// 충돌확인
+	GameObject::Tick();
+	// 투사체 이동
+	Process();
+	// 종료 조건 확인
+	Shutdown();
+}
+void js::PlayerProjectile::Process()
+{
+	Vector2 dir = GetDir();
+	Pos destPos = GetPos();
+	destPos.x += dir.x * 9300.0f * Time::GetDeltaTime();
+	SetPos(destPos);
+}
+void js::PlayerProjectile::Shutdown()
+{
+	Vector2 dir = GetDir();
 
-	// 위치 갱신
-	Pos pos = mOwner->GetPos();
-	SetPos(pos);
-	mStartPos = pos;				// 시작지점 기록
+	Vector2 curPos = mCollider->GetPos();
+	float curDistance = fabs(mStartPos.x - curPos.x);
+		
+	if (dir == Vector2::Right)
+	{
+		if (mStartPos.x + (mInfo.range * dir.x) <= curPos.x)
+			InActive();
+	}
+	else
+	{
+		if (mStartPos.x - mInfo.range >= curPos.x)
+			InActive();
+	}
 }
 
+
+void js::PlayerProjectile::Render(HDC hdc)
+{
+	if (mInfo.unable == false)
+		return;
+	GameObject::Render(hdc);
+}
+
+
+void js::PlayerProjectile::OnCollisionEnter(Collider* other)
+{
+	// 몬스터 객체에 있는 Damaged 호출
+	GameObject* attacker = other->GetOwner();
+	if (eColliderLayer::Monster == attacker->GetType())
+	{
+		Monster* target = dynamic_cast<Monster*>(attacker);
+		target->Hit(this);
+	}
+	
+	// 내가 FMJ 타입이 아니라면 비활성화 하기
+	if (!(mInfo.type == eProjectileType::FMJ))
+	{
+		mInfo.unable = false;
+	}
+}
+void js::PlayerProjectile::OnCollisionStay(Collider* other)
+{
+}
+void js::PlayerProjectile::OnCollisionExit(Collider* other)
+{
+}
+
+
+void js::PlayerProjectile::Active(eProjectileType type, int damage)
+{
+	mInfo.unable = true;			// 활성화
+	SetDir(mOwner->GetDir());		// 방향 갱신
+	mInfo.type = type;				// 타입 갱신
+	Pos pos = mOwner->GetPos();		// 위치 갱신
+	SetPos(pos);
+
+	mStartPos = pos;				// 시작지점 기록
+}

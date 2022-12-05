@@ -18,8 +18,8 @@
 #include "jsRigidbody.h"
 
 // 오브젝트
-#include "jsProjectile.h"
 #include "jsPlayerProjectile.h"
+#include "jsMonster.h"
 
 
 namespace js
@@ -33,7 +33,7 @@ namespace js
 		SetPos(Pos(400.f, 1000.f));
 		SetScale(Size(1.f, 1.f));
 		SetDir(Vector2::Right);
-		Init();
+		Initialize();
 	}
 	Player::Player(Pos pos)
 		: mSpeed(0.f)
@@ -43,51 +43,42 @@ namespace js
 		SetPos(pos);
 		SetScale(Size(1.f, 1.f));
 		SetDir(Vector2::Right);
-		Init();		
+		Initialize();		
 	}
 	Player::~Player()
 	{
 	}
 
-	void Player::Init()
+	void Player::Initialize()
 	{
-		// 스텟 설정
-		SetSpeed(1.3f);
-		SetHp(100);
+		SetType(eColliderLayer::Player);
+		SetName(L"Player");
 
-		// 이미지 리소스 로딩
+		// 애니메이션 스프라이트 로딩
 		if (nullptr == mImage)
 		{
 			mImage = Resources::Load<Image>
 				(L"Player", L"..\\Resources\\Image\\Player\\player.bmp");
 		}
-		// 스텟 초기화
+		SetComponent();
+		
 		InitStat();
-		// 애니메이터 설정
+		InitSkill();
+	}
+	void Player::SetComponent()
+	{
 		InitAnim();
 		mAnimator->Play(L"PIdleR");
+
 		// 콜라이더 설정
 		mCollider = new Collider;
+		AddComponent(mCollider);
 		mCollider->SetPos(GetPos());
 		mCollider->SetSize(Size(25.f, 40.f) * GetScale());
 		mCollider->SetOffset(Vector2(-10.f, 0.f));
-		AddComponent(mCollider);
+
 		// 강체 설정
 		mRigidbody = AddComponent<Rigidbody>();
-
-		// 스킬 설정
-		InitSkill();
-	}
-	void Player::InitStat()
-	{
-		mStat.maxHp = 110;
-		mStat.curHp = 110;
-		mStat.regenHp = 0.6;
-		mStat.def = 0;
-		mStat.moveSpeed = 1.3;
-		mStat.att = 12;
-		mStat.attSpeed = 1;
-		mStat.range = 700;
 	}
 	void Player::InitAnim()
 	{
@@ -154,6 +145,17 @@ namespace js
 		//mAnimator->GetCompleteEvents(L"PSuppressiveFireBothR") = std::bind(&Player::ReturnIdle, this);
 		//mAnimator->GetCompleteEvents(L"PSuppressiveFireBothL") = std::bind(&Player::ReturnIdle, this);
 	}
+	void Player::InitStat()
+	{
+		mStat.maxHp = 110;
+		mStat.curHp = 110;
+		mStat.regenHp = 0.6;
+		mStat.def = 0;
+		mStat.moveSpeed = 1.3;
+		mStat.att = 12;
+		mStat.attSpeed = 1;
+		mStat.range = 700;
+	}
 	void Player::InitSkill()
 	{
 		mDubleTab.damage = 60.f;
@@ -201,8 +203,12 @@ namespace js
 		mSupressiveFire.finish = false;
 	}
 
+
+
 	void Player::Tick()
 	{
+		// Death 상태일경우 ret
+
 		GameObject::Tick();
 		
 		Cooldown();
@@ -257,23 +263,6 @@ namespace js
 		break;
 		}
 	}
-
-	// State 시각적 디버깅
-	void Player::Render(HDC hdc)
-	{
-		GameObject::Render(hdc);
-
-		wchar_t szFloat[40] = {};
-
-		std::wstring stateStr = L"현재 State :";
-		stateStr += std::to_wstring((int)mState);
-
-		swprintf_s(szFloat, 40, stateStr.c_str());
-		int strLen = wcsnlen_s(szFloat, 40);
-		TextOut(hdc, 10, 50, szFloat, strLen);
-	}
-
-	// Done
 	void Player::Cooldown()
 	{
 		if (true == mDubleTab.unable)
@@ -313,14 +302,10 @@ namespace js
 			}
 		}
 	}
-	// Done
 	void Player::SkillProcess()
 	{
 		// 시간을 재서 여러 호출간 딜레이를 넣어줌
 		// 오브젝트 풀 호출
-		// 해당 스킬이 on 일 경우에만 작동함
-		
-		// 스킬 시전 on
 		if (true == mDubleTab.on)
 		{
 			// 딜레이 계산
@@ -332,7 +317,7 @@ namespace js
 				// 시전 준비가 되면 발사
 				if (mDubleTab.castDelayTime >= mDubleTab.castDelay)
 				{
-					Skill(ePlayerSkillType::DoubleTab);
+					Skill(eProjectileType::DoubleTab);
 					mDubleTab.castDelayTime = 0.0f;
 					++mDubleTab.curCount;
 				}
@@ -344,8 +329,6 @@ namespace js
 				mDubleTab.finish = true;
 			}
 		}
-
-		// 스킬을 사용중이라면
 		if (true == mFMJ.on)
 		{
 			// 딜레이 계산
@@ -354,10 +337,10 @@ namespace js
 			// 횟수 제한
 			if (mFMJ.curCount < mFMJ.maxCount)
 			{
-				Skill(ePlayerSkillType::FMJ);
+				Skill(eProjectileType::FMJ);
 				++mFMJ.curCount;
 			}
-			
+
 			// 딜레이 진행
 			if (mFMJ.castDelayTime >= mFMJ.castDelay)
 			{
@@ -367,7 +350,6 @@ namespace js
 				mFMJ.finish = true;
 			}
 		}
-
 		if (true == mTacticalDive.on)
 		{
 			// 딜레이 계산
@@ -377,12 +359,12 @@ namespace js
 			if (mTacticalDive.curCount < mTacticalDive.maxCount)
 			{
 				Vector2 velocity = mRigidbody->GetVelocity();
-				velocity.x = GetDir().x * 300.0f * mSpeed;
+				velocity.x = GetDir().x * 300.0f * mStat.moveSpeed;
 				mRigidbody->SetVelocity(velocity);
 				++mTacticalDive.curCount;
 			}
-			// 회피 로직
-			
+			// 회피 로직 추후 추가할 예정
+
 
 			// 딜레이 진행
 			if (mTacticalDive.castDelayTime >= mTacticalDive.castDelay)
@@ -404,7 +386,7 @@ namespace js
 				// 시전 준비가 되면 발사
 				if (mSupressiveFire.castDelayTime >= mSupressiveFire.castDelay)
 				{
-					Skill(ePlayerSkillType::SuppresiveFire);
+					Skill(eProjectileType::SuppresiveFire);
 					mSupressiveFire.castDelayTime = 0.0f;
 					++mSupressiveFire.curCount;
 				}
@@ -417,12 +399,11 @@ namespace js
 			}
 		}
 	}
-	// Done
-	void Player::Skill(ePlayerSkillType type)
+	void Player::Skill(eProjectileType type)
 	{
 		switch (type)
 		{
-		case ePlayerSkillType::DoubleTab:
+		case eProjectileType::DoubleTab:
 		{
 			// 투사체 풀에서 끌어다가 사용
 			for (int idx = 0; idx < WEAPON_POOL; ++idx)
@@ -439,7 +420,7 @@ namespace js
 			}
 		}
 		break;
-		case ePlayerSkillType::FMJ:
+		case eProjectileType::FMJ:
 		{
 			for (int idx = 0; idx < WEAPON_POOL; ++idx)
 			{
@@ -453,13 +434,13 @@ namespace js
 			}
 		}
 		break;
-		case ePlayerSkillType::TacticalDive:
+		case eProjectileType::TacticalDive:
 		{
 			mTacticalDive.unable = true;
 			mTacticalDive.on = true;
 		}
 		break;
-		case ePlayerSkillType::SuppresiveFire:
+		case eProjectileType::SuppresiveFire:
 		{
 			for (int idx = 0; idx < WEAPON_POOL; ++idx)
 			{
@@ -476,26 +457,35 @@ namespace js
 		}
 	}
 
-	// nothing
-	void Player::OnCollisionEnter(Collider* other)
+	// Collider, State 시각적 디버깅
+	void Player::Render(HDC hdc)
 	{
+		GameObject::Render(hdc);
+
+		wchar_t szFloat[40] = {};
+
+		std::wstring stateStr = L"현재 State :";
+		stateStr += std::to_wstring((int)mState);
+
+		swprintf_s(szFloat, 40, stateStr.c_str());
+		int strLen = wcsnlen_s(szFloat, 40);
+		TextOut(hdc, 10, 50, szFloat, strLen);
 	}
-	void Player::OnCollisionStay(Collider* other)
-	{
-	}
-	void Player::OnCollisionExit(Collider* other)
-	{
-	}
+
+
+	
 	
 	// 필요없음
-	void Player::ReturnIdle()
+	/*void Player::ReturnIdle()
 	{
 		Vector2 dir = GetDir();
 		if (dir == Vector2::Right)
 			mAnimator->Play(L"PIdleR");
 		else
 			mAnimator->Play(L"PIdleL");
-	}
+	}*/
+
+
 
 	void Player::Idle()
 	{
@@ -595,12 +585,12 @@ namespace js
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			SetDir(Vector2::Left);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mStat.moveSpeed);
 		}
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			SetDir(Vector2::Right);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mStat.moveSpeed);
 		}
 
 		// Idle 상태 (애니메이션 X)
@@ -695,12 +685,12 @@ namespace js
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			SetDir(Vector2::Left);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mStat.moveSpeed);
 		}
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			SetDir(Vector2::Right);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mStat.moveSpeed);
 		}
 
 
@@ -768,22 +758,6 @@ namespace js
 			}
 		}
 	}
-	// 사다리는 나중에 구현
-	void Player::Climb()
-	{
-		// 로직
-		
-		// 상태 전환
-		if (KEY_DOWN(eKeyCode::SPACE))
-		{
-			mState = ePlayerState::Jump;
-		}
-		if (KEY_DOWN(eKeyCode::C))
-		{
-			mState = ePlayerState::TacticalDive;
-		}
-	}
-	
 	void Player::DoubleTab()
 	{		
 		// 로직
@@ -791,7 +765,7 @@ namespace js
 		{
 			if (false == mDubleTab.unable)
 			{
-				Skill(ePlayerSkillType::DoubleTab);
+				Skill(eProjectileType::DoubleTab);
 			}
 		}
 		
@@ -812,7 +786,7 @@ namespace js
 		// 로직
 		if (false == mFMJ.unable)
 		{
-			Skill(ePlayerSkillType::FMJ);
+			Skill(eProjectileType::FMJ);
 		}
 
 		// Idle 상태 (애니메이션 O)
@@ -832,7 +806,7 @@ namespace js
 		// 로직		
 		if (false == mTacticalDive.unable)
 		{
-			Skill(ePlayerSkillType::TacticalDive);
+			Skill(eProjectileType::TacticalDive);
 		}
 		
 		// Idle 상태 (애니메이션 O)
@@ -851,7 +825,7 @@ namespace js
 	{
 		if (false == mSupressiveFire.unable)
 		{
-			Skill(ePlayerSkillType::SuppresiveFire);
+			Skill(eProjectileType::SuppresiveFire);
 		}
 
 		// Idle 상태 (애니메이션 O)
@@ -867,9 +841,57 @@ namespace js
 		}
 	}
 
+	// 나중에 구현
+	void Player::Climb()
+	{
+		// 로직
+		
+		// 상태 전환
+		if (KEY_DOWN(eKeyCode::SPACE))
+		{
+			mState = ePlayerState::Jump;
+		}
+		if (KEY_DOWN(eKeyCode::C))
+		{
+			mState = ePlayerState::TacticalDive;
+		}
+	}
 	void Player::Death()
 	{
 		// ..?
 		// 게임 종료 UI 불러오기
+	}
+	
+
+
+
+
+	void Player::OnCollisionEnter(Collider* other)
+	{
+		eColliderLayer type = other->GetOwner()->GetType();
+
+		// 추후 Monster_Projectile 대상으로 변경할 것
+		if (type == eColliderLayer::Monster)
+		{
+			Monster* attacker = dynamic_cast<Monster*>(other->GetOwner());
+			SelfDamaged(attacker);
+		}
+	}
+	void Player::OnCollisionStay(Collider* other)
+	{
+	}
+	void Player::OnCollisionExit(Collider* other)
+	{
+	}
+
+
+	void Player::SelfDamaged(Monster* other) 
+	{
+		// 뒤로 넉백
+		Vector2 velocity = mRigidbody->GetVelocity();
+		velocity.x = -GetDir().x * 150.0f;
+		mRigidbody->SetVelocity(velocity);
+		// 잠시 무적
+		// 채력 감소
 	}
 }

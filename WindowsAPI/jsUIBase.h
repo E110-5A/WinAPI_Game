@@ -61,10 +61,10 @@ namespace js
 		virtual void OnClear() {};
 				
 		UIBase* mParent;
-		Image* mImage;
-		Pos mPos;
-		Size mSize;
-		Pos mScreenPos;
+		Image*	mImage;
+		Pos		mPos;
+		Size	mSize;
+		Pos		mScreenPos;
 		
 	private:
 		std::vector<UIBase*> mChilds;

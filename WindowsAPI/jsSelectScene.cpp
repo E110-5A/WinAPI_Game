@@ -47,7 +47,7 @@ namespace js
 		wchar_t szFloat[40] = {};
 		swprintf_s(szFloat, 40, L"Select Scene");
 		int strLen = wcsnlen_s(szFloat, 40);
-		TextOut(hdc, 10, 30, szFloat, strLen);
+		TextOut(hdc, 5, 10, szFloat, strLen);
 	}
 	void SelectScene::Enter()
 	{

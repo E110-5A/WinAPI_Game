@@ -2,11 +2,17 @@
 #include "WindowsAPI.h"
 
 #include "jsToolScene.h"
+
 #include "jsApplication.h"
 #include "jsSceneManager.h"
 #include "jsInput.h"
+#include "jsCamera.h"
+
 #include "jsScene.h"
+
 #include "jsImage.h"
+
+
 
 namespace js
 {
@@ -27,6 +33,8 @@ namespace js
 
 	void ToolScene::Tick()
 	{
+        Camera::CameraMove();
+
         if (mTilePalette)
             mTilePalette->Tick();
 	}
@@ -37,7 +45,7 @@ namespace js
 		wchar_t szFloat[40] = {};
 		swprintf_s(szFloat, 40, L"Tool Scene");
 		int strLen = wcsnlen_s(szFloat, 40);
-		TextOut(hdc, 10, 30, szFloat, strLen);
+		TextOut(hdc, 5, 10, szFloat, strLen);
 
 
 
@@ -47,18 +55,27 @@ namespace js
 		HPEN prevPen = (HPEN)SelectObject(hdc, greenPen);
 
 		int maxRow = mainWindow.height / TILE_SIZE + 1;
-		for (int idx = 0; idx < maxRow; idx++)
-		{
-			MoveToEx(hdc, 0, TILE_SIZE * idx * TILE_SCALE, nullptr);
-			LineTo(hdc, mainWindow.width, TILE_SIZE * idx * TILE_SCALE);
-		}
-		int maxCol = mainWindow.width / TILE_SIZE + 1;
-		for (int idx = 0; idx < maxCol; idx++)
-		{
-			MoveToEx(hdc, TILE_SIZE * idx * TILE_SCALE, 0, nullptr);
-			LineTo(hdc, TILE_SIZE * idx * TILE_SCALE, mainWindow.height);
-		}
+        
 
+        for (int idx = 0; idx < maxRow; idx++)
+        {
+            MoveToEx(hdc, 
+                Camera::CalculatePos(Vector2(0, TILE_SIZE * idx * TILE_SCALE)).x, 
+                Camera::CalculatePos(Vector2(0, TILE_SIZE * idx * TILE_SCALE)).y, nullptr);
+            LineTo(hdc, 
+                Camera::CalculatePos(Vector2(mainWindow.width, TILE_SIZE * idx * TILE_SCALE)).x, 
+                Camera::CalculatePos(Vector2(mainWindow.width, TILE_SIZE * idx * TILE_SCALE)).y);
+        }
+        int maxCol = mainWindow.width / TILE_SIZE + 1;
+        for (int idx = 0; idx < maxCol; idx++)
+        {
+            MoveToEx(hdc, 
+                Camera::CalculatePos(Vector2(TILE_SIZE * idx * TILE_SCALE, 0)).x, 
+                Camera::CalculatePos(Vector2(TILE_SIZE * idx * TILE_SCALE, 0)).y, nullptr);
+            LineTo(hdc, 
+                Camera::CalculatePos(Vector2(TILE_SIZE * idx * TILE_SCALE, mainWindow.height)).x, 
+                Camera::CalculatePos(Vector2(TILE_SIZE * idx * TILE_SCALE, mainWindow.height)).y);
+        }
 
 		(HPEN)SelectObject(hdc, prevPen);
 		DeleteObject(greenPen);
@@ -85,10 +102,13 @@ namespace js
     {
         mTilePalette->Load(path);
     }
-    void ToolScene::SaveCollision()
+    void ToolScene::SaveObjectPalette()
     {
     }
-    void ToolScene::LoadCollision()
+    void ToolScene::LoadObjectPalette()
+    {
+    }
+    void ToolScene::LoadObjectPalette(const std::wstring& path)
     {
     }
 }

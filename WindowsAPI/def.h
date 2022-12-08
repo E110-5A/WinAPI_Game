@@ -85,10 +85,12 @@ enum class eColliderLayer
 	BackGround,					//	1
 	Tile,						//	2
 	BGObj,						//	3
-	Player,						//	4
-	Player_Projectile,			//	5
-	Monster,					//	6
-	Monster_Projectile,			//	7
+	Box,						//	4
+	Item,						//	5
+	Player,						//	6
+	Player_Projectile,			//	7
+	Monster,					//	8
+	Monster_Projectile,			//	9
 
 	Ground,						//	13
 	UI = _COLLIDER_LAYER - 1,	//	14

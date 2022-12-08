@@ -6,6 +6,7 @@
 #include "jsSceneManager.h"
 #include "jsCollisionManager.h"
 
+// tool
 #include "jsToolScene.h"
 
 // ui
@@ -20,6 +21,9 @@
 #include "jsGround.h"
 #include "jsPlayerProjectile.h"
 #include "jsImp.h"
+#include "jsSmallItemBox.h"
+#include "jsLargeItemBox.h"
+#include "jsGoldItemBox.h"
 
 // component
 #include "jsCollider.h"
@@ -43,13 +47,10 @@ namespace js
 		// 맵 로딩		
 		//SceneManager::LoadMap<ToolScene>(L"..\\Resources\\Tile\\testMap",eSceneType::Tool);
 
-
-
 		// 배경 오브젝트
 		GameObject* testGround = object::Instantiate<Ground>(eColliderLayer::Ground, Pos(600.0f, 600.0f));
 		Collider* gCollider = testGround->GetComponent<Collider>();
 		gCollider->SetSize(Vector2(6600.0f, 50.0f));
-
 
 		// 오브젝트 추가
 		Player* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 480.f));
@@ -60,10 +61,15 @@ namespace js
 			mPlayerAttack[idx]->SetOwner(pPlayer);
 		}
 
-		GameObject* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 480.f));
+		Monster* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(700.f, 480.f));
+		Monster* imp2 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(750.f, 480.f));
+		Monster* imp3 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 480.f));
 
+		EventObject* smallBox = object::Instantiate<SmallItemBox>(eColliderLayer::Box, Pos(70.0f, 480.0f));
+		EventObject* largeBox = object::Instantiate<LargeItemBox>(eColliderLayer::Box, Pos(140.0f, 480.0f));
+		EventObject* goldBox = object::Instantiate<GoldItemBox>(eColliderLayer::Box, Pos(220.0f, 480.0f));
 
-
+		
 
 
 		// ui 추가
@@ -85,7 +91,6 @@ namespace js
 		*  - 메뉴 UI 불러오기
 		*
 		*/
-
 		if (KEY_DOWN(eKeyCode::N))
 		{
 			SceneManager::ChangeScene(eSceneType::Title);
@@ -99,7 +104,7 @@ namespace js
 		wchar_t szFloat[50] = {};
 		swprintf_s(szFloat, 50, L"Test Scene");
 		int strLen = wcsnlen_s(szFloat, 50);
-		TextOut(hdc, 10, 30, szFloat, strLen);
+		TextOut(hdc, 5, 10, szFloat, strLen);
 	}
 
 	void TestScene::Enter()

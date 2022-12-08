@@ -14,7 +14,6 @@ namespace js
 		float attSpeed;		// 정확한 수치 ㅁ?ㄹ
 		float range;		// 700
 	};
-
 	struct SkillInfo
 	{
 		float damage;
@@ -35,6 +34,7 @@ namespace js
 	class Rigidbody;
 	class PlayerProjectile;
 	class Monster;
+
 	class Player : public GameObject
 	{
 	public:
@@ -53,7 +53,6 @@ namespace js
 
 		// 애니메이션
 		//void ReturnIdle();
-
 		
 		// 변수
 		PlayerStat GetInfo() { return mStat; }
@@ -61,20 +60,17 @@ namespace js
 		{
 			if (WEAPON_POOL == mWeaponID)
 				return;
+
 			mWeapon[mWeaponID] == nullptr;
 			mWeapon[mWeaponID] = weapon;
 			++mWeaponID;
 		}
 
-
 		// 기능
 		void Cooldown();
 		void SkillProcess();
 		void Skill(eProjectileType type);
-
 		void SelfDamaged(Monster* other);
-
-		float GetHp() { return mStat.curHp; }
 
 	public:
 		// 스스로 함수 호출
@@ -82,7 +78,6 @@ namespace js
 		virtual void OnCollisionStay(Collider* other)override;
 		virtual void OnCollisionExit(Collider* other)override;
 		
-
 	public:
 		// 상태
 		void SetState(ePlayerState state) { mState = state; }
@@ -104,13 +99,10 @@ namespace js
 		Collider*	mCollider;
 		Rigidbody*	mRigidbody;
 
-
 	private:
 		Image*				mImage;
 		PlayerStat			mStat;
 		ePlayerState		mState;
-
-
 
 	private:
 		PlayerProjectile*	mWeapon[WEAPON_POOL];
@@ -120,10 +112,5 @@ namespace js
 		SkillInfo			mFMJ;
 		SkillInfo			mSupressiveFire;
 		SkillInfo			mTacticalDive;
-
-		// 임시
-	private:
-		float				mSpeed;
-		int					mHp;
 	};
 }

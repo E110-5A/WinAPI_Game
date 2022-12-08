@@ -59,6 +59,18 @@ namespace js
 	}
 	void Camera::Render(HDC hdc)
 	{
+		wchar_t szFloat[40] = {};
+
+		std::wstring stateStr = L"Camera Posision :";
+		stateStr += L" (";
+		stateStr += std::to_wstring((int)mLookPosition.x);
+		stateStr += L" , ";
+		stateStr += std::to_wstring((int)mLookPosition.y);
+		stateStr += L")";
+
+		swprintf_s(szFloat, 40, stateStr.c_str());
+		int strLen = wcsnlen_s(szFloat, 40);
+		TextOut(hdc, 10, 40, szFloat, strLen);
 		// 투명도가 0에 가까워지면 렌더링하지 않음
 		if (mBlindAlpha <= 0.f)
 			return;
@@ -74,5 +86,24 @@ namespace js
 			mBlind->GetDC(), 
 			0, 0, mBlind->GetWidth(), mBlind->GetHeight(), func);
 
+	}
+	void Camera::CameraMove()
+	{
+		if (KEY_PRESSE(eKeyCode::W))
+		{
+			mLookPosition.y += -100 * Time::GetDeltaTime();
+		}
+		if (KEY_PRESSE(eKeyCode::S))
+		{
+			mLookPosition.y += 100 * Time::GetDeltaTime();
+		}
+		if (KEY_PRESSE(eKeyCode::A))
+		{
+			mLookPosition.x += -100 * Time::GetDeltaTime();
+		}
+		if (KEY_PRESSE(eKeyCode::D))
+		{
+			mLookPosition.x += 100 * Time::GetDeltaTime();
+		}
 	}
 }

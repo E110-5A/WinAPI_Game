@@ -46,7 +46,7 @@ namespace js
 	public:
 		static void Initialize();
 		static void Tick();
-		static void Render(HDC _dc);
+		static void Render(HDC hdc);
 
 		static eKeyState GetKeyState(eKeyCode _KeyCode);
 		static Vector2 GetMousePos() { return mMousePos; }

@@ -29,9 +29,10 @@ namespace js
 		if (nullptr == mTarget)
 			return;
 
-		Player* playerObj = dynamic_cast<Player*>(mTarget);
+		// 채력바 예시
+		/*Player* playerObj = dynamic_cast<Player*>(mTarget);
 		int hp = playerObj->GetHp();
-		float xRatio = (hp / 100.0f);
+		float xRatio = (hp / 100.0f);*/
 
 		BLENDFUNCTION func = {};
 		func.BlendOp = AC_SRC_OVER;
@@ -40,7 +41,7 @@ namespace js
 		func.SourceConstantAlpha = 255;
 
 		AlphaBlend(hdc, (int)mScreenPos.x, (int)mScreenPos.y
-			, mImage->GetWidth() * xRatio, mImage->GetHeight()
+			, mImage->GetWidth() /** xRatio*/, mImage->GetHeight()
 			, mImage->GetDC(), 0, 0, mImage->GetWidth(), mImage->GetHeight(), func);
 	}
 

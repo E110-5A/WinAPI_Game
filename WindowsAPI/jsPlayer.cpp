@@ -25,8 +25,7 @@
 namespace js
 {
 	Player::Player()
-		: mSpeed(0.f)
-		, mImage(nullptr)
+		: mImage(nullptr)
 		, mWeaponID(0)
 	{
 		// 내 초기값 세팅
@@ -36,8 +35,7 @@ namespace js
 		Initialize();
 	}
 	Player::Player(Pos pos)
-		: mSpeed(0.f)
-		, mImage(nullptr)
+		: mImage(nullptr)
 		, mWeaponID(0)
 	{
 		SetPos(pos);
@@ -469,7 +467,7 @@ namespace js
 
 		swprintf_s(szFloat, 40, stateStr.c_str());
 		int strLen = wcsnlen_s(szFloat, 40);
-		TextOut(hdc, 10, 50, szFloat, strLen);
+		TextOut(hdc, 10, 70, szFloat, strLen);
 	}
 
 

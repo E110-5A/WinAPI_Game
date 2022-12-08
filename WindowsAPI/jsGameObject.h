@@ -12,6 +12,8 @@ namespace js
 		GameObject(Pos pos);
 		virtual ~GameObject();
 
+
+		// 상속 함수
 		virtual void Initialize();
 		virtual void Tick();
 		virtual void Render(HDC hdc);
@@ -20,24 +22,24 @@ namespace js
 		virtual void OnCollisionStay(Collider* other);
 		virtual void OnCollisionExit(Collider* other);
 
+
+		// 오브젝트 변수 설정
 		void SetPos(Pos pos) { mPos = pos; }
-		Pos GetPos() { return mPos; }
-		
+		Pos GetPos() { return mPos; }		
 		void SetScale(Size scale) { mScale = scale; }
 		Size GetScale() { return mScale; }
-
 		void SetDir(Vector2 dir) { mDir = dir; }
 		Vector2 GetDir() { return mDir; }
-
 		void SetType(eColliderLayer type) { mType = type; }
 		eColliderLayer GetType() { return mType; }
 
-
+		// 오브젝트 기능
 		void Death() { mDead = true; }
 		bool IsDeath() { return mDead; }
 		void SetDeath(float time);
 		void DeathLoop();
 
+		// 컴포넌트 기능
 		void AddComponent(Component* component);
 		template <typename T>
 		__forceinline T* AddComponent()
@@ -46,8 +48,6 @@ namespace js
 			GameObject::AddComponent(component);
 			return component;
 		}
-		
-		
 		template <typename T>
 		__forceinline T* GetComponent()
 		{

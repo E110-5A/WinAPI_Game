@@ -1,6 +1,8 @@
 #include "jsInput.h"
 #include "jsApplication.h"
 
+#include "jsCamera.h"
+
 namespace js
 {
 	Vector2 Input::mMousePos = Vector2::Zero;
@@ -89,9 +91,24 @@ namespace js
 			}
 		}
 	}
-	void Input::Render(HDC _dc)
+
+	void Input::Render(HDC hdc)
 	{
+		wchar_t szFloat[40] = {};
+		Vector2 mosuePos = Camera::CalculatePos(mMousePos);
+		std::wstring stateStr = L"Mouse Posision :";
+		stateStr += L" (";
+		stateStr += std::to_wstring((int)mosuePos.x);
+		stateStr += L" , ";
+		stateStr += std::to_wstring((int)mosuePos.y);
+		stateStr += L")";
+
+		swprintf_s(szFloat, 40, stateStr.c_str());
+		int strLen = wcsnlen_s(szFloat, 40);
+		TextOut(hdc, 10, 60, szFloat, strLen);
 	}
+
+
 	eKeyState Input::GetKeyState(eKeyCode _KeyCode)
 	{
 		return mKeys[(UINT)_KeyCode].state;

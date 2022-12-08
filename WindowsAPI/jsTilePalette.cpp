@@ -20,29 +20,58 @@ namespace js
 	{
 	}
 
+	// 타일 팔렛트 기능
 	void TilePalette::Tick()
 	{
+		// 타일 생성
 		if (KEY_PRESSE(eKeyCode::LBTN))
 		{
 			if (GetFocus())
-			{				
+			{
+				// 마우스 위치 가져옴
 				js::Pos mousePos = js::Input::GetMousePos();
 				if (mousePos.x < 0 || mousePos.y < 0)
 					return;
 				if (mousePos.x > mWindowInfo.width
 					|| mousePos.y > mWindowInfo.height)
 					return;
-
 				int layerX = mousePos.x / (TILE_SIZE * TILE_SCALE);
 				int layerY = mousePos.y / (TILE_SIZE * TILE_SCALE);
 
+				// 툴씬을 찾아서 기록된 타일인덱스를 가져온다음 타일 생성
 				js::Scene* scene = js::SceneManager::GetPlayScene();
 				js::ToolScene* toolScene = dynamic_cast<ToolScene*>(scene);
 				UINT index = toolScene->GetTileIndex();
 				CreateTile(index, Vector2(layerX, layerY));
 			}
 		}
+		// 타일 제거
+		if (KEY_PRESSE(eKeyCode::RBTN))
+		{
+			if (GetFocus())
+			{
+				js::Pos mousePos = js::Input::GetMousePos();
+				if (mousePos.x < 0 || mousePos.y < 0)
+					return;
+				if (mousePos.x > mWindowInfo.width
+					|| mousePos.y > mWindowInfo.height)
+					return;
+				int layerX = mousePos.x / (TILE_SIZE * TILE_SCALE);
+				int layerY = mousePos.y / (TILE_SIZE * TILE_SCALE);
+
+				js::Scene* scene = js::SceneManager::GetPlayScene();
+				js::ToolScene* toolScene = dynamic_cast<ToolScene*>(scene);
+
+				// 해당 레이어 위치에 있는 타일을 찾은다음
+				 
+				
+				//UINT index = toolScene->GetTileIndex();
+				// 삭제하기
+				//CreateTile(index, Vector2(layerX, layerY));
+			}
+		}
 	}
+
 	void TilePalette::Render(HDC hdc)
 	{
 	}

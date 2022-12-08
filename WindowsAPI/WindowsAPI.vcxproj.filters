@@ -68,14 +68,23 @@
     <Filter Include="1 Engine\GameObject\Env">
       <UniqueIdentifier>{58aec7e4-92c0-48e3-a4e4-42b84837b708}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1 Engine\GameObject\TitleSceneObj">
-      <UniqueIdentifier>{9fcee474-a63c-47b1-9774-6fedfdd76b88}</UniqueIdentifier>
-    </Filter>
     <Filter Include="1 Engine\GameObject\Game\Player">
       <UniqueIdentifier>{118a1d99-fdc6-4f75-9b17-ae93e2ff5083}</UniqueIdentifier>
     </Filter>
     <Filter Include="1 Engine\GameObject\Game\Monster">
       <UniqueIdentifier>{a1adc797-2a83-4b48-b5f3-25dbf8a71f22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\EventObj">
+      <UniqueIdentifier>{2100e976-5955-4d0c-89ad-cb2fd8ebf745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\EventObj\Box">
+      <UniqueIdentifier>{7bc3b64d-2b9b-42df-80d9-12005b8b1070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\EventObj\Item">
+      <UniqueIdentifier>{df4743f8-e2b1-4177-9003-9a574bd564b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\BackGround\TitleSceneObj">
+      <UniqueIdentifier>{9fcee474-a63c-47b1-9774-6fedfdd76b88}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -218,7 +227,7 @@
       <Filter>1 Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="jsCommandoRun.h">
-      <Filter>1 Engine\GameObject\TitleSceneObj</Filter>
+      <Filter>1 Engine\GameObject\BackGround\TitleSceneObj</Filter>
     </ClInclude>
     <ClInclude Include="jsPlayer.h">
       <Filter>1 Engine\GameObject\Game\Player</Filter>
@@ -237,6 +246,24 @@
     </ClInclude>
     <ClInclude Include="jsMonsterAttack.h">
       <Filter>1 Engine\GameObject\Game\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="jsObjectPalette.h">
+      <Filter>1 Engine\GameObject\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="jsEventObject.h">
+      <Filter>1 Engine\GameObject\EventObj</Filter>
+    </ClInclude>
+    <ClInclude Include="jsItemObject.h">
+      <Filter>1 Engine\GameObject\EventObj\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="jsSmallItemBox.h">
+      <Filter>1 Engine\GameObject\EventObj\Box</Filter>
+    </ClInclude>
+    <ClInclude Include="jsLargeItemBox.h">
+      <Filter>1 Engine\GameObject\EventObj\Box</Filter>
+    </ClInclude>
+    <ClInclude Include="jsGoldItemBox.h">
+      <Filter>1 Engine\GameObject\EventObj\Box</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -370,11 +397,11 @@
     <ClCompile Include="jsSelectScene.cpp">
       <Filter>1 Engine\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="jsOption.cpp">
+    <ClCompile Include="jsOptionScene.cpp">
       <Filter>1 Engine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="jsCommandoRun.cpp">
-      <Filter>1 Engine\GameObject\TitleSceneObj</Filter>
+      <Filter>1 Engine\GameObject\BackGround\TitleSceneObj</Filter>
     </ClCompile>
     <ClCompile Include="jsPlayer.cpp">
       <Filter>1 Engine\GameObject\Game\Player</Filter>
@@ -393,6 +420,24 @@
     </ClCompile>
     <ClCompile Include="jsMonsterAttack.cpp">
       <Filter>1 Engine\GameObject\Game\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="jsObjectPalette.cpp">
+      <Filter>1 Engine\GameObject\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="jsEventObject.cpp">
+      <Filter>1 Engine\GameObject\EventObj</Filter>
+    </ClCompile>
+    <ClCompile Include="jsItemObject.cpp">
+      <Filter>1 Engine\GameObject\EventObj\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="jsSmallItemBox.cpp">
+      <Filter>1 Engine\GameObject\EventObj\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="jsLargeItemBox.cpp">
+      <Filter>1 Engine\GameObject\EventObj\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="jsGoldItemBox.cpp">
+      <Filter>1 Engine\GameObject\EventObj\Box</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

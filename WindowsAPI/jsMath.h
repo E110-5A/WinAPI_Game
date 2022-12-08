@@ -36,7 +36,6 @@ namespace js
 		{			
 			return Vector2(-x, -y);
 		}
-
 		Vector2 operator /(const float value)
 		{
 			Vector2 vec;
@@ -44,7 +43,6 @@ namespace js
 			vec.y = y / value;
 			return vec;
 		}
-		
 		Vector2 operator *(const Vector2& other)
 		{
 			Vector2 temp;
@@ -128,7 +126,6 @@ namespace js
 
 	namespace math
 	{
-
 		inline float DegreeToRadian(float degree)
 		{
 			return degree / 180 * PI;

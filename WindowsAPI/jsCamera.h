@@ -16,6 +16,9 @@ namespace js
 		static void SetTarget(GameObject* target) { mTarget = target; }
 		static void SetCameraEffect(eCameraEffect effect) { mEffect = effect; }
 
+		// W A S D 키로 카메라 위치 변경
+		static void CameraMove();
+
 	private:
 		Camera() = default;
 		~Camera() = default;

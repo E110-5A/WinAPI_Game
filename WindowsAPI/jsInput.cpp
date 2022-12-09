@@ -95,12 +95,12 @@ namespace js
 	void Input::Render(HDC hdc)
 	{
 		wchar_t szFloat[40] = {};
-		Vector2 mosuePos = Camera::CalculatePos(mMousePos);
+		Vector2 mousePos = Camera::CalculateMousePos(mMousePos);
 		std::wstring stateStr = L"Mouse Posision :";
 		stateStr += L" (";
-		stateStr += std::to_wstring((int)mosuePos.x);
+		stateStr += std::to_wstring((int)mousePos.x);
 		stateStr += L" , ";
-		stateStr += std::to_wstring((int)mosuePos.y);
+		stateStr += std::to_wstring((int)mousePos.y);
 		stateStr += L")";
 
 		swprintf_s(szFloat, 40, stateStr.c_str());

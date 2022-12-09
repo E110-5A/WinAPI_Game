@@ -31,10 +31,6 @@ namespace js
 		mAtlasWindowData.hdc = GetDC(data.hWnd);
 	}
 
-	void Application::InitializeCollisionWindow(WindowData data)
-	{
-	}
-
 	void Application::Tick()
 	{
 		Time::Tick();

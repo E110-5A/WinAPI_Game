@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "WindowsAPI.h"
 
-#include "jsToolScene.h"
+#include "jsMapToolScene.h"
 
 #include "jsApplication.h"
 #include "jsSceneManager.h"
@@ -17,28 +17,28 @@
 namespace js
 {
 	
-	ToolScene::ToolScene()
+    MapToolScene::MapToolScene()
         : mTileIndex(0)
 	{
 		mTilePalette = new TilePalette();
 	}
-	ToolScene::~ToolScene()
+    MapToolScene::~MapToolScene()
 	{
 		delete mTilePalette;
 	}
-	void ToolScene::Initialize()
+	void MapToolScene::Initialize()
 	{
 	}
 
 
-	void ToolScene::Tick()
+	void MapToolScene::Tick()
 	{
         Camera::CameraMove();
 
         if (mTilePalette)
             mTilePalette->Tick();
 	}
-	void ToolScene::Render(HDC hdc)
+	void MapToolScene::Render(HDC hdc)
 	{
 		Scene::Render(hdc);
 
@@ -54,27 +54,27 @@ namespace js
 		HPEN greenPen = CreatePen(PS_SOLID, 2, RGB(0, 125, 0));
 		HPEN prevPen = (HPEN)SelectObject(hdc, greenPen);
 
-		int maxRow = mainWindow.height / TILE_SIZE + 1;
+		int maxRow = mainWindow.height / TILE_SIZE * TILE_SCALE + 1;
         
 
         for (int idx = 0; idx < maxRow; idx++)
         {
-            MoveToEx(hdc, 
-                Camera::CalculatePos(Vector2(0, TILE_SIZE * idx * TILE_SCALE)).x, 
-                Camera::CalculatePos(Vector2(0, TILE_SIZE * idx * TILE_SCALE)).y, nullptr);
-            LineTo(hdc, 
-                Camera::CalculatePos(Vector2(mainWindow.width, TILE_SIZE * idx * TILE_SCALE)).x, 
-                Camera::CalculatePos(Vector2(mainWindow.width, TILE_SIZE * idx * TILE_SCALE)).y);
+            MoveToEx(hdc,
+                Camera::CalculateObjectPos(Vector2(0, TILE_SIZE * idx * TILE_SCALE)).x, 
+                Camera::CalculateObjectPos(Vector2(0, TILE_SIZE * idx * TILE_SCALE)).y, nullptr);
+            LineTo(hdc,
+                Camera::CalculateObjectPos(Vector2(mainWindow.width, TILE_SIZE * idx * TILE_SCALE)).x, 
+                Camera::CalculateObjectPos(Vector2(mainWindow.width, TILE_SIZE * idx * TILE_SCALE)).y);
         }
-        int maxCol = mainWindow.width / TILE_SIZE + 1;
+        int maxCol = mainWindow.width / TILE_SIZE * TILE_SCALE + 1;
         for (int idx = 0; idx < maxCol; idx++)
         {
-            MoveToEx(hdc, 
-                Camera::CalculatePos(Vector2(TILE_SIZE * idx * TILE_SCALE, 0)).x, 
-                Camera::CalculatePos(Vector2(TILE_SIZE * idx * TILE_SCALE, 0)).y, nullptr);
-            LineTo(hdc, 
-                Camera::CalculatePos(Vector2(TILE_SIZE * idx * TILE_SCALE, mainWindow.height)).x, 
-                Camera::CalculatePos(Vector2(TILE_SIZE * idx * TILE_SCALE, mainWindow.height)).y);
+            MoveToEx(hdc,
+                Camera::CalculateObjectPos(Vector2(TILE_SIZE * idx * TILE_SCALE, 0)).x, 
+                Camera::CalculateObjectPos(Vector2(TILE_SIZE * idx * TILE_SCALE, 0)).y, nullptr);
+            LineTo(hdc,
+                Camera::CalculateObjectPos(Vector2(TILE_SIZE * idx * TILE_SCALE, mainWindow.height)).x, 
+                Camera::CalculateObjectPos(Vector2(TILE_SIZE * idx * TILE_SCALE, mainWindow.height)).y);
         }
 
 		(HPEN)SelectObject(hdc, prevPen);
@@ -82,33 +82,35 @@ namespace js
 	}
 
 
-	void ToolScene::Enter()
+	void MapToolScene::Enter()
 	{
 		Application::GetInstance().SetMenuBar(true);
 	}
-	void ToolScene::Exit()
+	void MapToolScene::Exit()
 	{
 		Application::GetInstance().SetMenuBar(false);
 	}
-    void ToolScene::SaveTilePalette()
+    void MapToolScene::SaveTilePalette()
     {
         mTilePalette->Save();
     }
-    void ToolScene::LoadTilePalette()
+    void MapToolScene::LoadTilePalette()
     {
         mTilePalette->Load();
     }
-    void ToolScene::LoadTilePalette(const std::wstring& path)
+    void MapToolScene::LoadTilePalette(const std::wstring& path)
     {
         mTilePalette->Load(path);
     }
-    void ToolScene::SaveObjectPalette()
+
+
+    void MapToolScene::SaveObjectPalette()
     {
     }
-    void ToolScene::LoadObjectPalette()
+    void MapToolScene::LoadObjectPalette()
     {
     }
-    void ToolScene::LoadObjectPalette(const std::wstring& path)
+    void MapToolScene::LoadObjectPalette(const std::wstring& path)
     {
     }
 }
@@ -126,7 +128,7 @@ LRESULT CALLBACK AtlasWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 
 
         js::Scene* Scene = js::SceneManager::GetPlayScene();
-        js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(Scene);
+        js::MapToolScene* toolScene = dynamic_cast<js::MapToolScene*>(Scene);
         js::Image* atlas = toolScene->GetAtlasImage();
 
 
@@ -168,7 +170,7 @@ LRESULT CALLBACK AtlasWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
             int index = (y * TILE_LINE_X) + (x % TILE_LINE_X);
 
             js::Scene* Scene = js::SceneManager::GetPlayScene();
-            js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(Scene);
+            js::MapToolScene* toolScene = dynamic_cast<js::MapToolScene*>(Scene);
 
             toolScene->SetTileIndex(index);
         }
@@ -183,9 +185,8 @@ LRESULT CALLBACK AtlasWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 
         WindowData atlasWindowData = js::Application::GetInstance().GetAtlasWindowData();
         js::Scene* Scene = js::SceneManager::GetPlayScene();
-        js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(Scene);
+        js::MapToolScene* toolScene = dynamic_cast<js::MapToolScene*>(Scene);
         js::Image* atlas = toolScene->GetAtlasImage();
-
         js::Pos pos(js::Vector2::Zero);
 
         TransparentBlt(hdc, pos.x, pos.y, atlas->GetWidth() * TILE_SCALE, atlas->GetHeight() * TILE_SCALE,

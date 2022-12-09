@@ -38,7 +38,7 @@ namespace js
 		if (nullptr == mAtlas)
 			return;
 		Pos nowPos = GetPos();
-		Pos renderPos = Camera::CalculatePos(nowPos);
+		Pos renderPos = Camera::CalculateObjectPos(nowPos);
 
 		int tileImageX = mX * TILE_SIZE;
 		int tileImageY = mY * TILE_SIZE;

@@ -39,7 +39,7 @@ namespace js
 		Size scale = gameObj->GetScale();
 
 		if (mAffectedCamera)
-			pos = Camera::CalculatePos(pos);
+			pos = Camera::CalculateObjectPos(pos);
 
 		BLENDFUNCTION func = {};
 		func.AlphaFormat = AC_SRC_ALPHA;

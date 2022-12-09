@@ -49,7 +49,7 @@ namespace js
 	{
 		Pos pos = GetPos();
 		Size scale = GetScale();
-		pos = Camera::CalculatePos(pos);
+		pos = Camera::CalculateObjectPos(pos);
 
 		Ellipse(hdc, pos.x, pos.y,
 			pos.x + scale.x, pos.y + scale.y);

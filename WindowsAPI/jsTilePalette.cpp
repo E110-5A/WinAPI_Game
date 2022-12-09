@@ -1,12 +1,20 @@
 #include "jsTilePalette.h"
-#include "jsImage.h"
-#include "jsResources.h"
-#include "jsInput.h"
-#include "jsToolScene.h"
-#include "jsSceneManager.h"
-#include "jsObject.h"
-#include "jsApplication.h"
 #include <commdlg.h>
+#include "jsApplication.h"
+
+// manager
+#include "jsInput.h"
+#include "jsSceneManager.h"
+#include "jsCamera.h"
+
+#include "jsMapToolScene.h"
+
+// resource
+#include "jsResources.h"
+#include "jsImage.h"
+
+// object
+#include "jsObject.h"
 
 namespace js
 {
@@ -28,19 +36,28 @@ namespace js
 		{
 			if (GetFocus())
 			{
+				//eSceneType type = Application::GetInstance();
+
 				// 마우스 위치 가져옴
-				js::Pos mousePos = js::Input::GetMousePos();
+				Pos mousePos = Input::GetMousePos();
+
+				// 마우스가 화면 밖으로 나가면 ret
 				if (mousePos.x < 0 || mousePos.y < 0)
 					return;
 				if (mousePos.x > mWindowInfo.width
 					|| mousePos.y > mWindowInfo.height)
 					return;
+
+				mousePos = Camera::CalculateMousePos(mousePos);
+				// 마우스 위치를 타일 길이만큼 나눈 몫
 				int layerX = mousePos.x / (TILE_SIZE * TILE_SCALE);
 				int layerY = mousePos.y / (TILE_SIZE * TILE_SCALE);
 
-				// 툴씬을 찾아서 기록된 타일인덱스를 가져온다음 타일 생성
-				js::Scene* scene = js::SceneManager::GetPlayScene();
-				js::ToolScene* toolScene = dynamic_cast<ToolScene*>(scene);
+				// 툴씬 가져옴
+				Scene* scene = SceneManager::GetPlayScene();
+				MapToolScene* toolScene = dynamic_cast<MapToolScene*>(scene);
+
+				// 현재 선택중인 타일을 레이어 위치에 생성
 				UINT index = toolScene->GetTileIndex();
 				CreateTile(index, Vector2(layerX, layerY));
 			}
@@ -50,24 +67,35 @@ namespace js
 		{
 			if (GetFocus())
 			{
+				// 마우스 위치 가져오기
 				js::Pos mousePos = js::Input::GetMousePos();
+
+				// 윈도우 나가면 나가리
 				if (mousePos.x < 0 || mousePos.y < 0)
 					return;
 				if (mousePos.x > mWindowInfo.width
 					|| mousePos.y > mWindowInfo.height)
 					return;
-				int layerX = mousePos.x / (TILE_SIZE * TILE_SCALE);
-				int layerY = mousePos.y / (TILE_SIZE * TILE_SCALE);
 
-				js::Scene* scene = js::SceneManager::GetPlayScene();
-				js::ToolScene* toolScene = dynamic_cast<ToolScene*>(scene);
+				// 씬 구성 가져오기
+				Scene* scene = SceneManager::GetPlayScene();
+				MapToolScene* toolScene = dynamic_cast<MapToolScene*>(scene);
 
-				// 해당 레이어 위치에 있는 타일을 찾은다음
-				 
+				// 배치된 타일 오브젝트 가져오기
+				std::vector<GameObject*> tiles = toolScene->GetGameObjects(eColliderLayer::Tile);
+				std::vector<GameObject*>::iterator tileIter = tiles.begin();
 				
-				//UINT index = toolScene->GetTileIndex();
-				// 삭제하기
-				//CreateTile(index, Vector2(layerX, layerY));
+				// 모든 타일을 순회
+				for (; tileIter != tiles.end(); ++tileIter)
+				{
+					Vector2 objPos = (*tileIter)->GetPos();
+					// 마우스가 유효한 위치에 있는경우 해당 타일 제거
+					if (objPos.x < mousePos.x && objPos.x + (TILE_SIZE * TILE_SCALE) > mousePos.x
+						&& objPos.y < mousePos.y && objPos.y + (TILE_SIZE * TILE_SCALE) > mousePos.y)
+					{
+						object::Destroy((*tileIter));
+					}
+				}
 			}
 		}
 	}
@@ -108,7 +136,7 @@ namespace js
 		ofn.lpstrFile = szFilePath;
 		ofn.lpstrFile[0] = '\0';
 		ofn.nMaxFile = 256;
-		ofn.lpstrFilter = L"Tile\0*.tile\0";
+		ofn.lpstrFilter = L"Tile\0*.tile\0"; //"All Files\0*.*\0\0"
 		ofn.nFilterIndex = 1;
 		ofn.lpstrFileTitle = NULL;
 		ofn.nMaxFileTitle = 0;

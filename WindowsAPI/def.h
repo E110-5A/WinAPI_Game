@@ -32,7 +32,7 @@ enum class eCameraEffect
 // Scene enum
 enum class eSceneType
 {
-	Tool,
+	MapTool,
 	Test,
 	Title,
 	Select,
@@ -85,7 +85,7 @@ enum class eColliderLayer
 	BackGround,					//	1
 	Tile,						//	2
 	BGObj,						//	3
-	Box,						//	4
+	Chest,						//	4
 	Item,						//	5
 	Player,						//	6
 	Player_Projectile,			//	7
@@ -139,3 +139,4 @@ enum class eProjectileType
 };
 
 #define WEAPON_POOL 12
+#define GREED_SIZE 48

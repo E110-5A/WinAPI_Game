@@ -77,14 +77,17 @@
     <Filter Include="1 Engine\GameObject\EventObj">
       <UniqueIdentifier>{2100e976-5955-4d0c-89ad-cb2fd8ebf745}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1 Engine\GameObject\EventObj\Box">
-      <UniqueIdentifier>{7bc3b64d-2b9b-42df-80d9-12005b8b1070}</UniqueIdentifier>
-    </Filter>
     <Filter Include="1 Engine\GameObject\EventObj\Item">
       <UniqueIdentifier>{df4743f8-e2b1-4177-9003-9a574bd564b0}</UniqueIdentifier>
     </Filter>
     <Filter Include="1 Engine\GameObject\BackGround\TitleSceneObj">
       <UniqueIdentifier>{9fcee474-a63c-47b1-9774-6fedfdd76b88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\EventObj\Chest">
+      <UniqueIdentifier>{7bc3b64d-2b9b-42df-80d9-12005b8b1070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\Scene\Tool">
+      <UniqueIdentifier>{fddda5ab-b24e-441f-bcd3-a63a68f04fed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -184,9 +187,6 @@
     <ClInclude Include="jsTilePalette.h">
       <Filter>1 Engine\GameObject\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="jsToolScene.h">
-      <Filter>1 Engine\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="jsProjectile.h">
       <Filter>1 Engine\GameObject\Game</Filter>
     </ClInclude>
@@ -256,14 +256,17 @@
     <ClInclude Include="jsItemObject.h">
       <Filter>1 Engine\GameObject\EventObj\Item</Filter>
     </ClInclude>
-    <ClInclude Include="jsSmallItemBox.h">
-      <Filter>1 Engine\GameObject\EventObj\Box</Filter>
+    <ClInclude Include="jsSmallChest.h">
+      <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
     </ClInclude>
-    <ClInclude Include="jsLargeItemBox.h">
-      <Filter>1 Engine\GameObject\EventObj\Box</Filter>
+    <ClInclude Include="jsLargeChest.h">
+      <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
     </ClInclude>
-    <ClInclude Include="jsGoldItemBox.h">
-      <Filter>1 Engine\GameObject\EventObj\Box</Filter>
+    <ClInclude Include="jsGoldenChest.h">
+      <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
+    </ClInclude>
+    <ClInclude Include="jsMapToolScene.h">
+      <Filter>1 Engine\Scene\Tool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -349,9 +352,6 @@
     <ClCompile Include="jsAnimation.cpp">
       <Filter>1 Engine\Component</Filter>
     </ClCompile>
-    <ClCompile Include="jsToolScene.cpp">
-      <Filter>1 Engine\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="jsTile.cpp">
       <Filter>1 Engine\GameObject\Tile</Filter>
     </ClCompile>
@@ -430,14 +430,17 @@
     <ClCompile Include="jsItemObject.cpp">
       <Filter>1 Engine\GameObject\EventObj\Item</Filter>
     </ClCompile>
-    <ClCompile Include="jsSmallItemBox.cpp">
-      <Filter>1 Engine\GameObject\EventObj\Box</Filter>
+    <ClCompile Include="jsSmallChest.cpp">
+      <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
     </ClCompile>
-    <ClCompile Include="jsLargeItemBox.cpp">
-      <Filter>1 Engine\GameObject\EventObj\Box</Filter>
+    <ClCompile Include="jsLargeChest.cpp">
+      <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
     </ClCompile>
-    <ClCompile Include="jsGoldItemBox.cpp">
-      <Filter>1 Engine\GameObject\EventObj\Box</Filter>
+    <ClCompile Include="jsGoldenChest.cpp">
+      <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
+    </ClCompile>
+    <ClCompile Include="jsMapToolScene.cpp">
+      <Filter>1 Engine\Scene\Tool</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

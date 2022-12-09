@@ -72,7 +72,7 @@ namespace js
 					continue;
 
 				//Pos pos = mObjects[y][x]->GetPos();
-				//pos = Camera::CalculatePos(pos);
+				//pos = Camera::CalculateObjectPos(pos);
 
 				//// 화면 밖이면 스킵
 				//if (pos.x < -100 || pos.y < -100)

@@ -3,12 +3,12 @@
 
 namespace js
 {
-	class GoldItemBox : public EventObject
+	class GoldenChest : public EventObject
 	{
 	public:
-		GoldItemBox();
-		GoldItemBox(Pos pos);
-		virtual ~GoldItemBox();
+		GoldenChest();
+		GoldenChest(Pos pos);
+		virtual ~GoldenChest();
 
 		virtual void Initialize() override;
 		virtual void Tick() override;
@@ -18,6 +18,7 @@ namespace js
 		virtual void OnCollisionStay(Collider* other) override;
 		virtual void OnCollisionExit(Collider* other) override;
 
+		void Trigger();
 	private:
 		Event		mOnTrigger;
 	};

@@ -41,7 +41,7 @@ namespace js
 		else
 			prevPen = (HPEN)SelectObject(hdc, green);
 		
-		mPos = Camera::CalculatePos(mPos);
+		mPos = Camera::CalculateObjectPos(mPos);
 
 		Rectangle(hdc, (mPos.x - mSize.x / 2.f), (mPos.y - mSize.y / 2.f),
 			(mPos.x + mSize.x / 2.f), (mPos.y + mSize.y / 2.f));

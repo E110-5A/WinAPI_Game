@@ -12,7 +12,8 @@ namespace js
 		static void Tick();
 		static void Render(HDC hdc);
 
-		static Pos CalculatePos(Pos pos) { return pos - mDistance; }
+		static Pos CalculateObjectPos(Pos pos) { return pos - mDistance; }
+		static Pos CalculateMousePos(Pos pos) { return pos + mDistance; }
 		static void SetTarget(GameObject* target) { mTarget = target; }
 		static void SetCameraEffect(eCameraEffect effect) { mEffect = effect; }
 

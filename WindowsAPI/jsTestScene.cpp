@@ -7,7 +7,7 @@
 #include "jsCollisionManager.h"
 
 // tool
-#include "jsToolScene.h"
+#include "jsMapToolScene.h"
 
 // ui
 #include "jsUIManager.h"
@@ -21,9 +21,9 @@
 #include "jsGround.h"
 #include "jsPlayerProjectile.h"
 #include "jsImp.h"
-#include "jsSmallItemBox.h"
-#include "jsLargeItemBox.h"
-#include "jsGoldItemBox.h"
+#include "jsSmallChest.h"
+#include "jsLargeChest.h"
+#include "jsGoldenChest.h"
 
 // component
 #include "jsCollider.h"
@@ -45,10 +45,14 @@ namespace js
 		// 720
 		
 		// 맵 로딩		
-		//SceneManager::LoadMap<ToolScene>(L"..\\Resources\\Tile\\testMap",eSceneType::Tool);
+		//SceneManager::LoadMap<MapToolScene>(L"..\\Resources\\Tile\\debugTest", eSceneType::MapTool);
+		/*Scene* scene = SceneManager::GetScene(eSceneType::MapTool);
+		MapToolScene* toolScene = dynamic_cast<MapToolScene*>(scene);
+		toolScene->LoadTilePalette(L"..\\Resources\\Tile\\isthatbug");*/
+
 
 		// 배경 오브젝트
-		GameObject* testGround = object::Instantiate<Ground>(eColliderLayer::Ground, Pos(600.0f, 600.0f));
+		GameObject* testGround = object::Instantiate<Ground>(eColliderLayer::Ground, Pos(600.0f, 570.0f));
 		Collider* gCollider = testGround->GetComponent<Collider>();
 		gCollider->SetSize(Vector2(6600.0f, 50.0f));
 
@@ -65,9 +69,9 @@ namespace js
 		Monster* imp2 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(750.f, 480.f));
 		Monster* imp3 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 480.f));
 
-		EventObject* smallBox = object::Instantiate<SmallItemBox>(eColliderLayer::Box, Pos(70.0f, 480.0f));
-		EventObject* largeBox = object::Instantiate<LargeItemBox>(eColliderLayer::Box, Pos(140.0f, 480.0f));
-		EventObject* goldBox = object::Instantiate<GoldItemBox>(eColliderLayer::Box, Pos(220.0f, 480.0f));
+		EventObject* smallBox = object::Instantiate<SmallChest>(eColliderLayer::Chest, Pos(70.0f, 480.0f));
+		EventObject* largeBox = object::Instantiate<LargeChest>(eColliderLayer::Chest, Pos(140.0f, 480.0f));
+		EventObject* goldenBox = object::Instantiate<GoldenChest>(eColliderLayer::Chest, Pos(220.0f, 480.0f));
 
 		
 
@@ -111,7 +115,10 @@ namespace js
 	{
 		CollisionManager::SetLayer(eColliderLayer::Ground, eColliderLayer::Player, true);
 		CollisionManager::SetLayer(eColliderLayer::Ground, eColliderLayer::Monster, true);
+
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Chest, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Monster_Projectile, true);
+		
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player_Projectile, true);
 	}
 

@@ -4,13 +4,11 @@
 
 namespace js
 {
-
-	class ToolScene :
-		public Scene
+	class MapToolScene : public Scene
 	{
 	public:
-		ToolScene();
-		~ToolScene();
+		MapToolScene();
+		~MapToolScene();
 
 		void Initialize() override;
 		void Tick() override;

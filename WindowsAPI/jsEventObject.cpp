@@ -27,11 +27,14 @@ namespace js
 
 	void EventObject::Tick()
 	{
+		GameObject::Tick();
 	}
 
 	void EventObject::Render(HDC hdc)
 	{
+		GameObject::Render(hdc);
 	}
+
 
 	void EventObject::OnCollisionEnter(Collider* other)
 	{

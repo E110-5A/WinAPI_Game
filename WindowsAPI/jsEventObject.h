@@ -5,6 +5,7 @@ namespace js
 {
 	class Image;
 	class Collider;
+	class Player;
 	class EventObject : public GameObject
 	{
 	public:
@@ -31,6 +32,7 @@ namespace js
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 
+
 		virtual void OnCollisionEnter(Collider* other) override;
 		virtual void OnCollisionStay(Collider* other) override;
 		virtual void OnCollisionExit(Collider* other) override;
@@ -41,6 +43,8 @@ namespace js
 	protected:
 		Image*		mImage;
 		Collider*	mCollider;
+
+		// 게임정보 구조체 변수
 
 	private:
 	};

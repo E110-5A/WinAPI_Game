@@ -31,7 +31,7 @@ namespace js
 		rect.x = mImage->GetWidth() * scale.x;
 		rect.y = mImage->GetHeight() * scale.y;
 
-		finalPos = Camera::CalculatePos(finalPos);
+		finalPos = Camera::CalculateObjectPos(finalPos);
 		TransparentBlt(hdc,
 			finalPos.x, finalPos.y,
 			rect.x, rect.y,

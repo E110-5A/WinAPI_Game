@@ -12,11 +12,11 @@ namespace js
 	Vector2 Camera::mDistance = Vector2::Zero;
 	GameObject* Camera::mTarget = nullptr;
 
-	 eCameraEffect Camera::mEffect = eCameraEffect::None;
-	 Image* Camera::mBlind = nullptr;
-	 float Camera::mAlphaTime = 0.f;
-	 float Camera::mBlindAlpha = 0.f;
-	 float Camera::mEndTime = 2.f;
+	eCameraEffect Camera::mEffect = eCameraEffect::None;
+	Image* Camera::mBlind = nullptr;
+	float Camera::mAlphaTime = 0.f;
+	float Camera::mBlindAlpha = 0.f;
+	float Camera::mEndTime = 2.f;
 
 	void Camera::Initialize()
 	{
@@ -32,21 +32,24 @@ namespace js
 
 	void Camera::Tick()
 	{
-		// EndTime 2초
-		if (mAlphaTime <= mEndTime)
+		// 카메라 효과 기능
+		if (mEffect != eCameraEffect::None)
 		{
-			mAlphaTime += Time::GetDeltaTime();
-
-			// 현재 시간에서 종료 시간까지 비율 구하기
-			float ratio = (mAlphaTime / mEndTime);
-
-			if (eCameraEffect::FadeIn == mEffect)
+			if (mAlphaTime <= mEndTime)
 			{
-				mBlindAlpha = 1.f - ratio;
-			}
-			else if (eCameraEffect::FadeOut == mEffect)
-			{
-				mBlindAlpha = ratio;
+				mAlphaTime += Time::GetDeltaTime();
+
+				// 현재 시간에서 종료 시간까지 비율 구하기
+				float ratio = (mAlphaTime / mEndTime);
+
+				if (eCameraEffect::FadeIn == mEffect)
+				{
+					mBlindAlpha = 1.f - ratio;
+				}
+				else if (eCameraEffect::FadeOut == mEffect)
+				{
+					mBlindAlpha = ratio;
+				}
 			}
 		}
 
@@ -56,6 +59,7 @@ namespace js
 
 		// 월드와 로컬간의 간격차를 계산
 		mDistance = mLookPosition - (mResoultion / 2.f);
+		// 현재 카메라 위치에서 해상도 절반 값을 뺀 길이
 	}
 	void Camera::Render(HDC hdc)
 	{
@@ -91,19 +95,19 @@ namespace js
 	{
 		if (KEY_PRESSE(eKeyCode::W))
 		{
-			mLookPosition.y += -100 * Time::GetDeltaTime();
+			mLookPosition.y += -200 * Time::GetDeltaTime();
 		}
 		if (KEY_PRESSE(eKeyCode::S))
 		{
-			mLookPosition.y += 100 * Time::GetDeltaTime();
+			mLookPosition.y += 200 * Time::GetDeltaTime();
 		}
 		if (KEY_PRESSE(eKeyCode::A))
 		{
-			mLookPosition.x += -100 * Time::GetDeltaTime();
+			mLookPosition.x += -200 * Time::GetDeltaTime();
 		}
 		if (KEY_PRESSE(eKeyCode::D))
 		{
-			mLookPosition.x += 100 * Time::GetDeltaTime();
+			mLookPosition.x += 200 * Time::GetDeltaTime();
 		}
 	}
 }

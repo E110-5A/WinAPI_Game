@@ -3,12 +3,12 @@
 
 namespace js
 {
-	class LargeItemBox : public EventObject
+	class SmallChest : public EventObject
 	{
 	public:
-		LargeItemBox();
-		LargeItemBox(Pos pos);
-		virtual ~LargeItemBox();
+		SmallChest();
+		SmallChest(Pos pos);
+		virtual ~SmallChest();
 
 		virtual void Initialize() override;
 		virtual void Tick() override;
@@ -17,6 +17,9 @@ namespace js
 		virtual void OnCollisionEnter(Collider* other) override;
 		virtual void OnCollisionStay(Collider* other) override;
 		virtual void OnCollisionExit(Collider* other) override;
+
+		void Trigger();
+
 
 	private:
 		Event		mOnTrigger;

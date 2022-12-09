@@ -33,6 +33,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MyRegisterClass(hInstance, WndProc, szWindowClass);
     MyRegisterClass(hInstance, AtlasWndProc, L"AtlasWindow");
 
+
     // 메인 윈도우 생성 및 활성화
     if (!InitInstance (hInstance, nCmdShow))
     {
@@ -121,10 +122,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    js::Application::GetInstance().Initialize(windowData);
 
    eSceneType type = js::Application::GetInstance().GetPlaySceneType();
-   if (type != eSceneType::Tool)
+   if (type != eSceneType::MapTool)
        return TRUE;
-
-
 
 
    WindowData atlasWindowData;
@@ -133,14 +132,14 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    atlasWindowData.hWnd = hWnd;
    js::Application::GetInstance().InitializeAtlasWindow(atlasWindowData);
 
-   return TRUE;
+   
 }
 
 
 
 #include "jsSceneManager.h"
 #include "jsScene.h"
-#include "jsToolScene.h"
+#include "jsMapToolScene.h"
 #include "jsTilePalette.h"
 #include "jsTile.h"
 #include "jsImage.h"
@@ -163,14 +162,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case ID_TILE_SAVE:
             {
                 js::Scene* scene = js::SceneManager::GetPlayScene();
-                js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(scene);
+                js::MapToolScene* toolScene = dynamic_cast<js::MapToolScene*>(scene);
                 toolScene->SaveTilePalette();
             }
             break;
             case ID_TILE_LOAD:
             {
                 js::Scene* scene = js::SceneManager::GetPlayScene();
-                js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(scene);
+                js::MapToolScene* toolScene = dynamic_cast<js::MapToolScene*>(scene);
                 // 툴씬 오브젝트 싹 지우기
                 toolScene->LoadTilePalette();
             }
@@ -178,14 +177,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case ID_COLLISION_SAVE:
             {
                 js::Scene* scene = js::SceneManager::GetPlayScene();
-                js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(scene);
+                js::MapToolScene* toolScene = dynamic_cast<js::MapToolScene*>(scene);
                 toolScene->SaveTilePalette();
             }
             break;
             case ID_COLLISION_LOAD:
             {
                 js::Scene* scene = js::SceneManager::GetPlayScene();
-                js::ToolScene* toolScene = dynamic_cast<js::ToolScene*>(scene);
+                js::MapToolScene* toolScene = dynamic_cast<js::MapToolScene*>(scene);
                 // 툴씬 오브젝트 싹 지우기
                 toolScene->LoadTilePalette();
             }

@@ -15,8 +15,6 @@ namespace js
 
 		void Initialize(WindowData data);
 		void InitializeAtlasWindow(WindowData data);
-		// 충돌체 선택용 윈도우 생성하기
-		void InitializeCollisionWindow(WindowData data);
 
 		void Tick();
 
@@ -24,7 +22,6 @@ namespace js
 
 		WindowData GetWindowData() { return mWindowData; }
 		WindowData GetAtlasWindowData() { return mAtlasWindowData; }
-		WindowData GetCollisionWindowData() { return mCollisionWindowData; }
 
 		HDC GetHdc() { return mWindowData.hdc; }
 
@@ -40,7 +37,7 @@ namespace js
 	private:		
 		WindowData	mWindowData;
 		WindowData	mAtlasWindowData;
-		WindowData	mCollisionWindowData;
+		WindowData	mObjectWindowData;
 
 		HPEN		mPens[(UINT)ePenColor::End];
 		HBRUSH		mBrushs[(UINT)eBrushColor::End];

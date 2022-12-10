@@ -1,8 +1,6 @@
 #include "jsSoundManager.h"
 #include "jsApplication.h"
 
-
-
 namespace js
 {
 	LPDIRECTSOUND8 SoundManager::mSoundDevice;

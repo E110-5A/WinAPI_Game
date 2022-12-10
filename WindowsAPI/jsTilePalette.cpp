@@ -36,8 +36,6 @@ namespace js
 		{
 			if (GetFocus())
 			{
-				//eSceneType type = Application::GetInstance();
-
 				// 마우스 위치 가져옴
 				Pos mousePos = Input::GetMousePos();
 
@@ -47,9 +45,9 @@ namespace js
 				if (mousePos.x > mWindowInfo.width
 					|| mousePos.y > mWindowInfo.height)
 					return;
-
+				
+				// 마우스 위치를 타일 규격에 맞춤
 				mousePos = Camera::CalculateMousePos(mousePos);
-				// 마우스 위치를 타일 길이만큼 나눈 몫
 				int layerX = mousePos.x / (TILE_SIZE * TILE_SCALE);
 				int layerY = mousePos.y / (TILE_SIZE * TILE_SCALE);
 
@@ -57,7 +55,7 @@ namespace js
 				Scene* scene = SceneManager::GetPlayScene();
 				MapToolScene* toolScene = dynamic_cast<MapToolScene*>(scene);
 
-				// 현재 선택중인 타일을 레이어 위치에 생성
+				// 툴씬의 현재 인덱스 타일을 마우스 위치의 레이어에 생성
 				UINT index = toolScene->GetTileIndex();
 				CreateTile(index, Vector2(layerX, layerY));
 			}
@@ -77,6 +75,8 @@ namespace js
 					|| mousePos.y > mWindowInfo.height)
 					return;
 
+				// 마우스 위치를 씬에 대입
+				mousePos = Camera::CalculateMousePos(mousePos);
 				// 씬 구성 가져오기
 				Scene* scene = SceneManager::GetPlayScene();
 				MapToolScene* toolScene = dynamic_cast<MapToolScene*>(scene);

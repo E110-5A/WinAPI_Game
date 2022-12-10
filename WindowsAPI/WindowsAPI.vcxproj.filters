@@ -89,6 +89,12 @@
     <Filter Include="1 Engine\Scene\Tool">
       <UniqueIdentifier>{fddda5ab-b24e-441f-bcd3-a63a68f04fed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1 Engine\Manager\FrameWork">
+      <UniqueIdentifier>{bca13fdf-5836-4de7-a2bd-89396aff923c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\Manager\Game">
+      <UniqueIdentifier>{4911fc76-053b-44f5-a79d-86e0f6aa3f26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -121,23 +127,11 @@
     <ClInclude Include="jsScene.h">
       <Filter>1 Engine\Scene\Base</Filter>
     </ClInclude>
-    <ClInclude Include="jsSceneManager.h">
-      <Filter>1 Engine\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="jsGameObject.h">
       <Filter>1 Engine\GameObject\Base</Filter>
     </ClInclude>
-    <ClInclude Include="jsTime.h">
-      <Filter>1 Engine\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="jsInput.h">
-      <Filter>1 Engine\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="jsResource.h">
       <Filter>1 Engine\Resource\base</Filter>
-    </ClInclude>
-    <ClInclude Include="jsResources.h">
-      <Filter>1 Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="jsImage.h">
       <Filter>1 Engine\Resource</Filter>
@@ -163,9 +157,6 @@
     <ClInclude Include="jsRain.h">
       <Filter>homework</Filter>
     </ClInclude>
-    <ClInclude Include="jsCollisionManager.h">
-      <Filter>1 Engine\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="jsBGObj.h">
       <Filter>1 Engine\GameObject\BackGround</Filter>
     </ClInclude>
@@ -174,9 +165,6 @@
     </ClInclude>
     <ClInclude Include="jsObject.h">
       <Filter>1 Engine\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="jsCamera.h">
-      <Filter>1 Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="jsAnimation.h">
       <Filter>1 Engine\Component</Filter>
@@ -199,9 +187,6 @@
     <ClInclude Include="jsUIBase.h">
       <Filter>1 Engine\GameObject\UI\Base</Filter>
     </ClInclude>
-    <ClInclude Include="jsUIManager.h">
-      <Filter>1 Engine\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="jsButton.h">
       <Filter>1 Engine\GameObject\UI</Filter>
     </ClInclude>
@@ -213,9 +198,6 @@
     </ClInclude>
     <ClInclude Include="jsSound.h">
       <Filter>1 Engine\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="jsSoundManager.h">
-      <Filter>1 Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="jsGround.h">
       <Filter>1 Engine\GameObject\Env</Filter>
@@ -268,6 +250,39 @@
     <ClInclude Include="jsMapToolScene.h">
       <Filter>1 Engine\Scene\Tool</Filter>
     </ClInclude>
+    <ClInclude Include="jsCamera.h">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="jsInput.h">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="jsTime.h">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="jsUIManager.h">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="jsCollisionManager.h">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="jsSceneManager.h">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="jsSoundManager.h">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="jsResources.h">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="jsPoolManager.h">
+      <Filter>1 Engine\Manager\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="jsGameManager.h">
+      <Filter>1 Engine\Manager\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="jsPlayerManager.h">
+      <Filter>1 Engine\Manager\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -298,17 +313,8 @@
     <ClCompile Include="jsGameObject.cpp">
       <Filter>1 Engine\GameObject\Base</Filter>
     </ClCompile>
-    <ClCompile Include="jsTime.cpp">
-      <Filter>1 Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="jsInput.cpp">
-      <Filter>1 Engine\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="jsResource.cpp">
       <Filter>1 Engine\Resource\base</Filter>
-    </ClCompile>
-    <ClCompile Include="jsResources.cpp">
-      <Filter>1 Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="jsMath.cpp">
       <Filter>1 Engine\Common</Filter>
@@ -337,17 +343,11 @@
     <ClCompile Include="jsRain.cpp">
       <Filter>homework</Filter>
     </ClCompile>
-    <ClCompile Include="jsCollisionManager.cpp">
-      <Filter>1 Engine\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="jsBGObj.cpp">
       <Filter>1 Engine\GameObject\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="tempGround.cpp">
       <Filter>1 Engine\GameObject\BackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="jsCamera.cpp">
-      <Filter>1 Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="jsAnimation.cpp">
       <Filter>1 Engine\Component</Filter>
@@ -361,9 +361,6 @@
     <ClCompile Include="jsProjectile.cpp">
       <Filter>1 Engine\GameObject\Game</Filter>
     </ClCompile>
-    <ClCompile Include="jsSceneManager.cpp">
-      <Filter>1 Engine\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="jsRigidbody.cpp">
       <Filter>1 Engine\Component</Filter>
     </ClCompile>
@@ -372,9 +369,6 @@
     </ClCompile>
     <ClCompile Include="jsUIBase.cpp">
       <Filter>1 Engine\GameObject\UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="jsUIManager.cpp">
-      <Filter>1 Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="jsButton.cpp">
       <Filter>1 Engine\GameObject\UI</Filter>
@@ -387,9 +381,6 @@
     </ClCompile>
     <ClCompile Include="jsSound.cpp">
       <Filter>1 Engine\Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="jsSoundManager.cpp">
-      <Filter>1 Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="jsGround.cpp">
       <Filter>1 Engine\GameObject\Env</Filter>
@@ -441,6 +432,39 @@
     </ClCompile>
     <ClCompile Include="jsMapToolScene.cpp">
       <Filter>1 Engine\Scene\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="jsCamera.cpp">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="jsInput.cpp">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="jsTime.cpp">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="jsUIManager.cpp">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="jsCollisionManager.cpp">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="jsSceneManager.cpp">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="jsSoundManager.cpp">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="jsResources.cpp">
+      <Filter>1 Engine\Manager\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="jsPoolManager.cpp">
+      <Filter>1 Engine\Manager\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="jsGameManager.cpp">
+      <Filter>1 Engine\Manager\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="jsPlayerManager.cpp">
+      <Filter>1 Engine\Manager\Game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

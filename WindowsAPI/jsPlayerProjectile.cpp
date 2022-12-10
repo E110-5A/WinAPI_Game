@@ -2,6 +2,7 @@
 
 // 매니저
 #include "jsTime.h"
+#include "jsPlayerManager.h"
 
 // 컴포넌트
 #include "jsCollider.h"
@@ -25,12 +26,19 @@ js::PlayerProjectile::~PlayerProjectile()
 
 void js::PlayerProjectile::Initialize()
 {
+	// 기본 설정
 	SetType(eColliderLayer::Player_Projectile);
 	mOwner = nullptr;
 
+	// 스텟 설정
 	mInfo.range = 700;
 	mInfo.type = eProjectileType::DoubleTab;
 	mInfo.unable = false;
+	
+	InitComponent();
+}
+void js::PlayerProjectile::InitComponent()
+{
 	// 충돌체 설정
 	mCollider = new Collider();
 	AddComponent(mCollider);
@@ -47,7 +55,7 @@ void js::PlayerProjectile::SetOwner(Player* owner)
 void js::PlayerProjectile::SetInfo()
 {
 	// info 설정
-	mInfo.range = mOwner->GetInfo().range;
+	//mInfo.range = mOwner->GetInfo().range;
 
 	// 충돌체 크기 설정
 	Collider* playerCollider = mOwner->GetComponent<Collider>();

@@ -20,7 +20,7 @@ namespace js
 		~PlayerProjectile();
 
 		virtual void Initialize() override;
-		
+		void InitComponent();
 		virtual void Tick() override;
 		void Process();
 		void Shutdown();
@@ -50,5 +50,6 @@ namespace js
 		Player* mOwner;
 		ProjectileInfo mInfo;
 		Pos mStartPos;
+		PlayerStat* mPlayerStat;
 	};
 }

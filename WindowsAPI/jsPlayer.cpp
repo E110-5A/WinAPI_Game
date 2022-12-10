@@ -5,6 +5,7 @@
 #include "jsInput.h"
 #include "jsSceneManager.h"
 #include "jsCamera.h"
+#include "jsPlayerManager.h"
 
 // 리소스
 #include "jsImage.h"
@@ -51,6 +52,7 @@ namespace js
 	{
 		SetType(eColliderLayer::Player);
 		SetName(L"Player");
+		mStat = PlayerManager::GetInstance().GetPlayerStat();
 
 		// 애니메이션 스프라이트 로딩
 		if (nullptr == mImage)
@@ -59,8 +61,6 @@ namespace js
 				(L"Player", L"..\\Resources\\Image\\Player\\player.bmp");
 		}
 		SetComponent();
-		
-		InitStat();
 		InitSkill();
 	}
 	void Player::SetComponent()
@@ -143,17 +143,7 @@ namespace js
 		//mAnimator->GetCompleteEvents(L"PSuppressiveFireBothR") = std::bind(&Player::ReturnIdle, this);
 		//mAnimator->GetCompleteEvents(L"PSuppressiveFireBothL") = std::bind(&Player::ReturnIdle, this);
 	}
-	void Player::InitStat()
-	{
-		mStat.maxHp = 110;
-		mStat.curHp = 110;
-		mStat.regenHp = 0.6;
-		mStat.def = 0;
-		mStat.moveSpeed = 1.3;
-		mStat.att = 12;
-		mStat.attSpeed = 1;
-		mStat.range = 700;
-	}
+
 	void Player::InitSkill()
 	{
 		mDubleTab.damage = 60.f;
@@ -189,7 +179,7 @@ namespace js
 		mTacticalDive.on = false;
 		mTacticalDive.finish = false;
 
-		mSupressiveFire.damage = 60.f;
+		mSupressiveFire.damage = 80.f;
 		mSupressiveFire.maxCount = 6;
 		mSupressiveFire.curCount = 0;
 		mSupressiveFire.castDelay = mStat.attSpeed * 0.14f;
@@ -200,8 +190,6 @@ namespace js
 		mSupressiveFire.on = false;
 		mSupressiveFire.finish = false;
 	}
-
-
 
 	void Player::Tick()
 	{
@@ -467,11 +455,9 @@ namespace js
 
 		swprintf_s(szFloat, 40, stateStr.c_str());
 		int strLen = wcsnlen_s(szFloat, 40);
-		TextOut(hdc, 10, 70, szFloat, strLen);
+		TextOut(hdc, 10, 130, szFloat, strLen);
 	}
-
-
-	
+		
 	
 	// 필요없음
 	/*void Player::ReturnIdle()
@@ -482,7 +468,6 @@ namespace js
 		else
 			mAnimator->Play(L"PIdleL");
 	}*/
-
 
 
 	void Player::Idle()
@@ -860,8 +845,6 @@ namespace js
 		// 게임 종료 UI 불러오기
 	}
 	
-
-
 
 
 	void Player::OnCollisionEnter(Collider* other)

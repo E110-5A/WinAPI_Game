@@ -3,6 +3,7 @@
 
 namespace js
 {
+	class Collider;
 	class Ground : public GameObject
 	{
 	public:
@@ -17,7 +18,12 @@ namespace js
 		virtual void OnCollisionEnter(Collider* other)override;
 		virtual void OnCollisionStay(Collider* other)override;
 		virtual void OnCollisionExit(Collider* other)override;
-	private:
 
+
+		void SetColliderSize(Size size) { mCollider->SetSize(size); }
+		void SetColliderOffset(Pos pos) { mCollider->SetOffset(pos); }
+
+	private:
+		Collider* mCollider;
 	};
 }

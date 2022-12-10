@@ -11,6 +11,9 @@
 #include "jsCamera.h"
 #include "jsUIManager.h"
 #include "jsSoundManager.h"
+
+// д©╫╨ер
+#include "jsPlayerManager.h"
 namespace js
 {
 	void Application::Initialize(WindowData data)
@@ -20,6 +23,7 @@ namespace js
 		Time::Initialize();
 		Input::Initialize();
 		UIManager::Initialize();
+		PlayerManager::Initialize();
 		SceneManager::Initialize();
 		Camera::Initialize();
 		SoundManager::Initialize();

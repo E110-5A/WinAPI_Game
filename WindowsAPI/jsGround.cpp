@@ -19,8 +19,8 @@ namespace js
 
 	void Ground::Initialize()
 	{
-		Collider* collider = AddComponent<Collider>();
-		collider->SetSize(Size(600.0f, 50.0f));
+		mCollider = AddComponent<Collider>();
+		mCollider->SetSize(Size(64.0f, 64.0f));
 	}
 	void Ground::Tick()
 	{

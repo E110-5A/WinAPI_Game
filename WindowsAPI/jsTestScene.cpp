@@ -44,34 +44,14 @@ namespace js
 		// 1280
 		// 720
 		
-		// 맵 로딩		
-		//SceneManager::LoadMap<MapToolScene>(L"..\\Resources\\Tile\\debugTest", eSceneType::MapTool);
-		/*Scene* scene = SceneManager::GetScene(eSceneType::MapTool);
-		MapToolScene* toolScene = dynamic_cast<MapToolScene*>(scene);
-		toolScene->LoadTilePalette(L"..\\Resources\\Tile\\isthatbug");*/
-
+		// 맵 로딩
+		TileLoadTest();
 
 		// 배경 오브젝트
-		GameObject* testGround = object::Instantiate<Ground>(eColliderLayer::Ground, Pos(600.0f, 570.0f));
-		Collider* gCollider = testGround->GetComponent<Collider>();
-		gCollider->SetSize(Vector2(6600.0f, 50.0f));
+		BGTest();
 
 		// 오브젝트 추가
-		Player* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 480.f));
-		
-		for (int idx = 0; idx < WEAPON_POOL; ++idx)
-		{
-			mPlayerAttack[idx] = object::Instantiate<PlayerProjectile>(eColliderLayer::Player_Projectile);
-			mPlayerAttack[idx]->SetOwner(pPlayer);
-		}
-
-		Monster* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(700.f, 480.f));
-		Monster* imp2 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(750.f, 480.f));
-		Monster* imp3 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 480.f));
-
-		EventObject* smallBox = object::Instantiate<SmallChest>(eColliderLayer::Chest, Pos(70.0f, 480.0f));
-		EventObject* largeBox = object::Instantiate<LargeChest>(eColliderLayer::Chest, Pos(140.0f, 480.0f));
-		EventObject* goldenBox = object::Instantiate<GoldenChest>(eColliderLayer::Chest, Pos(220.0f, 480.0f));
+		ObjectTest();
 
 		
 
@@ -111,6 +91,45 @@ namespace js
 		TextOut(hdc, 5, 10, szFloat, strLen);
 	}
 
+	void TestScene::TileLoadTest()
+	{
+		SceneManager::LoadMap<MapToolScene>(L"..\\Resources\\Tile\\pls", eSceneType::MapTool);
+	}
+
+	void TestScene::BGTest()
+	{
+		Ground* leftGround = object::Instantiate<Ground>(eColliderLayer::Ground, Pos(0.0f, 384.0f));
+		leftGround->SetColliderSize(Size(GRID_SIZE, GRID_SIZE * 5));
+		leftGround->SetColliderOffset(Pos(GRID_SIZE / 2, GRID_SIZE * 5 / 2));
+
+		Ground* mainGround = object::Instantiate<Ground>(eColliderLayer::Ground, Pos(64.0f, 640.0f));
+		mainGround->SetColliderSize(Size(GRID_SIZE * 16, GRID_SIZE));
+		mainGround->SetColliderOffset(Pos(GRID_SIZE * 8, GRID_SIZE / 2));
+	}
+
+	void TestScene::ObjectTest()
+	{
+		// 플레이어 설정
+		Player* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 600.0f));
+
+		for (int idx = 0; idx < WEAPON_POOL; ++idx)
+		{
+			mPlayerAttack[idx] = object::Instantiate<PlayerProjectile>(eColliderLayer::Player_Projectile);
+			mPlayerAttack[idx]->SetOwner(pPlayer);
+		}
+
+		// 기타 오브젝트 설정
+		EventObject* smallBox = object::Instantiate<SmallChest>(eColliderLayer::Chest, Pos(70.0f, 480.0f));
+		EventObject* largeBox = object::Instantiate<LargeChest>(eColliderLayer::Chest, Pos(140.0f, 480.0f));
+		EventObject* goldenBox = object::Instantiate<GoldenChest>(eColliderLayer::Chest, Pos(220.0f, 480.0f));
+		
+		// 몬스터 설정
+		Monster* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(700.f, 600.0f));
+		Monster* imp2 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(750.f, 600.0f));
+		Monster* imp3 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 600.0f));
+	}
+
+	// 충돌 및 UI 설정
 	void TestScene::Enter()
 	{
 		CollisionManager::SetLayer(eColliderLayer::Ground, eColliderLayer::Player, true);
@@ -122,6 +141,7 @@ namespace js
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player_Projectile, true);
 	}
 
+	// UI 끄고 나가셈
 	void TestScene::Exit()
 	{
 	}

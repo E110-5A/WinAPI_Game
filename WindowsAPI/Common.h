@@ -54,7 +54,6 @@ struct WindowData
 		width = 0;
 	}
 };
-
 struct Pen
 {
 private:
@@ -87,7 +86,6 @@ public:
 		mPrevPen = (HPEN)SelectObject(mHdc, pen);
 	}
 };
-
 struct Brush
 {
 private:
@@ -109,4 +107,30 @@ public:
 		SelectObject(mHdc, mPrevBrush);
 		DeleteObject(mTargetBrush);
 	}
+};
+
+
+// 플레이어 정보
+
+struct PlayerStat
+{
+	float	maxHp;			// 110				+ 32
+	float	curHp;
+	int		maxExe;			// 최대 경험치
+	int		curExe;			// 현재 경험치
+	float	regenHp;		// 0.6				+ 0.12
+	float	def;			// 0				+ 2
+	float	moveSpeed;		// 1.3
+	float	att;			// 12				+ 3
+	float	attSpeed;		// 정확한 수치 ㅁ?ㄹ
+	float	range;			// 700
+	int		critical;		// 치명타율
+};
+
+struct ItemInfo
+{
+	eItemType	type;			// 유형
+	float		count;			// 개수
+	float		value;			// 효과 위력
+	float		duration;		// 유효 시간
 };

@@ -3,29 +3,19 @@
 
 namespace js
 {
-	struct PlayerStat
-	{
-		float maxHp;		// 110				+ 32
-		float curHp;
-		float regenHp;		// 0.6				+ 0.12
-		float def;			// 0				+ 2
-		float moveSpeed;	// 1.3
-		float att;			// 12				+ 3
-		float attSpeed;		// 정확한 수치 ㅁ?ㄹ
-		float range;		// 700
-	};
+	
 	struct SkillInfo
 	{
-		float damage;
-		float castDelay;			// 스킬 지연시간
-		float castDelayTime;
-		int maxCount;					// 반복 횟수
-		int curCount;
-		float coolDown;				// 스킬 재사용 대기시간
-		float coolDownTime;
-		bool unable;				// 사용불가 상태		: 쿨다운 대기
-		bool on;					// 진행중 상태		: 스킬 내부로직 조건용
-		bool finish;				// 끝난 상태			: 상태 종료 조건
+		float	damage;
+		float	castDelay;			// 스킬 지연시간
+		float	castDelayTime;
+		int		maxCount;					// 반복 횟수
+		int		curCount;
+		float	coolDown;				// 스킬 재사용 대기시간
+		float	coolDownTime;
+		bool	unable;				// 사용불가 상태		: 쿨다운 대기
+		bool	on;					// 진행중 상태		: 스킬 내부로직 조건용
+		bool	finish;				// 끝난 상태			: 상태 종료 조건
 	};
 
 	class Image;
@@ -42,7 +32,6 @@ namespace js
 		Player(Pos pos);
 		~Player();
 
-		void InitStat();
 		void SetComponent();
 		void InitAnim();
 		void InitSkill();
@@ -55,7 +44,7 @@ namespace js
 		//void ReturnIdle();
 		
 		// 변수
-		PlayerStat GetInfo() { return mStat; }
+		//PlayerStat GetInfo() { return mStat; }
 		void SetWeapon(PlayerProjectile* weapon) 
 		{
 			if (WEAPON_POOL == mWeaponID)

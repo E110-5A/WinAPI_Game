@@ -146,6 +146,7 @@
     <ClInclude Include="jsComponent.h" />
     <ClInclude Include="jsEntity.h" />
     <ClInclude Include="jsEventObject.h" />
+    <ClInclude Include="jsGameManager.h" />
     <ClInclude Include="jsGameObject.h" />
     <ClInclude Include="jsGoldenChest.h" />
     <ClInclude Include="jsGround.h" />
@@ -157,6 +158,8 @@
     <ClInclude Include="jsObjectPalette.h" />
     <ClInclude Include="jsOptionScene.h" />
     <ClInclude Include="jsPanel.h" />
+    <ClInclude Include="jsPlayerManager.h" />
+    <ClInclude Include="jsPoolManager.h" />
     <ClInclude Include="jsSelectScene.h" />
     <ClInclude Include="jsSmallChest.h" />
     <ClInclude Include="jsSound.h" />
@@ -204,6 +207,7 @@
     <ClCompile Include="jsComponent.cpp" />
     <ClCompile Include="jsEntity.cpp" />
     <ClCompile Include="jsEventObject.cpp" />
+    <ClCompile Include="jsGameManager.cpp" />
     <ClCompile Include="jsGameObject.cpp" />
     <ClCompile Include="jsGoldenChest.cpp" />
     <ClCompile Include="jsGround.cpp" />
@@ -215,6 +219,8 @@
     <ClCompile Include="jsObjectPalette.cpp" />
     <ClCompile Include="jsOptionScene.cpp" />
     <ClCompile Include="jsPanel.cpp" />
+    <ClCompile Include="jsPlayerManager.cpp" />
+    <ClCompile Include="jsPoolManager.cpp" />
     <ClCompile Include="jsSelectScene.cpp" />
     <ClCompile Include="jsSmallChest.cpp" />
     <ClCompile Include="jsSound.cpp" />

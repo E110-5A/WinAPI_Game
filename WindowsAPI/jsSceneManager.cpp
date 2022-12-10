@@ -23,7 +23,7 @@ namespace js
 		mScene[(UINT)eSceneType::Select]->Initialize();
 		mScene[(UINT)eSceneType::Play] = new PlayScene();
 		mScene[(UINT)eSceneType::Play]->Initialize();
-		ChangeScene(eSceneType::MapTool);
+		ChangeScene(eSceneType::Test);
 	}
 
 	void SceneManager::Tick()

@@ -195,11 +195,9 @@ namespace js
 	{
 		// Death 상태일경우 ret
 
-		GameObject::Tick();
-		
+		GameObject::Tick();		
 		Cooldown();
 		SkillProcess();
-
 		switch (mState)
 		{
 		case ePlayerState::Idle:
@@ -562,7 +560,6 @@ namespace js
 		{
 			mAnimator->Play(L"PIdleL");
 		}
-
 
 		// 로직
 		if (KEY_PRESSE(eKeyCode::LEFT))

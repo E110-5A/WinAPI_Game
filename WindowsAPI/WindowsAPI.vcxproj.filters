@@ -95,6 +95,9 @@
     <Filter Include="1 Engine\Manager\Game">
       <UniqueIdentifier>{4911fc76-053b-44f5-a79d-86e0f6aa3f26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1 Engine\GameObject\EventObj\Shrine">
+      <UniqueIdentifier>{21678d3e-38f2-4091-81ef-bd09cbed94b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -283,6 +286,9 @@
     <ClInclude Include="jsPlayerManager.h">
       <Filter>1 Engine\Manager\Game</Filter>
     </ClInclude>
+    <ClInclude Include="jsShrine.h">
+      <Filter>1 Engine\GameObject\EventObj\Shrine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -465,6 +471,9 @@
     </ClCompile>
     <ClCompile Include="jsPlayerManager.cpp">
       <Filter>1 Engine\Manager\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="jsShrine.cpp">
+      <Filter>1 Engine\GameObject\EventObj\Shrine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

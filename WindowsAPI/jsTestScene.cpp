@@ -24,6 +24,7 @@
 #include "jsSmallChest.h"
 #include "jsLargeChest.h"
 #include "jsGoldenChest.h"
+#include "jsItemObject.h"
 
 // component
 #include "jsCollider.h"
@@ -111,7 +112,7 @@ namespace js
 	{
 		// 플레이어 설정
 		Player* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 600.0f));
-
+		// 투사체 풀링
 		for (int idx = 0; idx < WEAPON_POOL; ++idx)
 		{
 			mPlayerAttack[idx] = object::Instantiate<PlayerProjectile>(eColliderLayer::Player_Projectile);
@@ -119,10 +120,12 @@ namespace js
 		}
 
 		// 기타 오브젝트 설정
-		EventObject* smallBox = object::Instantiate<SmallChest>(eColliderLayer::Chest, Pos(70.0f, 480.0f));
-		EventObject* largeBox = object::Instantiate<LargeChest>(eColliderLayer::Chest, Pos(140.0f, 480.0f));
-		EventObject* goldenBox = object::Instantiate<GoldenChest>(eColliderLayer::Chest, Pos(220.0f, 480.0f));
+		EventObject* smallBox = object::Instantiate<SmallChest>(eColliderLayer::Chest, Pos(70.0f, 600.0f));
+		EventObject* largeBox = object::Instantiate<LargeChest>(eColliderLayer::Chest, Pos(140.0f, 600.0f));
+		EventObject* goldenBox = object::Instantiate<GoldenChest>(eColliderLayer::Chest, Pos(220.0f, 600.0f));
 		
+
+
 		// 몬스터 설정
 		Monster* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(700.f, 600.0f));
 		Monster* imp2 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(750.f, 600.0f));

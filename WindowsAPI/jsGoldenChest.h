@@ -3,6 +3,7 @@
 
 namespace js
 {
+	class ItemObject;
 	class GoldenChest : public EventObject
 	{
 	public:
@@ -21,6 +22,7 @@ namespace js
 		void Trigger();
 	private:
 		Event		mOnTrigger;
+		ItemObject* mItemObject;
 	};
 }
 

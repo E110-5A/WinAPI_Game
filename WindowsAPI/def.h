@@ -104,12 +104,13 @@ enum class eColliderLayer
 	BackGround,					//	1
 	Tile,						//	2
 	BGObj,						//	3
-	Chest,						//	4
-	Item,						//	5
-	Player,						//	6
-	Player_Projectile,			//	7
-	Monster,					//	8
-	Monster_Projectile,			//	9
+	EventObject,				//	4
+	Chest,						//	5
+	Item,						//	6
+	Player,						//	7
+	Player_Projectile,			//	8
+	Monster,					//	9
+	Monster_Projectile,			//	10
 
 	Ground,						//	13
 	UI = _COLLIDER_LAYER - 1,	//	14
@@ -139,7 +140,6 @@ enum class eProjectileType
 };
 #define WEAPON_POOL 12
 
-
 // item enum
 enum class eChestType
 {
@@ -147,6 +147,8 @@ enum class eChestType
 	Large,
 	Golden,
 };
+
+#define ITEM_SIZE 34
 enum class eItemType
 {
 	Common,
@@ -163,18 +165,18 @@ enum class eItemList
 	Tooth,			// 처치시 체력 회복
 	Root,			// 최대 채력 증가
 	// Uncommon
-	TimeKeeper,		// 치명상을 입을 때, 시간을 멈춤
+	TimeKeeper = 5,		// 치명상을 입을 때, 시간을 멈춤
 	Wisp,			// 처치시 폭발
 	MissileMk1,		// 일정확률로 투사체 사출
 	Seed,			// 타격마다 회복
 	Feather,		// 점프 1회 추가
 	// Rare
-	MissileMk2,		// 더많이 더 강한 투사체 사출
+	MissileMk2 = 10,// 더많이 더 강한 투사체 사출
 	Behemoth,		// 모든 공격이 폭발함
 	Ring,			// 치명타 증가, 치명타시 쿨다운 감소
 	Scepter,		// 4번째 스킬 강화
 	// Active
-	Key,			// 화면에 보이는 상자를 열음
+	Key	= 15,		// 화면에 보이는 상자를 열음
 	Fruit,			// 즉시 회복
 	Watch,			// 시간을 멈춤
 	End,

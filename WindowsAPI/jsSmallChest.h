@@ -3,6 +3,7 @@
 
 namespace js
 {
+	class ItemObject;
 	class SmallChest : public EventObject
 	{
 	public:
@@ -23,5 +24,6 @@ namespace js
 
 	private:
 		Event		mOnTrigger;
+		ItemObject* mItemObject;
 	};
 }

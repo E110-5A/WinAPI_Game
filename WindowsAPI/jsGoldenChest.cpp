@@ -6,12 +6,14 @@
 // manager
 #include "jsInput.h"
 #include "jsCamera.h"
+#include "jsTime.h"
 
 // component
 #include "jsCollider.h"
 
 // object
 #include "jsObject.h"
+#include "jsItemObject.h"
 
 namespace js
 {
@@ -38,15 +40,24 @@ namespace js
         mCollider->SetSize(Size(80.0f, 45.0f));
 
         mOnTrigger = std::bind(&GoldenChest::Trigger, this);
+        // 상자와 대응하는 아이템 생성
+        mItemObject = object::Instantiate<ItemObject>(eColliderLayer::Item);
+
+        // 활성화
+        mActive = true;
     }
 
     void js::GoldenChest::Tick()
     {
+        if (false == mActive)
+            return;
         EventObject::Tick();
     }
 
     void js::GoldenChest::Render(HDC hdc)
     {
+        if (false == mActive)
+            return;
         Pos pos = Camera::CalculateObjectPos(GetPos());
         Size scale = GetScale();
 
@@ -71,6 +82,8 @@ namespace js
 
     void js::GoldenChest::OnCollisionStay(Collider* other)
     {
+        if (false == mActive)
+            return;
         if (KEY_DOWN(eKeyCode::A))
         {
             mOnTrigger();
@@ -82,6 +95,13 @@ namespace js
     }
     void GoldenChest::Trigger()
     {
-        //object::Instantiate<>();
+        // 아이템 종류
+        srand((unsigned int)time(NULL));
+        int rare = 10 + (rand() % 4);
+                
+        // 아이템 불러오기
+        mItemObject->Active(GetPos(), rare);
+        // 비활성화 하기
+        mActive = false;
     }
 }

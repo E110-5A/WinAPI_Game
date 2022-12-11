@@ -43,8 +43,7 @@ namespace js
 	protected:
 		Image*		mImage;
 		Collider*	mCollider;
-
-		// 게임정보 구조체 변수
+		bool		mActive;
 
 	private:
 	};

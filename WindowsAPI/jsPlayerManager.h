@@ -24,5 +24,6 @@ namespace js
 		static PlayerStat	mDefaultStat;		// 기초 스텟
 		static PlayerStat	mPlayerStat;		// 플레이어 순정 스텟 (레벨 증가량 포함)
 		static int			mPlayerLevel;		// 플레이어 레벨
+		// 아이템 배열 리스트가 필요함
 	};
 }

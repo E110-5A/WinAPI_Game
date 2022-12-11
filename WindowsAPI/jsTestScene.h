@@ -4,6 +4,7 @@
 namespace js
 {
 	class PlayerProjectile;
+	class ItemObject;
 	class TestScene : public Scene
 	{
 	public:
@@ -24,6 +25,6 @@ namespace js
 		virtual void Exit();
 
 	private:
-		PlayerProjectile* mPlayerAttack[WEAPON_POOL];
+		PlayerProjectile*	mPlayerAttack[WEAPON_POOL];
 	};
 }

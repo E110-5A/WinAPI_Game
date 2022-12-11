@@ -12,6 +12,7 @@
 #include <stack>
 #include <queue>
 #include <assert.h>
+#include <time.h>
 
 #include "def.h"
 #include "jsMath.h"

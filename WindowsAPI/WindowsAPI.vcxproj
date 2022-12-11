@@ -161,6 +161,7 @@
     <ClInclude Include="jsPlayerManager.h" />
     <ClInclude Include="jsPoolManager.h" />
     <ClInclude Include="jsSelectScene.h" />
+    <ClInclude Include="jsShrine.h" />
     <ClInclude Include="jsSmallChest.h" />
     <ClInclude Include="jsSound.h" />
     <ClInclude Include="jsSoundManager.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="jsPlayerManager.cpp" />
     <ClCompile Include="jsPoolManager.cpp" />
     <ClCompile Include="jsSelectScene.cpp" />
+    <ClCompile Include="jsShrine.cpp" />
     <ClCompile Include="jsSmallChest.cpp" />
     <ClCompile Include="jsSound.cpp" />
     <ClCompile Include="jsSoundManager.cpp" />

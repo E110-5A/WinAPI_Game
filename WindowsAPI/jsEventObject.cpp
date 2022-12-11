@@ -11,6 +11,8 @@
 namespace js
 {
 	js::EventObject::EventObject()
+		: mImage(nullptr)
+		, mActive(nullptr)
 	{
 		Initialize();
 	}

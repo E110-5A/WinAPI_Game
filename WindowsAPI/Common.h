@@ -27,7 +27,7 @@
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "dsound.lib")
 
-
+// 프레임워크
 struct Pixel
 {
 	BYTE R;
@@ -112,20 +112,32 @@ public:
 
 
 // 플레이어 정보
-
+struct Health
+{
+	float maxHP;
+	float curHP;
+	float healthRegen;
+	float defance;
+	float moveSpeed;
+};
+struct Offence
+{
+	float damage;
+	float attackSpeed;
+	float criticalChance;
+	float range;
+};
+struct Utility
+{
+	float maxExp;
+	float curExp;
+	float gold;
+};
 struct PlayerStat
 {
-	float	maxHp;			// 110				+ 32
-	float	curHp;
-	int		maxExe;			// 최대 경험치
-	int		curExe;			// 현재 경험치
-	float	regenHp;		// 0.6				+ 0.12
-	float	def;			// 0				+ 2
-	float	moveSpeed;		// 1.3
-	float	att;			// 12				+ 3
-	float	attSpeed;		// 정확한 수치 ㅁ?ㄹ
-	float	range;			// 700
-	int		critical;		// 치명타율
+	Health		playerHealth;
+	Offence		playerOffence;
+	Utility		playerUtility;
 };
 
 struct ItemInfo
@@ -135,3 +147,13 @@ struct ItemInfo
 	float		value;			// 효과 위력
 	float		duration;		// 유효 시간
 };
+
+// 
+struct ProjectileInfo
+{
+	eProjectileType		type;		// 투사체 종류 (스킬 + 아이템)
+	eStagger			stagger;	// 투사체 위력
+	float				range;		// 투사체 사거리
+	bool				unable;		// 투사체 활성화 On Off 여부
+};
+

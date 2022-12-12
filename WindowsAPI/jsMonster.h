@@ -48,18 +48,22 @@ namespace js
 
 
 		// 스텟설정 함수
-		void SetMaxHp(float value) { mStat.maxHp = value; }
-		float GetMaxHp() { return mStat.maxHp; }
-		void SetCurHp(float value) { mStat.curHp = value; }
-		float GetCurHp() { return mStat.curHp; }
+		void InitHealth(float hp, float regen, float defance, float moveSpeed)
+		{
+			mMonsterHealth.maxHP = hp;
+			mMonsterHealth.curHP = hp;
+			mMonsterHealth.healthRegen = regen;
+			mMonsterHealth.defance = defance;
+			mMonsterHealth.moveSpeed = moveSpeed;
+		}
 
-		void SetMoveSpeed(float value) { mStat.moveSpeed = value; }
-		float GetMoveSpeed() { return mStat.moveSpeed; }
-		
-		void SetDef(float value) { mStat.def = value; }
-		float SetDef() { return mStat.def; }
-		void SetAtt(float value) { mStat.att = value; }
-		float GetAtt() { return mStat.att; }
+		void InitOffence(float damage, float attackSpeed, float range)
+		{
+			mMonsterOffence.damage = damage;
+			mMonsterOffence.attackSpeed = attackSpeed;
+			mMonsterOffence.criticalChance = 0;
+			mMonsterOffence.range = range;
+		}
 
 		// None
 		virtual void OnCollisionEnter(Collider* other) override;
@@ -67,12 +71,12 @@ namespace js
 		virtual void OnCollisionExit(Collider* other) override;
 
 		// 기능
-		void Hit(GameObject* attaker);
-		void SelfDamaged(GameObject* attaker);
+		void SelfHit(GameObject* attaker, float damage, eStagger stagger, float power);
+		void SelfDamaged(float damage);
 		// 입력받은 방향으로 밀려남
-		void SelfKnockBack(GameObject* attaker);
+		void SelfKnockBack(float dir, eStagger stagger, float power);
 		// 입력받은 값 동안 움직이지 않음
-		void SelfStrun();
+		void SelfStun(float power);
 
 	protected:
 		Collider*	mCollider;
@@ -81,7 +85,9 @@ namespace js
 
 	private:
 		Image*			mImage;
-		MonsterStat		mStat;
+		Health			mMonsterHealth;
+		Offence			mMonsterOffence;
+		eStagger		mMonsterResistance;
 	};
 }
 

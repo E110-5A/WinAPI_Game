@@ -3,6 +3,8 @@
 // manager
 #include "jsCamera.h"
 #include "jsTime.h"
+#include "jsPlayerManager.h"
+
 // resource
 #include "jsResources.h"
 #include "jsImage.h"
@@ -12,7 +14,7 @@
 namespace js
 {
     ItemObject::ItemObject()
-        : mIndex(0)
+        : mIndex(eItemList::End)
         , mY(-1)
         , mX(-1)
         , mAble(false)
@@ -74,7 +76,7 @@ namespace js
     void ItemObject::SetIndex(UINT index)
     {
         // 인덱스 변경
-        mIndex = index;
+        mIndex = (eItemList)index;
 
         // 이미지 LT 변경
         int maxColum = mImage->GetWidth() / ITEM_SIZE;
@@ -95,7 +97,7 @@ namespace js
     void ItemObject::InActive()
     {
         // 초기화?
-        mIndex = 0;
+        mIndex = eItemList::End;
         mY = -1;
         mX = -1;
 
@@ -107,7 +109,7 @@ namespace js
     void ItemObject::PickUp()
     {
         // 게임매니저의 아이템리스트 갱신;
-        int a = 0;
+        PlayerManager::PickUpItems(mIndex);
         InActive();
     }
     void ItemObject::OnCollisionEnter(Collider* other)

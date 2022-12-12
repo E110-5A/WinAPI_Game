@@ -3,13 +3,6 @@
 
 namespace js
 {
-	struct ProjectileInfo
-	{
-		eProjectileType		type;		// 투사체 종류 (스킬 + 아이템)
-		float				range;		// 투사체 사거리
-		bool				unable;		// 투사체 활성화 On Off 여부
-	};
-
 	class Collider;
 	class Player;
 	class PlayerProjectile : public GameObject
@@ -38,6 +31,8 @@ namespace js
 		void InActive() { mInfo.unable = false; }
 
 		bool IsActive() { return mInfo.unable; }
+
+		void BlowHit(Monster* target);
 
 		// 타격 대상의 함수 호출
 		virtual void OnCollisionEnter(Collider* other)override;

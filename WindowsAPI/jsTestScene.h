@@ -25,6 +25,6 @@ namespace js
 		virtual void Exit();
 
 	private:
-		PlayerProjectile*	mPlayerAttack[WEAPON_POOL];
+		PlayerProjectile*	mPlayerAttack[PLAYER_PROJECTILE_POOL];
 	};
 }

@@ -93,11 +93,8 @@ namespace js
     }
     void Imp::InitStat()
     {
-        SetMaxHp(310.0f);
-        SetCurHp(310.0f);
-        SetDef(0.0f);
-        SetMoveSpeed(16.0f);
-        SetAtt(13.0f);
+        InitHealth(310.0f, 0, 0, 16.0f);
+        InitOffence(13.0f, 1, 1);
     }
 
     void Imp::Tick()

@@ -23,15 +23,15 @@ namespace js
 		void PickUp();
 
 	private:
-		Event	mOnTrigger;
+		Event		mOnTrigger;
 
 		// 아틀라스 이미지 설정 값
-		UINT	mIndex;
+		eItemList	mIndex;
 		// 이미지 LT 좌표
-		UINT	mX;
-		UINT	mY;
+		UINT		mX;
+		UINT		mY;
 
-		bool	mAble;
-		float	mAbleTime;
+		bool		mAble;
+		float		mAbleTime;
 	};
 }

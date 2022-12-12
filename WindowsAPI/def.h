@@ -136,9 +136,18 @@ enum class eProjectileType
 	FMJ,				// 2번 기술
 	TacticalDive,		// 3번 기술
 	SuppresiveFire,		// 4번 기술
+
 	End,
 };
-#define WEAPON_POOL 12
+
+enum class eStagger
+{
+	Light,		// 소형 몬스터 넉백
+	Nomal,		// 중형 몬스터 넉백
+	Heave,		// 보스 제외 기절유발
+};
+
+#define PLAYER_PROJECTILE_POOL 40
 
 // item enum
 enum class eChestType

@@ -51,26 +51,41 @@ namespace js
 	{
 	}
 
-
-	void Monster::Hit(GameObject* attaker)
+	// damage, stagger, power
+	void Monster::SelfHit(GameObject* attaker, float damage, eStagger stagger, float power)
 	{
-		SelfKnockBack(attaker);
-		SelfDamaged(attaker);
+		SelfDamaged(damage);
+		SelfKnockBack(attaker->GetDir().x, stagger, power);
 	}
 
-	void Monster::SelfDamaged(GameObject* attaker)
+	// damage
+	void Monster::SelfDamaged(float damage)
 	{
+		// 방어력 계산해서 피 까기
+		float finalDamage = damage - mMonsterHealth.defance;
+
+		// 최소 피해량
+		if (1 > damage - mMonsterHealth.defance)
+			finalDamage = 1;
 		
+		mMonsterHealth.curHP -= finalDamage;
 	}
 
-	void Monster::SelfKnockBack(GameObject* attaker)
+	//stagger, power
+	void Monster::SelfKnockBack(float dir, eStagger stagger, float power)
 	{
-		Vector2 velocity = mRigidbody->GetVelocity();
-		velocity.x = attaker->GetDir().x * 100.0f;
-		mRigidbody->SetVelocity(velocity);
+		Vector2 knockBack = mRigidbody->GetVelocity();
+		knockBack.x = dir * power;
+		mRigidbody->SetVelocity(knockBack);
+
+		// 경우에 따라서 SelfStun 호출
+		if (stagger >= mMonsterResistance)
+			SelfStun(power);
 	}
 
-	void Monster::SelfStrun()
+	// power
+	void Monster::SelfStun(float power)
 	{
+		// power에 따라서 기절시간이 달라짐
 	}
 }

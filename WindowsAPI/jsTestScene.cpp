@@ -113,7 +113,7 @@ namespace js
 		// 플레이어 설정
 		Player* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 600.0f));
 		// 투사체 풀링
-		for (int idx = 0; idx < WEAPON_POOL; ++idx)
+		for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 		{
 			mPlayerAttack[idx] = object::Instantiate<PlayerProjectile>(eColliderLayer::Player_Projectile);
 			mPlayerAttack[idx]->SetOwner(pPlayer);

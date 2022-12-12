@@ -14,16 +14,24 @@ namespace js
 
 		static void Initialize();
 		static void InitStat(PlayerStat& stat);
-
-		// 게임매니저는 플레이어가 레벨업 조건에 달성하면 반드시 호출할 것
+		
+		// 기능 함수
 		static void PlayerLevelUp();
-
+		
+		// 스텟 함수
 		static PlayerStat& GetPlayerStat() { return mPlayerStat; }
+
+
+		// 아이템 함수
+		static void PickUpItems(eItemList item);
+		static int GetItem(eItemList type) { return mPlayerItems[(UINT)type]; }
+		static int* GetItemList() { return mPlayerItems; }
 
 	private:
 		static PlayerStat	mDefaultStat;		// 기초 스텟
 		static PlayerStat	mPlayerStat;		// 플레이어 순정 스텟 (레벨 증가량 포함)
 		static int			mPlayerLevel;		// 플레이어 레벨
 		// 아이템 배열 리스트가 필요함
+		static int			mPlayerItems[(UINT)eItemList::End];
 	};
 }

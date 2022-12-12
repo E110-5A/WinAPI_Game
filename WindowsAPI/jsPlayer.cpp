@@ -52,7 +52,10 @@ namespace js
 	{
 		SetType(eColliderLayer::Player);
 		SetName(L"Player");
-		mStat = PlayerManager::GetInstance().GetPlayerStat();
+		PlayerStat stat = PlayerManager::GetInstance().GetPlayerStat();
+		mHealth = stat.playerHealth;
+		mOffence = stat.playerOffence;
+		mUtility = stat.playerUtility;
 
 		// 애니메이션 스프라이트 로딩
 		if (nullptr == mImage)
@@ -61,7 +64,10 @@ namespace js
 				(L"Player", L"..\\Resources\\Image\\Player\\player.bmp");
 		}
 		SetComponent();
-		InitSkill();
+		InitSkill(mDubleTab, 60.f, 40.f, 2, mOffence.attackSpeed * 0.14f, mOffence.attackSpeed * 0.4f);
+		InitSkill(mFMJ, 230.f, 80.f, 1, 0.60f, 3.0f);
+		InitSkill(mTacticalDive, 0.f, mHealth.moveSpeed * 100.f, 1, 0.70f, 5.0f);
+		InitSkill(mSupressiveFire, 80.f, 40.f, 6, mOffence.attackSpeed * 0.14f, 5.0f);
 	}
 	void Player::SetComponent()
 	{
@@ -144,51 +150,20 @@ namespace js
 		//mAnimator->GetCompleteEvents(L"PSuppressiveFireBothL") = std::bind(&Player::ReturnIdle, this);
 	}
 
-	void Player::InitSkill()
+	void Player::InitSkill(SkillInfo& skill, float damage, float power, int maxCount
+		, float castDelay, float coolDown)
 	{
-		mDubleTab.damage = 60.f;
-		mDubleTab.maxCount = 2;
-		mDubleTab.curCount = 0;
-		mDubleTab.castDelay = mStat.attSpeed * 0.14f;
-		mDubleTab.castDelayTime = 0.0f;
-		mDubleTab.coolDown = mStat.attSpeed * 0.4f;
-		mDubleTab.coolDownTime = 0.0f;
-		mDubleTab.unable = false;
-		mDubleTab.on = false;
-		mDubleTab.finish = false;
-
-		mFMJ.damage = 230.f;
-		mFMJ.maxCount = 1;
-		mFMJ.curCount = 0;
-		mFMJ.castDelay = 0.60f;
-		mFMJ.castDelayTime = 0.0f;
-		mFMJ.coolDown = 3.0f;
-		mFMJ.coolDownTime = 0.0f;
-		mFMJ.unable = false;
-		mFMJ.on = false;
-		mFMJ.finish = false;
-
-		mTacticalDive.damage = 0.f;
-		mTacticalDive.maxCount = 1;
-		mTacticalDive.curCount = 0;
-		mTacticalDive.castDelay = 0.70f;
-		mTacticalDive.castDelayTime = 0.0f;
-		mTacticalDive.coolDown = 5.0f;
-		mTacticalDive.coolDownTime = 0.0f;
-		mTacticalDive.unable = false;
-		mTacticalDive.on = false;
-		mTacticalDive.finish = false;
-
-		mSupressiveFire.damage = 80.f;
-		mSupressiveFire.maxCount = 6;
-		mSupressiveFire.curCount = 0;
-		mSupressiveFire.castDelay = mStat.attSpeed * 0.14f;
-		mSupressiveFire.castDelayTime = 0.0f;
-		mSupressiveFire.coolDown = 5.0f;
-		mSupressiveFire.coolDownTime = 0.0f;
-		mSupressiveFire.unable = false;
-		mSupressiveFire.on = false;
-		mSupressiveFire.finish = false;
+		skill.damage = damage;
+		skill.power = power;
+		skill.maxCount = maxCount;
+		skill.curCount = 0;
+		skill.castDelay = castDelay;
+		skill.castDelayTime = 0.0f;
+		skill.coolDown = coolDown;
+		skill.coolDownTime = 0.0f;
+		skill.unable = false;
+		skill.on = false;
+		skill.finish = false;
 	}
 
 	void Player::Tick()
@@ -343,12 +318,11 @@ namespace js
 			if (mTacticalDive.curCount < mTacticalDive.maxCount)
 			{
 				Vector2 velocity = mRigidbody->GetVelocity();
-				velocity.x = GetDir().x * 300.0f * mStat.moveSpeed;
+				velocity.x = GetDir().x * 300.0f * mHealth.moveSpeed;
 				mRigidbody->SetVelocity(velocity);
 				++mTacticalDive.curCount;
 			}
 			// 회피 로직 추후 추가할 예정
-
 
 			// 딜레이 진행
 			if (mTacticalDive.castDelayTime >= mTacticalDive.castDelay)
@@ -390,7 +364,7 @@ namespace js
 		case eProjectileType::DoubleTab:
 		{
 			// 투사체 풀에서 끌어다가 사용
-			for (int idx = 0; idx < WEAPON_POOL; ++idx)
+			for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 			{
 				// 사용 대기중인 투사체 찾으면
 				if (mWeapon[idx]->IsActive() == false)
@@ -406,7 +380,7 @@ namespace js
 		break;
 		case eProjectileType::FMJ:
 		{
-			for (int idx = 0; idx < WEAPON_POOL; ++idx)
+			for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 			{
 				if (mWeapon[idx]->IsActive() == false)
 				{
@@ -426,7 +400,7 @@ namespace js
 		break;
 		case eProjectileType::SuppresiveFire:
 		{
-			for (int idx = 0; idx < WEAPON_POOL; ++idx)
+			for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 			{
 				if (mWeapon[idx]->IsActive() == false)
 				{
@@ -565,12 +539,12 @@ namespace js
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			SetDir(Vector2::Left);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mStat.moveSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mHealth.moveSpeed);
 		}
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			SetDir(Vector2::Right);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mStat.moveSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mHealth.moveSpeed);
 		}
 
 		// Idle 상태 (애니메이션 X)
@@ -665,14 +639,13 @@ namespace js
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			SetDir(Vector2::Left);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mStat.moveSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mHealth.moveSpeed);
 		}
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			SetDir(Vector2::Right);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mStat.moveSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mHealth.moveSpeed);
 		}
-
 
 		// Idle 상태 (애니메이션 O)
 		if (true == mRigidbody->IsGrounded())
@@ -683,8 +656,7 @@ namespace js
 			else
 				mAnimator->Play(L"PIdleL");
 			mState = ePlayerState::Idle;
-		}
-		
+		}		
 		// DoubleTab 상태 (애니 O)
 		if (KEY_PRESSE(eKeyCode::Z))
 		{

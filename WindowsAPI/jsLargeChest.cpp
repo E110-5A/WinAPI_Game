@@ -96,24 +96,27 @@ void js::LargeChest::Trigger()
 {
     // 아이템 종류
     srand((unsigned int)time(NULL));
+    // 뽑을 아이템의 등급
+    int randomItem = (rand() % 50);
+
+    // 등급에 해당하는 아이템
     int common = 0 + (rand() % 5);
     int uncommon = 5 + (rand() % 5);
     int active = 15 + (rand() % 3);
 
-    int randomItem = (rand() % 50);
     
     // 아이템 불러오기
     if (0 <= randomItem && 20 > randomItem)                      // 0~2  common
     {
-        mItemObject->Active(GetPos(), rand() % common);
+        mItemObject->Active(GetPos(), (eItemList)(common));
     }
     else if (20 <= randomItem && 40 > randomItem)                 // 3~4  uncommon
     {
-        mItemObject->Active(GetPos(), rand() % uncommon);
+        mItemObject->Active(GetPos(), (eItemList)(uncommon));
     }                                                           // 5    active
     else
     {
-        mItemObject->Active(GetPos(), rand() % active);
+        mItemObject->Active(GetPos(), (eItemList)(active));
     }
 
     // 비활성화 하기

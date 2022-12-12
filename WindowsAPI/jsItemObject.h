@@ -17,7 +17,7 @@ namespace js
 		virtual void OnCollisionExit(Collider* other) override;
 
 		void SetIndex(UINT index);
-		void Active(Pos pos, int index);
+		void Active(Pos pos, eItemList index);
 		void InActive();
 
 		void PickUp();
@@ -30,5 +30,8 @@ namespace js
 		// 이미지 LT 좌표
 		UINT	mX;
 		UINT	mY;
+
+		bool	mAble;
+		float	mAbleTime;
 	};
 }

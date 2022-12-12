@@ -98,9 +98,9 @@ namespace js
         // 아이템 종류
         srand((unsigned int)time(NULL));
         int rare = 10 + (rand() % 4);
-                
+
         // 아이템 불러오기
-        mItemObject->Active(GetPos(), rare);
+        mItemObject->Active(GetPos(), (eItemList)rare);
         // 비활성화 하기
         mActive = false;
     }

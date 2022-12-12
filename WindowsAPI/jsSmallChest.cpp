@@ -105,15 +105,15 @@ namespace js
         // 아이템 불러오기
         if (0 <= randomItem && 30 > randomItem)                      // 0~2  common
         {
-            mItemObject->Active(GetPos(), rand() % common);
+            mItemObject->Active(GetPos(), (eItemList)(common));
         }
         else if (30 <= randomItem && 40 > randomItem)                 // 3~4  uncommon
         {
-            mItemObject->Active(GetPos(), rand() % uncommon);
+            mItemObject->Active(GetPos(), (eItemList)(uncommon));
         }                                                           // 5    active
         else
         {
-            mItemObject->Active(GetPos(), rand() % active);
+            mItemObject->Active(GetPos(), (eItemList)(active));
         }
         // 비활성화 하기
         mActive = false;

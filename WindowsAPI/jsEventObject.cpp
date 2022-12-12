@@ -12,7 +12,7 @@ namespace js
 {
 	js::EventObject::EventObject()
 		: mImage(nullptr)
-		, mActive(nullptr)
+		, mActive(false)
 	{
 		Initialize();
 	}

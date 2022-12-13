@@ -1,32 +1,37 @@
 #pragma once
 #include "jsGameObject.h"
 
+#define PLAYER_SIZE_X 25
+#define PLAYER_SIZE_Y 34
+
 namespace js
-{
-	
+{	
 	struct SkillInfo
 	{
-		float	damage;				// 피해량 비율
-		float	power;				// 위력 (피해와 연관없음)
-		float	castDelay;			// 스킬 지연시간
-		float	castDelayTime;		
-		int		maxCount;			// 반복 횟수
-		int		curCount;
-		float	coolDown;			// 스킬 재사용 대기시간
-		float	coolDownTime;
+		float		damage;				// 피해량 비율
+		eStagger	stagger;			// 관통 단계
+		float		power;				// 위력 (피해와 연관없음)
 
-		bool	unable;				// 사용불가 상태		: 쿨다운 대기
-		bool	on;					// 진행중 상태		: 스킬 내부로직 조건용
-		bool	finish;				// 끝난 상태			: 상태 종료 조건
+		float		castDelay;			// 스킬 지연시간
+		float		castDelayTime;		
+		float		coolDown;			// 스킬 재사용 대기시간
+		float		coolDownTime;
+
+		int			maxCount;			// 반복 횟수
+		int			curCount;
+
+		bool		unable;				// 사용불가 상태		: 쿨다운 대기
+		bool		run;				// 진행중 상태		: 스킬 내부로직 조건용
+		bool		finish;				// 끝난 상태			: 상태 종료 조건
 	};
 
 	class Image;
 	class Animator;
 	class Collider;
 	class Rigidbody;
+	class GameObject;
 	class PlayerProjectile;
-	class Monster;
-
+	class GroundCheck;
 	class Player : public GameObject
 	{
 	public:
@@ -36,7 +41,7 @@ namespace js
 
 		void SetComponent();
 		void InitAnim();
-		void InitSkill(SkillInfo& skill, float damage, float power, int maxCount, float castDelay, float coolDown);
+		void InitSkill(SkillInfo& skill, float damage, float power, int maxCount, float castDelay, float coolDown, eStagger	stagger = eStagger::Light);
 
 		virtual void Initialize() override;
 		virtual void Tick() override;
@@ -62,7 +67,7 @@ namespace js
 		void Cooldown();
 		void SkillProcess();
 		void Skill(eProjectileType type);
-		void SelfDamaged(Monster* other);
+		void SelfDamaged(GameObject* other);
 
 	public:
 		// 스스로 함수 호출
@@ -88,15 +93,18 @@ namespace js
 		// 컴포넌트
 	private:
 		Animator*	mAnimator;
-		Collider*	mCollider;
 		Rigidbody*	mRigidbody;
 
+		Collider*	mBodyCollider;
+		Collider*	mFootCollider;
+
 	private:
-		Image*				mImage;
-		ePlayerState		mState;
-		Health				mHealth;
-		Offence				mOffence;
-		Utility				mUtility;
+		GroundCheck*	mFootObject;
+		Image*			mSpriteImage;
+		ePlayerState	mState;
+		Health			mHealthStat;
+		Offence			mOffenceStat;
+		Utility			mUtilityStat;
 
 	private:
 		PlayerProjectile*	mWeapon[PLAYER_PROJECTILE_POOL];

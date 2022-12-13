@@ -130,7 +130,7 @@ namespace js
 		if (eColliderLayer::Monster == attacker->GetType())
 		{
 			Monster* target = dynamic_cast<Monster*>(attacker);
-			target->SelfHit(this);
+			target->SelfHit(this, mInfo.damage, mInfo.stagger, mInfo.power);
 		}
 
 		// 내가 FMJ 타입이 아니라면 비활성화 하기
@@ -147,14 +147,20 @@ namespace js
 	}
 
 
-	void PlayerProjectile::Active(eProjectileType type, int damage)
+	void PlayerProjectile::Active(eProjectileType type, float damage, eStagger stagger, float power)
 	{
-		mInfo.unable = true;			// 활성화
-		SetDir(mOwner->GetDir());		// 방향 갱신
-		mInfo.type = type;				// 타입 갱신
-		Pos pos = mOwner->GetPos();		// 위치 갱신
-		SetPos(pos);
+		// 투사체 활성화
+		mInfo.unable = true;
 
-		mStartPos = pos;				// 시작지점 기록
+		// 투사체 기본 정보 갱신
+		SetDir(mOwner->GetDir());
+		SetPos(mOwner->GetPos());
+
+		mInfo.type = type;
+		mInfo.damage = damage;
+		mInfo.stagger = stagger;
+		mInfo.power = power;
+
+		mStartPos = GetPos();				// 시작지점 기록 (나중에 사용 안하는 기능
 	}
 }

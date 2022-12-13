@@ -27,7 +27,7 @@ namespace js
 		void SetInfo();
 
 
-		void Active(eProjectileType type, int damage);
+		void Active(eProjectileType type, float damage, eStagger stagger, float power);
 		void InActive() { mInfo.unable = false; }
 
 		bool IsActive() { return mInfo.unable; }

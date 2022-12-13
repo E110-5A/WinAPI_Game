@@ -55,7 +55,7 @@ namespace js
 
 	void Rigidbody::GravityAction()
 	{
-		// 중력 적용
+		// 중력 제거
 		if (mIsGround)
 		{
 			Vector2 gravity = mGravity;
@@ -63,6 +63,7 @@ namespace js
 			float dot = math::Dot(mVelocity, gravity);
 			mVelocity -= gravity * dot;
 		}
+		// 중력 적용
 		else
 		{
 			mVelocity += mGravity * Time::GetDeltaTime() * 2.0f;
@@ -85,13 +86,9 @@ namespace js
 
 			// 마찰력이 속도를 넘기면
 			if (friction.Length() > mVelocity.Length())
-			{
 				mVelocity = Vector2::Zero;
-			}
 			else
-			{
 				mVelocity += friction;
-			}
 		}
 	}
 	void Rigidbody::LimitVelocityAction()
@@ -100,7 +97,9 @@ namespace js
 		Vector2 gravity = mGravity;
 		gravity.Normalize();
 		float dot = math::Dot(mVelocity, gravity);
+
 		gravity *= dot;
+		
 		Vector2 sideVelocity = mVelocity - gravity;
 
 		// 수직 속도 제한
@@ -115,6 +114,7 @@ namespace js
 			sideVelocity.Normalize();
 			sideVelocity *= mLimitVelocity.x;
 		}
+
 		mVelocity = gravity + sideVelocity;
 	}
 }

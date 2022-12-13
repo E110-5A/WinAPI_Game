@@ -43,9 +43,9 @@ namespace js
     {
         if (false == mActive)
             return;
-        if (0.5f >= mAbleTime)
+        if (1.0f >= mAbleTime)
             mAbleTime += Time::GetDeltaTime();
-        if (0.4f <= mAbleTime)
+        if (0.8f <= mAbleTime)
             mAble = true;
         EventObject::Tick();
     }

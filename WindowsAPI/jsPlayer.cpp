@@ -19,14 +19,15 @@
 #include "jsRigidbody.h"
 
 // 오브젝트
+#include "jsObject.h"
 #include "jsPlayerProjectile.h"
-#include "jsMonster.h"
+#include "jsGroundCheck.h"
 
 
 namespace js
 {
 	Player::Player()
-		: mImage(nullptr)
+		: mSpriteImage(nullptr)
 		, mWeaponID(0)
 	{
 		// 내 초기값 세팅
@@ -36,14 +37,15 @@ namespace js
 		Initialize();
 	}
 	Player::Player(Pos pos)
-		: mImage(nullptr)
+		: mSpriteImage(nullptr)
 		, mWeaponID(0)
 	{
 		SetPos(pos);
 		SetScale(Size(1.f, 1.f));
 		SetDir(Vector2::Right);
-		Initialize();		
+		Initialize();
 	}
+
 	Player::~Player()
 	{
 	}
@@ -52,22 +54,25 @@ namespace js
 	{
 		SetType(eColliderLayer::Player);
 		SetName(L"Player");
-		PlayerStat stat = PlayerManager::GetInstance().GetPlayerStat();
-		mHealth = stat.playerHealth;
-		mOffence = stat.playerOffence;
-		mUtility = stat.playerUtility;
+
+		// 스텟 연동
+		mHealthStat = PlayerManager::GetInstance().GetPlayerStat().playerHealth;
+		mOffenceStat = PlayerManager::GetInstance().GetPlayerStat().playerOffence;
+		mUtilityStat = PlayerManager::GetInstance().GetPlayerStat().playerUtility;
 
 		// 애니메이션 스프라이트 로딩
-		if (nullptr == mImage)
+		if (nullptr == mSpriteImage)
 		{
-			mImage = Resources::Load<Image>
+			mSpriteImage = Resources::Load<Image>
 				(L"Player", L"..\\Resources\\Image\\Player\\player.bmp");
 		}
+		
 		SetComponent();
-		InitSkill(mDubleTab, 60.f, 40.f, 2, mOffence.attackSpeed * 0.14f, mOffence.attackSpeed * 0.4f);
-		InitSkill(mFMJ, 230.f, 80.f, 1, 0.60f, 3.0f);
-		InitSkill(mTacticalDive, 0.f, mHealth.moveSpeed * 100.f, 1, 0.70f, 5.0f);
-		InitSkill(mSupressiveFire, 80.f, 40.f, 6, mOffence.attackSpeed * 0.14f, 5.0f);
+
+		InitSkill(mDubleTab, 60.f, 60.f, 2, mOffenceStat.attackSpeed * 0.14f, mOffenceStat.attackSpeed * 0.4f);
+		InitSkill(mFMJ, 230.f, 100.f, 1, 0.60f, 3.0f, eStagger::Nomal);
+		InitSkill(mTacticalDive, 0.f, mHealthStat.moveSpeed * 100.f, 1, 0.70f, 5.0f);
+		InitSkill(mSupressiveFire, 800.f, 60.f, 6, mOffenceStat.attackSpeed * 0.14f, 5.0f, eStagger::Heave);
 	}
 	void Player::SetComponent()
 	{
@@ -75,11 +80,18 @@ namespace js
 		mAnimator->Play(L"PIdleR");
 
 		// 콜라이더 설정
-		mCollider = new Collider;
-		AddComponent(mCollider);
-		mCollider->SetPos(GetPos());
-		mCollider->SetSize(Size(25.f, 40.f) * GetScale());
-		mCollider->SetOffset(Vector2(-10.f, 0.f));
+		mBodyCollider = new Collider();
+		AddComponent(mBodyCollider);
+		mBodyCollider->SetSize(Size(PLAYER_SIZE_X, PLAYER_SIZE_Y) * GetScale());
+		mBodyCollider->SetOffset(Vector2(-10.f, 0.f));
+				
+		mFootObject = object::Instantiate<GroundCheck>(eColliderLayer::GroundCheck);
+		mFootObject->SetOwner(this);
+
+		mFootCollider = new Collider();
+		mFootObject->AddComponent(mFootCollider);
+		mFootCollider->SetSize(Size(5, 5));
+		mFootCollider->SetOffset(Vector2(-10, 20));
 
 		// 강체 설정
 		mRigidbody = AddComponent<Rigidbody>();
@@ -89,53 +101,53 @@ namespace js
 		mAnimator = new Animator;
 		AddComponent(mAnimator);
 
-		mAnimator->CreateAnimation(L"PIdleR", mImage, Pos(0.f, 0.f), Size(30.f, 36.f)
+		mAnimator->CreateAnimation(L"PIdleR", mSpriteImage, Pos(0.f, 0.f), Size(30.f, 36.f)
 			, Vector2(-10.f, 0.f), 1, 0.1f);
-		mAnimator->CreateAnimation(L"PIdleL", mImage, Pos(0.f, 36.f), Size(30.f, 36.f)
+		mAnimator->CreateAnimation(L"PIdleL", mSpriteImage, Pos(0.f, 36.f), Size(30.f, 36.f)
 			, Vector2(-8.f, 0.f), 1, 0.1f);
 
-		mAnimator->CreateAnimation(L"PWalkR", mImage, Pos(0.f, 72.f), Size(18.0f, 33.f)
+		mAnimator->CreateAnimation(L"PWalkR", mSpriteImage, Pos(0.f, 72.f), Size(18.0f, 33.f)
 			, Vector2(-10.f, 0.f), 8, 0.1f);
-		mAnimator->CreateAnimation(L"PWalkL", mImage, Pos(0.f, 105.f), Size(18.0f, 33.f)
+		mAnimator->CreateAnimation(L"PWalkL", mSpriteImage, Pos(0.f, 105.f), Size(18.0f, 33.f)
 			, Vector2(-10.f, 0.f), 8, 0.1f);
 
-		mAnimator->CreateAnimation(L"PJumpR", mImage, Pos(0.f, 504.f), Size(18.0f, 33.f)
+		mAnimator->CreateAnimation(L"PJumpR", mSpriteImage, Pos(0.f, 504.f), Size(18.0f, 33.f)
 			, Vector2(-10.f, 0.f), 1, 0.1f);
-		mAnimator->CreateAnimation(L"PJumpL", mImage, Pos(0.f, 537.f), Size(18.0f, 33.f)
+		mAnimator->CreateAnimation(L"PJumpL", mSpriteImage, Pos(0.f, 537.f), Size(18.0f, 33.f)
 			, Vector2(-10.f, 0.f), 1, 0.1f);
 
-		mAnimator->CreateAnimation(L"PClimb", mImage, Pos(0.f, 570.f), Size(18.0f, 36.f)
+		mAnimator->CreateAnimation(L"PClimb", mSpriteImage, Pos(0.f, 570.f), Size(18.0f, 36.f)
 			, Vector2(-10.f, 0.f), 2, 0.1f);
 
-		mAnimator->CreateAnimation(L"PDeathR", mImage, Pos(0.f, 606.f), Size(54.0f, 27.f)
+		mAnimator->CreateAnimation(L"PDeathR", mSpriteImage, Pos(0.f, 606.f), Size(54.0f, 27.f)
 			, Vector2(-25.f, 5.f), 5, 0.1f);
-		mAnimator->CreateAnimation(L"PDeathL", mImage, Pos(0.f, 633.f), Size(54.0f, 27.f)
+		mAnimator->CreateAnimation(L"PDeathL", mSpriteImage, Pos(0.f, 633.f), Size(54.0f, 27.f)
 			, Vector2(25.f, 5.f), 5, 0.1f);
 
 
 
-		mAnimator->CreateAnimation(L"PDubleTabR", mImage, Pos(0.f, 138.f), Size(60.f, 36.f)
+		mAnimator->CreateAnimation(L"PDubleTabR", mSpriteImage, Pos(0.f, 138.f), Size(60.f, 36.f)
 			, Vector2(2.f, 0.f), 5, 0.08f);
-		mAnimator->CreateAnimation(L"PDubleTabL", mImage, Pos(0.f, 174.f), Size(60.f, 36.f)
+		mAnimator->CreateAnimation(L"PDubleTabL", mSpriteImage, Pos(0.f, 174.f), Size(60.f, 36.f)
 			, Vector2(-25.f, 0.f), 5, 0.08f);
 
-		mAnimator->CreateAnimation(L"PFMJR", mImage, Pos(0.f, 210.f), Size(96.0f, 33.f)
+		mAnimator->CreateAnimation(L"PFMJR", mSpriteImage, Pos(0.f, 210.f), Size(96.0f, 33.f)
 			, Vector2(23.f, 0.f), 5, 0.1f);
-		mAnimator->CreateAnimation(L"PFMJL", mImage, Pos(0.f, 243.f), Size(96.0f, 33.f)
+		mAnimator->CreateAnimation(L"PFMJL", mSpriteImage, Pos(0.f, 243.f), Size(96.0f, 33.f)
 			, Vector2(-45.f, 0.f), 5, 0.1f);
 
-		mAnimator->CreateAnimation(L"PDiveR", mImage, Pos(0.f, 276.f), Size(36.f, 36.f)
+		mAnimator->CreateAnimation(L"PDiveR", mSpriteImage, Pos(0.f, 276.f), Size(36.f, 36.f)
 			, Vector2(-12.f, 0.f), 9, 0.1f);
-		mAnimator->CreateAnimation(L"PDiveL", mImage, Pos(0.f, 312.f), Size(36.f, 36.f)
+		mAnimator->CreateAnimation(L"PDiveL", mSpriteImage, Pos(0.f, 312.f), Size(36.f, 36.f)
 			, Vector2(-8.f, 0.f), 9, 0.1f);
 
-		mAnimator->CreateAnimation(L"PSuppressiveFireR", mImage, Pos(0.f, 348.f), Size(114.f, 39.f)
+		mAnimator->CreateAnimation(L"PSuppressiveFireR", mSpriteImage, Pos(0.f, 348.f), Size(114.f, 39.f)
 			, Vector2(-10.f, 0.f), 15, 0.08f);
-		mAnimator->CreateAnimation(L"PSuppressiveFireL", mImage, Pos(0.f, 387.f), Size(114.f, 39.f)
+		mAnimator->CreateAnimation(L"PSuppressiveFireL", mSpriteImage, Pos(0.f, 387.f), Size(114.f, 39.f)
 			, Vector2(-10.f, 0.f), 15, 0.08f);
-		mAnimator->CreateAnimation(L"PSuppressiveFireBothR", mImage, Pos(0.f, 426.f), Size(114.f, 39.f)
+		mAnimator->CreateAnimation(L"PSuppressiveFireBothR", mSpriteImage, Pos(0.f, 426.f), Size(114.f, 39.f)
 			, Vector2(0.f, 0.f), 15, 0.08f);
-		mAnimator->CreateAnimation(L"PSuppressiveFireBothL", mImage, Pos(0.f, 465.f), Size(114.f, 39.f)
+		mAnimator->CreateAnimation(L"PSuppressiveFireBothL", mSpriteImage, Pos(0.f, 465.f), Size(114.f, 39.f)
 			, Vector2(0.f, 0.f), 15, 0.08f);
 
 		//mAnimator->GetCompleteEvents(L"PDubleTabR") = std::bind(&Player::ReturnIdle, this);
@@ -151,7 +163,7 @@ namespace js
 	}
 
 	void Player::InitSkill(SkillInfo& skill, float damage, float power, int maxCount
-		, float castDelay, float coolDown)
+		, float castDelay, float coolDown, eStagger	stagger)
 	{
 		skill.damage = damage;
 		skill.power = power;
@@ -162,17 +174,23 @@ namespace js
 		skill.coolDown = coolDown;
 		skill.coolDownTime = 0.0f;
 		skill.unable = false;
-		skill.on = false;
+		skill.run = false;
 		skill.finish = false;
+		skill.stagger = stagger;
 	}
 
 	void Player::Tick()
 	{
 		// Death 상태일경우 ret
 
-		GameObject::Tick();		
+		// 본인 컴포넌트 Tick 호출
+		mFootObject->Tick();
+		GameObject::Tick();
+
+		// 스킬 기능
 		Cooldown();
 		SkillProcess();
+		// 상태 기능
 		switch (mState)
 		{
 		case ePlayerState::Idle:
@@ -265,7 +283,7 @@ namespace js
 	{
 		// 시간을 재서 여러 호출간 딜레이를 넣어줌
 		// 오브젝트 풀 호출
-		if (true == mDubleTab.on)
+		if (true == mDubleTab.run)
 		{
 			// 딜레이 계산
 			mDubleTab.castDelayTime += Time::GetDeltaTime();
@@ -284,11 +302,11 @@ namespace js
 			else
 			{
 				mDubleTab.curCount = 0;
-				mDubleTab.on = false;
+				mDubleTab.run = false;
 				mDubleTab.finish = true;
 			}
 		}
-		if (true == mFMJ.on)
+		if (true == mFMJ.run)
 		{
 			// 딜레이 계산
 			mFMJ.castDelayTime += Time::GetDeltaTime();
@@ -305,11 +323,11 @@ namespace js
 			{
 				mFMJ.castDelayTime = 0.0f;
 				mFMJ.curCount = 0;
-				mFMJ.on = false;
+				mFMJ.run = false;
 				mFMJ.finish = true;
 			}
 		}
-		if (true == mTacticalDive.on)
+		if (true == mTacticalDive.run)
 		{
 			// 딜레이 계산
 			mTacticalDive.castDelayTime += Time::GetDeltaTime();
@@ -317,9 +335,7 @@ namespace js
 			// 횟수 제한
 			if (mTacticalDive.curCount < mTacticalDive.maxCount)
 			{
-				Vector2 velocity = mRigidbody->GetVelocity();
-				velocity.x = GetDir().x * 300.0f * mHealth.moveSpeed;
-				mRigidbody->SetVelocity(velocity);
+				Skill(eProjectileType::TacticalDive);
 				++mTacticalDive.curCount;
 			}
 			// 회피 로직 추후 추가할 예정
@@ -329,11 +345,11 @@ namespace js
 			{
 				mTacticalDive.castDelayTime = 0.0f;
 				mTacticalDive.curCount = 0;
-				mTacticalDive.on = false;
+				mTacticalDive.run = false;
 				mTacticalDive.finish = true;
 			}
 		}
-		if (true == mSupressiveFire.on)
+		if (true == mSupressiveFire.run)
 		{
 			// 딜레이 계산
 			mSupressiveFire.castDelayTime += Time::GetDeltaTime();
@@ -352,7 +368,7 @@ namespace js
 			else
 			{
 				mSupressiveFire.curCount = 0;
-				mSupressiveFire.on = false;
+				mSupressiveFire.run = false;
 				mSupressiveFire.finish = true;
 			}
 		}
@@ -370,9 +386,9 @@ namespace js
 				if (mWeapon[idx]->IsActive() == false)
 				{
 					// Active상태로 만들고
-					mWeapon[idx]->Active(type, mDubleTab.damage);
+					mWeapon[idx]->Active(type, mDubleTab.damage, mDubleTab.stagger, mDubleTab.power);
 					mDubleTab.unable = true;
-					mDubleTab.on = true;
+					mDubleTab.run = true;
 					break;
 				}
 			}
@@ -384,9 +400,9 @@ namespace js
 			{
 				if (mWeapon[idx]->IsActive() == false)
 				{
-					mWeapon[idx]->Active(type, mFMJ.damage);
+					mWeapon[idx]->Active(type, mFMJ.damage, mFMJ.stagger, mFMJ.power);
 					mFMJ.unable = true;
-					mFMJ.on = true;
+					mFMJ.run = true;
 					break;
 				}
 			}
@@ -394,8 +410,12 @@ namespace js
 		break;
 		case eProjectileType::TacticalDive:
 		{
+			Vector2 velocity = mRigidbody->GetVelocity();
+			velocity.x = GetDir().x * mTacticalDive.power * 3.0f;
+			mRigidbody->SetVelocity(velocity);
+
 			mTacticalDive.unable = true;
-			mTacticalDive.on = true;
+			mTacticalDive.run = true;
 		}
 		break;
 		case eProjectileType::SuppresiveFire:
@@ -404,9 +424,9 @@ namespace js
 			{
 				if (mWeapon[idx]->IsActive() == false)
 				{
-					mWeapon[idx]->Active(type, mSupressiveFire.damage);
+					mWeapon[idx]->Active(type, mSupressiveFire.damage, mSupressiveFire.stagger, mSupressiveFire.power);
 					mSupressiveFire.unable = true;
-					mSupressiveFire.on = true;
+					mSupressiveFire.run = true;
 					break;
 				}
 			}
@@ -418,8 +438,8 @@ namespace js
 	// Collider, State 시각적 디버깅
 	void Player::Render(HDC hdc)
 	{
+		mFootObject->Render(hdc);
 		GameObject::Render(hdc);
-
 		wchar_t szFloat[40] = {};
 
 		std::wstring stateStr = L"현재 State :";
@@ -539,12 +559,12 @@ namespace js
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			SetDir(Vector2::Left);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mHealth.moveSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mHealthStat.moveSpeed);
 		}
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			SetDir(Vector2::Right);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mHealth.moveSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mHealthStat.moveSpeed);
 		}
 
 		// Idle 상태 (애니메이션 X)
@@ -639,12 +659,12 @@ namespace js
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			SetDir(Vector2::Left);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mHealth.moveSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mHealthStat.moveSpeed);
 		}
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			SetDir(Vector2::Right);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mHealth.moveSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mHealthStat.moveSpeed);
 		}
 
 		// Idle 상태 (애니메이션 O)
@@ -820,12 +840,8 @@ namespace js
 	{
 		eColliderLayer type = other->GetOwner()->GetType();
 
-		// 추후 Monster_Projectile 대상으로 변경할 것
-		if (type == eColliderLayer::Monster)
-		{
-			Monster* attacker = dynamic_cast<Monster*>(other->GetOwner());
-			SelfDamaged(attacker);
-		}
+		if (type == eColliderLayer::DamagingObj)
+			SelfDamaged(other->GetOwner());
 	}
 	void Player::OnCollisionStay(Collider* other)
 	{
@@ -835,7 +851,7 @@ namespace js
 	}
 
 
-	void Player::SelfDamaged(Monster* other) 
+	void Player::SelfDamaged(GameObject* other) 
 	{
 		// 뒤로 넉백
 		Vector2 velocity = mRigidbody->GetVelocity();

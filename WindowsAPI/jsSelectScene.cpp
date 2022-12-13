@@ -23,13 +23,13 @@ namespace js
 	void SelectScene::Initialize()
 	{
 		// 배경 오브젝트
-		BGObj* selectBG = object::Instantiate<BGObj>(eColliderLayer::BackGround);
+		BGObj* selectBG = object::Instantiate<BGObj>(eColliderLayer::BackGroundImage);
 		selectBG->SetImage(L"SelectBG", L"SelectBG.bmp");
 
-		BGObj* selectInfo = object::Instantiate<BGObj>(eColliderLayer::BackGround,Vector2(60.0f, 100.0f));
+		BGObj* selectInfo = object::Instantiate<BGObj>(eColliderLayer::BackGroundImage,Vector2(60.0f, 100.0f));
 		selectInfo->SetImage(L"select_Info", L"select_Info.bmp");
 
-		BGObj* selectList = object::Instantiate<BGObj>(eColliderLayer::BackGround, Vector2(1000.0f, 80.0f));
+		BGObj* selectList = object::Instantiate<BGObj>(eColliderLayer::BackGroundImage, Vector2(1000.0f, 80.0f));
 		selectList->SetImage(L"select_list", L"select_list.bmp");
 				
 	}

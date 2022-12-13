@@ -75,7 +75,9 @@ namespace js
 		void SelfDamaged(float damage);
 		// 입력받은 방향으로 밀려남
 		void SelfKnockBack(float dir, eStagger stagger, float power);
-		// 입력받은 값 동안 움직이지 않음
+
+
+		// FSM 만들때 추후 추가할 예정
 		void SelfStun(float power);
 
 	protected:

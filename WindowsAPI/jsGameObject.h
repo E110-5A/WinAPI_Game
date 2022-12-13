@@ -64,10 +64,10 @@ namespace js
 
 	private:
 		std::vector<Component*> mComponents;
+		eColliderLayer mType;
 		Pos		mPos;
 		Size	mScale;
 		Vector2 mDir;
-		eColliderLayer mType;
 
 		bool	mDead;
 		float	mDeathTime;

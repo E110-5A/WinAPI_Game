@@ -152,8 +152,10 @@ struct ItemInfo
 struct ProjectileInfo
 {
 	eProjectileType		type;		// 투사체 종류 (스킬 + 아이템)
-	eStagger			stagger;	// 투사체 위력
-	float				range;		// 투사체 사거리
-	bool				unable;		// 투사체 활성화 On Off 여부
+	float				damage;		// 피해량
+	eStagger			stagger;	// 관통
+	float				power;		// 위력
+	float				range;		// 사거리
+	bool				unable;		// 활성화 On Off 여부
 };
 

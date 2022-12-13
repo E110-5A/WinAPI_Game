@@ -7,7 +7,9 @@ namespace js
 	GameObject::GameObject()
 		: mPos (Vector2::Zero)
 		, mScale (Vector2::One)
+		, mDir (Vector2::Right)
 		, mDead (false)
+		, mBeDeath (false)
 		, mDeathTime (-10.f)
 	{
 	}
@@ -15,7 +17,9 @@ namespace js
 	GameObject::GameObject(Pos pos)
 		: mPos (pos)
 		, mScale (Vector2::One)
+		, mDir(Vector2::Right)
 		, mDead (false)
+		, mBeDeath(false)
 		, mDeathTime (-10.f)
 	{
 	}

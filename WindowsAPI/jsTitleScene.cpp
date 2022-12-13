@@ -25,12 +25,12 @@ namespace js
 	{
 		// 배경 오브젝트
 		//BGObj* title = new BGObj();
-		//AddGameObject(title, eColliderLayer::BackGround);
-		BGObj* title = object::Instantiate<BGObj>(eColliderLayer::BackGround);
+		//AddGameObject(title, eColliderLayer::BackGroundImage);
+		BGObj* title = object::Instantiate<BGObj>(eColliderLayer::BackGroundImage);
 		title->SetImage(L"TitleBG", L"Title_BG.bmp");
 
 		// 회전하는 행성 배경 추가
-		BGObj* ground = object::Instantiate<BGObj>(eColliderLayer::BackGround, Vector2(380.0f, 560.0f));
+		BGObj* ground = object::Instantiate<BGObj>(eColliderLayer::BackGroundImage, Vector2(380.0f, 560.0f));
 		ground->SetImage(L"TitleGround", L"ground.bmp");
 		// 이동하는 플레이어 배경 추가
 		CommandoRun* pObj = object::Instantiate<CommandoRun>(eColliderLayer::BGObj, Vector2(640.0f, 618.0f));

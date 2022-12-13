@@ -100,19 +100,21 @@ enum class eComponentType
 };
 enum class eColliderLayer
 {
-	Default,					//	0
-	BackGround,					//	1
-	Tile,						//	2
-	BGObj,						//	3
-	EventObject,				//	4
-	Chest,						//	5
-	Item,						//	6
-	Player,						//	7
-	Player_Projectile,			//	8
-	Monster,					//	9
-	Monster_Projectile,			//	10
+	Default,					//	 1		// None
+	BackGroundImage,			//	 2		// 이미지만 존재하는 배경 오브젝트
+	Tile,						//	 3		// 타일로 존재하는 배경 오브젝트
+	BGObj,						//	 4		// 이미지 외에 컴포넌트가 필요한 배경 오브젝트
+	EventObject,				//	 5		// 기타 충돌시 작동하는 이벤트 오브젝트
+	Chest,						//	 6		// 자원을 소모해 아이템과 교환가능한 이벤트 오브젝트
+	Item,						//	 7		// 플레이어에 의해 PickUp 가능한 이벤트 오브젝트
+	Player,						//	 8		// 물리는 벽 충돌만 가질 예정
+	Player_Projectile,			//	 9		// 몬스터에게만 피해를 줌
+	Monster,					//	10		// 플레이어 투사체에 의해서만 피해를 입음
 
-	Ground,						//	13
+	Ground,						//	11		// 벽 역할을 하는 오브젝트 (비가시)
+	GroundCheck,				//	12		// 중력 처리용 오브젝트 (비가시)
+	DamagingObj,				//	13		// 용암바닥, 몬스터 투사체 등
+
 	UI = _COLLIDER_LAYER - 1,	//	14
 	End = _COLLIDER_LAYER,		//	15
 };

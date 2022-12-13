@@ -74,13 +74,18 @@ namespace js
 	//stagger, power
 	void Monster::SelfKnockBack(float dir, eStagger stagger, float power)
 	{
-		Vector2 knockBack = mRigidbody->GetVelocity();
-		knockBack.x = dir * power;
-		mRigidbody->SetVelocity(knockBack);
+		// 저항력이 관통력보다 낮은 경우
+		if (stagger >= mMonsterResistance)		// 관통이 0이고 저항력이 0이면 넉백
+		{
+			// 넉백
+			Vector2 knockBack = mRigidbody->GetVelocity();
+			knockBack.x = dir * power * 2.5f;
+			mRigidbody->SetVelocity(knockBack);
 
-		// 경우에 따라서 SelfStun 호출
-		if (stagger >= mMonsterResistance)
-			SelfStun(power);
+			// 관통력이 쌔면 기절
+			if (eStagger::Heave == stagger)
+				SelfStun(power);
+		}
 	}
 
 	// power

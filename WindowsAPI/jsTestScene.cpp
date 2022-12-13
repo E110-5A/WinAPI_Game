@@ -135,12 +135,14 @@ namespace js
 	// 충돌 및 UI 설정
 	void TestScene::Enter()
 	{
+		CollisionManager::SetLayer(eColliderLayer::Ground, eColliderLayer::GroundCheck, true);
 		CollisionManager::SetLayer(eColliderLayer::Ground, eColliderLayer::Player, true);
 		CollisionManager::SetLayer(eColliderLayer::Ground, eColliderLayer::Monster, true);
 
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Chest, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Item, true);
-		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Monster_Projectile, true);
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Monster, true);
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::DamagingObj, true);
 		
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player_Projectile, true);
 	}

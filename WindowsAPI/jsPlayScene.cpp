@@ -23,7 +23,7 @@ namespace js
 		BGObj* bg = new BGObj();
 		bg->SetImage(L"PlayBG", L"Play_BG.bmp");
 		bg->Initialize();
-		AddGameObject(bg, eColliderLayer::BackGround);
+		AddGameObject(bg, eColliderLayer::BackGroundImage);
 
 		/*
 		tempGround* g = new tempGround();

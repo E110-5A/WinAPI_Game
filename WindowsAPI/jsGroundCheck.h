@@ -3,25 +3,25 @@
 
 namespace js
 {
-
-	class Projectile :
-		public GameObject
+	class Collider;
+	class GroundCheck : public GameObject
 	{
 	public:
-		Projectile();
-		~Projectile();
+		GroundCheck();
+		~GroundCheck();
 
 		virtual void Tick() override;
-		virtual void Render(HDC _hdc) override;
+		virtual void Render(HDC hdc) override;
 
 		virtual void OnCollisionEnter(Collider* other)override;
 		virtual void OnCollisionStay(Collider* other)override;
 		virtual void OnCollisionExit(Collider* other)override;
 
+		void SetOwner(GameObject* owner) { mOwner = owner; }
+		GameObject* GetOwner() { return mOwner; }
+
 	private:
-		Vector2 mDir;
-		float mSpeed;
-		float mLifeTime;
+		GameObject* mOwner;
+		Collider*	mCollider;
 	};
 }
-

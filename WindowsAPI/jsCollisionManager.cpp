@@ -11,14 +11,18 @@ namespace js
 
 	void CollisionManager::Tick()
 	{
+		// 현재 씬 가져옴
 		Scene* playScene = SceneManager::GetPlayScene();
 
+		// 서로다른 두 레이어를 비교
 		for (size_t row = 0; row < _COLLIDER_LAYER; row++)
 		{
 			for (size_t col = 0; col < _COLLIDER_LAYER; col++)
 			{
+				// 씬에서 레이어간 충돌이 설정된 경우
 				if (mMatrix[row] & (1 << col))
 				{
+					// 충돌을 확인하려는 씬과 서로 비교하려는 충돌체 레이어 대입
 					LayerCollision(playScene, (eColliderLayer)row, (eColliderLayer)col);
 				}
 			}
@@ -58,10 +62,13 @@ namespace js
 	}
 	void CollisionManager::LayerCollision(Scene* scene, eColliderLayer left, eColliderLayer right)
 	{
+		// 각각의 레이어에 있는 모든 오브젝트를 왼쪽과 오른쪽으로 가져옴
 		std::vector<GameObject*>& lefts = scene->GetGameObjects(left);
 		std::vector<GameObject*>& rights = scene->GetGameObjects(right);
 
 		// iterator를 사용해서 코드가 매우 길어지기 때문에 auto 사용
+
+		// 왼쪽 오브젝트를 순회하며
 		for (auto leftObject : lefts)
 		{
 			Collider* leftCollider = leftObject->GetComponent<Collider>();

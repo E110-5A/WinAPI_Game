@@ -15,7 +15,7 @@ namespace js
 			rain[i]->SetScale(Pos(rand() % 100, rand() % 100));
 			rain[i]->SetSpeed(250 + rand() % 600);
 			rain[i]->SetRGB(rand() % 255, rand() % 255, rand() % 255);
-			_target->AddGameObject(rain[i],eColliderLayer::Monster_Projectile);
+			_target->AddGameObject(rain[i],eColliderLayer::DamagingObj);
 		}
 	}
 }

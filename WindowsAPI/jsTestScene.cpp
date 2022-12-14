@@ -54,7 +54,6 @@ namespace js
 		// 오브젝트 추가
 		ObjectTest();
 
-		
 
 
 		// ui 추가
@@ -106,12 +105,17 @@ namespace js
 		Ground* mainGround = object::Instantiate<Ground>(eColliderLayer::Ground, Pos(64.0f, 640.0f));
 		mainGround->SetColliderSize(Size(GRID_SIZE * 16, GRID_SIZE));
 		mainGround->SetColliderOffset(Pos(GRID_SIZE * 8, GRID_SIZE / 2));
+
+		Ground* rock = object::Instantiate<Ground>(eColliderLayer::Ground, Pos(256.0f, 576.0f));
+		rock->SetColliderSize(Size(GRID_SIZE, GRID_SIZE));
+		rock->SetColliderOffset(Pos(GRID_SIZE / 2, GRID_SIZE / 2));
 	}
 
 	void TestScene::ObjectTest()
 	{
 		// 플레이어 설정
 		Player* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 600.0f));
+
 		// 투사체 풀링
 		for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 		{
@@ -124,12 +128,10 @@ namespace js
 		EventObject* largeBox = object::Instantiate<LargeChest>(eColliderLayer::Chest, Pos(140.0f, 600.0f));
 		EventObject* goldenBox = object::Instantiate<GoldenChest>(eColliderLayer::Chest, Pos(220.0f, 600.0f));
 		
-
-
 		// 몬스터 설정
-		Monster* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(700.f, 600.0f));
+		/*Monster* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(700.f, 600.0f));
 		Monster* imp2 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(750.f, 600.0f));
-		Monster* imp3 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 600.0f));
+		Monster* imp3 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 600.0f));*/
 	}
 
 	// 충돌 및 UI 설정

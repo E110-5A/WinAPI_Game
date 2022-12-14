@@ -13,7 +13,7 @@ namespace js
 		, mFriction(150.f)
 	{
 		mGravity = Vector2(0.0f, 800.0f);
-		mIsGround = true;
+		mIsGround = false;
 		mLimitVelocity = Vector2(1000.0f, 1400.0f);
 	}
 	Rigidbody::~Rigidbody()
@@ -42,15 +42,6 @@ namespace js
 	}
 	void Rigidbody::Render(HDC hdc)
 	{
-		/*wchar_t szFloat[40] = {};
-		
-		Pos pos = GetOwner()->GetPos();
-		std::wstring postr = std::to_wstring(pos.x);
-		postr += L":" + std::to_wstring(pos.y);
-
-		swprintf_s(szFloat, 40, postr.c_str());
-		int strLen = wcsnlen_s(szFloat, 40);
-		TextOut(hdc, 10, 50, szFloat, strLen);*/
 	}
 
 	void Rigidbody::GravityAction()
@@ -60,6 +51,7 @@ namespace js
 		{
 			Vector2 gravity = mGravity;
 			gravity.Normalize();
+			// 지금 속도에 중력의 방향을 내적한 값 (땅에 있는경우 0)
 			float dot = math::Dot(mVelocity, gravity);
 			mVelocity -= gravity * dot;
 		}

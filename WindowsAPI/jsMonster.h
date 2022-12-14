@@ -40,30 +40,29 @@ namespace js
 		virtual void Render(HDC hdc) override;
 
 		
-
-
 		
 		void SetImage(Image* image) { mImage = image; }
 		Image* GetImage() { return mImage; }
 
 
 		// 스텟설정 함수
-		void InitHealth(float hp, float regen, float defance, float moveSpeed)
+		void InitMonsterStat(float hp, float regen, float defance, float damage, float attackSpeed, float range, float moveSpeed)
 		{
 			mMonsterHealth.maxHP = hp;
 			mMonsterHealth.curHP = hp;
 			mMonsterHealth.healthRegen = regen;
 			mMonsterHealth.defance = defance;
-			mMonsterHealth.moveSpeed = moveSpeed;
-		}
-
-		void InitOffence(float damage, float attackSpeed, float range)
-		{
+			
 			mMonsterOffence.damage = damage;
 			mMonsterOffence.attackSpeed = attackSpeed;
 			mMonsterOffence.criticalChance = 0;
 			mMonsterOffence.range = range;
+
+			mMonsterUtility.moveSpeed = moveSpeed;
+			mMonsterUtility.maxJumpCount = 1;
+			mMonsterUtility.curJumpCount = 0;
 		}
+
 
 		// None
 		virtual void OnCollisionEnter(Collider* other) override;
@@ -89,6 +88,7 @@ namespace js
 		Image*			mImage;
 		Health			mMonsterHealth;
 		Offence			mMonsterOffence;
+		Utility			mMonsterUtility;
 		eStagger		mMonsterResistance;
 	};
 }

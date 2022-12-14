@@ -4,6 +4,7 @@
 
 namespace js
 {
+	class Image;
 	class Collider;
 	class GameObject : public Entity
 	{
@@ -23,6 +24,7 @@ namespace js
 		virtual void OnCollisionExit(Collider* other);
 
 
+
 		// 오브젝트 변수 설정
 		void SetPos(Pos pos) { mPos = pos; }
 		Pos GetPos() { return mPos; }		
@@ -32,6 +34,8 @@ namespace js
 		Vector2 GetDir() { return mDir; }
 		void SetType(eColliderLayer type) { mType = type; }
 		eColliderLayer GetType() { return mType; }
+		
+
 
 		// 오브젝트 기능
 		void Death() { mDead = true; }
@@ -39,8 +43,11 @@ namespace js
 		void SetDeath(float time);
 		void DeathLoop();
 
+
+
 		// 컴포넌트 기능
 		void AddComponent(Component* component);
+
 		template <typename T>
 		__forceinline T* AddComponent()
 		{
@@ -48,6 +55,7 @@ namespace js
 			GameObject::AddComponent(component);
 			return component;
 		}
+
 		template <typename T>
 		__forceinline T* GetComponent()
 		{
@@ -65,9 +73,11 @@ namespace js
 	private:
 		std::vector<Component*> mComponents;
 		eColliderLayer mType;
+
 		Pos		mPos;
 		Size	mScale;
 		Vector2 mDir;
+
 
 		bool	mDead;
 		float	mDeathTime;

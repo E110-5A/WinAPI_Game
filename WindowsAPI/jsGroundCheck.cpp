@@ -1,6 +1,11 @@
 #include "jsGroundCheck.h"
 
+// component
 #include "jsCollider.h"
+#include "jsRigidbody.h"
+
+// collider
+#include "jsCreature.h"
 
 namespace js
 {
@@ -33,6 +38,11 @@ namespace js
 
 	void GroundCheck::OnCollisionEnter(Collider* other)
 	{
+		GameObject* tempObj = other->GetOwner();
+		SetGround(tempObj, true);
+
+		// 점프 카운트 회복
+		mOwner->GetUtility().curJumpCount = 0;
 	}
 
 	void GroundCheck::OnCollisionStay(Collider* other)
@@ -41,5 +51,13 @@ namespace js
 
 	void GroundCheck::OnCollisionExit(Collider* other)
 	{
+		GameObject* tempObj = other->GetOwner();
+		SetGround(tempObj, false);
+	}
+	void GroundCheck::SetGround(GameObject* other, bool isGround)
+	{
+		eColliderLayer tempObj = other->GetType();
+		if (eColliderLayer::Ground == tempObj)
+			mOwner->GetComponent<Rigidbody>()->SetGround(isGround);
 	}
 }

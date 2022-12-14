@@ -4,6 +4,7 @@
 namespace js
 {
 	class Collider;
+	class Creature;
 	class GroundCheck : public GameObject
 	{
 	public:
@@ -17,11 +18,13 @@ namespace js
 		virtual void OnCollisionStay(Collider* other)override;
 		virtual void OnCollisionExit(Collider* other)override;
 
-		void SetOwner(GameObject* owner) { mOwner = owner; }
-		GameObject* GetOwner() { return mOwner; }
+		void SetOwner(Creature* owner) { mOwner = owner; }
+		Creature* GetOwner() { return mOwner; }
+
+		void SetGround(GameObject* other, bool isGround);
 
 	private:
-		GameObject* mOwner;
+		Creature* mOwner;
 		Collider*	mCollider;
 	};
 }

@@ -22,13 +22,12 @@
 #include "jsObject.h"
 #include "jsPlayerProjectile.h"
 #include "jsGroundCheck.h"
-
+#include "jsMonster.h"
 
 namespace js
 {
 	Player::Player()
-		: mSpriteImage(nullptr)
-		, mWeaponID(0)
+		: mWeaponID(0)
 	{
 		// 내 초기값 세팅
 		SetPos(Pos(400.f, 1000.f));
@@ -37,8 +36,7 @@ namespace js
 		Initialize();
 	}
 	Player::Player(Pos pos)
-		: mSpriteImage(nullptr)
-		, mWeaponID(0)
+		: mWeaponID(0)
 	{
 		SetPos(pos);
 		SetScale(Size(1.f, 1.f));
@@ -54,53 +52,35 @@ namespace js
 	{
 		SetType(eColliderLayer::Player);
 		SetName(L"Player");
-
 		// 스텟 연동
-		mHealthStat = PlayerManager::GetInstance().GetPlayerStat().playerHealth;
-		mOffenceStat = PlayerManager::GetInstance().GetPlayerStat().playerOffence;
-		mUtilityStat = PlayerManager::GetInstance().GetPlayerStat().playerUtility;
+		SetPlayerHealth(PlayerManager::GetInstance().GetPlayerStat().playerHealth);
+		SetPlayerOffence(PlayerManager::GetInstance().GetPlayerStat().playerOffence);
+		SetPlayerUtility(PlayerManager::GetInstance().GetPlayerStat().playerUtility);
 
 		// 애니메이션 스프라이트 로딩
 		if (nullptr == mSpriteImage)
-		{
-			mSpriteImage = Resources::Load<Image>
-				(L"Player", L"..\\Resources\\Image\\Player\\player.bmp");
-		}
+			SetImage(Resources::Load<Image>(L"Player", L"..\\Resources\\Image\\Player\\player.bmp"));
 		
 		SetComponent();
 
 		InitSkill(mDubleTab, 60.f, 60.f, 2, mOffenceStat.attackSpeed * 0.14f, mOffenceStat.attackSpeed * 0.4f);
 		InitSkill(mFMJ, 230.f, 100.f, 1, 0.60f, 3.0f, eStagger::Nomal);
-		InitSkill(mTacticalDive, 0.f, mHealthStat.moveSpeed * 100.f, 1, 0.70f, 5.0f);
+		InitSkill(mTacticalDive, 0.f, mUtilityStat.moveSpeed * 100.f, 1, 0.70f, 5.0f);
 		InitSkill(mSupressiveFire, 800.f, 60.f, 6, mOffenceStat.attackSpeed * 0.14f, 5.0f, eStagger::Heave);
 	}
 	void Player::SetComponent()
 	{
+		Creature::SetComponent();
 		InitAnim();
-		mAnimator->Play(L"PIdleR");
 
-		// 콜라이더 설정
-		mBodyCollider = new Collider();
-		AddComponent(mBodyCollider);
 		mBodyCollider->SetSize(Size(PLAYER_SIZE_X, PLAYER_SIZE_Y) * GetScale());
 		mBodyCollider->SetOffset(Vector2(-10.f, 0.f));
-				
-		mFootObject = object::Instantiate<GroundCheck>(eColliderLayer::GroundCheck);
-		mFootObject->SetOwner(this);
 
-		mFootCollider = new Collider();
-		mFootObject->AddComponent(mFootCollider);
-		mFootCollider->SetSize(Size(5, 5));
-		mFootCollider->SetOffset(Vector2(-10, 20));
-
-		// 강체 설정
-		mRigidbody = AddComponent<Rigidbody>();
+		mFootCollider->SetSize(Size(15, 5));
+		mFootCollider->SetOffset(Vector2(-9, 20));
 	}
 	void Player::InitAnim()
 	{
-		mAnimator = new Animator;
-		AddComponent(mAnimator);
-
 		mAnimator->CreateAnimation(L"PIdleR", mSpriteImage, Pos(0.f, 0.f), Size(30.f, 36.f)
 			, Vector2(-10.f, 0.f), 1, 0.1f);
 		mAnimator->CreateAnimation(L"PIdleL", mSpriteImage, Pos(0.f, 36.f), Size(30.f, 36.f)
@@ -150,6 +130,7 @@ namespace js
 		mAnimator->CreateAnimation(L"PSuppressiveFireBothL", mSpriteImage, Pos(0.f, 465.f), Size(114.f, 39.f)
 			, Vector2(0.f, 0.f), 15, 0.08f);
 
+		mAnimator->Play(L"PIdleR");
 		//mAnimator->GetCompleteEvents(L"PDubleTabR") = std::bind(&Player::ReturnIdle, this);
 		//mAnimator->GetCompleteEvents(L"PDubleTabL") = std::bind(&Player::ReturnIdle, this);
 		//mAnimator->GetCompleteEvents(L"PDiveR") = std::bind(&Player::ReturnIdle, this);
@@ -435,19 +416,21 @@ namespace js
 		}
 	}
 
+	void Player::JumpProcess()
+	{
+		mRigidbody->SetGround(false);
+		++mUtilityStat.curJumpCount;
+		Vector2 velocity = mRigidbody->GetVelocity();
+		velocity.y = -mUtilityStat.jumpPower;
+		mRigidbody->SetVelocity(velocity);
+	}
+
 	// Collider, State 시각적 디버깅
 	void Player::Render(HDC hdc)
 	{
 		mFootObject->Render(hdc);
 		GameObject::Render(hdc);
-		wchar_t szFloat[40] = {};
-
-		std::wstring stateStr = L"현재 State :";
-		stateStr += std::to_wstring((int)mState);
-
-		swprintf_s(szFloat, 40, stateStr.c_str());
-		int strLen = wcsnlen_s(szFloat, 40);
-		TextOut(hdc, 10, 130, szFloat, strLen);
+		func::DebugTextRender(hdc, L"현재 State :", std::to_wstring((int)mState), 10, 130);
 	}
 		
 	
@@ -474,13 +457,14 @@ namespace js
 			mAnimator->Play(L"PWalkL");
 		}		
 
-		// Move 상태 (애니메이션 X)
+		// 상태 변동
+		// Move 상태 
 		if (KEY_PRESSE(eKeyCode::LEFT) || KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			mState = ePlayerState::Move;
 		}
-		// Jump 상태 (애니메이션 O)
-		if (KEY_DOWN(eKeyCode::SPACE))
+		// Jump 상태 
+		if (KEY_DOWN(eKeyCode::SPACE) && mUtilityStat.curJumpCount < mUtilityStat.maxJumpCount)
 		{
 			Vector2 dir = GetDir();
 			if (dir == Vector2::Right)
@@ -488,9 +472,10 @@ namespace js
 			else
 				mAnimator->Play(L"PJumpL");
 			mState = ePlayerState::Jump;
+			JumpProcess();
 		}
 
-		// DoubleTab 상태 (애니 O)
+		// DoubleTab 상태 
 		if (KEY_PRESSE(eKeyCode::Z))
 		{
 			if (false == mDubleTab.unable)
@@ -503,7 +488,7 @@ namespace js
 				mState = ePlayerState::DoubleTab;
 			}
 		}
-		// FMJ 상태 (애니 O)
+		// FMJ 상태 
 		if (KEY_DOWN(eKeyCode::X))
 		{
 			if (false == mFMJ.unable)
@@ -516,7 +501,7 @@ namespace js
 				mState = ePlayerState::FMJ;
 			}
 		}
-		// SupressiveFire 상태 (애니 O)
+		// SupressiveFire 상태 
 		if (KEY_DOWN(eKeyCode::V))
 		{
 			if (false == mSupressiveFire.unable)
@@ -529,7 +514,7 @@ namespace js
 				mState = ePlayerState::SupressiveFire;
 			}
 		}
-		// TacticalDive 상태 (애니 O)
+		// TacticalDive 상태 
 		if (KEY_DOWN(eKeyCode::C))
 		{
 			if (false == mTacticalDive.unable)
@@ -559,21 +544,22 @@ namespace js
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			SetDir(Vector2::Left);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mHealthStat.moveSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mUtilityStat.moveSpeed);
 		}
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			SetDir(Vector2::Right);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mHealthStat.moveSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mUtilityStat.moveSpeed);
 		}
 
-		// Idle 상태 (애니메이션 X)
+		// 상태 변동
+		// Idle 상태 
 		if (KEY_UP(eKeyCode::LEFT) || KEY_UP(eKeyCode::RIGHT))
 		{
 			mState = ePlayerState::Idle;
 		}
-		// Jump 상태 (애니메이션 O)
-		if (KEY_DOWN(eKeyCode::SPACE))
+		// Jump 상태 
+		if (KEY_DOWN(eKeyCode::SPACE) && mUtilityStat.curJumpCount < mUtilityStat.maxJumpCount)
 		{
 			Vector2 dir = GetDir();
 			if (dir == Vector2::Right)
@@ -581,9 +567,10 @@ namespace js
 			else
 				mAnimator->Play(L"PJumpL");
 			mState = ePlayerState::Jump;
+			JumpProcess();
 		}
 
-		// DoubleTab 상태 (애니 O)
+		// DoubleTab 상태 
 		if (KEY_PRESSE(eKeyCode::Z))
 		{
 			if (false == mDubleTab.unable)
@@ -596,7 +583,7 @@ namespace js
 				mState = ePlayerState::DoubleTab;
 			}
 		}
-		// FMJ 상태 (애니 O)
+		// FMJ 상태 
 		if (KEY_DOWN(eKeyCode::X))
 		{
 			if (false == mFMJ.unable)
@@ -609,7 +596,7 @@ namespace js
 				mState = ePlayerState::FMJ;
 			}
 		}
-		// SupressiveFire 상태 (애니 O)
+		// SupressiveFire 상태 
 		if (KEY_DOWN(eKeyCode::V))
 		{
 			if (false == mSupressiveFire.unable)
@@ -622,7 +609,7 @@ namespace js
 				mState = ePlayerState::SupressiveFire;
 			}
 		}
-		// TacticalDive 상태 (애니 O)
+		// TacticalDive 상태 
 		if (KEY_DOWN(eKeyCode::C))
 		{
 			if (false == mTacticalDive.unable)
@@ -649,25 +636,23 @@ namespace js
 		}
 
 		// 로직
-		if (KEY_PRESSE(eKeyCode::SPACE) && true == mRigidbody->IsGrounded())
+		if (KEY_DOWN(eKeyCode::SPACE) && mUtilityStat.curJumpCount < mUtilityStat.maxJumpCount)
 		{
-			Vector2 velocity = mRigidbody->GetVelocity();
-			velocity.y = -500.0f;
-			mRigidbody->SetVelocity(velocity);
-			mRigidbody->SetGround(false);
+			JumpProcess();			
 		}
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			SetDir(Vector2::Left);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mHealthStat.moveSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mUtilityStat.moveSpeed);
 		}
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			SetDir(Vector2::Right);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mHealthStat.moveSpeed);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mUtilityStat.moveSpeed);
 		}
 
-		// Idle 상태 (애니메이션 O)
+		// 상태 변동
+		// Idle 상태 
 		if (true == mRigidbody->IsGrounded())
 		{
 			Vector2 dir = GetDir();
@@ -677,7 +662,7 @@ namespace js
 				mAnimator->Play(L"PIdleL");
 			mState = ePlayerState::Idle;
 		}		
-		// DoubleTab 상태 (애니 O)
+		// DoubleTab 상태 
 		if (KEY_PRESSE(eKeyCode::Z))
 		{
 			if (false == mDubleTab.unable)
@@ -690,7 +675,7 @@ namespace js
 				mState = ePlayerState::DoubleTab;
 			}
 		}
-		// FMJ 상태 (애니 O)
+		// FMJ 상태 
 		if (KEY_DOWN(eKeyCode::X))
 		{
 			if (false == mFMJ.unable)
@@ -703,7 +688,7 @@ namespace js
 				mState = ePlayerState::FMJ;
 			}
 		}
-		// SupressiveFire 상태 (애니 O)
+		// SupressiveFire 상태 
 		if (KEY_DOWN(eKeyCode::V))
 		{
 			if (false == mSupressiveFire.unable)
@@ -716,7 +701,7 @@ namespace js
 				mState = ePlayerState::SupressiveFire;
 			}
 		}
-		// TacticalDive 상태 (애니 O)
+		// TacticalDive 상태 
 		if (KEY_DOWN(eKeyCode::C))
 		{
 			if (false == mTacticalDive.unable)
@@ -741,7 +726,8 @@ namespace js
 			}
 		}
 		
-		// Idle 상태 (애니메이션 O)
+		// 상태 변동
+		// Idle 상태 
 		if (true == mDubleTab.finish)
 		{
 			Vector2 dir = GetDir();
@@ -761,7 +747,8 @@ namespace js
 			Skill(eProjectileType::FMJ);
 		}
 
-		// Idle 상태 (애니메이션 O)
+		// 상태 변동
+		// Idle 상태 
 		if (true == mFMJ.finish)
 		{
 			Vector2 dir = GetDir();
@@ -781,7 +768,8 @@ namespace js
 			Skill(eProjectileType::TacticalDive);
 		}
 		
-		// Idle 상태 (애니메이션 O)
+		// 상태 변동
+		// Idle 상태 
 		if (true == mTacticalDive.finish)
 		{
 			Vector2 dir = GetDir();
@@ -800,7 +788,8 @@ namespace js
 			Skill(eProjectileType::SuppresiveFire);
 		}
 
-		// Idle 상태 (애니메이션 O)
+		// 상태 변동
+		// Idle 상태 
 		if (true == mSupressiveFire.finish)
 		{
 			Vector2 dir = GetDir();
@@ -840,24 +829,21 @@ namespace js
 	{
 		eColliderLayer type = other->GetOwner()->GetType();
 
+		if (type == eColliderLayer::Ground)
+			return;
+
+		
 		if (type == eColliderLayer::DamagingObj)
-			SelfDamaged(other->GetOwner());
+		{
+			Creature* attacker = dynamic_cast<Creature*>(other->GetOwner());
+			Offence offence = attacker->GetOffence();
+			Creature::SelfHit(other->GetOwner(), offence.damage, eStagger::Nomal, 40);
+		}
 	}
 	void Player::OnCollisionStay(Collider* other)
 	{
 	}
 	void Player::OnCollisionExit(Collider* other)
 	{
-	}
-
-
-	void Player::SelfDamaged(GameObject* other) 
-	{
-		// 뒤로 넉백
-		Vector2 velocity = mRigidbody->GetVelocity();
-		velocity.x = -GetDir().x * 150.0f;
-		mRigidbody->SetVelocity(velocity);
-		// 잠시 무적
-		// 채력 감소
 	}
 }

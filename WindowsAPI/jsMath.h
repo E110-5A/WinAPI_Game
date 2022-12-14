@@ -109,10 +109,12 @@ namespace js
 			return false;
 		}
 
+		// 
 		float Length()
 		{
 			return sqrtf(x * x + y * y);
 		}
+
 		Vector2& Normalize()
 		{
 			float length = Length();

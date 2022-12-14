@@ -20,10 +20,13 @@ namespace js
 		stat.playerHealth.curHP = 110;
 		stat.playerHealth.healthRegen = 0.6;
 		stat.playerHealth.defance = 0;
-		stat.playerHealth.moveSpeed = 1.3;
 		stat.playerOffence.damage = 12;
 		stat.playerOffence.attackSpeed = 1;
 		stat.playerOffence.range = 700;
+		stat.playerUtility.moveSpeed = 1.3;
+		stat.playerUtility.maxJumpCount = 1;
+		stat.playerUtility.curJumpCount = 0;
+		stat.playerUtility.jumpPower = 500;
 	}
 
 	void PlayerManager::PlayerLevelUp()

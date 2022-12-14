@@ -118,7 +118,6 @@ struct Health
 	float curHP;
 	float healthRegen;
 	float defance;
-	float moveSpeed;
 };
 struct Offence
 {
@@ -129,9 +128,10 @@ struct Offence
 };
 struct Utility
 {
-	float maxExp;
-	float curExp;
-	float gold;
+	int		maxJumpCount;
+	int		curJumpCount;
+	float	jumpPower;
+	float	moveSpeed;
 };
 struct PlayerStat
 {
@@ -139,7 +139,12 @@ struct PlayerStat
 	Offence		playerOffence;
 	Utility		playerUtility;
 };
-
+struct PlayerInfo
+{
+	float	maxExp;
+	float	curExp;
+	float	gold;
+};
 struct ItemInfo
 {
 	eItemType	type;			// À¯Çü

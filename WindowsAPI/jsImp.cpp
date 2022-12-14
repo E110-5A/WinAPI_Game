@@ -93,8 +93,8 @@ namespace js
     }
     void Imp::InitStat()
     {
-        InitHealth(310.0f, 0, 0, 16.0f);
-        InitOffence(13.0f, 1, 1);
+        /*InitHealth(310.0f, 0, 0, 16.0f);
+        InitOffence(13.0f, 1, 1);*/
     }
 
     void Imp::Tick()

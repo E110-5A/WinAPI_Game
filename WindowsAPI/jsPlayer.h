@@ -1,5 +1,5 @@
 #pragma once
-#include "jsGameObject.h"
+#include "jsCreature.h"
 
 #define PLAYER_SIZE_X 25
 #define PLAYER_SIZE_Y 34
@@ -32,20 +32,20 @@ namespace js
 	class GameObject;
 	class PlayerProjectile;
 	class GroundCheck;
-	class Player : public GameObject
+	class Player : public Creature
 	{
 	public:
 		Player();
 		Player(Pos pos);
 		~Player();
 
-		void SetComponent();
 		void InitAnim();
 		void InitSkill(SkillInfo& skill, float damage, float power, int maxCount, float castDelay, float coolDown, eStagger	stagger = eStagger::Light);
 
 		virtual void Initialize() override;
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
+		virtual void SetComponent() override;
 
 		// 애니메이션
 		//void ReturnIdle();
@@ -67,7 +67,7 @@ namespace js
 		void Cooldown();
 		void SkillProcess();
 		void Skill(eProjectileType type);
-		void SelfDamaged(GameObject* other);
+		void JumpProcess();
 
 	public:
 		// 스스로 함수 호출
@@ -75,6 +75,7 @@ namespace js
 		virtual void OnCollisionStay(Collider* other)override;
 		virtual void OnCollisionExit(Collider* other)override;
 		
+
 	public:
 		// 상태
 		void SetState(ePlayerState state) { mState = state; }
@@ -90,23 +91,10 @@ namespace js
 		void SupressiveFire();
 		void Death();
 
-		// 컴포넌트
-	private:
-		Animator*	mAnimator;
-		Rigidbody*	mRigidbody;
-
-		Collider*	mBodyCollider;
-		Collider*	mFootCollider;
 
 	private:
-		GroundCheck*	mFootObject;
-		Image*			mSpriteImage;
-		ePlayerState	mState;
-		Health			mHealthStat;
-		Offence			mOffenceStat;
-		Utility			mUtilityStat;
+		ePlayerState		mState;
 
-	private:
 		PlayerProjectile*	mWeapon[PLAYER_PROJECTILE_POOL];
 		int					mWeaponID;
 

@@ -60,4 +60,19 @@ namespace js
 			}
 		}
 	}
+	namespace func
+	{
+		static __forceinline void DebugTextRender(HDC hdc, const std::wstring& first, const std::wstring& second, int x, int y)
+		{
+			wchar_t szFloat[40] = {};
+
+			std::wstring stateStr = first;
+			stateStr += L" ";
+			stateStr += second;
+
+			swprintf_s(szFloat, 40, stateStr.c_str());
+			int strLen = wcsnlen_s(szFloat, 40);
+			TextOut(hdc, x, y, szFloat, strLen);
+		}
+	}
 }

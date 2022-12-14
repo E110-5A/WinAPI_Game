@@ -144,6 +144,7 @@
     <ClInclude Include="jsCollider.h" />
     <ClInclude Include="jsCollisionManager.h" />
     <ClInclude Include="jsComponent.h" />
+    <ClInclude Include="jsCreature.h" />
     <ClInclude Include="jsEntity.h" />
     <ClInclude Include="jsEventObject.h" />
     <ClInclude Include="jsGameManager.h" />
@@ -205,6 +206,7 @@
     <ClCompile Include="jsCollider.cpp" />
     <ClCompile Include="jsCollisionManager.cpp" />
     <ClCompile Include="jsComponent.cpp" />
+    <ClCompile Include="jsCreature.cpp" />
     <ClCompile Include="jsEntity.cpp" />
     <ClCompile Include="jsEventObject.cpp" />
     <ClCompile Include="jsGameManager.cpp" />

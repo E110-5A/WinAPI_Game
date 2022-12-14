@@ -23,6 +23,9 @@ namespace js
 		void SetColliderSize(Size size) { mCollider->SetSize(size); }
 		void SetColliderOffset(Pos pos) { mCollider->SetOffset(pos); }
 
+
+		void WallProcess(GameObject* other);
+
 	private:
 		Collider* mCollider;
 	};

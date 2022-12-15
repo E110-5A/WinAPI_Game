@@ -70,13 +70,15 @@ namespace js
 			return nullptr;
 		}
 
+	protected:
+		Vector2 mDir;
+
 	private:
 		std::vector<Component*> mComponents;
 		eColliderLayer mType;
 
 		Pos		mPos;
 		Size	mScale;
-		Vector2 mDir;
 
 
 		bool	mDead;

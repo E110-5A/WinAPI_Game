@@ -150,7 +150,7 @@
     <ClInclude Include="jsGameManager.h" />
     <ClInclude Include="jsGameObject.h" />
     <ClInclude Include="jsGoldenChest.h" />
-    <ClInclude Include="jsGround.h" />
+    <ClInclude Include="jsPlatform.h" />
     <ClInclude Include="jsGroundCheck.h" />
     <ClInclude Include="jsHUD.h" />
     <ClInclude Include="jsImp.h" />
@@ -212,7 +212,7 @@
     <ClCompile Include="jsGameManager.cpp" />
     <ClCompile Include="jsGameObject.cpp" />
     <ClCompile Include="jsGoldenChest.cpp" />
-    <ClCompile Include="jsGround.cpp" />
+    <ClCompile Include="jsPlatform.cpp" />
     <ClCompile Include="jsGroundCheck.cpp" />
     <ClCompile Include="jsHUD.cpp" />
     <ClCompile Include="jsImp.cpp" />

@@ -57,7 +57,7 @@ namespace js
 	void GroundCheck::SetGround(GameObject* other, bool isGround)
 	{
 		eColliderLayer tempObj = other->GetType();
-		if (eColliderLayer::Ground == tempObj)
+		if (eColliderLayer::Platform == tempObj)
 			mOwner->GetComponent<Rigidbody>()->SetGround(isGround);
 	}
 }

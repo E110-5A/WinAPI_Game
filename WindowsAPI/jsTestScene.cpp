@@ -18,7 +18,7 @@
 #include "jsPlayer.h"
 #include "jsBGObj.h"
 #include "jsObject.h"
-#include "jsGround.h"
+#include "jsPlatform.h"
 #include "jsPlayerProjectile.h"
 #include "jsImp.h"
 #include "jsSmallChest.h"
@@ -98,15 +98,15 @@ namespace js
 
 	void TestScene::BGTest()
 	{
-		Ground* leftGround = object::Instantiate<Ground>(eColliderLayer::Ground, Pos(0.0f, 384.0f));
+		Platform* leftGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(0.0f, 384.0f));
 		leftGround->SetColliderSize(Size(GRID_SIZE, GRID_SIZE * 5));
 		leftGround->SetColliderOffset(Pos(GRID_SIZE / 2, GRID_SIZE * 5 / 2));
 
-		Ground* mainGround = object::Instantiate<Ground>(eColliderLayer::Ground, Pos(64.0f, 640.0f));
+		Platform* mainGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(64.0f, 640.0f));
 		mainGround->SetColliderSize(Size(GRID_SIZE * 16, GRID_SIZE));
 		mainGround->SetColliderOffset(Pos(GRID_SIZE * 8, GRID_SIZE / 2));
 
-		Ground* rock = object::Instantiate<Ground>(eColliderLayer::Ground, Pos(256.0f, 576.0f));
+		Platform* rock = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(256.0f, 576.0f));
 		rock->SetColliderSize(Size(GRID_SIZE, GRID_SIZE));
 		rock->SetColliderOffset(Pos(GRID_SIZE / 2, GRID_SIZE / 2));
 	}
@@ -137,9 +137,9 @@ namespace js
 	// 충돌 및 UI 설정
 	void TestScene::Enter()
 	{
-		CollisionManager::SetLayer(eColliderLayer::Ground, eColliderLayer::GroundCheck, true);
-		CollisionManager::SetLayer(eColliderLayer::Ground, eColliderLayer::Player, true);
-		CollisionManager::SetLayer(eColliderLayer::Ground, eColliderLayer::Monster, true);
+		CollisionManager::SetLayer(eColliderLayer::Platform, eColliderLayer::GroundCheck, true);
+		CollisionManager::SetLayer(eColliderLayer::Platform, eColliderLayer::Player, true);
+		CollisionManager::SetLayer(eColliderLayer::Platform, eColliderLayer::Monster, true);
 
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Chest, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Item, true);

@@ -4,12 +4,12 @@
 namespace js
 {
 	class Collider;
-	class Ground : public GameObject
+	class Platform : public GameObject
 	{
 	public:
-		Ground();
-		Ground(Pos pos);
-		~Ground();
+		Platform();
+		Platform(Pos pos);
+		~Platform();
 
 		virtual void Initialize() override;
 		virtual void Tick() override;

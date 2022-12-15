@@ -49,15 +49,20 @@ namespace js
 		// 중력 제거
 		if (mIsGround)
 		{
+			// 중력의 단위벡터 구하기
 			Vector2 gravity = mGravity;
 			gravity.Normalize();
-			// 지금 속도에 중력의 방향을 내적한 값 (땅에 있는경우 0)
+
+			// 현재 속도의 y성분 추출 (속도와 중력의 단위벡터 내적 : 중력의 단위벡터와 내적하기 때문에 속도의 y성분만 추출된다)
 			float dot = math::Dot(mVelocity, gravity);
+
+			// 내적으로 추출한 y 성분을 역방향으로 더해서 속도값을 0으로 만든다
 			mVelocity -= gravity * dot;
 		}
 		// 중력 적용
 		else
 		{
+			// 현재 속도를 중력의 영향에 받도록 한다 (현재 속도의 y성분에 중력 가속도에 비례한 값을 추가한다)
 			mVelocity += mGravity * Time::GetDeltaTime() * 2.0f;
 		}
 	}
@@ -74,8 +79,6 @@ namespace js
 			if (mForce == Vector2::Zero)
 				friction += friction * 3;
 
-
-
 			// 마찰력이 속도를 넘기면
 			if (friction.Length() > mVelocity.Length())
 				mVelocity = Vector2::Zero;
@@ -91,22 +94,23 @@ namespace js
 		float dot = math::Dot(mVelocity, gravity);
 
 		gravity *= dot;
-		
+
 		Vector2 sideVelocity = mVelocity - gravity;
 
-		// 수직 속도 제한
+		// 수직 속도 제한 적용
 		if (gravity.Length() > mLimitVelocity.y)
 		{
 			gravity.Normalize();
 			gravity *= mLimitVelocity.y;
 		}
-		// 수평 속도 제한
+		// 수평 속도 제한 적용
 		if (sideVelocity.Length() > mLimitVelocity.x)
 		{
 			sideVelocity.Normalize();
 			sideVelocity *= mLimitVelocity.x;
 		}
 
+		// 수평속도 수직속도를 합친다
 		mVelocity = gravity + sideVelocity;
 	}
 }

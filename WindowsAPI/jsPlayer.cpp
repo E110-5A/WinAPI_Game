@@ -544,12 +544,16 @@ namespace js
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			SetDir(Vector2::Left);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mUtilityStat.moveSpeed);
+			Vector2 curVelocity = mRigidbody->GetVelocity();
+			curVelocity.x = mDir.x * mUtilityStat.moveSpeed * 100;
+			mRigidbody->SetVelocity(curVelocity);
 		}
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			SetDir(Vector2::Right);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mUtilityStat.moveSpeed);
+			Vector2 curVelocity = mRigidbody->GetVelocity();
+			curVelocity.x = mDir.x * mUtilityStat.moveSpeed * 100;
+			mRigidbody->SetVelocity(curVelocity);
 		}
 
 		// 상태 변동
@@ -558,7 +562,7 @@ namespace js
 		{
 			mState = ePlayerState::Idle;
 		}
-		// Jump 상태 
+		// Jump 상태
 		if (KEY_DOWN(eKeyCode::SPACE) && mUtilityStat.curJumpCount < mUtilityStat.maxJumpCount)
 		{
 			Vector2 dir = GetDir();
@@ -829,7 +833,7 @@ namespace js
 	{
 		eColliderLayer type = other->GetOwner()->GetType();
 
-		if (type == eColliderLayer::Ground)
+		if (type == eColliderLayer::Platform)
 			return;
 
 		

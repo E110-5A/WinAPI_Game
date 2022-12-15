@@ -77,7 +77,7 @@ namespace js
 		eStagger	mResistance;
 
 	protected:
-		GroundCheck* mFootObject;
-		Image* mSpriteImage;
+		GroundCheck*	mFootObject;
+		Image*			mSpriteImage;
 	};
 }

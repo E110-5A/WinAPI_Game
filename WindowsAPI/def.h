@@ -111,13 +111,16 @@ enum class eColliderLayer
 	Player_Projectile,			//	 9		// 몬스터에게만 피해를 줌
 	Monster,					//	10		// 플레이어 투사체에 의해서만 피해를 입음
 
-	Ground,						//	11		// 벽 역할을 하는 오브젝트 (비가시)
+	Platform,					//	11		// 벽 역할을 하는 오브젝트 (비가시)
 	GroundCheck,				//	12		// 중력 처리용 오브젝트 (비가시)
 	DamagingObj,				//	13		// 용암바닥, 몬스터 투사체 등
 
 	UI = _COLLIDER_LAYER - 1,	//	14
 	End = _COLLIDER_LAYER,		//	15
 };
+
+// 1 백그라운드 레이어 통일할 것
+// 2 Chest를 EventObj 에 통합할 것
 
 // Object enum
 enum class ePlayerState

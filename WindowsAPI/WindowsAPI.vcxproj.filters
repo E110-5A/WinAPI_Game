@@ -53,52 +53,49 @@
     <Filter Include="1 Engine\Manager\Game">
       <UniqueIdentifier>{4911fc76-053b-44f5-a79d-86e0f6aa3f26}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1 Engine\Component\Creature">
-      <UniqueIdentifier>{ea4bf369-1a38-40e6-845e-743c36e911f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="1 Engine\GameObject">
       <UniqueIdentifier>{443df47f-b046-4bb2-9722-e59c7a03c141}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1 Engine\GameObject\0 Base">
-      <UniqueIdentifier>{c8af8821-aa97-42dd-99da-784b40f4743e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="1 Engine\GameObject\1 BackGround">
+    <Filter Include="1 Engine\GameObject\BackGround">
       <UniqueIdentifier>{ab7b9e2a-a23f-4950-a2bc-dbc1cda023e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1 Engine\GameObject\1 BackGround\TitleSceneObj">
-      <UniqueIdentifier>{9fcee474-a63c-47b1-9774-6fedfdd76b88}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="1 Engine\GameObject\2 UI">
-      <UniqueIdentifier>{56ec319f-d07a-49af-943b-da6aa96b4283}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="1 Engine\GameObject\2 UI\Base">
-      <UniqueIdentifier>{abb1050b-2a42-4d67-8211-d48f7d231f5d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="1 Engine\GameObject\3 Tile">
-      <UniqueIdentifier>{046c83af-50a0-4b0e-a188-2fd68c0edb7d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="1 Engine\GameObject\5 EventObj">
-      <UniqueIdentifier>{2100e976-5955-4d0c-89ad-cb2fd8ebf745}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="1 Engine\GameObject\5 EventObj\Item">
-      <UniqueIdentifier>{df4743f8-e2b1-4177-9003-9a574bd564b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="1 Engine\GameObject\5 EventObj\Chest">
-      <UniqueIdentifier>{7bc3b64d-2b9b-42df-80d9-12005b8b1070}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="1 Engine\GameObject\5 EventObj\Shrine">
-      <UniqueIdentifier>{21678d3e-38f2-4091-81ef-bd09cbed94b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="1 Engine\GameObject\4 Env">
+    <Filter Include="1 Engine\GameObject\BackGround\Ground">
       <UniqueIdentifier>{58aec7e4-92c0-48e3-a4e4-42b84837b708}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1 Engine\GameObject\6 Creature">
+    <Filter Include="1 Engine\GameObject\BackGround\BGObj">
+      <UniqueIdentifier>{9fcee474-a63c-47b1-9774-6fedfdd76b88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\BackGround\TileObj">
+      <UniqueIdentifier>{046c83af-50a0-4b0e-a188-2fd68c0edb7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\UI">
+      <UniqueIdentifier>{56ec319f-d07a-49af-943b-da6aa96b4283}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\UI\Base">
+      <UniqueIdentifier>{abb1050b-2a42-4d67-8211-d48f7d231f5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\EventObj">
+      <UniqueIdentifier>{2100e976-5955-4d0c-89ad-cb2fd8ebf745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\EventObj\Item">
+      <UniqueIdentifier>{df4743f8-e2b1-4177-9003-9a574bd564b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\EventObj\Chest">
+      <UniqueIdentifier>{7bc3b64d-2b9b-42df-80d9-12005b8b1070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\EventObj\Shrine">
+      <UniqueIdentifier>{21678d3e-38f2-4091-81ef-bd09cbed94b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\Base">
+      <UniqueIdentifier>{c8af8821-aa97-42dd-99da-784b40f4743e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\Creature">
       <UniqueIdentifier>{603c99fe-b6af-4003-9837-528785e52388}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1 Engine\GameObject\6 Creature\Player">
+    <Filter Include="1 Engine\GameObject\Creature\Player">
       <UniqueIdentifier>{118a1d99-fdc6-4f75-9b17-ae93e2ff5083}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1 Engine\GameObject\6 Creature\Monster">
+    <Filter Include="1 Engine\GameObject\Creature\Monster">
       <UniqueIdentifier>{a1adc797-2a83-4b48-b5f3-25dbf8a71f22}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -134,7 +131,7 @@
       <Filter>1 Engine\Scene\Base</Filter>
     </ClInclude>
     <ClInclude Include="jsGameObject.h">
-      <Filter>1 Engine\GameObject\0 Base</Filter>
+      <Filter>1 Engine\GameObject\Base</Filter>
     </ClInclude>
     <ClInclude Include="jsResource.h">
       <Filter>1 Engine\Resource\base</Filter>
@@ -163,12 +160,6 @@
     <ClInclude Include="jsRain.h">
       <Filter>homework</Filter>
     </ClInclude>
-    <ClInclude Include="jsBGObj.h">
-      <Filter>1 Engine\GameObject\1 BackGround</Filter>
-    </ClInclude>
-    <ClInclude Include="tempGround.h">
-      <Filter>1 Engine\GameObject\1 BackGround</Filter>
-    </ClInclude>
     <ClInclude Include="jsObject.h">
       <Filter>1 Engine\Common</Filter>
     </ClInclude>
@@ -176,10 +167,10 @@
       <Filter>1 Engine\Component</Filter>
     </ClInclude>
     <ClInclude Include="jsTile.h">
-      <Filter>1 Engine\GameObject\3 Tile</Filter>
+      <Filter>1 Engine\GameObject\BackGround\TileObj</Filter>
     </ClInclude>
     <ClInclude Include="jsTilePalette.h">
-      <Filter>1 Engine\GameObject\3 Tile</Filter>
+      <Filter>1 Engine\GameObject\BackGround\TileObj</Filter>
     </ClInclude>
     <ClInclude Include="jsRigidbody.h">
       <Filter>1 Engine\Component</Filter>
@@ -188,22 +179,22 @@
       <Filter>1 Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="jsUIBase.h">
-      <Filter>1 Engine\GameObject\2 UI\Base</Filter>
+      <Filter>1 Engine\GameObject\UI\Base</Filter>
     </ClInclude>
     <ClInclude Include="jsButton.h">
-      <Filter>1 Engine\GameObject\2 UI</Filter>
+      <Filter>1 Engine\GameObject\UI</Filter>
     </ClInclude>
     <ClInclude Include="jsHUD.h">
-      <Filter>1 Engine\GameObject\2 UI</Filter>
+      <Filter>1 Engine\GameObject\UI</Filter>
     </ClInclude>
     <ClInclude Include="jsPanel.h">
-      <Filter>1 Engine\GameObject\2 UI</Filter>
+      <Filter>1 Engine\GameObject\UI</Filter>
     </ClInclude>
     <ClInclude Include="jsSound.h">
       <Filter>1 Engine\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="jsGround.h">
-      <Filter>1 Engine\GameObject\4 Env</Filter>
+    <ClInclude Include="jsPlatform.h">
+      <Filter>1 Engine\GameObject\BackGround\Ground</Filter>
     </ClInclude>
     <ClInclude Include="jsSelectScene.h">
       <Filter>1 Engine\Scene</Filter>
@@ -211,41 +202,38 @@
     <ClInclude Include="jsOptionScene.h">
       <Filter>1 Engine\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="jsCommandoRun.h">
-      <Filter>1 Engine\GameObject\1 BackGround\TitleSceneObj</Filter>
-    </ClInclude>
     <ClInclude Include="jsPlayer.h">
-      <Filter>1 Engine\GameObject\6 Creature\Player</Filter>
+      <Filter>1 Engine\GameObject\Creature\Player</Filter>
     </ClInclude>
     <ClInclude Include="jsPlayerProjectile.h">
-      <Filter>1 Engine\GameObject\6 Creature\Player</Filter>
+      <Filter>1 Engine\GameObject\Creature\Player</Filter>
     </ClInclude>
     <ClInclude Include="jsUIGameObject.h">
-      <Filter>1 Engine\GameObject\2 UI</Filter>
+      <Filter>1 Engine\GameObject\UI</Filter>
     </ClInclude>
     <ClInclude Include="jsMonster.h">
-      <Filter>1 Engine\GameObject\6 Creature\Monster</Filter>
+      <Filter>1 Engine\GameObject\Creature\Monster</Filter>
     </ClInclude>
     <ClInclude Include="jsImp.h">
-      <Filter>1 Engine\GameObject\6 Creature\Monster</Filter>
+      <Filter>1 Engine\GameObject\Creature\Monster</Filter>
     </ClInclude>
     <ClInclude Include="jsMonsterAttack.h">
-      <Filter>1 Engine\GameObject\6 Creature\Monster</Filter>
+      <Filter>1 Engine\GameObject\Creature\Monster</Filter>
     </ClInclude>
     <ClInclude Include="jsEventObject.h">
-      <Filter>1 Engine\GameObject\5 EventObj</Filter>
+      <Filter>1 Engine\GameObject\EventObj</Filter>
     </ClInclude>
     <ClInclude Include="jsItemObject.h">
-      <Filter>1 Engine\GameObject\5 EventObj\Item</Filter>
+      <Filter>1 Engine\GameObject\EventObj\Item</Filter>
     </ClInclude>
     <ClInclude Include="jsSmallChest.h">
-      <Filter>1 Engine\GameObject\5 EventObj\Chest</Filter>
+      <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
     </ClInclude>
     <ClInclude Include="jsLargeChest.h">
-      <Filter>1 Engine\GameObject\5 EventObj\Chest</Filter>
+      <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
     </ClInclude>
     <ClInclude Include="jsGoldenChest.h">
-      <Filter>1 Engine\GameObject\5 EventObj\Chest</Filter>
+      <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
     </ClInclude>
     <ClInclude Include="jsMapToolScene.h">
       <Filter>1 Engine\Scene\Tool</Filter>
@@ -284,13 +272,22 @@
       <Filter>1 Engine\Manager\Game</Filter>
     </ClInclude>
     <ClInclude Include="jsShrine.h">
-      <Filter>1 Engine\GameObject\5 EventObj\Shrine</Filter>
+      <Filter>1 Engine\GameObject\EventObj\Shrine</Filter>
     </ClInclude>
     <ClInclude Include="jsGroundCheck.h">
-      <Filter>1 Engine\GameObject\6 Creature</Filter>
+      <Filter>1 Engine\GameObject\Creature</Filter>
     </ClInclude>
     <ClInclude Include="jsCreature.h">
-      <Filter>1 Engine\GameObject\6 Creature</Filter>
+      <Filter>1 Engine\GameObject\Creature</Filter>
+    </ClInclude>
+    <ClInclude Include="jsBGObj.h">
+      <Filter>1 Engine\GameObject\BackGround\BGObj</Filter>
+    </ClInclude>
+    <ClInclude Include="jsCommandoRun.h">
+      <Filter>1 Engine\GameObject\BackGround\BGObj</Filter>
+    </ClInclude>
+    <ClInclude Include="tempGround.h">
+      <Filter>1 Engine\GameObject\BackGround\BGObj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -320,7 +317,7 @@
       <Filter>1 Engine\Scene\Base</Filter>
     </ClCompile>
     <ClCompile Include="jsGameObject.cpp">
-      <Filter>1 Engine\GameObject\0 Base</Filter>
+      <Filter>1 Engine\GameObject\Base</Filter>
     </ClCompile>
     <ClCompile Include="jsResource.cpp">
       <Filter>1 Engine\Resource\base</Filter>
@@ -352,20 +349,14 @@
     <ClCompile Include="jsRain.cpp">
       <Filter>homework</Filter>
     </ClCompile>
-    <ClCompile Include="jsBGObj.cpp">
-      <Filter>1 Engine\GameObject\1 BackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="tempGround.cpp">
-      <Filter>1 Engine\GameObject\1 BackGround</Filter>
-    </ClCompile>
     <ClCompile Include="jsAnimation.cpp">
       <Filter>1 Engine\Component</Filter>
     </ClCompile>
     <ClCompile Include="jsTile.cpp">
-      <Filter>1 Engine\GameObject\3 Tile</Filter>
+      <Filter>1 Engine\GameObject\BackGround\TileObj</Filter>
     </ClCompile>
     <ClCompile Include="jsTilePalette.cpp">
-      <Filter>1 Engine\GameObject\3 Tile</Filter>
+      <Filter>1 Engine\GameObject\BackGround\TileObj</Filter>
     </ClCompile>
     <ClCompile Include="jsRigidbody.cpp">
       <Filter>1 Engine\Component</Filter>
@@ -374,22 +365,22 @@
       <Filter>1 Engine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="jsUIBase.cpp">
-      <Filter>1 Engine\GameObject\2 UI\Base</Filter>
+      <Filter>1 Engine\GameObject\UI\Base</Filter>
     </ClCompile>
     <ClCompile Include="jsButton.cpp">
-      <Filter>1 Engine\GameObject\2 UI</Filter>
+      <Filter>1 Engine\GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="jsHUD.cpp">
-      <Filter>1 Engine\GameObject\2 UI</Filter>
+      <Filter>1 Engine\GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="jsPanel.cpp">
-      <Filter>1 Engine\GameObject\2 UI</Filter>
+      <Filter>1 Engine\GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="jsSound.cpp">
       <Filter>1 Engine\Resource</Filter>
     </ClCompile>
-    <ClCompile Include="jsGround.cpp">
-      <Filter>1 Engine\GameObject\4 Env</Filter>
+    <ClCompile Include="jsPlatform.cpp">
+      <Filter>1 Engine\GameObject\BackGround\Ground</Filter>
     </ClCompile>
     <ClCompile Include="jsSelectScene.cpp">
       <Filter>1 Engine\Scene</Filter>
@@ -397,41 +388,38 @@
     <ClCompile Include="jsOptionScene.cpp">
       <Filter>1 Engine\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="jsCommandoRun.cpp">
-      <Filter>1 Engine\GameObject\1 BackGround\TitleSceneObj</Filter>
-    </ClCompile>
     <ClCompile Include="jsPlayer.cpp">
-      <Filter>1 Engine\GameObject\6 Creature\Player</Filter>
+      <Filter>1 Engine\GameObject\Creature\Player</Filter>
     </ClCompile>
     <ClCompile Include="jsPlayerProjectile.cpp">
-      <Filter>1 Engine\GameObject\6 Creature\Player</Filter>
+      <Filter>1 Engine\GameObject\Creature\Player</Filter>
     </ClCompile>
     <ClCompile Include="jsUIGameObject.cpp">
-      <Filter>1 Engine\GameObject\2 UI</Filter>
+      <Filter>1 Engine\GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="jsMonster.cpp">
-      <Filter>1 Engine\GameObject\6 Creature\Monster</Filter>
+      <Filter>1 Engine\GameObject\Creature\Monster</Filter>
     </ClCompile>
     <ClCompile Include="jsImp.cpp">
-      <Filter>1 Engine\GameObject\6 Creature\Monster</Filter>
+      <Filter>1 Engine\GameObject\Creature\Monster</Filter>
     </ClCompile>
     <ClCompile Include="jsMonsterAttack.cpp">
-      <Filter>1 Engine\GameObject\6 Creature\Monster</Filter>
+      <Filter>1 Engine\GameObject\Creature\Monster</Filter>
     </ClCompile>
     <ClCompile Include="jsEventObject.cpp">
-      <Filter>1 Engine\GameObject\5 EventObj</Filter>
+      <Filter>1 Engine\GameObject\EventObj</Filter>
     </ClCompile>
     <ClCompile Include="jsItemObject.cpp">
-      <Filter>1 Engine\GameObject\5 EventObj\Item</Filter>
+      <Filter>1 Engine\GameObject\EventObj\Item</Filter>
     </ClCompile>
     <ClCompile Include="jsSmallChest.cpp">
-      <Filter>1 Engine\GameObject\5 EventObj\Chest</Filter>
+      <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
     </ClCompile>
     <ClCompile Include="jsLargeChest.cpp">
-      <Filter>1 Engine\GameObject\5 EventObj\Chest</Filter>
+      <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
     </ClCompile>
     <ClCompile Include="jsGoldenChest.cpp">
-      <Filter>1 Engine\GameObject\5 EventObj\Chest</Filter>
+      <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
     </ClCompile>
     <ClCompile Include="jsMapToolScene.cpp">
       <Filter>1 Engine\Scene\Tool</Filter>
@@ -470,13 +458,22 @@
       <Filter>1 Engine\Manager\Game</Filter>
     </ClCompile>
     <ClCompile Include="jsShrine.cpp">
-      <Filter>1 Engine\GameObject\5 EventObj\Shrine</Filter>
+      <Filter>1 Engine\GameObject\EventObj\Shrine</Filter>
     </ClCompile>
     <ClCompile Include="jsGroundCheck.cpp">
-      <Filter>1 Engine\GameObject\6 Creature</Filter>
+      <Filter>1 Engine\GameObject\Creature</Filter>
     </ClCompile>
     <ClCompile Include="jsCreature.cpp">
-      <Filter>1 Engine\GameObject\6 Creature</Filter>
+      <Filter>1 Engine\GameObject\Creature</Filter>
+    </ClCompile>
+    <ClCompile Include="jsBGObj.cpp">
+      <Filter>1 Engine\GameObject\BackGround\BGObj</Filter>
+    </ClCompile>
+    <ClCompile Include="jsCommandoRun.cpp">
+      <Filter>1 Engine\GameObject\BackGround\BGObj</Filter>
+    </ClCompile>
+    <ClCompile Include="tempGround.cpp">
+      <Filter>1 Engine\GameObject\BackGround\BGObj</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

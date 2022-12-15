@@ -8,7 +8,7 @@
 
 #include "jsBGObj.h"
 #include "jsMonster.h"
-#include "jsGround.h"
+#include "jsPlatform.h"
 namespace js
 {
 	PlayScene::PlayScene()

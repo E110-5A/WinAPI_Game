@@ -43,6 +43,8 @@ namespace js
 		void SetDeath(float time);
 		void DeathLoop();
 
+		// 풀링 기능
+		bool IsAble() { return mAble; }
 
 
 		// 컴포넌트 기능
@@ -72,6 +74,7 @@ namespace js
 
 	protected:
 		Vector2 mDir;
+		bool	mAble;	// true : 활성화됨, false : 비활성화 됨
 
 	private:
 		std::vector<Component*> mComponents;

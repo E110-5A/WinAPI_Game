@@ -114,7 +114,7 @@ namespace js
 	void TestScene::ObjectTest()
 	{
 		// 플레이어 설정
-		Player* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 600.0f));
+		Player* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 550.0f));
 
 		// 투사체 풀링
 		for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
@@ -129,9 +129,9 @@ namespace js
 		EventObject* goldenBox = object::Instantiate<GoldenChest>(eColliderLayer::Chest, Pos(220.0f, 600.0f));
 		
 		// 몬스터 설정
-		Monster* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(700.f, 600.0f));
-		Monster* imp2 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(750.f, 600.0f));
-		Monster* imp3 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 600.0f));
+		Monster* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(700.f, 550.0f));
+		Monster* imp2 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(750.f, 550.0f));
+		Monster* imp3 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 550.0f));
 	}
 
 	// 충돌 및 UI 설정

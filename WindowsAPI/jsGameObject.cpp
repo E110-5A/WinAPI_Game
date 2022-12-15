@@ -12,6 +12,7 @@ namespace js
 		, mDead(false)
 		, mBeDeath(false)
 		, mDeathTime(-10.f)
+		, mAble(true)
 	{
 	}
 
@@ -23,6 +24,7 @@ namespace js
 		, mDead(false)
 		, mBeDeath(false)
 		, mDeathTime(-10.f)
+		, mAble(true)
 	{
 	}
 

@@ -98,18 +98,19 @@ namespace js
 		id.left = left->GetID();
 		id.right = right->GetID();
 		
+		// 두 충돌체 ID로 충돌 정보 찾기
 		std::map<UINT64, bool>::iterator iter
 			= mCollisionInfo.find(id.ID);
 
-		// 이전에 없던 충돌정보라면 충돌정보를 생성해준다
+		// 충돌정보가 없다면 만들어준다
 		if (iter == mCollisionInfo.end())
 		{
 			mCollisionInfo.insert(std::make_pair(id.ID, false));
 			iter = mCollisionInfo.find(id.ID);
 		}
 
+		// 충돌 확인
 		if (Intersect(left, right))
-			// 충돌
 		{
 			// 처음 충돌한 상태
 			if (false == iter->second)
@@ -149,6 +150,10 @@ namespace js
 		if (right->GetOwner()->IsDeath())
 			return false;
 
+		if (! left->GetOwner()->IsAble())
+			return false;
+		if (! right->GetOwner()->IsAble())
+			return false;
 
 		Pos leftPos = left->GetPos();
 		Scale leftScale = left->GetSize();

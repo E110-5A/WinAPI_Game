@@ -161,6 +161,5 @@ struct ProjectileInfo
 	float				damage;		// 피해량
 	float				power;		// 위력
 	float				range;		// 사거리
-	bool				active;		// 활성화 On Off 여부
 };
 

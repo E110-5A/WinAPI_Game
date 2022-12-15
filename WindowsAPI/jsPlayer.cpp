@@ -63,8 +63,8 @@ namespace js
 		
 		SetComponent();
 
-		InitSkill(mDubleTab, 60.f, 60.f, 2, mOffenceStat.attackSpeed * 0.14f, mOffenceStat.attackSpeed * 0.4f);
-		InitSkill(mFMJ, 230.f, 100.f, 1, 0.60f, 3.0f, eStagger::Nomal);
+		InitSkill(mDubleTab, 60.f, 50.f, 2, mOffenceStat.attackSpeed * 0.14f, mOffenceStat.attackSpeed * 0.4f);
+		InitSkill(mFMJ, 230.f, 120.f, 1, 0.60f, 3.0f, eStagger::Nomal);
 		InitSkill(mTacticalDive, 0.f, mUtilityStat.moveSpeed * 100.f, 1, 0.70f, 5.0f);
 		InitSkill(mSupressiveFire, 800.f, 60.f, 6, mOffenceStat.attackSpeed * 0.14f, 5.0f, eStagger::Heave);
 	}
@@ -363,8 +363,8 @@ namespace js
 			// 투사체 풀에서 끌어다가 사용
 			for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 			{
-				// 사용 대기중인 투사체 찾으면
-				if (mWeapon[idx]->IsActive() == false)
+				// 비활성화 투사체 찾으면
+				if (mWeapon[idx]->IsAble() == false)
 				{
 					// Active상태로 만들고
 					mWeapon[idx]->Active(type, mDubleTab.damage, mDubleTab.stagger, mDubleTab.power);
@@ -379,7 +379,7 @@ namespace js
 		{
 			for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 			{
-				if (mWeapon[idx]->IsActive() == false)
+				if (mWeapon[idx]->IsAble() == false)
 				{
 					mWeapon[idx]->Active(type, mFMJ.damage, mFMJ.stagger, mFMJ.power);
 					mFMJ.active = true;
@@ -403,7 +403,7 @@ namespace js
 		{
 			for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 			{
-				if (mWeapon[idx]->IsActive() == false)
+				if (mWeapon[idx]->IsAble() == false)
 				{
 					mWeapon[idx]->Active(type, mSupressiveFire.damage, mSupressiveFire.stagger, mSupressiveFire.power);
 					mSupressiveFire.active = true;

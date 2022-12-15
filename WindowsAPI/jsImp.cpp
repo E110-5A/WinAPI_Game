@@ -53,8 +53,8 @@ namespace js
         // collider
         mBodyCollider->SetSize(Size(20.f, 25.f) * GetScale());
         mBodyCollider->SetOffset(Vector2(8.f, 13.f));
-        mFootCollider->SetSize(Size(20.f, 25.f) * GetScale());
-        mFootCollider->SetOffset(Vector2(8.f, 13.f));
+        mFootCollider->SetSize(Size(15, 5) * GetScale());
+        mFootCollider->SetOffset(Vector2(8, 38.f));
     }
     void Imp::SetAnimator()
     {

@@ -13,25 +13,25 @@
 
 namespace js
 {
-
 	PlayerProjectile::PlayerProjectile()
 		: mOwner (nullptr)
 		, mInfo { }
 		, mDeltaTime (0.0f)
-		, mLifeTime (0.14f)
+		, mLifeTime (0.05f)
 	{
 		SetType(eColliderLayer::Player_Projectile);
 		mCollider = AddComponent<Collider>();
-		mInfo.active = false;
+		mAble = false;
 	}
 	PlayerProjectile::PlayerProjectile(Pos pos)
 		: mOwner(nullptr)
+		, mInfo{ }
 		, mDeltaTime(0.0f)
-		, mLifeTime(0.14f)
+		, mLifeTime(0.05f)
 	{
 		SetType(eColliderLayer::Player_Projectile);
 		mCollider = AddComponent<Collider>();
-		mInfo.active = false;
+		mAble = false;
 	}
 	PlayerProjectile::~PlayerProjectile()
 	{
@@ -51,8 +51,8 @@ namespace js
 
 	void PlayerProjectile::Tick()
 	{
-		// 비활성화 상태인 경우 종료
-		if (mInfo.active == false)
+		// 활성화 상태가 아니면 종료
+		if (!mAble)
 			return;
 
 		GameObject::Tick();
@@ -79,7 +79,6 @@ namespace js
 	void PlayerProjectile::FMJ()
 	{
 		std::vector<Monster*>::iterator iter = mTarget.begin();
-
 		for (; iter != mTarget.end(); ++iter)
 		{
 			// 몬스터 위치 가져오기
@@ -90,29 +89,35 @@ namespace js
 
 	void PlayerProjectile::Render(HDC hdc)
 	{
-		if (mInfo.active == false)
+		// 활성화 상태가 아니면 종료
+		if (!mAble)
 			return;
 		GameObject::Render(hdc);
 	}
-
 
 	void PlayerProjectile::AddTarget(Monster* target)
 	{
 		mTarget.push_back(target);
 	}
-
 	void PlayerProjectile::FindTarget()
 	{
 		// vector에 추가된 몬스터를 순회하며 가장 가까운 적 찾기
 		float minLenth = mInfo.range + 1.0f;
 		Monster* target = nullptr;
+
+		// 타겟 순회하기
 		std::vector<Monster*>::iterator iter = mTarget.begin();
 		for (; iter != mTarget.end(); ++iter)
 		{
 			// 몬스터 위치 가져오기
 			float targetPosX = (*iter)->GetPos().x;
+			// 내 위치 가져오기
 			float startPosX = GetPos().x;
-			float lenth = targetPosX - startPosX;
+
+			// 타겟과 나 사이의 거리
+			float lenth = fabs(targetPosX - startPosX);
+			
+			// 최소거리인 경우 타겟 갱신
 			if (minLenth > lenth)
 			{
 				minLenth = lenth;
@@ -131,7 +136,8 @@ namespace js
 		if (eColliderLayer::Monster == attacker->GetType())
 		{
 			Monster* target = dynamic_cast<Monster*>(attacker);
-			AddTarget(target);
+			if (nullptr != target)
+				AddTarget(target);
 		}
 	}
 	void PlayerProjectile::OnCollisionStay(Collider* other)
@@ -145,7 +151,7 @@ namespace js
 	void PlayerProjectile::Active(eProjectileType type, float damage, eStagger stagger, float power)
 	{
 		// 투사체 활성화
-		mInfo.active = true;
+		mAble = true;
 
 		// 투사체 기본 정보 갱신
 		mInfo.type = type;

@@ -154,7 +154,7 @@ namespace js
 		skill.castDelayTime = 0.0f;
 		skill.coolDown = coolDown;
 		skill.coolDownTime = 0.0f;
-		skill.unable = false;
+		skill.active = false;
 		skill.run = false;
 		skill.finish = false;
 		skill.stagger = stagger;
@@ -223,39 +223,39 @@ namespace js
 	}
 	void Player::Cooldown()
 	{
-		if (true == mDubleTab.unable)
+		if (true == mDubleTab.active)
 		{
 			mDubleTab.coolDownTime += Time::GetDeltaTime();
 			if (mDubleTab.coolDownTime > mDubleTab.coolDown)
 			{
-				mDubleTab.unable = false;
+				mDubleTab.active = false;
 				mDubleTab.coolDownTime = 0.0f;
 			}
 		}
-		if (true == mFMJ.unable)
+		if (true == mFMJ.active)
 		{
 			mFMJ.coolDownTime += Time::GetDeltaTime();
 			if (mFMJ.coolDownTime > mFMJ.coolDown)
 			{
-				mFMJ.unable = false;
+				mFMJ.active = false;
 				mFMJ.coolDownTime = 0.0f;
 			}
 		}
-		if (true == mTacticalDive.unable)
+		if (true == mTacticalDive.active)
 		{
 			mTacticalDive.coolDownTime += Time::GetDeltaTime();
 			if (mTacticalDive.coolDownTime > mTacticalDive.coolDown)
 			{
-				mTacticalDive.unable = false;
+				mTacticalDive.active = false;
 				mTacticalDive.coolDownTime = 0.0f;
 			}
 		}
-		if (true == mSupressiveFire.unable)
+		if (true == mSupressiveFire.active)
 		{
 			mSupressiveFire.coolDownTime += Time::GetDeltaTime();
 			if (mSupressiveFire.coolDownTime > mSupressiveFire.coolDown)
 			{
-				mSupressiveFire.unable = false;
+				mSupressiveFire.active = false;
 				mSupressiveFire.coolDownTime = 0.0f;
 			}
 		}
@@ -368,7 +368,7 @@ namespace js
 				{
 					// Active상태로 만들고
 					mWeapon[idx]->Active(type, mDubleTab.damage, mDubleTab.stagger, mDubleTab.power);
-					mDubleTab.unable = true;
+					mDubleTab.active = true;
 					mDubleTab.run = true;
 					break;
 				}
@@ -382,7 +382,7 @@ namespace js
 				if (mWeapon[idx]->IsActive() == false)
 				{
 					mWeapon[idx]->Active(type, mFMJ.damage, mFMJ.stagger, mFMJ.power);
-					mFMJ.unable = true;
+					mFMJ.active = true;
 					mFMJ.run = true;
 					break;
 				}
@@ -395,7 +395,7 @@ namespace js
 			velocity.x = GetDir().x * mTacticalDive.power * 3.0f;
 			mRigidbody->SetVelocity(velocity);
 
-			mTacticalDive.unable = true;
+			mTacticalDive.active = true;
 			mTacticalDive.run = true;
 		}
 		break;
@@ -406,7 +406,7 @@ namespace js
 				if (mWeapon[idx]->IsActive() == false)
 				{
 					mWeapon[idx]->Active(type, mSupressiveFire.damage, mSupressiveFire.stagger, mSupressiveFire.power);
-					mSupressiveFire.unable = true;
+					mSupressiveFire.active = true;
 					mSupressiveFire.run = true;
 					break;
 				}
@@ -418,8 +418,12 @@ namespace js
 
 	void Player::JumpProcess()
 	{
+		// ground off
 		mRigidbody->SetGround(false);
+		// count +
 		++mUtilityStat.curJumpCount;
+
+		// set velocity
 		Vector2 velocity = mRigidbody->GetVelocity();
 		velocity.y = -mUtilityStat.jumpPower;
 		mRigidbody->SetVelocity(velocity);
@@ -478,7 +482,7 @@ namespace js
 		// DoubleTab 상태 
 		if (KEY_PRESSE(eKeyCode::Z))
 		{
-			if (false == mDubleTab.unable)
+			if (false == mDubleTab.active)
 			{
 				Vector2 dir = GetDir();
 				if (dir == Vector2::Right)
@@ -491,7 +495,7 @@ namespace js
 		// FMJ 상태 
 		if (KEY_DOWN(eKeyCode::X))
 		{
-			if (false == mFMJ.unable)
+			if (false == mFMJ.active)
 			{
 				Vector2 dir = GetDir();
 				if (dir == Vector2::Right)
@@ -504,7 +508,7 @@ namespace js
 		// SupressiveFire 상태 
 		if (KEY_DOWN(eKeyCode::V))
 		{
-			if (false == mSupressiveFire.unable)
+			if (false == mSupressiveFire.active)
 			{
 				Vector2 dir = GetDir();
 				if (dir == Vector2::Right)
@@ -517,7 +521,7 @@ namespace js
 		// TacticalDive 상태 
 		if (KEY_DOWN(eKeyCode::C))
 		{
-			if (false == mTacticalDive.unable)
+			if (false == mTacticalDive.active)
 			{
 				Vector2 dir = GetDir();
 				if (dir == Vector2::Right)
@@ -577,7 +581,7 @@ namespace js
 		// DoubleTab 상태 
 		if (KEY_PRESSE(eKeyCode::Z))
 		{
-			if (false == mDubleTab.unable)
+			if (false == mDubleTab.active)
 			{
 				Vector2 dir = GetDir();
 				if (dir == Vector2::Right)
@@ -590,7 +594,7 @@ namespace js
 		// FMJ 상태 
 		if (KEY_DOWN(eKeyCode::X))
 		{
-			if (false == mFMJ.unable)
+			if (false == mFMJ.active)
 			{
 				Vector2 dir = GetDir();
 				if (dir == Vector2::Right)
@@ -603,7 +607,7 @@ namespace js
 		// SupressiveFire 상태 
 		if (KEY_DOWN(eKeyCode::V))
 		{
-			if (false == mSupressiveFire.unable)
+			if (false == mSupressiveFire.active)
 			{
 				Vector2 dir = GetDir();
 				if (dir == Vector2::Right)
@@ -616,7 +620,7 @@ namespace js
 		// TacticalDive 상태 
 		if (KEY_DOWN(eKeyCode::C))
 		{
-			if (false == mTacticalDive.unable)
+			if (false == mTacticalDive.active)
 			{
 				Vector2 dir = GetDir();
 				if (dir == Vector2::Right)
@@ -669,7 +673,7 @@ namespace js
 		// DoubleTab 상태 
 		if (KEY_PRESSE(eKeyCode::Z))
 		{
-			if (false == mDubleTab.unable)
+			if (false == mDubleTab.active)
 			{
 				Vector2 dir = GetDir();
 				if (dir == Vector2::Right)
@@ -682,7 +686,7 @@ namespace js
 		// FMJ 상태 
 		if (KEY_DOWN(eKeyCode::X))
 		{
-			if (false == mFMJ.unable)
+			if (false == mFMJ.active)
 			{
 				Vector2 dir = GetDir();
 				if (dir == Vector2::Right)
@@ -695,7 +699,7 @@ namespace js
 		// SupressiveFire 상태 
 		if (KEY_DOWN(eKeyCode::V))
 		{
-			if (false == mSupressiveFire.unable)
+			if (false == mSupressiveFire.active)
 			{
 				Vector2 dir = GetDir();
 				if (dir == Vector2::Right)
@@ -708,7 +712,7 @@ namespace js
 		// TacticalDive 상태 
 		if (KEY_DOWN(eKeyCode::C))
 		{
-			if (false == mTacticalDive.unable)
+			if (false == mTacticalDive.active)
 			{
 				Vector2 dir = GetDir();
 				if (dir == Vector2::Right)
@@ -724,7 +728,7 @@ namespace js
 		// 로직
 		if (KEY_PRESSE(eKeyCode::Z))
 		{
-			if (false == mDubleTab.unable)
+			if (false == mDubleTab.active)
 			{
 				Skill(eProjectileType::DoubleTab);
 			}
@@ -746,7 +750,7 @@ namespace js
 	void Player::FMJ()
 	{
 		// 로직
-		if (false == mFMJ.unable)
+		if (false == mFMJ.active)
 		{
 			Skill(eProjectileType::FMJ);
 		}
@@ -767,7 +771,7 @@ namespace js
 	void Player::TacticalDive()
 	{
 		// 로직		
-		if (false == mTacticalDive.unable)
+		if (false == mTacticalDive.active)
 		{
 			Skill(eProjectileType::TacticalDive);
 		}
@@ -787,7 +791,7 @@ namespace js
 	}
 	void Player::SupressiveFire()
 	{
-		if (false == mSupressiveFire.unable)
+		if (false == mSupressiveFire.active)
 		{
 			Skill(eProjectileType::SuppresiveFire);
 		}

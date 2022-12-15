@@ -120,7 +120,7 @@ namespace js
 		for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 		{
 			mPlayerAttack[idx] = object::Instantiate<PlayerProjectile>(eColliderLayer::Player_Projectile);
-			mPlayerAttack[idx]->SetOwner(pPlayer);
+			mPlayerAttack[idx]->SetPlayerInfo(pPlayer);
 		}
 
 		// 기타 오브젝트 설정
@@ -129,9 +129,9 @@ namespace js
 		EventObject* goldenBox = object::Instantiate<GoldenChest>(eColliderLayer::Chest, Pos(220.0f, 600.0f));
 		
 		// 몬스터 설정
-		/*Monster* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(700.f, 600.0f));
+		Monster* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(700.f, 600.0f));
 		Monster* imp2 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(750.f, 600.0f));
-		Monster* imp3 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 600.0f));*/
+		Monster* imp3 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 600.0f));
 	}
 
 	// 충돌 및 UI 설정

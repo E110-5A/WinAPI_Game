@@ -20,7 +20,7 @@ namespace js
 		int			maxCount;			// 반복 횟수
 		int			curCount;
 
-		bool		unable;				// 사용불가 상태		: 쿨다운 대기
+		bool		active;				// 사용불가 상태		: 쿨다운 대기
 		bool		run;				// 진행중 상태		: 스킬 내부로직 조건용
 		bool		finish;				// 끝난 상태			: 상태 종료 조건
 	};

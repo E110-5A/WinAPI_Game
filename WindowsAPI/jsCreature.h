@@ -23,11 +23,10 @@ namespace js
 		virtual void OnCollisionEnter(Collider* other)override;
 		virtual void OnCollisionStay(Collider* other)override;
 		virtual void OnCollisionExit(Collider* other)override;
-
 		
-
 		// √ ±‚»≠
 		virtual void SetComponent();
+
 		void SetPlayerHealth(Health stat) { mHealthStat = stat; }
 		void SetPlayerOffence(Offence stat) { mOffenceStat = stat; }
 		void SetPlayerUtility(Utility stat) { mUtilityStat = stat; }

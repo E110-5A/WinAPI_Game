@@ -1,17 +1,8 @@
 #pragma once
-#include "jsGameObject.h"
+#include "jsCreature.h"
 
 namespace js
 {
-	struct MonsterStat
-	{
-		float maxHp;		// 310
-		float curHp;
-		float def;			// 0
-		float moveSpeed;	// 16
-		float att;			// 13
-	};
-
 	enum class eMonsterState
 	{
 		Idle,
@@ -22,7 +13,7 @@ namespace js
 
 	class Image;
 	class PlayerProjectile;
-	class Monster : public GameObject
+	class Monster : public Creature
 	{
 	public:
 		Monster();
@@ -30,39 +21,12 @@ namespace js
 		virtual ~Monster();
 
 		virtual void Initialize();
+		virtual void SetComponent() override;
 
-		virtual void InitStat() {};
-		virtual void InitCollider() {};
-		virtual void InitAnimator() {};
-		virtual void InitRigidbody() {};
-
+		// 부모 함수 호출
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
-
 		
-		
-		void SetImage(Image* image) { mImage = image; }
-		Image* GetImage() { return mImage; }
-
-
-		// 스텟설정 함수
-		void InitMonsterStat(float hp, float regen, float defance, float damage, float attackSpeed, float range, float moveSpeed)
-		{
-			mMonsterHealth.maxHP = hp;
-			mMonsterHealth.curHP = hp;
-			mMonsterHealth.healthRegen = regen;
-			mMonsterHealth.defance = defance;
-			
-			mMonsterOffence.damage = damage;
-			mMonsterOffence.attackSpeed = attackSpeed;
-			mMonsterOffence.criticalChance = 0;
-			mMonsterOffence.range = range;
-
-			mMonsterUtility.moveSpeed = moveSpeed;
-			mMonsterUtility.maxJumpCount = 1;
-			mMonsterUtility.curJumpCount = 0;
-		}
-
 
 		// None
 		virtual void OnCollisionEnter(Collider* other) override;
@@ -74,22 +38,9 @@ namespace js
 		void SelfDamaged(float damage);
 		// 입력받은 방향으로 밀려남
 		void SelfKnockBack(float dir, eStagger stagger, float power);
-
-
 		// FSM 만들때 추후 추가할 예정
 		void SelfStun(float power);
 
-	protected:
-		Collider*	mCollider;
-		Rigidbody*	mRigidbody;
-		Animator*	mAnimator;
-
-	private:
-		Image*			mImage;
-		Health			mMonsterHealth;
-		Offence			mMonsterOffence;
-		Utility			mMonsterUtility;
-		eStagger		mMonsterResistance;
 	};
 }
 

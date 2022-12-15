@@ -2,7 +2,6 @@
 
 // 매니저
 #include "jsTime.h"
-#include "jsPlayerManager.h"
 
 // 컴포넌트
 #include "jsCollider.h"
@@ -16,127 +15,123 @@ namespace js
 {
 
 	PlayerProjectile::PlayerProjectile()
+		: mOwner (nullptr)
+		, mInfo { }
+		, mDeltaTime (0.0f)
+		, mLifeTime (0.14f)
 	{
-		Initialize();
+		SetType(eColliderLayer::Player_Projectile);
+		mCollider = AddComponent<Collider>();
+		mInfo.active = false;
 	}
 	PlayerProjectile::PlayerProjectile(Pos pos)
+		: mOwner(nullptr)
+		, mDeltaTime(0.0f)
+		, mLifeTime(0.14f)
 	{
-		Initialize();
+		SetType(eColliderLayer::Player_Projectile);
+		mCollider = AddComponent<Collider>();
+		mInfo.active = false;
 	}
 	PlayerProjectile::~PlayerProjectile()
 	{
 	}
 
-	void PlayerProjectile::Initialize()
-	{
-		// 기본 설정
-		SetType(eColliderLayer::Player_Projectile);
-		mOwner = nullptr;
-
-		// 스텟 설정
-		mInfo.range = 700;
-		mInfo.type = eProjectileType::DoubleTab;
-		mInfo.unable = false;
-
-		InitComponent();
-	}
-	void PlayerProjectile::InitComponent()
-	{
-		// 충돌체 설정
-		mCollider = new Collider();
-		AddComponent(mCollider);
-		mCollider->SetPos(Vector2::Zero);
-		mCollider->SetSize(Vector2::One);
-	}
-	void PlayerProjectile::SetOwner(Player* owner)
+	void PlayerProjectile::SetPlayerInfo(Player* owner)
 	{
 		// 오너 설정
 		mOwner = owner;
 		owner->SetWeapon(this);
-		SetInfo();
-	}
-	void PlayerProjectile::SetInfo()
-	{
-		// info 설정
-		//mInfo.range = mOwner->GetInfo().range;
-
 		// 충돌체 크기 설정
-		Collider* playerCollider = mOwner->GetComponent<Collider>();
-		Size ownerSize = playerCollider->GetSize();
-		mCollider->SetSize(ownerSize);
+		mInfo.range = mOwner->GetOffence().range;
+		Collider* onwerCollider = mOwner->GetComponent<Collider>();
+		float colliderSizeY = onwerCollider->GetSize().y;
+		mCollider->SetSize(Size(mInfo.range, colliderSizeY));
 	}
-
 
 	void PlayerProjectile::Tick()
 	{
 		// 비활성화 상태인 경우 종료
-		if (mInfo.unable == false)
+		if (mInfo.active == false)
 			return;
 
-		// 충돌확인
 		GameObject::Tick();
-		// 투사체 이동
+
 		Process();
-		// 종료 조건 확인
-		Shutdown();
 	}
+
 	void PlayerProjectile::Process()
-	{
-		Vector2 dir = GetDir();
-		Pos destPos = GetPos();
-		destPos.x += dir.x * 9300.0f * Time::GetDeltaTime();
-		SetPos(destPos);
-	}
-	void PlayerProjectile::Shutdown()
-	{
-		Vector2 dir = GetDir();
+	{		
+		mDeltaTime += Time::GetDeltaTime();
 
-		Vector2 curPos = mCollider->GetPos();
-		float curDistance = fabs(mStartPos.x - curPos.x);
-
-		if (dir == Vector2::Right)
+		// 찰나의 시간동안 진행됨
+		if (mDeltaTime >= mLifeTime)
 		{
-			if (mStartPos.x + (mInfo.range * dir.x) <= curPos.x)
-				InActive();
+			if (eProjectileType::FMJ == mInfo.type)
+				FMJ();
+			else
+				FindTarget();
+
+			InActive();
 		}
-		else
+	}
+
+	void PlayerProjectile::FMJ()
+	{
+		std::vector<Monster*>::iterator iter = mTarget.begin();
+
+		for (; iter != mTarget.end(); ++iter)
 		{
-			if (mStartPos.x - mInfo.range >= curPos.x)
-				InActive();
+			// 몬스터 위치 가져오기
+			(*iter)->SelfHit(this, mInfo.damage, mInfo.stagger, mInfo.power);
 		}
 	}
 
 
 	void PlayerProjectile::Render(HDC hdc)
 	{
-		if (mInfo.unable == false)
+		if (mInfo.active == false)
 			return;
 		GameObject::Render(hdc);
 	}
 
 
+	void PlayerProjectile::AddTarget(Monster* target)
+	{
+		mTarget.push_back(target);
+	}
 
-	void PlayerProjectile::BlowHit(Monster* target)
-	{		
-		// 최종 피해량 계산
-
-		// 전달
+	void PlayerProjectile::FindTarget()
+	{
+		// vector에 추가된 몬스터를 순회하며 가장 가까운 적 찾기
+		float minLenth = mInfo.range + 1.0f;
+		Monster* target = nullptr;
+		std::vector<Monster*>::iterator iter = mTarget.begin();
+		for (; iter != mTarget.end(); ++iter)
+		{
+			// 몬스터 위치 가져오기
+			float targetPosX = (*iter)->GetPos().x;
+			float startPosX = GetPos().x;
+			float lenth = targetPosX - startPosX;
+			if (minLenth > lenth)
+			{
+				minLenth = lenth;
+				target = (*iter);
+			}
+		}
+		if (nullptr != target)
+			target->SelfHit(this, mInfo.damage, mInfo.stagger, mInfo.power);
 	}
 
 	void PlayerProjectile::OnCollisionEnter(Collider* other)
 	{
 		// 몬스터 객체에 있는 Damaged 호출
 		GameObject* attacker = other->GetOwner();
+
 		if (eColliderLayer::Monster == attacker->GetType())
 		{
 			Monster* target = dynamic_cast<Monster*>(attacker);
-			target->SelfHit(this, mInfo.damage, mInfo.stagger, mInfo.power);
-		}
-
-		// 내가 FMJ 타입이 아니라면 비활성화 하기
-		if (!(mInfo.type == eProjectileType::FMJ))
-		{
-			mInfo.unable = false;
+			AddTarget(target);
 		}
 	}
 	void PlayerProjectile::OnCollisionStay(Collider* other)
@@ -146,21 +141,27 @@ namespace js
 	{
 	}
 
-
+	// 외부에서 호출됨
 	void PlayerProjectile::Active(eProjectileType type, float damage, eStagger stagger, float power)
 	{
 		// 투사체 활성화
-		mInfo.unable = true;
+		mInfo.active = true;
 
 		// 투사체 기본 정보 갱신
-		SetDir(mOwner->GetDir());
-		SetPos(mOwner->GetPos());
-
 		mInfo.type = type;
 		mInfo.damage = damage;
 		mInfo.stagger = stagger;
 		mInfo.power = power;
 
-		mStartPos = GetPos();				// 시작지점 기록 (나중에 사용 안하는 기능
+		SetDir(mOwner->GetDir());
+		SetPos(mOwner->GetPos());
+		if (GetDir().x < 0)
+		{
+			mCollider->SetOffset(Vector2(-mInfo.range / 2, 0));
+		}
+		else
+		{			
+			mCollider->SetOffset(Vector2(mInfo.range / 2 - PLAYER_SIZE_X, 0));
+		}
 	}
 }

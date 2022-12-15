@@ -50,7 +50,7 @@ namespace js
 		Animation* FindAnimation(const std::wstring& name);
 
 		// bmp파일에 담긴 스프라이트로 애니메이션을 만듦
-		void CreateAnimation(const std::wstring& name, 
+		void CreateAnimation(const std::wstring& name,
 			Image* image, Vector2 leftTop, Size size, Vector2 offset,
 			UINT spriteLength, float duration, bool bAffectedCamera = true);
 

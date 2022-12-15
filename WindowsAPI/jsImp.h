@@ -14,10 +14,8 @@ namespace js
 		~Imp();
 
 		virtual void Initialize()override;
-		virtual void InitStat() override;
-		virtual void InitCollider() override;
-		virtual void InitAnimator() override;
-		virtual void InitRigidbody() override;
+		virtual void SetComponent() override;
+		void SetAnimator();
 
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;

@@ -17,11 +17,9 @@
 namespace js
 {
 	Monster::Monster()
-		: mImage(nullptr)
 	{
 	}
 	Monster::Monster(Pos pos)
-		: mImage(nullptr)
 	{
 	}
 	Monster::~Monster()
@@ -32,15 +30,19 @@ namespace js
 	{
 		SetType(eColliderLayer::Monster);
 	}
+	void Monster::SetComponent()
+	{
+		Creature::SetComponent();
+	}
 	void Monster::Tick()
 	{
+		Creature::Tick();
 	}
 	void Monster::Render(HDC hdc)
 	{
+		Creature::Render(hdc);
 	}
-
 	
-
 	void Monster::OnCollisionEnter(Collider* other)
 	{
 	}
@@ -62,20 +64,20 @@ namespace js
 	void Monster::SelfDamaged(float damage)
 	{
 		// 방어력 계산해서 피 까기
-		float finalDamage = damage - mMonsterHealth.defance;
+		float finalDamage = damage - mHealthStat.defance;
 
 		// 최소 피해량
-		if (1 > damage - mMonsterHealth.defance)
+		if (1 > damage - mHealthStat.defance)
 			finalDamage = 1;
 		
-		mMonsterHealth.curHP -= finalDamage;
+		mHealthStat.curHP -= finalDamage;
 	}
 
 	//stagger, power
 	void Monster::SelfKnockBack(float dir, eStagger stagger, float power)
 	{
 		// 저항력이 관통력보다 낮은 경우
-		if (stagger >= mMonsterResistance)		// 관통이 0이고 저항력이 0이면 넉백
+		if (stagger >= mResistance)		// 관통이 0이고 저항력이 0이면 넉백
 		{
 			// 넉백
 			Vector2 knockBack = mRigidbody->GetVelocity();

@@ -11,7 +11,7 @@ namespace js
 		static void Tick();
 		static void Render(HDC _dc);
 
-		static float GetDeltaTime() { return mDeltaTime* mTimeScale; }
+		static float GetDeltaTime() { return mDeltaTime * mTimeScale; }
 		static void SetTimeScale(float scale) { mTimeScale = scale; }
 
 	private:

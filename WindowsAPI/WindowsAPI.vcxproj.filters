@@ -41,9 +41,6 @@
     <Filter Include="1 Engine\Component\Base">
       <UniqueIdentifier>{0abf21eb-0977-4877-be13-8467a19f1f1b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="homework">
-      <UniqueIdentifier>{937efefe-5622-4dea-a370-e07351c56e9d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="1 Engine\Scene\Tool">
       <UniqueIdentifier>{fddda5ab-b24e-441f-bcd3-a63a68f04fed}</UniqueIdentifier>
     </Filter>
@@ -153,12 +150,6 @@
     </ClInclude>
     <ClInclude Include="jsTitleScene.h">
       <Filter>1 Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="jsRainPool.h">
-      <Filter>homework</Filter>
-    </ClInclude>
-    <ClInclude Include="jsRain.h">
-      <Filter>homework</Filter>
     </ClInclude>
     <ClInclude Include="jsObject.h">
       <Filter>1 Engine\Common</Filter>
@@ -289,6 +280,10 @@
     <ClInclude Include="tempGround.h">
       <Filter>1 Engine\GameObject\BackGround\BGObj</Filter>
     </ClInclude>
+    <ClInclude Include="jsLadder.h" />
+    <ClInclude Include="jsChest.h">
+      <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -342,12 +337,6 @@
     </ClCompile>
     <ClCompile Include="jsTitleScene.cpp">
       <Filter>1 Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="jsRainPool.cpp">
-      <Filter>homework</Filter>
-    </ClCompile>
-    <ClCompile Include="jsRain.cpp">
-      <Filter>homework</Filter>
     </ClCompile>
     <ClCompile Include="jsAnimation.cpp">
       <Filter>1 Engine\Component</Filter>
@@ -474,6 +463,10 @@
     </ClCompile>
     <ClCompile Include="tempGround.cpp">
       <Filter>1 Engine\GameObject\BackGround\BGObj</Filter>
+    </ClCompile>
+    <ClCompile Include="jsLadder.cpp" />
+    <ClCompile Include="jsChest.cpp">
+      <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

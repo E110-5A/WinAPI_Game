@@ -28,19 +28,16 @@ namespace js
 {
 	Player::Player()
 		: mWeaponID(0)
+		, mBlocked(false)
 	{
-		// 내 초기값 세팅
 		SetPos(Pos(400.f, 1000.f));
-		SetScale(Size(1.f, 1.f));
-		SetDir(Vector2::Right);
 		Initialize();
 	}
 	Player::Player(Pos pos)
 		: mWeaponID(0)
+		, mBlocked(false)
 	{
 		SetPos(pos);
-		SetScale(Size(1.f, 1.f));
-		SetDir(Vector2::Right);
 		Initialize();
 	}
 
@@ -468,10 +465,9 @@ namespace js
 			mState = ePlayerState::Move;
 		}
 		// Jump 상태 
-		if (KEY_DOWN(eKeyCode::SPACE) && mUtilityStat.curJumpCount < mUtilityStat.maxJumpCount)
+		if (KEY_PRESSE(eKeyCode::SPACE) && mUtilityStat.curJumpCount < mUtilityStat.maxJumpCount)
 		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
+			if (Vector2::Right == mDir)
 				mAnimator->Play(L"PJumpR");
 			else
 				mAnimator->Play(L"PJumpL");
@@ -484,8 +480,7 @@ namespace js
 		{
 			if (false == mDubleTab.active)
 			{
-				Vector2 dir = GetDir();
-				if (dir == Vector2::Right)
+				if (Vector2::Right == mDir)
 					mAnimator->Play(L"PDubleTabR", false);
 				else
 					mAnimator->Play(L"PDubleTabL", false);
@@ -493,12 +488,11 @@ namespace js
 			}
 		}
 		// FMJ 상태 
-		if (KEY_DOWN(eKeyCode::X))
+		if (KEY_PRESSE(eKeyCode::X))
 		{
 			if (false == mFMJ.active)
 			{
-				Vector2 dir = GetDir();
-				if (dir == Vector2::Right)
+				if (Vector2::Right == mDir)
 					mAnimator->Play(L"PFMJR", false);
 				else
 					mAnimator->Play(L"PFMJL", false);
@@ -506,12 +500,11 @@ namespace js
 			}
 		}
 		// SupressiveFire 상태 
-		if (KEY_DOWN(eKeyCode::V))
+		if (KEY_PRESSE(eKeyCode::V))
 		{
 			if (false == mSupressiveFire.active)
 			{
-				Vector2 dir = GetDir();
-				if (dir == Vector2::Right)
+				if (Vector2::Right == mDir)
 					mAnimator->Play(L"PSuppressiveFireR", false);
 				else
 					mAnimator->Play(L"PSuppressiveFireL", false);
@@ -519,12 +512,11 @@ namespace js
 			}
 		}
 		// TacticalDive 상태 
-		if (KEY_DOWN(eKeyCode::C))
+		if (KEY_PRESSE(eKeyCode::C))
 		{
 			if (false == mTacticalDive.active)
 			{
-				Vector2 dir = GetDir();
-				if (dir == Vector2::Right)
+				if (Vector2::Right == mDir)
 					mAnimator->Play(L"PDiveR", false);
 				else
 					mAnimator->Play(L"PDiveL", false);
@@ -567,10 +559,9 @@ namespace js
 			mState = ePlayerState::Idle;
 		}
 		// Jump 상태
-		if (KEY_DOWN(eKeyCode::SPACE) && mUtilityStat.curJumpCount < mUtilityStat.maxJumpCount)
+		if (KEY_PRESSE(eKeyCode::SPACE) && mUtilityStat.curJumpCount < mUtilityStat.maxJumpCount)
 		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
+			if (Vector2::Right == mDir)
 				mAnimator->Play(L"PJumpR");
 			else
 				mAnimator->Play(L"PJumpL");
@@ -583,8 +574,7 @@ namespace js
 		{
 			if (false == mDubleTab.active)
 			{
-				Vector2 dir = GetDir();
-				if (dir == Vector2::Right)
+				if (Vector2::Right == mDir)
 					mAnimator->Play(L"PDubleTabR", false);
 				else
 					mAnimator->Play(L"PDubleTabL", false);
@@ -592,12 +582,11 @@ namespace js
 			}
 		}
 		// FMJ 상태 
-		if (KEY_DOWN(eKeyCode::X))
+		if (KEY_PRESSE(eKeyCode::X))
 		{
 			if (false == mFMJ.active)
 			{
-				Vector2 dir = GetDir();
-				if (dir == Vector2::Right)
+				if (Vector2::Right == mDir)
 					mAnimator->Play(L"PFMJR", false);
 				else
 					mAnimator->Play(L"PFMJL", false);
@@ -605,12 +594,11 @@ namespace js
 			}
 		}
 		// SupressiveFire 상태 
-		if (KEY_DOWN(eKeyCode::V))
+		if (KEY_PRESSE(eKeyCode::V))
 		{
 			if (false == mSupressiveFire.active)
 			{
-				Vector2 dir = GetDir();
-				if (dir == Vector2::Right)
+				if (Vector2::Right == mDir)
 					mAnimator->Play(L"PSuppressiveFireR", false);
 				else
 					mAnimator->Play(L"PSuppressiveFireL", false);
@@ -618,12 +606,11 @@ namespace js
 			}
 		}
 		// TacticalDive 상태 
-		if (KEY_DOWN(eKeyCode::C))
+		if (KEY_PRESSE(eKeyCode::C))
 		{
 			if (false == mTacticalDive.active)
 			{
-				Vector2 dir = GetDir();
-				if (dir == Vector2::Right)
+				if (Vector2::Right == mDir)
 					mAnimator->Play(L"PDiveR", false);
 				else
 					mAnimator->Play(L"PDiveL", false);
@@ -651,20 +638,27 @@ namespace js
 		if (KEY_PRESSE(eKeyCode::LEFT))
 		{
 			SetDir(Vector2::Left);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mUtilityStat.moveSpeed);
+			Vector2 curVelocity = mRigidbody->GetVelocity();
+			curVelocity.x = mDir.x * mUtilityStat.moveSpeed * 100;
+			mRigidbody->SetVelocity(curVelocity);
+			/*SetDir(Vector2::Left);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mUtilityStat.moveSpeed)*/;
 		}
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			SetDir(Vector2::Right);
-			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mUtilityStat.moveSpeed);
+			Vector2 curVelocity = mRigidbody->GetVelocity();
+			curVelocity.x = mDir.x * mUtilityStat.moveSpeed * 100;
+			mRigidbody->SetVelocity(curVelocity);
+			/*SetDir(Vector2::Right);
+			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mUtilityStat.moveSpeed);*/
 		}
 
 		// 상태 변동
 		// Idle 상태 
 		if (true == mRigidbody->IsGrounded())
 		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
+			if (Vector2::Right == mDir)
 				mAnimator->Play(L"PIdleR");
 			else
 				mAnimator->Play(L"PIdleL");
@@ -675,8 +669,7 @@ namespace js
 		{
 			if (false == mDubleTab.active)
 			{
-				Vector2 dir = GetDir();
-				if (dir == Vector2::Right)
+				if (Vector2::Right == mDir)
 					mAnimator->Play(L"PDubleTabR", false);
 				else
 					mAnimator->Play(L"PDubleTabL", false);
@@ -688,8 +681,7 @@ namespace js
 		{
 			if (false == mFMJ.active)
 			{
-				Vector2 dir = GetDir();
-				if (dir == Vector2::Right)
+				if (Vector2::Right == mDir)
 					mAnimator->Play(L"PFMJR", false);
 				else
 					mAnimator->Play(L"PFMJL", false);
@@ -701,8 +693,7 @@ namespace js
 		{
 			if (false == mSupressiveFire.active)
 			{
-				Vector2 dir = GetDir();
-				if (dir == Vector2::Right)
+				if (Vector2::Right == mDir)
 					mAnimator->Play(L"PSuppressiveFireR", false);
 				else
 					mAnimator->Play(L"PSuppressiveFireL", false);
@@ -714,8 +705,7 @@ namespace js
 		{
 			if (false == mTacticalDive.active)
 			{
-				Vector2 dir = GetDir();
-				if (dir == Vector2::Right)
+				if (Vector2::Right == mDir)
 					mAnimator->Play(L"PDiveR", false);
 				else
 					mAnimator->Play(L"PDiveL", false);
@@ -729,17 +719,14 @@ namespace js
 		if (KEY_PRESSE(eKeyCode::Z))
 		{
 			if (false == mDubleTab.active)
-			{
 				Skill(eProjectileType::DoubleTab);
-			}
 		}
 		
 		// 상태 변동
-		// Idle 상태 
+		// Idle 상태
 		if (true == mDubleTab.finish)
 		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
+			if (Vector2::Right == mDir)
 				mAnimator->Play(L"PIdleR");
 			else
 				mAnimator->Play(L"PIdleL");
@@ -751,16 +738,13 @@ namespace js
 	{
 		// 로직
 		if (false == mFMJ.active)
-		{
 			Skill(eProjectileType::FMJ);
-		}
 
 		// 상태 변동
 		// Idle 상태 
 		if (true == mFMJ.finish)
 		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
+			if (Vector2::Right == mDir)
 				mAnimator->Play(L"PIdleR");
 			else
 				mAnimator->Play(L"PIdleL");
@@ -772,16 +756,13 @@ namespace js
 	{
 		// 로직		
 		if (false == mTacticalDive.active)
-		{
 			Skill(eProjectileType::TacticalDive);
-		}
 		
 		// 상태 변동
 		// Idle 상태 
 		if (true == mTacticalDive.finish)
 		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
+			if (Vector2::Right == mDir)
 				mAnimator->Play(L"PIdleR");
 			else
 				mAnimator->Play(L"PIdleL");
@@ -792,16 +773,13 @@ namespace js
 	void Player::SupressiveFire()
 	{
 		if (false == mSupressiveFire.active)
-		{
 			Skill(eProjectileType::SuppresiveFire);
-		}
 
 		// 상태 변동
 		// Idle 상태 
 		if (true == mSupressiveFire.finish)
 		{
-			Vector2 dir = GetDir();
-			if (dir == Vector2::Right)
+			if (Vector2::Right == mDir)
 				mAnimator->Play(L"PIdleR");
 			else
 				mAnimator->Play(L"PIdleL");
@@ -814,15 +792,33 @@ namespace js
 	void Player::Climb()
 	{
 		// 로직
-		
-		// 상태 전환
-		if (KEY_DOWN(eKeyCode::SPACE))
+		if (KEY_PRESSE(eKeyCode::UP))
 		{
+			mRigidbody->AddForce(Vector2::Up * mUtilityStat.moveSpeed);
+		}
+		if (KEY_PRESSE(eKeyCode::DOWN))
+		{
+			mRigidbody->AddForce(Vector2::Down * mUtilityStat.moveSpeed);
+		}
+
+		// 상태 변동 (조건 : 벽과 충돌여부)
+		if (KEY_DOWN(eKeyCode::SPACE) && false == mBlocked)
+		{
+			mRigidbody->SetGround(false);
 			mState = ePlayerState::Jump;
 		}
-		if (KEY_DOWN(eKeyCode::C))
+		if (KEY_DOWN(eKeyCode::C) && false == mBlocked)
 		{
-			mState = ePlayerState::TacticalDive;
+			if (false == mTacticalDive.active)
+			{
+				mRigidbody->SetGround(false);
+
+				if (Vector2::Right == mDir)
+					mAnimator->Play(L"PDiveR", false);
+				else
+					mAnimator->Play(L"PDiveL", false);
+				mState = ePlayerState::TacticalDive;
+			}
 		}
 	}
 	void Player::Death()
@@ -837,15 +833,18 @@ namespace js
 	{
 		eColliderLayer type = other->GetOwner()->GetType();
 
+		// 벽에 닿음
 		if (type == eColliderLayer::Platform)
-			return;
-
+		{
+			mBlocked = true;
+		}
 		
+		// 공격 받음
 		if (type == eColliderLayer::DamagingObj)
 		{
 			Creature* attacker = dynamic_cast<Creature*>(other->GetOwner());
 			Offence offence = attacker->GetOffence();
-			Creature::SelfHit(other->GetOwner(), offence.damage, eStagger::Nomal, 40);
+			Creature::SelfHit(other->GetOwner(), offence.damage, eStagger::Nomal);
 		}
 	}
 	void Player::OnCollisionStay(Collider* other)
@@ -853,5 +852,11 @@ namespace js
 	}
 	void Player::OnCollisionExit(Collider* other)
 	{
+		eColliderLayer type = other->GetOwner()->GetType();
+
+		if (type == eColliderLayer::Platform)
+		{
+			mBlocked = false;
+		}
 	}
 }

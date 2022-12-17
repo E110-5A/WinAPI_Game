@@ -1,10 +1,10 @@
 #pragma once
-#include "jsEventObject.h"
+#include "jsChest.h"
 
 namespace js
 {
 	class ItemObject;
-	class SmallChest : public EventObject
+	class SmallChest : public Chest
 	{
 	public:
 		SmallChest();
@@ -19,11 +19,6 @@ namespace js
 		virtual void OnCollisionStay(Collider* other) override;
 		virtual void OnCollisionExit(Collider* other) override;
 
-		void Trigger();
-
-
-	private:
-		Event		mOnTrigger;
-		ItemObject* mItemObject;
+		virtual void Trigger() override;
 	};
 }

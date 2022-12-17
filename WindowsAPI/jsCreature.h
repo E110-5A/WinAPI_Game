@@ -25,7 +25,7 @@ namespace js
 		virtual void OnCollisionExit(Collider* other)override;
 		
 		// 초기화
-		virtual void SetComponent();
+		virtual void SetComponent() override;
 
 		void SetPlayerHealth(Health stat) { mHealthStat = stat; }
 		void SetPlayerOffence(Offence stat) { mOffenceStat = stat; }
@@ -58,10 +58,10 @@ namespace js
 		Utility& GetUtility() { return mUtilityStat; }
 
 		// 가해자 오브젝트, 맞은 피해량, 스테거, 위력
-		virtual void SelfHit(GameObject* attaker, float damage, eStagger stagger, float power);
+		virtual void SelfHit(GameObject* attaker, float damage, eStagger stagger, float power = 40);
 		virtual void SelfDamaged(float damage);
-		virtual void SelfKnockBack(float dir, eStagger stagger, float power);
-		virtual void SelfStun(float power);
+		virtual void SelfKnockBack(float dir, eStagger stagger, float power = 40);
+		virtual void SelfStun(float power = 40);
 
 	protected:
 		Animator*	mAnimator;

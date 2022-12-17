@@ -27,7 +27,7 @@ namespace js
 	{
 		SetType(eColliderLayer::Platform);
 		mCollider = AddComponent<Collider>();
-		mCollider->SetSize(Size(64.0f, 64.0f));
+		mCollider->SetSize(Size(GRID_SIZE, GRID_SIZE));
 	}
 	void Platform::Tick()
 	{

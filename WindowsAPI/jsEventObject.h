@@ -26,12 +26,15 @@ namespace js
 		};
 
 		EventObject();
+		EventObject(Pos pos);
 		virtual ~EventObject();
 
+		// 타입, 충돌체, 스케일
 		virtual void Initialize() override;
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
-
+				
+		virtual void SetComponent() override;
 
 		virtual void OnCollisionEnter(Collider* other) override;
 		virtual void OnCollisionStay(Collider* other) override;
@@ -42,8 +45,7 @@ namespace js
 
 	protected:
 		Image*		mImage;
-		Collider*	mCollider;
-		bool		mActive;
+		Collider*	mEventCollider;
 
 	private:
 	};
@@ -55,5 +57,6 @@ namespace js
 * 상자
 * 텔레포터
 * 성소
-* 점프대 등등
+* 
+* 점프대는 제외
 */

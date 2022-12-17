@@ -26,7 +26,7 @@ namespace js
 		stat.playerUtility.moveSpeed = 1.3;
 		stat.playerUtility.maxJumpCount = 1;
 		stat.playerUtility.curJumpCount = 0;
-		stat.playerUtility.jumpPower = 500;
+		stat.playerUtility.jumpPower = 600;
 	}
 
 	void PlayerManager::PlayerLevelUp()

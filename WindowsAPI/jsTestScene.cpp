@@ -16,15 +16,19 @@
 
 // obj
 #include "jsPlayer.h"
-#include "jsBGObj.h"
 #include "jsObject.h"
-#include "jsPlatform.h"
 #include "jsPlayerProjectile.h"
 #include "jsImp.h"
 #include "jsSmallChest.h"
 #include "jsLargeChest.h"
 #include "jsGoldenChest.h"
 #include "jsItemObject.h"
+
+// env
+#include "jsBGObj.h"
+#include "jsPlatform.h"
+#include "jsLadder.h"
+
 
 // component
 #include "jsCollider.h"
@@ -106,9 +110,13 @@ namespace js
 		mainGround->SetColliderSize(Size(GRID_SIZE * 16, GRID_SIZE));
 		mainGround->SetColliderOffset(Pos(GRID_SIZE * 8, GRID_SIZE / 2));
 
-		Platform* rock = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(256.0f, 576.0f));
+		/*Platform* rock = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(256.0f, 576.0f));
 		rock->SetColliderSize(Size(GRID_SIZE, GRID_SIZE));
-		rock->SetColliderOffset(Pos(GRID_SIZE / 2, GRID_SIZE / 2));
+		rock->SetColliderOffset(Pos(GRID_SIZE / 2, GRID_SIZE / 2));*/
+
+		//Ladder* ladder = object::Instantiate<Ladder>(eColliderLayer::EventObject, Pos(256.0f, 576.0f));
+		//ladder->SetColliderSize(Size(GRID_SIZE, GRID_SIZE));
+		//ladder->SetColliderOffset(Pos(GRID_SIZE / 2, GRID_SIZE / 2));
 	}
 
 	void TestScene::ObjectTest()
@@ -124,9 +132,9 @@ namespace js
 		}
 
 		// 기타 오브젝트 설정
-		EventObject* smallBox = object::Instantiate<SmallChest>(eColliderLayer::Chest, Pos(70.0f, 600.0f));
-		EventObject* largeBox = object::Instantiate<LargeChest>(eColliderLayer::Chest, Pos(140.0f, 600.0f));
-		EventObject* goldenBox = object::Instantiate<GoldenChest>(eColliderLayer::Chest, Pos(220.0f, 600.0f));
+		EventObject* smallBox = object::Instantiate<SmallChest>(eColliderLayer::EventObject, Pos(70.0f, 600.0f));
+		EventObject* largeBox = object::Instantiate<LargeChest>(eColliderLayer::EventObject, Pos(140.0f, 600.0f));
+		EventObject* goldenBox = object::Instantiate<GoldenChest>(eColliderLayer::EventObject, Pos(220.0f, 600.0f));
 		
 		// 몬스터 설정
 		Monster* imp = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(700.f, 550.0f));
@@ -141,8 +149,7 @@ namespace js
 		CollisionManager::SetLayer(eColliderLayer::Platform, eColliderLayer::Player, true);
 		CollisionManager::SetLayer(eColliderLayer::Platform, eColliderLayer::Monster, true);
 
-		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Chest, true);
-		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Item, true);
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::EventObject, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Monster, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::DamagingObj, true);
 		

@@ -17,8 +17,8 @@ namespace js
         : mIndex(eItemList::End)
         , mY(-1)
         , mX(-1)
-        , mAble(false)
-        , mAbleTime(0.f)
+        , mDrop(false)
+        , mDropTime(0.f)
     {
         Initialize();
     }
@@ -27,32 +27,36 @@ namespace js
     }
 
     void ItemObject::Initialize()
-    {        
+    {
+        EventObject::Initialize();
         // 아이템 이미지 세팅
         SetImage(L"Items", L"..\\Resources\\Image\\Item\\Items.bmp");
 
         // 콜라이더 설정
-        mCollider->SetPos(GetPos());
-        mCollider->SetSize(Size(ITEM_SIZE * TILE_SCALE, ITEM_SIZE * TILE_SCALE));
-        mCollider->SetOffset(Vector2(ITEM_SIZE, ITEM_SIZE));
+        mEventCollider->SetSize(Size(ITEM_SIZE * TILE_SCALE, ITEM_SIZE * TILE_SCALE));
+        mEventCollider->SetOffset(Vector2(ITEM_SIZE, ITEM_SIZE));
+
         // 이벤트 설정
         mOnTrigger = std::bind(&ItemObject::PickUp, this);
+        mAble = false;
 
     }
     void ItemObject::Tick()
     {
-        if (false == mActive)
+        if (false == mAble)
             return;
-        if (1.0f >= mAbleTime)
-            mAbleTime += Time::GetDeltaTime();
-        if (0.8f <= mAbleTime)
-            mAble = true;
+
+        if (1.0f >= mDropTime)
+            mDropTime += Time::GetDeltaTime();
+        if (0.8f <= mDropTime)
+            mDrop = true;
         EventObject::Tick();
     }
     void ItemObject::Render(HDC hdc)
     {
-        if (false == mActive)
+        if (false == mAble)
             return;
+
         if (nullptr == mImage)
             return;
 
@@ -73,7 +77,7 @@ namespace js
         EventObject::Render(hdc);
     }
 
-    void ItemObject::SetIndex(UINT index)
+    void ItemObject::SetItemIndex(UINT index)
     {
         // 인덱스 변경
         mIndex = (eItemList)index;
@@ -86,13 +90,12 @@ namespace js
     }
 
     void ItemObject::Active(Pos pos, eItemList index)
-    {
-        
+    {        
         // 아이탬 생성 위치
         SetPos(pos + Vector2(-10.f,-30.0f));
         // 아이템 유형 및 이미지 설정
-        SetIndex((UINT)index);
-        mActive = true;
+        SetItemIndex((UINT)index);
+        mAble = true;
     }
     void ItemObject::InActive()
     {
@@ -102,9 +105,9 @@ namespace js
         mX = -1;
 
         // 내가 없어져볼게
-        mActive = false;
         mAble = false;
-        mAbleTime = 0.f;
+        mDrop = false;
+        mDropTime = 0.f;
     }
     void ItemObject::PickUp()
     {
@@ -118,14 +121,14 @@ namespace js
         if (eColliderLayer::Player != other->GetOwner()->GetType())
             return;
 
-        if (true == mAble)
+        if (true == mDrop)
             PickUp();
     }
     void ItemObject::OnCollisionStay(Collider* other)
     {
         if (eColliderLayer::Player != other->GetOwner()->GetType())
             return;
-        if (true == mAble)
+        if (true == mDrop)
             PickUp();
     }
     void ItemObject::OnCollisionExit(Collider* other)

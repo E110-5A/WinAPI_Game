@@ -8,7 +8,8 @@ namespace js
 	public:
 		ItemObject();
 		virtual ~ItemObject();
-		void Initialize();
+
+		virtual void Initialize() override;
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 
@@ -16,7 +17,8 @@ namespace js
 		virtual void OnCollisionStay(Collider* other) override;
 		virtual void OnCollisionExit(Collider* other) override;
 
-		void SetIndex(UINT index);
+		void SetItemIndex(UINT index);
+
 		void Active(Pos pos, eItemList index);
 		void InActive();
 
@@ -31,7 +33,7 @@ namespace js
 		UINT		mX;
 		UINT		mY;
 
-		bool		mAble;
-		float		mAbleTime;
+		bool		mDrop;
+		float		mDropTime;
 	};
 }

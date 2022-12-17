@@ -17,80 +17,49 @@
 
 namespace js
 {
-    js::GoldenChest::GoldenChest()
+    GoldenChest::GoldenChest()
     {
         Initialize();
     }
 
-    js::GoldenChest::GoldenChest(Pos pos)
+    GoldenChest::GoldenChest(Pos pos)
     {
         SetPos(pos);
         Initialize();
     }
 
-    js::GoldenChest::~GoldenChest()
+    GoldenChest::~GoldenChest()
     {
     }
 
-    void js::GoldenChest::Initialize()
+    void GoldenChest::Initialize()
     {
+        Chest::Initialize();
         SetImage(L"GoldBox", L"..\\Resources\\Image\\Item\\GoldBox.bmp");
-        mCollider->SetPos(GetPos());
-        mCollider->SetOffset(Vector2(23.0f, 10.0f));
-        mCollider->SetSize(Size(80.0f, 45.0f));
-
-        mOnTrigger = std::bind(&GoldenChest::Trigger, this);
+        mEventCollider->SetSize(Size(80.0f, 45.0f));
+        mEventCollider->SetOffset(Vector2(23.0f, 10.0f));
         // 상자와 대응하는 아이템 생성
-        mItemObject = object::Instantiate<ItemObject>(eColliderLayer::Item);
-
-        // 활성화
-        mActive = true;
+        mItemObject = object::Instantiate<ItemObject>(eColliderLayer::EventObject);
     }
 
-    void js::GoldenChest::Tick()
+    void GoldenChest::Tick()
     {
-        if (false == mActive)
-            return;
-        EventObject::Tick();
+        Chest::Tick();
     }
 
-    void js::GoldenChest::Render(HDC hdc)
+    void GoldenChest::Render(HDC hdc)
     {
-        if (false == mActive)
-            return;
-        Pos pos = Camera::CalculateObjectPos(GetPos());
-        Size scale = GetScale();
-
-        BLENDFUNCTION func = {};
-        func.AlphaFormat = AC_SRC_ALPHA;
-        func.BlendOp = AC_SRC_OVER;
-        func.BlendFlags = 0;
-        func.SourceConstantAlpha = 255;
-
-        AlphaBlend(hdc,
-            pos.x, pos.y,
-            mImage->GetWidth() * scale.x, mImage->GetHeight() * scale.y,
-            mImage->GetDC(), 0, 0,
-            mImage->GetWidth(), mImage->GetHeight(), func);
-
-        EventObject::Render(hdc);
+        Chest::Render(hdc);
     }
 
-    void js::GoldenChest::OnCollisionEnter(Collider* other)
+    void GoldenChest::OnCollisionEnter(Collider* other)
     {
     }
-
-    void js::GoldenChest::OnCollisionStay(Collider* other)
+    void GoldenChest::OnCollisionStay(Collider* other)
     {
-        if (false == mActive)
-            return;
-        if (KEY_DOWN(eKeyCode::A))
-        {
-            mOnTrigger();
-        }
+        Chest::OnCollisionStay(other);
     }
-
-    void js::GoldenChest::OnCollisionExit(Collider* other)
+    void GoldenChest::OnCollisionExit(Collider* other)
     {
     }
     void GoldenChest::Trigger()
@@ -101,7 +70,8 @@ namespace js
 
         // 아이템 불러오기
         mItemObject->Active(GetPos(), (eItemList)rare);
+
         // 비활성화 하기
-        mActive = false;
+        mAble = false;
     }
 }

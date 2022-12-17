@@ -24,7 +24,7 @@ namespace js
 		void SetGround(GameObject* other, bool isGround);
 
 	private:
-		Creature* mOwner;
+		Creature*	mOwner;
 		Collider*	mCollider;
 	};
 }

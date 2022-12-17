@@ -136,6 +136,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="jsAnimation.h" />
     <ClInclude Include="jsAnimator.h" />
+    <ClInclude Include="jsChest.h" />
     <ClInclude Include="jsCommandoRun.h" />
     <ClInclude Include="jsApplication.h" />
     <ClInclude Include="jsBGObj.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="jsGameManager.h" />
     <ClInclude Include="jsGameObject.h" />
     <ClInclude Include="jsGoldenChest.h" />
+    <ClInclude Include="jsLadder.h" />
     <ClInclude Include="jsPlatform.h" />
     <ClInclude Include="jsGroundCheck.h" />
     <ClInclude Include="jsHUD.h" />
@@ -178,8 +180,6 @@
     <ClInclude Include="jsPlayer.h" />
     <ClInclude Include="jsPlayerProjectile.h" />
     <ClInclude Include="jsPlayScene.h" />
-    <ClInclude Include="jsRain.h" />
-    <ClInclude Include="jsRainPool.h" />
     <ClInclude Include="jsResource.h" />
     <ClInclude Include="jsResources.h" />
     <ClInclude Include="jsRigidbody.h" />
@@ -198,6 +198,7 @@
   <ItemGroup>
     <ClCompile Include="jsAnimation.cpp" />
     <ClCompile Include="jsAnimator.cpp" />
+    <ClCompile Include="jsChest.cpp" />
     <ClCompile Include="jsCommandoRun.cpp" />
     <ClCompile Include="jsApplication.cpp" />
     <ClCompile Include="jsBGObj.cpp" />
@@ -212,6 +213,7 @@
     <ClCompile Include="jsGameManager.cpp" />
     <ClCompile Include="jsGameObject.cpp" />
     <ClCompile Include="jsGoldenChest.cpp" />
+    <ClCompile Include="jsLadder.cpp" />
     <ClCompile Include="jsPlatform.cpp" />
     <ClCompile Include="jsGroundCheck.cpp" />
     <ClCompile Include="jsHUD.cpp" />
@@ -239,8 +241,6 @@
     <ClCompile Include="jsPlayer.cpp" />
     <ClCompile Include="jsPlayerProjectile.cpp" />
     <ClCompile Include="jsPlayScene.cpp" />
-    <ClCompile Include="jsRain.cpp" />
-    <ClCompile Include="jsRainPool.cpp" />
     <ClCompile Include="jsResource.cpp" />
     <ClCompile Include="jsResources.cpp" />
     <ClCompile Include="jsRigidbody.cpp" />

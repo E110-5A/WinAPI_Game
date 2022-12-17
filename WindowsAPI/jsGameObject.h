@@ -23,7 +23,7 @@ namespace js
 		virtual void OnCollisionStay(Collider* other);
 		virtual void OnCollisionExit(Collider* other);
 
-
+		virtual void SetComponent() {}
 
 		// 오브젝트 변수 설정
 		void SetPos(Pos pos) { mPos = pos; }
@@ -74,7 +74,7 @@ namespace js
 
 	protected:
 		Vector2 mDir;
-		bool	mAble;	// true : 활성화됨, false : 비활성화 됨
+		bool	mAble;	// true : 활성화됨(기본값), false : 비활성화 됨
 
 	private:
 		std::vector<Component*> mComponents;

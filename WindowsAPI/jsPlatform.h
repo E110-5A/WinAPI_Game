@@ -23,7 +23,7 @@ namespace js
 		void SetColliderSize(Size size) { mCollider->SetSize(size); }
 		void SetColliderOffset(Pos pos) { mCollider->SetOffset(pos); }
 
-
+	private:
 		void WallProcess(GameObject* other);
 
 	private:

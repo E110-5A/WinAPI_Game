@@ -12,9 +12,14 @@ namespace js
 {
 	js::EventObject::EventObject()
 		: mImage(nullptr)
-		, mActive(false)
+		, mEventCollider(nullptr)
 	{
-		Initialize();
+	}
+
+	EventObject::EventObject(Pos pos)
+		: mImage(nullptr)
+		, mEventCollider(nullptr)
+	{
 	}
 
 	js::EventObject::~EventObject()
@@ -23,8 +28,14 @@ namespace js
 
 	void EventObject::Initialize()
 	{
+		SetType(eColliderLayer::EventObject);
 		SetScale(Vector2(2.0f, 2.0f));
-		mCollider = AddComponent<Collider>();
+		SetComponent();
+	}
+
+	void EventObject::SetComponent()
+	{
+		mEventCollider = AddComponent<Collider>();
 	}
 
 	void EventObject::Tick()

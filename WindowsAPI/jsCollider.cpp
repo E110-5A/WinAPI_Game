@@ -10,7 +10,7 @@ namespace js
 		, mPos(Vector2::Zero)
 		, mSize(Vector2::One)
 	{
-		SetSize(Size(50.f, 50.f));
+		SetSize(Size(GRID_SIZE, GRID_SIZE));
 	}
 	Collider::~Collider()
 	{

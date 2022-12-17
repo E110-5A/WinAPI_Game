@@ -20,15 +20,12 @@ namespace js
     Imp::Imp()
     {
         SetPos(Vector2(600.0f, 400.0f));
-        SetScale(Vector2::One);
-        SetDir(Vector2::Right);
         Initialize();
     }
     Imp::Imp(Pos pos)
     {
         SetPos(pos);
         SetScale(Vector2::One * 2);
-        SetDir(Vector2::Right);
         Initialize();
     }
     Imp::~Imp()

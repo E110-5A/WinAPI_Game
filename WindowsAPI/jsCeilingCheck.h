@@ -5,11 +5,11 @@ namespace js
 {
 	class Collider;
 	class Creature;
-	class GroundCheck : public GameObject
+	class CeilingCheck : public GameObject
 	{
 	public:
-		GroundCheck();
-		~GroundCheck();
+		CeilingCheck();
+		~CeilingCheck();
 
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
@@ -21,11 +21,11 @@ namespace js
 		void SetOwner(Creature* owner) { mOwner = owner; }
 		Creature* GetOwner() { return mOwner; }
 
-		// 바닥에 충돌했을때 ground 설정
-		void GroundProcess(Collider* other, bool isGround);
+		// 천장에 충돌했을때 ground 설정
+		void CeilingProcess(Collider* other);
 
 	private:
-		Creature*	mOwner;
-		Collider*	mCollider;
+		Creature* mOwner;
+		Collider* mCollider;
 	};
 }

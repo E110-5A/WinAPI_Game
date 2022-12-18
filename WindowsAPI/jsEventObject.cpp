@@ -28,7 +28,6 @@ namespace js
 
 	void EventObject::Initialize()
 	{
-		SetType(eColliderLayer::EventObject);
 		SetScale(Vector2(2.0f, 2.0f));
 		SetComponent();
 	}

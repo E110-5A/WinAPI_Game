@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -136,7 +136,10 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="jsAnimation.h" />
     <ClInclude Include="jsAnimator.h" />
+    <ClInclude Include="jsCeilingCheck.h" />
     <ClInclude Include="jsChest.h" />
+    <ClInclude Include="jsCollisionBlock.h" />
+    <ClInclude Include="jsCollisionCheck.h" />
     <ClInclude Include="jsCommandoRun.h" />
     <ClInclude Include="jsApplication.h" />
     <ClInclude Include="jsBGObj.h" />
@@ -198,7 +201,10 @@
   <ItemGroup>
     <ClCompile Include="jsAnimation.cpp" />
     <ClCompile Include="jsAnimator.cpp" />
+    <ClCompile Include="jsCeilingCheck.cpp" />
     <ClCompile Include="jsChest.cpp" />
+    <ClCompile Include="jsCollisionBlock.cpp" />
+    <ClCompile Include="jsCollisionCheck.cpp" />
     <ClCompile Include="jsCommandoRun.cpp" />
     <ClCompile Include="jsApplication.cpp" />
     <ClCompile Include="jsBGObj.cpp" />

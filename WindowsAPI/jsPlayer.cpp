@@ -28,14 +28,14 @@ namespace js
 {
 	Player::Player()
 		: mWeaponID(0)
-		, mBlocked(false)
+		, mBlocking(false)
 	{
 		SetPos(Pos(400.f, 1000.f));
 		Initialize();
 	}
 	Player::Player(Pos pos)
 		: mWeaponID(0)
-		, mBlocked(false)
+		, mBlocking(false)
 	{
 		SetPos(pos);
 		Initialize();
@@ -74,7 +74,10 @@ namespace js
 		mBodyCollider->SetOffset(Vector2(-10.f, 0.f));
 
 		mFootCollider->SetSize(Size(15, 5));
-		mFootCollider->SetOffset(Vector2(-9, 20));
+		mFootCollider->SetOffset(Vector2(-10, 20));
+
+		mHeadCollider->SetSize(Size(10, 5));
+		mHeadCollider->SetOffset(Vector2(-10, -18));
 	}
 	void Player::InitAnim()
 	{
@@ -163,6 +166,7 @@ namespace js
 
 		// 본인 컴포넌트 Tick 호출
 		mFootObject->Tick();
+		mHeadObject->Tick();
 		GameObject::Tick();
 
 		// 스킬 기능
@@ -791,27 +795,37 @@ namespace js
 	// 나중에 구현
 	void Player::Climb()
 	{
+		// 애니메이션
+		if (KEY_PRESSE(eKeyCode::UP) || KEY_PRESSE(eKeyCode::DOWN))
+		{
+			mAnimator->Play(L"PClimb", false);
+		}
 		// 로직
 		if (KEY_PRESSE(eKeyCode::UP))
 		{
-			mRigidbody->AddForce(Vector2::Up * mUtilityStat.moveSpeed);
+			Vector2 curPos = GetPos();
+			curPos.y += -mUtilityStat.moveSpeed * 100 * Time::GetDeltaTime();
+			SetPos(curPos);
 		}
 		if (KEY_PRESSE(eKeyCode::DOWN))
 		{
-			mRigidbody->AddForce(Vector2::Down * mUtilityStat.moveSpeed);
+			Vector2 curPos = GetPos();
+			curPos.y += +mUtilityStat.moveSpeed * 100 * Time::GetDeltaTime();
+			SetPos(curPos);
 		}
 
 		// 상태 변동 (조건 : 벽과 충돌여부)
-		if (KEY_DOWN(eKeyCode::SPACE) && false == mBlocked)
+		if (KEY_DOWN(eKeyCode::SPACE) && false == mBlocking)
 		{
 			mRigidbody->SetGround(false);
 			mState = ePlayerState::Jump;
+			JumpProcess();
 		}
-		if (KEY_DOWN(eKeyCode::C) && false == mBlocked)
+		if (KEY_DOWN(eKeyCode::C) && false == mBlocking)
 		{
 			if (false == mTacticalDive.active)
 			{
-				mRigidbody->SetGround(false);
+				mRigidbody->SetGround(true);
 
 				if (Vector2::Right == mDir)
 					mAnimator->Play(L"PDiveR", false);
@@ -836,7 +850,7 @@ namespace js
 		// 벽에 닿음
 		if (type == eColliderLayer::Platform)
 		{
-			mBlocked = true;
+			mBlocking = true;
 		}
 		
 		// 공격 받음
@@ -856,7 +870,7 @@ namespace js
 
 		if (type == eColliderLayer::Platform)
 		{
-			mBlocked = false;
+			mBlocking = false;
 		}
 	}
 }

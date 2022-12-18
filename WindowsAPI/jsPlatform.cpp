@@ -25,39 +25,37 @@ namespace js
 
 	void Platform::Initialize()
 	{
-		SetType(eColliderLayer::Platform);
-		mCollider = AddComponent<Collider>();
-		mCollider->SetSize(Size(GRID_SIZE, GRID_SIZE));
+		CollisionBlock::Initialize();
 	}
 	void Platform::Tick()
 	{
-		GameObject::Tick();
+		CollisionBlock::Tick();
 	}
 	void Platform::Render(HDC hdc)
 	{
-		GameObject::Render(hdc);
+		CollisionBlock::Render(hdc);
 	}
 
 	void Platform::OnCollisionEnter(Collider* other)
 	{
 		GameObject* tempObj = other->GetOwner();
 		
-		if (eColliderLayer::GroundCheck != tempObj->GetType())
-			WallProcess(tempObj);
+		if (eColliderLayer::CollisionCheck != tempObj->GetType())
+			Process(tempObj);
 	}
 	void Platform::OnCollisionStay(Collider* other)
 	{
 		GameObject* tempObj = other->GetOwner();
 
-		if (eColliderLayer::GroundCheck != tempObj->GetType())
-			WallProcess(tempObj);
+		if (eColliderLayer::CollisionCheck != tempObj->GetType())
+			Process(tempObj);
 	}
 	void Platform::OnCollisionExit(Collider* other)
 	{
 	}
 
 	// 충돌중인 경우에만 진입
-	void Platform::WallProcess(GameObject* other)
+	void Platform::Process(GameObject* other)
 	{
 		// 대상 오브젝트의 정보 가져오기
 		Rigidbody* targetRigidbody = other->GetComponent<Rigidbody>();

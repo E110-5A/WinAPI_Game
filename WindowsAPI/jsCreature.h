@@ -8,6 +8,7 @@ namespace js
 	class Animator;
 	class Rigidbody;
 	class GroundCheck;
+	class CeilingCheck;
 	class Creature : public GameObject
 	{
 	public:
@@ -64,19 +65,21 @@ namespace js
 		virtual void SelfStun(float power = 40);
 
 	protected:
-		Animator*	mAnimator;
-		Rigidbody*	mRigidbody;
-		Collider*	mBodyCollider;
-		Collider*	mFootCollider;
+		Animator*		mAnimator;
+		Rigidbody*		mRigidbody;
+		Collider*		mHeadCollider;
+		Collider*		mBodyCollider;
+		Collider*		mFootCollider;
 
 	protected:
-		Health		mHealthStat;
-		Offence		mOffenceStat;
-		Utility		mUtilityStat;
-		eStagger	mResistance;
+		Health			mHealthStat;
+		Offence			mOffenceStat;
+		Utility			mUtilityStat;
+		eStagger		mResistance;
 
 	protected:
 		GroundCheck*	mFootObject;
+		CeilingCheck*	mHeadObject;
 		Image*			mSpriteImage;
 	};
 }

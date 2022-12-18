@@ -14,7 +14,7 @@ namespace js
 			T* gameObject = new T();
 			Scene* scene = SceneManager::GetPlayScene();
 			scene->AddGameObject(dynamic_cast<GameObject*>(gameObject), type);
-
+			gameObject->SetType(type);
 			return gameObject;
 		}
 		template <typename T>
@@ -23,7 +23,7 @@ namespace js
 			T* gameObject = new T(pos);
 			Scene* scene = SceneManager::GetPlayScene();
 			scene->AddGameObject(dynamic_cast<GameObject*>(gameObject), type);
-
+			gameObject->SetType(type);
 			return gameObject;
 		}
 

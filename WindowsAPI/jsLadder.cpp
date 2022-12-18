@@ -5,6 +5,7 @@
 
 // component
 #include "jsCollider.h"
+#include "jsRigidbody.h"
 
 // object
 #include "jsPlayer.h"
@@ -25,51 +26,58 @@ namespace js
 	}
 	void Ladder::Initialize()
 	{
-		EventObject::Initialize();
+		CollisionBlock::Initialize();
 	}
 
 	void Ladder::Tick()
 	{
-		EventObject::Tick();
+		CollisionBlock::Tick();
 	}
 	void Ladder::Render(HDC hdc)
 	{
-		EventObject::Render(hdc);
+		CollisionBlock::Render(hdc);
 	}
-	void Ladder::SetPlayerState(Player* player)
-	{
-		if (ePlayerState::Climb != player->GetState())
-		{
-			int a = 0;
-		}
-		
-		// Climb 상태로 만들기
-
-		// Idle 상태로 만들기
-
-	}
-	void Ladder::SetPlayerPos(Player* player)
-	{
-		// 플레이어 Pos.x 보정
-	}
+	
 	void Ladder::OnCollisionEnter(Collider* other)
-	{
-		
+	{		
 	}
 	void Ladder::OnCollisionStay(Collider* other)
 	{
-		// 충돌한 대상이 플레이어가 아니라면 return
-		if (eColliderLayer::Player != other->GetOwner()->GetType())
-			return;
-
-		Player* target = dynamic_cast<Player*>(other->GetOwner());
-
-		if (KEY_DOWN(eKeyCode::UP) || KEY_DOWN(eKeyCode::DOWN))
+		// 플레이어만 충돌가능함
+		Player* player = dynamic_cast<Player*>(other->GetOwner());
+		
+		if ((KEY_DOWN(eKeyCode::UP) || KEY_DOWN(eKeyCode::DOWN)) && ePlayerState::Climb != player->GetState())
 		{
-			SetPlayerState(target);
-		}		
+			player->SetState(ePlayerState::Climb);
+		}
+		// Climb 상태라면
+		Process(player);
 	}
+
 	void Ladder::OnCollisionExit(Collider* other)
 	{
+		if (eColliderLayer::Player != other->GetOwner()->GetType())
+			return;
+		Player* player = dynamic_cast<Player*>(other->GetOwner());
+
+		if (ePlayerState::Climb == player->GetState())
+		{
+			player->SetState(ePlayerState::Idle);
+			player->GetComponent<Rigidbody>()->SetGround(false);
+		}
+	}
+
+	void Ladder::Process(GameObject* target)
+	{
+		Player* player = dynamic_cast<Player*>(target);
+		if (ePlayerState::Climb == player->GetState())
+		{
+			// 플레이어의 x 위치를 내 위치로 가져옴
+			Vector2 playerPos = player->GetPos();
+			Vector2 ladderPos = GetPos();
+			ladderPos.x += mCollider->GetSize().x / 3 * 2;
+			playerPos.x = ladderPos.x;
+			player->SetPos(playerPos);
+		}
 	}
 }

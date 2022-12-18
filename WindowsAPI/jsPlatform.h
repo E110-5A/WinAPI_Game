@@ -1,10 +1,10 @@
 #pragma once
-#include "jsGameObject.h"
+#include "jsCollisionBlock.h"
 
 namespace js
 {
 	class Collider;
-	class Platform : public GameObject
+	class Platform : public CollisionBlock
 	{
 	public:
 		Platform();
@@ -20,13 +20,7 @@ namespace js
 		virtual void OnCollisionExit(Collider* other)override;
 
 
-		void SetColliderSize(Size size) { mCollider->SetSize(size); }
-		void SetColliderOffset(Pos pos) { mCollider->SetOffset(pos); }
-
-	private:
-		void WallProcess(GameObject* other);
-
-	private:
-		Collider* mCollider;
+	protected:
+		virtual void Process(GameObject* other) override;
 	};
 }

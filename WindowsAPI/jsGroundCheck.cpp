@@ -3,9 +3,12 @@
 // component
 #include "jsCollider.h"
 #include "jsRigidbody.h"
+#include "jsAnimator.h"
 
 // collider
 #include "jsCreature.h"
+
+#include "jsPlayer.h"
 
 namespace js
 {
@@ -14,7 +17,7 @@ namespace js
 		: mOwner(nullptr)
 		, mCollider(nullptr)
 	{
-		SetType(eColliderLayer::GroundCheck);
+		SetType(eColliderLayer::CollisionCheck);
 	}
 
 	GroundCheck::~GroundCheck()
@@ -37,9 +40,19 @@ namespace js
 	}
 
 	void GroundCheck::OnCollisionEnter(Collider* other)
-	{
-		GameObject* tempObj = other->GetOwner();
-		SetGround(tempObj, true);
+	{		
+		Player* player = dynamic_cast<Player*>(mOwner);
+		GroundProcess(other, true);
+
+		// 1) 발이 땅에 닿고,	 2)벽에 부딧친 상태가 아니라면		Climb -> Idle
+		if (nullptr != player && ePlayerState::Climb == player->GetState() && false == player->GetBlocking())
+		{
+			player->SetState(ePlayerState::Idle);
+			if (Vector2::Right == player->GetDir())
+				player->GetComponent<Animator>()->Play(L"PIdleR");
+			else
+				player->GetComponent<Animator>()->Play(L"PIdleL");
+		}
 
 		// 점프 카운트 회복
 		mOwner->GetUtility().curJumpCount = 0;
@@ -51,13 +64,19 @@ namespace js
 
 	void GroundCheck::OnCollisionExit(Collider* other)
 	{
-		GameObject* tempObj = other->GetOwner();
-		SetGround(tempObj, false);
+		Player* player = dynamic_cast<Player*>(mOwner);
+
+		// Climb 상태라면 땅에서 벗어나도 중력이 적용되지 않음
+		if (nullptr != player && ePlayerState::Climb == player->GetState())
+			return;
+		
+		GroundProcess(other, false);
 	}
-	void GroundCheck::SetGround(GameObject* other, bool isGround)
+
+	void GroundCheck::GroundProcess(Collider* other, bool isGround)
 	{
-		eColliderLayer tempObj = other->GetType();
-		if (eColliderLayer::Platform == tempObj)
+		eColliderLayer objLayer = other->GetOwner()->GetType();
+		if (eColliderLayer::Platform == objLayer)
 			mOwner->GetComponent<Rigidbody>()->SetGround(isGround);
 	}
 }

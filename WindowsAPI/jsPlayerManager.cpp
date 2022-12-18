@@ -1,12 +1,17 @@
 #include "jsPlayerManager.h"
 
+#include "jsSceneManager.h"
+
+#include "jsScene.h"
+
+#include "jsPlayer.h"
+
 namespace js
 {
 	PlayerStat	PlayerManager::mDefaultStat = {};
 	PlayerStat	PlayerManager::mPlayerStat = {};
 	int			PlayerManager::mPlayerLevel = 0;
 	int			PlayerManager::mPlayerItems[(UINT)eItemList::End] = {};
-
 	void PlayerManager::Initialize()
 	{
 		InitStat(mDefaultStat);
@@ -37,6 +42,7 @@ namespace js
 		mPlayerStat.playerHealth.defance = (mDefaultStat.playerHealth.defance + (2 * mPlayerLevel));
 		mPlayerStat.playerOffence.damage = (mDefaultStat.playerOffence.damage + (3 * mPlayerLevel));
 	}
+
 	void PlayerManager::PickUpItems(eItemList item)
 	{
 		++mPlayerItems[(UINT)item];

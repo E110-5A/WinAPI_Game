@@ -8,13 +8,38 @@
 // object
 #include "jsObject.h"
 #include "jsGroundCheck.h"
+#include "jsCeilingCheck.h"
 
 namespace js
 {
 	Creature::Creature()
+		: mAnimator(nullptr)
+		, mRigidbody(nullptr)
+		, mHeadCollider(nullptr)
+		, mBodyCollider(nullptr)
+		, mFootCollider(nullptr)
+		, mHealthStat{}
+		, mOffenceStat{}
+		, mUtilityStat{}
+		, mResistance{}
+		, mFootObject(nullptr)
+		, mHeadObject(nullptr)
+		, mSpriteImage(nullptr)
 	{
 	}
 	Creature::Creature(Pos pos)
+		: mAnimator(nullptr)
+		, mRigidbody(nullptr)
+		, mHeadCollider(nullptr)
+		, mBodyCollider(nullptr)
+		, mFootCollider(nullptr)
+		, mHealthStat{}
+		, mOffenceStat{}
+		, mUtilityStat{}
+		, mResistance{}
+		, mFootObject(nullptr)
+		, mHeadObject(nullptr)
+		, mSpriteImage(nullptr)
 	{
 	}
 	Creature::~Creature()
@@ -51,10 +76,13 @@ namespace js
 		mBodyCollider = AddComponent<Collider>();
 		mRigidbody = AddComponent<Rigidbody>();
 
-		// 바닥 충돌 오브젝트 생성 및 연동
-		mFootObject = object::Instantiate<GroundCheck>(eColliderLayer::GroundCheck);
+		// 벽 충돌 체크 오브젝트 생성 및 할당
+		mFootObject = object::Instantiate<GroundCheck>(eColliderLayer::CollisionCheck);
 		mFootObject->SetOwner(this);
 		mFootCollider = mFootObject->AddComponent<Collider>();
+		mHeadObject = object::Instantiate<CeilingCheck>(eColliderLayer::CollisionCheck);
+		mHeadObject->SetOwner(this);
+		mHeadCollider = mHeadObject->AddComponent<Collider>();
 	}
 
 	void Creature::SelfHit(GameObject* attaker, float damage, eStagger stagger, float power)

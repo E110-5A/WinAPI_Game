@@ -104,25 +104,29 @@ namespace js
 	{
 		Platform* leftGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(0.0f, 384.0f));
 		leftGround->SetColliderSize(Size(GRID_SIZE, GRID_SIZE * 5));
-		leftGround->SetColliderOffset(Pos(GRID_SIZE / 2, GRID_SIZE * 5 / 2));
+		leftGround->SetColliderOffset(Vector2(GRID_SIZE / 2, GRID_SIZE * 5 / 2));
 
 		Platform* mainGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(64.0f, 640.0f));
 		mainGround->SetColliderSize(Size(GRID_SIZE * 16, GRID_SIZE));
-		mainGround->SetColliderOffset(Pos(GRID_SIZE * 8, GRID_SIZE / 2));
+		mainGround->SetColliderOffset(Vector2(GRID_SIZE * 8, GRID_SIZE / 2));
+
+		Platform* secondGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(64.0f, 512.0f));
+		secondGround->SetColliderSize(Size(GRID_SIZE * 16, GRID_SIZE));
+		secondGround->SetColliderOffset(Vector2(GRID_SIZE * 8, GRID_SIZE / 2));
 
 		/*Platform* rock = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(256.0f, 576.0f));
 		rock->SetColliderSize(Size(GRID_SIZE, GRID_SIZE));
 		rock->SetColliderOffset(Pos(GRID_SIZE / 2, GRID_SIZE / 2));*/
 
-		//Ladder* ladder = object::Instantiate<Ladder>(eColliderLayer::EventObject, Pos(256.0f, 576.0f));
-		//ladder->SetColliderSize(Size(GRID_SIZE, GRID_SIZE));
-		//ladder->SetColliderOffset(Pos(GRID_SIZE / 2, GRID_SIZE / 2));
+		Ladder* ladder = object::Instantiate<Ladder>(eColliderLayer::EventObject, Pos(256.0f, 512.0f));
+		ladder->SetColliderSize(Size(GRID_SIZE, GRID_SIZE * 2));
+		ladder->SetColliderOffset(Vector2(GRID_SIZE / 2, GRID_SIZE * 2 / 2));
 	}
 
 	void TestScene::ObjectTest()
 	{
 		// 플레이어 설정
-		Player* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 550.0f));
+		Player* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 576.0f));
 
 		// 투사체 풀링
 		for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
@@ -145,12 +149,11 @@ namespace js
 	// 충돌 및 UI 설정
 	void TestScene::Enter()
 	{
-		CollisionManager::SetLayer(eColliderLayer::Platform, eColliderLayer::GroundCheck, true);
+		CollisionManager::SetLayer(eColliderLayer::Platform, eColliderLayer::CollisionCheck, true);
 		CollisionManager::SetLayer(eColliderLayer::Platform, eColliderLayer::Player, true);
 		CollisionManager::SetLayer(eColliderLayer::Platform, eColliderLayer::Monster, true);
 
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::EventObject, true);
-		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Monster, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::DamagingObj, true);
 		
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player_Projectile, true);

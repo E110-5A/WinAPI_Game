@@ -106,9 +106,9 @@ enum class eColliderLayer
 	BGObj,						//	4		// 이미지 외에 컴포넌트가 필요한 배경 오브젝트
 	
 	EventObject,				//	5		// 기타 충돌시 작동하는 이벤트 오브젝트
-	Platform,					//	6		// 벽 역할을 하는 오브젝트 (비가시)
+	Platform,					//	6		// 벽 역할을 하는 오브젝트
 	Propellant,					//	7		// 오브젝트를 위로 날려버림
-	GroundCheck,				//	8		// 중력 처리용 오브젝트 (비가시)
+	CollisionCheck,				//	8		// 오브젝트의 충돌처리를 돕는 오브젝트
 
 	Player,						//	9		// 
 	Player_Projectile,			//	10		// 플레이어가 매개가 되는 공격 투사체 (스킬과 아이템효과)
@@ -119,9 +119,7 @@ enum class eColliderLayer
 	UI = _COLLIDER_LAYER - 1,	//	14
 	End = _COLLIDER_LAYER,		//	15
 };
-
 // 1 백그라운드 레이어 통일할 것
-// 2 Chest를 EventObj 에 통합할 것
 
 // Object enum
 enum class ePlayerState

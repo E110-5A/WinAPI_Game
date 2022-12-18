@@ -49,15 +49,7 @@ namespace js
 		// 중력 제거
 		if (mIsGround)
 		{
-			// 중력의 단위벡터 구하기
-			Vector2 gravity = mGravity;
-			gravity.Normalize();
-
-			// 현재 속도의 y성분 추출 (속도와 중력의 단위벡터 내적 : 중력의 단위벡터와 내적하기 때문에 속도의 y성분만 추출된다)
-			float dot = math::Dot(mVelocity, gravity);
-
-			// 내적으로 추출한 y 성분을 역방향으로 더해서 속도값을 0으로 만든다
-			mVelocity -= gravity * dot;
+			VelocityControl(mGravity, mVelocity);
 		}
 		// 중력 적용
 		else
@@ -112,5 +104,18 @@ namespace js
 
 		// 수평속도 수직속도를 합친다
 		mVelocity = gravity + sideVelocity;
+	}
+
+	void Rigidbody::VelocityControl(Vector2 dir, Vector2 velocity)
+	{
+		// 단위벡터 구하기
+		Vector2 unit = dir;
+		unit.Normalize();
+
+		// 현재 속도의 y성분 추출 (속도와 중력의 단위벡터 내적 : 중력의 단위벡터와 내적하기 때문에 속도의 y성분만 추출된다)
+		float dot = math::Dot(unit, velocity);
+
+		// 추출한 벡터의 성분을 역방향으로 더해서 속도값을 0으로 만든다
+		mVelocity -= unit * dot;
 	}
 }

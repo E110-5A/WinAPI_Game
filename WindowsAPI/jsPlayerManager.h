@@ -3,6 +3,8 @@
 
 namespace js
 {
+	class Player;
+	class SceneManager;
 	class PlayerManager
 	{
 	public:
@@ -21,7 +23,6 @@ namespace js
 		// 스텟 함수
 		static PlayerStat& GetPlayerStat() { return mPlayerStat; }
 
-
 		// 아이템 함수
 		static void PickUpItems(eItemList item);
 		static int GetItem(eItemList type) { return mPlayerItems[(UINT)type]; }
@@ -31,7 +32,6 @@ namespace js
 		static PlayerStat	mDefaultStat;		// 기초 스텟
 		static PlayerStat	mPlayerStat;		// 플레이어 순정 스텟 (레벨 증가량 포함)
 		static int			mPlayerLevel;		// 플레이어 레벨
-		// 아이템 배열 리스트가 필요함
 		static int			mPlayerItems[(UINT)eItemList::End];
 	};
 }

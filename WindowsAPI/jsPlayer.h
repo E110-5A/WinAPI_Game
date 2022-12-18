@@ -68,8 +68,11 @@ namespace js
 		void SkillProcess();
 		void Skill(eProjectileType type);
 		void JumpProcess();
+
 		//
-		void SetBlock(bool isBlock) { mBlocked = isBlock; }
+		void SetBlocking(bool isBlock) { mBlocking = isBlock; }
+		bool GetBlocking() { return mBlocking; }
+		void SetGround(bool isGround) { mRigidbody->SetGround(isGround); }
 
 	public:
 		// 스스로 함수 호출
@@ -105,7 +108,8 @@ namespace js
 		SkillInfo			mSupressiveFire;
 		SkillInfo			mTacticalDive;
 
-		// 벽에 충돌중인지 확인하는 변수
-		bool				mBlocked;
+		// 외부요인
+	private:
+		bool				mBlocking;
 	};
 }

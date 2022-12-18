@@ -3,13 +3,13 @@
 
 namespace js
 {
-	class Collider;
 	class Creature;
-	class GroundCheck : public GameObject
+	class Collider;
+	class CollisionCheck : public GameObject
 	{
 	public:
-		GroundCheck();
-		~GroundCheck();
+		CollisionCheck();
+		virtual ~CollisionCheck();
 
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
@@ -22,10 +22,10 @@ namespace js
 		Creature* GetOwner() { return mOwner; }
 
 		// 바닥에 충돌했을때 ground 설정
-		void GroundProcess(Collider* other, bool isGround);
+		virtual void Process(Collider* other);
 
-	private:
-		Creature*	mOwner;
-		Collider*	mCollider;
-	};
+	protected:
+		Creature* mOwner;
+		Collider* mCollider;
+	};	
 }

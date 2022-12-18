@@ -1,9 +1,10 @@
 #pragma once
-#include "jsEventObject.h"
+#include "jsCollisionBlock.h"
 
 namespace js
 {
-	class Ladder : public EventObject
+	class Player;
+	class Ladder : public CollisionBlock
 	{
 	public:
 		Ladder();
@@ -14,24 +15,13 @@ namespace js
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 
-		// 씬에서 충돌크기 지정
-		void SetColliderSize(Size size) { mEventCollider->SetSize(size); }
-		// 씬에서 충돌위치 지정
-		void SetColliderOffset(Pos pos) { mEventCollider->SetOffset(pos); }
-
-		// 플레이어 상태 바꾸기
-		void SetPlayerState(Player* player);
-
-
-		// 플레이어 위치 변경
-		void SetPlayerPos(Player* player);
-
-
 		virtual void OnCollisionEnter(Collider* other) override;
 		virtual void OnCollisionStay(Collider* other) override;
 		virtual void OnCollisionExit(Collider* other) override;
-	private:
 
+	protected:
+		// 플레이어 위치 변경
+		virtual void Process(GameObject* target) override;
 	};
 }
 

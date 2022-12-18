@@ -1,3 +1,3 @@
-# WinAPI_Game
+# WinAPI_Game_RoR1
 
-Risk of Rain 모작입니다
+Risk of Rain 1 모작입니다

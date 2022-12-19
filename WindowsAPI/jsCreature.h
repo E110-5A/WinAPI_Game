@@ -1,6 +1,7 @@
 #pragma once
 #include "jsGameObject.h"
 #include "jsPlayerManager.h"
+#include "jsRigidbody.h"
 
 namespace js
 {
@@ -31,7 +32,6 @@ namespace js
 		void SetPlayerHealth(Health stat) { mHealthStat = stat; }
 		void SetPlayerOffence(Offence stat) { mOffenceStat = stat; }
 		void SetPlayerUtility(Utility stat) { mUtilityStat = stat; }
-
 		void SetMonsterStat(float hp, float regen, float defance, float damage, float attackSpeed, float range, float moveSpeed)
 		{
 			mHealthStat.maxHP = hp;
@@ -50,6 +50,20 @@ namespace js
 		}
 
 
+
+		// 기능
+		void BodyCollision(GameObject* other);
+		void SetGround(bool isGround) { mRigidbody->SetGround(isGround); }
+		void JumpCountReset() { mUtilityStat.curJumpCount = 0; }
+
+		// 가해자 오브젝트, 맞은 피해량, 스테거, 위력
+		virtual void SelfHit(GameObject* attaker, float damage, eStagger stagger, float power = 40);
+		virtual void SelfDamaged(float damage);
+		virtual void SelfKnockBack(float dir, eStagger stagger, float power = 40);
+		virtual void SelfStun(float power = 40);
+
+
+
 		// GetSet
 		void SetImage(Image* image) { mSpriteImage = image; }
 		Image* GetImage() { return mSpriteImage; }
@@ -61,11 +75,6 @@ namespace js
 		Animator* GetAnimator() { return mAnimator; }
 		Rigidbody* GetRigidbody() { return mRigidbody; }
 
-		// 가해자 오브젝트, 맞은 피해량, 스테거, 위력
-		virtual void SelfHit(GameObject* attaker, float damage, eStagger stagger, float power = 40);
-		virtual void SelfDamaged(float damage);
-		virtual void SelfKnockBack(float dir, eStagger stagger, float power = 40);
-		virtual void SelfStun(float power = 40);
 
 	protected:
 		Animator*		mAnimator;

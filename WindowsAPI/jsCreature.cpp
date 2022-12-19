@@ -54,10 +54,14 @@ namespace js
 	void Creature::Tick()
 	{
 		GameObject::Tick();
+		mFootObject->Tick();
+		mHeadObject->Tick();
 	}
 	void Creature::Render(HDC hdc)
 	{
 		GameObject::Render(hdc);
+		mFootObject->Render(hdc);
+		mHeadObject->Render(hdc);
 	}
 
 	void Creature::OnCollisionEnter(Collider* other)
@@ -77,12 +81,32 @@ namespace js
 		mRigidbody = AddComponent<Rigidbody>();
 
 		// 벽 충돌 체크 오브젝트 생성 및 할당
-		mFootObject = object::Instantiate<Foot>(eColliderLayer::CollisionCheck);
+		mFootObject = object::Instantiate<Foot>(eColliderLayer::Foot);
 		mFootObject->SetOwner(this);
 		mFootCollider = mFootObject->GetComponent<Collider>();
-		mHeadObject = object::Instantiate<Head>(eColliderLayer::CollisionCheck);
+		mHeadObject = object::Instantiate<Head>(eColliderLayer::Head);
 		mHeadObject->SetOwner(this);
 		mHeadCollider = mHeadObject->GetComponent<Collider>();
+	}
+
+	void Creature::BodyCollision(GameObject* other)
+	{
+		// 벽과 나의 위치 구하기
+		Vector2 targetPos = other->GetPos();
+		Vector2 myPos = GetPos();
+
+		// 상대적인 벽 방향 찾기
+		Vector2 wallLocationDir = myPos - targetPos;
+		if (0 < wallLocationDir.x)					// x가 양수일 경우 벽위치는 내 왼쪽
+			wallLocationDir = Vector2::Left;
+		else
+			wallLocationDir = Vector2::Right;
+
+		// 벽을 향할 경우 x 속력을 0으로 만들기
+		if (wallLocationDir == mDir)
+		{
+			mRigidbody->EraseVelocity(wallLocationDir, mRigidbody->GetVelocity());
+		}
 	}
 
 	void Creature::SelfHit(GameObject* attaker, float damage, eStagger stagger, float power)

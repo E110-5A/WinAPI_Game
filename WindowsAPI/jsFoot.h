@@ -19,12 +19,10 @@ namespace js
 		virtual void OnCollisionStay(Collider* other)override;
 		virtual void OnCollisionExit(Collider* other)override;
 
+		// Climb상태에서 Foot이 Platform과 충돌할경우
 
-	protected:
-		// 바닥에 충돌했을때 ground 설정
-		virtual void Process() override;
+		void ClimbDown(Collider* other);
+		void PlatformCollision(Collider* other);
 
-	private:
-		bool isGround;
 	};
 }

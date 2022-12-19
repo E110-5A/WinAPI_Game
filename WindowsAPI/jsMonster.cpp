@@ -45,6 +45,15 @@ namespace js
 	
 	void Monster::OnCollisionEnter(Collider* other)
 	{
+		GameObject* collisionObj = other->GetOwner();
+		eColliderLayer type = collisionObj->GetType();
+
+		// 벽에 닿음
+		if (type == eColliderLayer::Platform)
+		{
+			// 나아가지 못하게 막기
+			BodyCollision(collisionObj);
+		}
 	}
 	void Monster::OnCollisionStay(Collider* other)
 	{

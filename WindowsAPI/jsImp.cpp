@@ -13,7 +13,7 @@
 #include "jsRigidbody.h"
 
 // 오브젝트
-#include "jsGroundCheck.h"
+#include "jsFoot.h"
 
 namespace js
 {
@@ -83,8 +83,7 @@ namespace js
 
     void Imp::Tick()
     {
-        mFootObject->Tick();
-        GameObject::Tick();
+        Monster::Tick();
 
         // 에니메이션 테스트용
 		if (KEY_DOWN(eKeyCode::L))
@@ -132,7 +131,7 @@ namespace js
     }
     void Imp::Render(HDC hdc)
     {
-        GameObject::Render(hdc);
+        Monster::Render(hdc);
     }
     void Imp::OnCollisionEnter(Collider* other)
     {

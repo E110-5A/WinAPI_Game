@@ -63,16 +63,10 @@ namespace js
 			++mWeaponID;
 		}
 
-		// 기능
-		void Cooldown();
-		void SkillProcess();
-		void Skill(eProjectileType type);
-		void JumpProcess();
 
 		//
 		void SetBlocking(bool isBlock) { mBlocking = isBlock; }
 		bool GetBlocking() { return mBlocking; }
-		void SetGround(bool isGround) { mRigidbody->SetGround(isGround); }
 
 	public:
 		// 스스로 함수 호출
@@ -86,6 +80,8 @@ namespace js
 		void SetState(ePlayerState state) { mState = state; }
 		ePlayerState GetState() { return mState; }
 
+
+	private:
 		void Idle();
 		void Move();
 		void Jump();
@@ -96,6 +92,12 @@ namespace js
 		void SupressiveFire();
 		void Death();
 
+	private:
+		// 기능
+		void Cooldown();
+		void SkillProcess();
+		void Skill(eProjectileType type);
+		void JumpProcess();
 
 	private:
 		ePlayerState		mState;

@@ -23,6 +23,7 @@ namespace js
 	void Head::Initialize()
 	{
 		CollisionCheck::Initialize();
+		SetType(eColliderLayer::Head);
 	}
 	void Head::Tick()
 	{

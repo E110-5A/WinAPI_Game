@@ -6,9 +6,11 @@
 // component
 #include "jsCollider.h"
 #include "jsRigidbody.h"
+#include "jsAnimator.h"
 
 // object
 #include "jsPlayer.h"
+#include "jsFoot.h"
 
 namespace js
 {
@@ -43,31 +45,27 @@ namespace js
 	}
 	void Ladder::OnCollisionStay(Collider* other)
 	{
-		// 플레이어만 충돌가능함
-		Player* player = dynamic_cast<Player*>(other->GetOwner());
-		
-		if ((KEY_DOWN(eKeyCode::UP) || KEY_DOWN(eKeyCode::DOWN)) && ePlayerState::Climb != player->GetState())
+		// Climb이 아닌 상태에서 UP키를 누른 경우
+		if (eColliderLayer::Player == other->GetOwner()->GetType())
 		{
-			player->SetState(ePlayerState::Climb);
+			BodyCollision(other);
 		}
-		// Climb 상태라면
-		Process(player);
 	}
 
 	void Ladder::OnCollisionExit(Collider* other)
 	{
-		if (eColliderLayer::Player != other->GetOwner()->GetType())
-			return;
-		Player* player = dynamic_cast<Player*>(other->GetOwner());
-
-		if (ePlayerState::Climb == player->GetState())
+		if (eColliderLayer::Foot == other->GetOwner()->GetType())
 		{
-			player->SetState(ePlayerState::Idle);
-			player->GetComponent<Rigidbody>()->SetGround(false);
+			FootEscapeLadder(other);
+		}
+		if (eColliderLayer::Player == other->GetOwner()->GetType())
+		{
+			mIsBodyCollision = false;
 		}
 	}
 
-	void Ladder::Process(GameObject* target)
+
+	void Ladder::PullPlayer(GameObject* target)
 	{
 		Player* player = dynamic_cast<Player*>(target);
 		if (ePlayerState::Climb == player->GetState())
@@ -78,6 +76,40 @@ namespace js
 			ladderPos.x += mCollider->GetSize().x / 3 * 2;
 			playerPos.x = ladderPos.x;
 			player->SetPos(playerPos);
+		}
+	}
+
+	void Ladder::BodyCollision(Collider* other)
+	{
+		Player* player = dynamic_cast<Player*>(other->GetOwner());
+		if (nullptr != player)
+		{
+			mIsBodyCollision = true;
+			if (KEY_DOWN(eKeyCode::UP) && ePlayerState::Climb != player->GetState())
+			{
+				player->SetState(ePlayerState::Climb);
+				player->SetGround(true);
+				player->JumpCountReset();
+			}
+			// 상시적용
+			PullPlayer(player);
+		}
+	}
+	void Ladder::FootEscapeLadder(Collider* other)
+	{
+		
+		Foot* foot = dynamic_cast<Foot*>(other->GetOwner());
+		Player* player = dynamic_cast<Player*>(foot->GetOwner());
+
+		// Climb 상태에서 벗어난 경우 (State -> Idle, Ground -> false
+		if (ePlayerState::Climb == player->GetState())
+		{
+			if (Vector2::Right == player->GetDir())
+				player->GetComponent<Animator>()->Play(L"PIdleR");
+			else
+				player->GetComponent<Animator>()->Play(L"PIdleL");
+			player->SetState(ePlayerState::Idle);
+			player->GetRigidbody()->SetGround(false);
 		}
 	}
 }

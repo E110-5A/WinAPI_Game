@@ -1,14 +1,17 @@
 #include "jsFoot.h"
 
+// manager
+#include "jsInput.h"
+
 // component
 #include "jsCollider.h"
 #include "jsRigidbody.h"
 #include "jsAnimator.h"
 
-// collider
+// object
 #include "jsCreature.h"
-
 #include "jsPlayer.h"
+#include "jsLadder.h"
 
 namespace js
 {
@@ -24,6 +27,7 @@ namespace js
 	void Foot::Initialize()
 	{
 		CollisionCheck::Initialize();
+		SetType(eColliderLayer::Foot);
 	}
 	void Foot::Tick()
 	{
@@ -34,48 +38,70 @@ namespace js
 		CollisionCheck::Render(hdc);
 	}
 
+
 	void Foot::OnCollisionEnter(Collider* other)
 	{
-		// rigidbody->ground 상태 변경
-		eColliderLayer objLayer = other->GetOwner()->GetType();
-		if (eColliderLayer::Platform == objLayer)
-			mOwner->GetComponent<Rigidbody>()->SetGround(true);
-
-		// climb 예외처리
-		Player* player = dynamic_cast<Player*>(mOwner);
-		if (nullptr != player && ePlayerState::Climb == player->GetState() && false == player->GetBlocking())
+		// Player State :: Climb 예외처리
+		if (eColliderLayer::Platform == other->GetOwner()->GetType())
 		{
-			player->SetState(ePlayerState::Idle);
-			if (Vector2::Right == player->GetDir())
-				player->GetComponent<Animator>()->Play(L"PIdleR");
-			else
-				player->GetComponent<Animator>()->Play(L"PIdleL");
+			PlatformCollision(other);
 		}
-
-		// 점프 카운트 회복
-		mOwner->GetUtility().curJumpCount = 0;
-
+		
 	}
 
 	void Foot::OnCollisionStay(Collider* other)
 	{
+		// Player State :: Climb 예외처리
+		if (eColliderLayer::Ladder == other->GetOwner()->GetType())
+		{
+			ClimbDown(other);
+		}
 	}
 
 	void Foot::OnCollisionExit(Collider* other)
 	{
-		// Climb 상태라면 땅에서 벗어나도 중력이 적용되지 않음
+		
+	}
 
+
+	void Foot::ClimbDown(Collider* other)
+	{
+		Ladder* ladder = dynamic_cast<Ladder*>(other->GetOwner());
 		Player* player = dynamic_cast<Player*>(mOwner);
-		if (nullptr != player && ePlayerState::Climb == player->GetState())
-			return;
-
-		eColliderLayer objLayer = other->GetOwner()->GetType();
-		if (eColliderLayer::Platform == objLayer)
-			mOwner->GetComponent<Rigidbody>()->SetGround(isGround);
+		if (nullptr != player)
+		{
+			// 꼭대기에서 내려가는 경우
+			if (KEY_DOWN(eKeyCode::DOWN) && ePlayerState::Climb != player->GetState() && false == ladder->IsPlayerCollision())
+			{
+				player->SetState(ePlayerState::Climb);
+				player->SetGround(true);
+				player->JumpCountReset();
+				ladder->PullPlayer(player);
+			}
+		}
 	}
 
-
-	void Foot::Process()
-	{		
+	void Foot::PlatformCollision(Collider* other)
+	{
+		Player* player = dynamic_cast<Player*>(mOwner);
+		if (nullptr != player)
+		{
+			// 사다리를 타고 난 뒤에 땅에 닿은 경우
+			if (ePlayerState::Idle == player->GetState())
+			{
+				player->SetGround(true);
+			}
+			// 사다리 타다가 땅에 닿은 경우
+			if (ePlayerState::Climb == player->GetState() && false == player->GetBlocking())
+			{
+				player->SetState(ePlayerState::Idle);
+				if (Vector2::Right == player->GetDir())
+					player->GetComponent<Animator>()->Play(L"PIdleR");
+				else
+					player->GetComponent<Animator>()->Play(L"PIdleL");
+				player->SetGround(true);
+			}
+		}
 	}
+
 }

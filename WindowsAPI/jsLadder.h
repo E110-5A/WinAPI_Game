@@ -19,9 +19,15 @@ namespace js
 		virtual void OnCollisionStay(Collider* other) override;
 		virtual void OnCollisionExit(Collider* other) override;
 
-	protected:
 		// 플레이어 위치 변경
-		virtual void Process(GameObject* target) override;
+		void PullPlayer(GameObject* target);
+
+		// Climb이 아닌 상태에서 UP키를 누른 경우
+		void BodyCollision(Collider* other);
+		void FootEscapeLadder(Collider* other);
+		bool IsPlayerCollision() { return mIsBodyCollision; }
+	private:
+		bool mIsBodyCollision;
 	};
 }
 

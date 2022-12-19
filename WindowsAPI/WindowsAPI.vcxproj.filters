@@ -184,9 +184,6 @@
     <ClInclude Include="jsRigidbody.h">
       <Filter>1 Engine\Component</Filter>
     </ClInclude>
-    <ClInclude Include="jsTestScene.h">
-      <Filter>1 Engine\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="jsUIBase.h">
       <Filter>1 Engine\GameObject\UI\Base</Filter>
     </ClInclude>
@@ -295,14 +292,8 @@
     <ClInclude Include="jsChest.h">
       <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
     </ClInclude>
-    <ClInclude Include="jsGroundCheck.h">
-      <Filter>1 Engine\GameObject\Creature\Core\CollisionCheck</Filter>
-    </ClInclude>
     <ClInclude Include="jsCreature.h">
       <Filter>1 Engine\GameObject\Creature\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="jsCeilingCheck.h">
-      <Filter>1 Engine\GameObject\Creature\Core\CollisionCheck</Filter>
     </ClInclude>
     <ClInclude Include="jsCollisionCheck.h">
       <Filter>1 Engine\GameObject\Creature\Core\CollisionCheck\Core</Filter>
@@ -318,6 +309,12 @@
     </ClInclude>
     <ClInclude Include="jsFoot.h">
       <Filter>1 Engine\GameObject\Creature\Core\CollisionCheck</Filter>
+    </ClInclude>
+    <ClInclude Include="jsTestScene.h">
+      <Filter>1 Engine\Scene\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="jsPropellant.h">
+      <Filter>1 Engine\GameObject\EventObj\Propellant</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -384,9 +381,6 @@
     </ClCompile>
     <ClCompile Include="jsRigidbody.cpp">
       <Filter>1 Engine\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="jsTestScene.cpp">
-      <Filter>1 Engine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="jsUIBase.cpp">
       <Filter>1 Engine\GameObject\UI\Base</Filter>
@@ -496,14 +490,8 @@
     <ClCompile Include="jsChest.cpp">
       <Filter>1 Engine\GameObject\EventObj\Chest</Filter>
     </ClCompile>
-    <ClCompile Include="jsGroundCheck.cpp">
-      <Filter>1 Engine\GameObject\Creature\Core\CollisionCheck</Filter>
-    </ClCompile>
     <ClCompile Include="jsCreature.cpp">
       <Filter>1 Engine\GameObject\Creature\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="jsCeilingCheck.cpp">
-      <Filter>1 Engine\GameObject\Creature\Core\CollisionCheck</Filter>
     </ClCompile>
     <ClCompile Include="jsCollisionCheck.cpp">
       <Filter>1 Engine\GameObject\Creature\Core\CollisionCheck\Core</Filter>
@@ -519,6 +507,12 @@
     </ClCompile>
     <ClCompile Include="jsFoot.cpp">
       <Filter>1 Engine\GameObject\Creature\Core\CollisionCheck</Filter>
+    </ClCompile>
+    <ClCompile Include="jsTestScene.cpp">
+      <Filter>1 Engine\Scene\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="jsPropellant.cpp">
+      <Filter>1 Engine\GameObject\EventObj\Propellant</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

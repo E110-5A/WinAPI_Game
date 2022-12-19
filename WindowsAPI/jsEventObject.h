@@ -28,12 +28,11 @@ namespace js
 		EventObject();
 		EventObject(Pos pos);
 		virtual ~EventObject();
-
-		// 타입, 충돌체, 스케일
+				
 		virtual void Initialize() override;
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
-				
+
 		virtual void SetComponent() override;
 
 		virtual void OnCollisionEnter(Collider* other) override;

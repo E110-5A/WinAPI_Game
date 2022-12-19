@@ -41,7 +41,6 @@ enum class eSceneType
 	End,
 };
 
-
 // UI enum
 enum class eUIType
 {
@@ -85,7 +84,7 @@ typedef ColliderID TileID;
 #define TILE_LINE_X 12			// 아틀라스 가로 개수
 #define TILE_LINE_Y 6			// 아틀라스 세로 개수
 
-#define GRID_SIZE 64
+#define GRID_SIZE 64			// 타일 크기
 
 
 // Component enum
@@ -100,21 +99,26 @@ enum class eComponentType
 };
 enum class eColliderLayer
 {
-	Default,					//	1		// None
-	BackGroundImage,			//	2		// 이미지만 존재하는 배경 이미지
-	Tile,						//	3		// 타일로 존재하는 배경 오브젝트
-	BGObj,						//	4		// 이미지 외에 컴포넌트가 필요한 배경 오브젝트
-	
-	EventObject,				//	5		// 기타 충돌시 작동하는 이벤트 오브젝트
-	Platform,					//	6		// 벽 역할을 하는 오브젝트
+	Default,					//	0	//	// None
+	BackGroundImage,			//	1		// 이미지만 존재하는 배경 이미지
+	Tile,						//	2		// 타일로 존재하는 배경 오브젝트
+	BGObj,						//	3		// 이미지 외에 컴포넌트가 필요한 배경 오브젝트
+
+								//	4	//
+
+	EventObject,				//	4		// 트리거를 가진 오브젝트
+	Platform,					//	5		// 벽
+	Ladder,						//	6		// 사다리
 	Propellant,					//	7		// 오브젝트를 위로 날려버림
-	CollisionCheck,				//	8		// 오브젝트의 충돌처리를 돕는 오브젝트
+	Head,						//	8		// Creature 머리충돌
+	Foot,						//	9		// Creature 바닥충돌
 
-	Player,						//	9		// 
-	Player_Projectile,			//	10		// 플레이어가 매개가 되는 공격 투사체 (스킬과 아이템효과)
-	Monster,					//	11		// 플레이어 투사체에 의해서만 피해를 입음
+								//  10	//
 
-	DamagingObj,				//	12		// 용암바닥, 몬스터 투사체 등
+	Player,						//	10		// 
+	Player_Projectile,			//	11		// 플레이어가 매개가 되는 투사체 (스킬과 아이템효과)
+	Monster,					//	12		// 플레이어 투사체에 의해서만 피해를 입음
+	DamagingObj,				//	13		// 용암바닥, 몬스터 투사체 등
 
 	UI = _COLLIDER_LAYER - 1,	//	14
 	End = _COLLIDER_LAYER,		//	15
@@ -124,10 +128,10 @@ enum class eColliderLayer
 // Object enum
 enum class ePlayerState
 {
-	Idle,		// 아무 상태로 변환 가능
-	Move,		// 아무 상태로 변환 가능
-	Jump,		// 아무 상태로 변환 가능
-	Climb,		// 점프만 사용가능
+	Idle,		
+	Move,		
+	Jump,		
+	Climb,		
 	DoubleTab,
 	FMJ,
 	TacticalDive,		

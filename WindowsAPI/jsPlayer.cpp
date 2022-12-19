@@ -21,8 +21,9 @@
 // 오브젝트
 #include "jsObject.h"
 #include "jsPlayerProjectile.h"
-#include "jsGroundCheck.h"
 #include "jsMonster.h"
+#include "jsFoot.h"
+#include "jsHead.h"
 
 namespace js
 {
@@ -164,10 +165,7 @@ namespace js
 	{
 		// Death 상태일경우 ret
 
-		// 본인 컴포넌트 Tick 호출
-		mFootObject->Tick();
-		mHeadObject->Tick();
-		GameObject::Tick();
+		Creature::Tick();
 
 		// 스킬 기능
 		Cooldown();
@@ -430,14 +428,22 @@ namespace js
 		mRigidbody->SetVelocity(velocity);
 	}
 
-	// Collider, State 시각적 디버깅
+	// Collider, State 등 시각적 디버깅
 	void Player::Render(HDC hdc)
 	{
-		mFootObject->Render(hdc);
-		GameObject::Render(hdc);
+		Creature::Render(hdc);
 		func::DebugTextRender(hdc, L"현재 State :", std::to_wstring((int)mState), 10, 130);
+		func::DebugTextRender(hdc, L"Z", L" 기본공격", 5, 150);
+		func::DebugTextRender(hdc, L"X", L" 관통 공격 (쿨다운3초)", 5, 165);
+		func::DebugTextRender(hdc, L"C", L" 회피 (쿨다운5초)", 5, 180);
+		func::DebugTextRender(hdc, L"V", L" 연사 (쿨다운5초)", 5, 195);
+
+		func::DebugTextRender(hdc, L"A", L" 상자 열기", 5, 220);
+
+		func::DebugTextRender(hdc, L"Left, Right", L" 이동", 5, 235);
+		func::DebugTextRender(hdc, L"Up, Donw", L" 사다리 타기", 5, 250);
 	}
-		
+	
 	
 	// 필요없음
 	/*void Player::ReturnIdle()
@@ -818,14 +824,14 @@ namespace js
 		if (KEY_DOWN(eKeyCode::SPACE) && false == mBlocking)
 		{
 			mRigidbody->SetGround(false);
-			mState = ePlayerState::Jump;
 			JumpProcess();
+			mState = ePlayerState::Jump;
 		}
 		if (KEY_DOWN(eKeyCode::C) && false == mBlocking)
 		{
 			if (false == mTacticalDive.active)
 			{
-				mRigidbody->SetGround(true);
+				mRigidbody->SetGround(false);
 
 				if (Vector2::Right == mDir)
 					mAnimator->Play(L"PDiveR", false);
@@ -845,12 +851,17 @@ namespace js
 
 	void Player::OnCollisionEnter(Collider* other)
 	{
-		eColliderLayer type = other->GetOwner()->GetType();
+		GameObject* collisionObj = other->GetOwner();
+		eColliderLayer type = collisionObj->GetType();
 
 		// 벽에 닿음
 		if (type == eColliderLayer::Platform)
 		{
+			// 벽안으로 들어감
 			mBlocking = true;
+			// Climb 상태가 아니라면 나아가지 못하게 막기
+			if (ePlayerState::Climb != mState)
+				BodyCollision(collisionObj);
 		}
 		
 		// 공격 받음
@@ -863,6 +874,17 @@ namespace js
 	}
 	void Player::OnCollisionStay(Collider* other)
 	{
+		GameObject* collisionObj = other->GetOwner();
+		eColliderLayer type = collisionObj->GetType();
+		// 벽에 닿음
+		if (type == eColliderLayer::Platform)
+		{
+			// 벽밖으로 나옴
+			mBlocking = true;
+			// Climb 상태가 아니라면 나아가지 못하게 막기
+			if (ePlayerState::Climb != mState)
+				BodyCollision(collisionObj);
+		}
 	}
 	void Player::OnCollisionExit(Collider* other)
 	{

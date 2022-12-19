@@ -19,8 +19,9 @@ namespace js
 		virtual void OnCollisionStay(Collider* other)override;
 		virtual void OnCollisionExit(Collider* other)override;
 
+		// 대상의 Ground상태 변경, 점프카운트 초기화, Climb 예외처리
+		void TargetSetGround(GameObject* target, bool isGround);
+		void TargetJumpCountReset(GameObject* target);
 
-	protected:
-		virtual void Process(GameObject* other) override;
 	};
 }

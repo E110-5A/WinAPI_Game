@@ -6,7 +6,8 @@
 
 // object
 #include "jsCreature.h"
-#include "jsGroundCheck.h"
+#include "jsFoot.h"
+#include "jsPlayer.h"
 
 namespace js
 {
@@ -38,50 +39,60 @@ namespace js
 
 	void Platform::OnCollisionEnter(Collider* other)
 	{
-		GameObject* tempObj = other->GetOwner();
+		GameObject* target = other->GetOwner();
 		
-		if (eColliderLayer::CollisionCheck != tempObj->GetType())
-			Process(tempObj);
+		// 바닥 <-> 발바닥 충돌
+		if (eColliderLayer::Foot == target->GetType())
+		{
+			// 대상의 Ground상태 변경, 점프카운트 초기화, Climb 예외처리
+			TargetSetGround(target, true);
+			TargetJumpCountReset(target);
+		}
 	}
 	void Platform::OnCollisionStay(Collider* other)
 	{
 		GameObject* tempObj = other->GetOwner();
 
-		if (eColliderLayer::CollisionCheck != tempObj->GetType())
-			Process(tempObj);
+
 	}
 	void Platform::OnCollisionExit(Collider* other)
 	{
-	}
+		GameObject* target = other->GetOwner();
 
-	// 충돌중인 경우에만 진입
-	void Platform::Process(GameObject* other)
-	{
-		// 대상 오브젝트의 정보 가져오기
-		Rigidbody* targetRigidbody = other->GetComponent<Rigidbody>();
-
-		// 대상 오브젝트와 나의 위치 구하기
-		Vector2 targetPos = other->GetPos();
-		Vector2 wallPos = GetPos();
-
-		// 두 오브젝트의 위치를 구해서 방향 찾기
-		Vector2 wallLocationDir = wallPos - targetPos;
-		if (0 > wallLocationDir.x)
-			wallLocationDir = Vector2::Left;
-		else
-			wallLocationDir = Vector2::Right;
-		
-		// 대상 오브젝트의 x성분 추출
-		Vector2 targetVelocity = targetRigidbody->GetVelocity();
-		float dot = math::Dot(targetVelocity, wallLocationDir);
-
-		// 대상이 나를 향한경우 velocity의 x성분을 0으로 만들기
-		Vector2 targetDir = other->GetDir();
-		if (wallLocationDir == targetDir)
+		// 바닥 <-> 발바닥 충돌
+		if (eColliderLayer::Foot == target->GetType())
 		{
-			// 0 = 속도 - (방향 *성분)
-			targetVelocity -= wallLocationDir * dot;
-			targetRigidbody->SetVelocity(targetVelocity);
+			// Ground = false (if state::Climb, ignore)
+			TargetSetGround(target, false);
 		}
 	}
+
+	void Platform::TargetSetGround(GameObject* foot, bool isGround)
+	{
+		// Target 형변환
+		Creature* target = dynamic_cast<Foot*>(foot)->GetOwner();
+		
+		// Climb 예외처리
+		if (eColliderLayer::Player == target->GetType())
+		{
+			if (ePlayerState::Climb != dynamic_cast<Player*>(target)->GetState())
+			{
+				// Ground setting
+				target->GetRigidbody()->SetGround(isGround);
+			}
+		}
+		else
+		{
+			// Ground setting
+			target->GetRigidbody()->SetGround(isGround);
+		}
+	}
+
+	void Platform::TargetJumpCountReset(GameObject* foot)
+	{
+		// Target 형변환
+		Creature* target = dynamic_cast<Foot*>(foot)->GetOwner();
+		target->JumpCountReset();
+	}
+
 }

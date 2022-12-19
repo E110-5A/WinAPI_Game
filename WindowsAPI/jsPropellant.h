@@ -1,15 +1,14 @@
 #pragma once
-#include "jsGameObject.h"
+#include "jsEventObject.h"
 
 namespace js
 {
-	class Collider;
-	class CollisionBlock : public GameObject
+	class Propellant : public EventObject
 	{
 	public:
-		CollisionBlock();
-		CollisionBlock(Pos pos);
-		virtual ~CollisionBlock();
+		Propellant();
+		Propellant(Pos pos);
+		virtual ~Propellant();
 
 		virtual void Initialize() override;
 		virtual void Tick() override;
@@ -19,12 +18,9 @@ namespace js
 		virtual void OnCollisionStay(Collider* other) override;
 		virtual void OnCollisionExit(Collider* other) override;
 
+		void Push();
 
-		void SetColliderSize(Size size) { mCollider->SetSize(size); }
-		void SetColliderOffset(Pos pos) { mCollider->SetOffset(pos); }
+	private:
 
-
-	protected:
-		Collider* mCollider;
 	};
 }

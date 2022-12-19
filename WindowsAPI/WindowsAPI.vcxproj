@@ -136,7 +136,6 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="jsAnimation.h" />
     <ClInclude Include="jsAnimator.h" />
-    <ClInclude Include="jsCeilingCheck.h" />
     <ClInclude Include="jsChest.h" />
     <ClInclude Include="jsCollisionBlock.h" />
     <ClInclude Include="jsCollisionCheck.h" />
@@ -158,7 +157,6 @@
     <ClInclude Include="jsHead.h" />
     <ClInclude Include="jsLadder.h" />
     <ClInclude Include="jsPlatform.h" />
-    <ClInclude Include="jsGroundCheck.h" />
     <ClInclude Include="jsHUD.h" />
     <ClInclude Include="jsImp.h" />
     <ClInclude Include="jsItemObject.h" />
@@ -168,6 +166,7 @@
     <ClInclude Include="jsPanel.h" />
     <ClInclude Include="jsPlayerManager.h" />
     <ClInclude Include="jsPoolManager.h" />
+    <ClInclude Include="jsPropellant.h" />
     <ClInclude Include="jsSelectScene.h" />
     <ClInclude Include="jsShrine.h" />
     <ClInclude Include="jsSmallChest.h" />
@@ -203,7 +202,6 @@
   <ItemGroup>
     <ClCompile Include="jsAnimation.cpp" />
     <ClCompile Include="jsAnimator.cpp" />
-    <ClCompile Include="jsCeilingCheck.cpp" />
     <ClCompile Include="jsChest.cpp" />
     <ClCompile Include="jsCollisionBlock.cpp" />
     <ClCompile Include="jsCollisionCheck.cpp" />
@@ -225,7 +223,6 @@
     <ClCompile Include="jsHead.cpp" />
     <ClCompile Include="jsLadder.cpp" />
     <ClCompile Include="jsPlatform.cpp" />
-    <ClCompile Include="jsGroundCheck.cpp" />
     <ClCompile Include="jsHUD.cpp" />
     <ClCompile Include="jsImp.cpp" />
     <ClCompile Include="jsItemObject.cpp" />
@@ -235,6 +232,7 @@
     <ClCompile Include="jsPanel.cpp" />
     <ClCompile Include="jsPlayerManager.cpp" />
     <ClCompile Include="jsPoolManager.cpp" />
+    <ClCompile Include="jsPropellant.cpp" />
     <ClCompile Include="jsSelectScene.cpp" />
     <ClCompile Include="jsShrine.cpp" />
     <ClCompile Include="jsSmallChest.cpp" />

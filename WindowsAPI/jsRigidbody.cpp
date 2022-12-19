@@ -46,15 +46,14 @@ namespace js
 
 	void Rigidbody::GravityAction()
 	{
-		// 중력 제거
 		if (mIsGround)
 		{
-			VelocityControl(mGravity, mVelocity);
+			// 중력 제거
+			EraseVelocity(mGravity, mVelocity);
 		}
-		// 중력 적용
 		else
 		{
-			// 현재 속도를 중력의 영향에 받도록 한다 (현재 속도의 y성분에 중력 가속도에 비례한 값을 추가한다)
+			// 중력 적용
 			mVelocity += mGravity * Time::GetDeltaTime() * 2.0f;
 		}
 	}
@@ -106,7 +105,7 @@ namespace js
 		mVelocity = gravity + sideVelocity;
 	}
 
-	void Rigidbody::VelocityControl(Vector2 dir, Vector2 velocity)
+	void Rigidbody::EraseVelocity(Vector2 dir, Vector2 velocity)
 	{
 		// 단위벡터 구하기
 		Vector2 unit = dir;

@@ -7,8 +7,8 @@ namespace js
 	class Image;
 	class Animator;
 	class Rigidbody;
-	class GroundCheck;
-	class CeilingCheck;
+	class Foot;
+	class Head;
 	class Creature : public GameObject
 	{
 	public:
@@ -58,6 +58,9 @@ namespace js
 		Offence& GetOffence() { return mOffenceStat; }
 		Utility& GetUtility() { return mUtilityStat; }
 
+		Animator* GetAnimator() { return mAnimator; }
+		Rigidbody* GetRigidbody() { return mRigidbody; }
+
 		// 가해자 오브젝트, 맞은 피해량, 스테거, 위력
 		virtual void SelfHit(GameObject* attaker, float damage, eStagger stagger, float power = 40);
 		virtual void SelfDamaged(float damage);
@@ -78,8 +81,8 @@ namespace js
 		eStagger		mResistance;
 
 	protected:
-		GroundCheck*	mFootObject;
-		CeilingCheck*	mHeadObject;
+		Foot*			mFootObject;
+		Head*			mHeadObject;
 		Image*			mSpriteImage;
 	};
 }

@@ -1,4 +1,4 @@
-#include "jsGroundCheck.h"
+#include "jsFoot.h"
 
 // component
 #include "jsCollider.h"
@@ -13,42 +13,36 @@
 namespace js
 {
 
-	GroundCheck::GroundCheck()
-		: mOwner(nullptr)
-		, mCollider(nullptr)
+	Foot::Foot()
 	{
-		SetType(eColliderLayer::CollisionCheck);
+		Initialize();
 	}
-
-	GroundCheck::~GroundCheck()
+	Foot::~Foot()
 	{
 	}
 
-	void GroundCheck::Initialize()
+	void Foot::Initialize()
 	{
+		CollisionCheck::Initialize();
+	}
+	void Foot::Tick()
+	{
+		CollisionCheck::Tick();
+	}
+	void Foot::Render(HDC hdc)
+	{
+		CollisionCheck::Render(hdc);
 	}
 
-	void GroundCheck::Tick()
+	void Foot::OnCollisionEnter(Collider* other)
 	{
-		if (nullptr == mCollider)
-			mCollider = GetComponent<Collider>();
-		
-		SetPos(mOwner->GetPos());
+		// rigidbody->ground 상태 변경
+		eColliderLayer objLayer = other->GetOwner()->GetType();
+		if (eColliderLayer::Platform == objLayer)
+			mOwner->GetComponent<Rigidbody>()->SetGround(true);
 
-		GameObject::Tick();
-	}
-
-	void GroundCheck::Render(HDC hdc)
-	{
-		GameObject::Render(hdc);
-	}
-
-	void GroundCheck::OnCollisionEnter(Collider* other)
-	{		
+		// climb 예외처리
 		Player* player = dynamic_cast<Player*>(mOwner);
-		GroundProcess(other, true);
-
-		// 1) 발이 땅에 닿고,	 2)벽에 부딧친 상태가 아니라면		Climb -> Idle
 		if (nullptr != player && ePlayerState::Climb == player->GetState() && false == player->GetBlocking())
 		{
 			player->SetState(ePlayerState::Idle);
@@ -60,27 +54,28 @@ namespace js
 
 		// 점프 카운트 회복
 		mOwner->GetUtility().curJumpCount = 0;
+
 	}
 
-	void GroundCheck::OnCollisionStay(Collider* other)
+	void Foot::OnCollisionStay(Collider* other)
 	{
 	}
 
-	void GroundCheck::OnCollisionExit(Collider* other)
+	void Foot::OnCollisionExit(Collider* other)
 	{
-		Player* player = dynamic_cast<Player*>(mOwner);
-
 		// Climb 상태라면 땅에서 벗어나도 중력이 적용되지 않음
+
+		Player* player = dynamic_cast<Player*>(mOwner);
 		if (nullptr != player && ePlayerState::Climb == player->GetState())
 			return;
-		
-		GroundProcess(other, false);
-	}
 
-	void GroundCheck::GroundProcess(Collider* other, bool isGround)
-	{
 		eColliderLayer objLayer = other->GetOwner()->GetType();
 		if (eColliderLayer::Platform == objLayer)
 			mOwner->GetComponent<Rigidbody>()->SetGround(isGround);
+	}
+
+
+	void Foot::Process()
+	{		
 	}
 }

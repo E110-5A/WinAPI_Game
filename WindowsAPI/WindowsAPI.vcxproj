@@ -151,9 +151,11 @@
     <ClInclude Include="jsCreature.h" />
     <ClInclude Include="jsEntity.h" />
     <ClInclude Include="jsEventObject.h" />
+    <ClInclude Include="jsFoot.h" />
     <ClInclude Include="jsGameManager.h" />
     <ClInclude Include="jsGameObject.h" />
     <ClInclude Include="jsGoldenChest.h" />
+    <ClInclude Include="jsHead.h" />
     <ClInclude Include="jsLadder.h" />
     <ClInclude Include="jsPlatform.h" />
     <ClInclude Include="jsGroundCheck.h" />
@@ -216,9 +218,11 @@
     <ClCompile Include="jsCreature.cpp" />
     <ClCompile Include="jsEntity.cpp" />
     <ClCompile Include="jsEventObject.cpp" />
+    <ClCompile Include="jsFoot.cpp" />
     <ClCompile Include="jsGameManager.cpp" />
     <ClCompile Include="jsGameObject.cpp" />
     <ClCompile Include="jsGoldenChest.cpp" />
+    <ClCompile Include="jsHead.cpp" />
     <ClCompile Include="jsLadder.cpp" />
     <ClCompile Include="jsPlatform.cpp" />
     <ClCompile Include="jsGroundCheck.cpp" />

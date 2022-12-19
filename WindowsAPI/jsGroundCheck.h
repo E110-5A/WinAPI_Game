@@ -11,6 +11,7 @@ namespace js
 		GroundCheck();
 		~GroundCheck();
 
+		virtual void Initialize() override;
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 

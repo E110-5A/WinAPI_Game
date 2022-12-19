@@ -313,6 +313,12 @@
     <ClInclude Include="jsCollisionBlock.h">
       <Filter>1 Engine\GameObject\CollisionBlock</Filter>
     </ClInclude>
+    <ClInclude Include="jsHead.h">
+      <Filter>1 Engine\GameObject\Creature\Core\CollisionCheck</Filter>
+    </ClInclude>
+    <ClInclude Include="jsFoot.h">
+      <Filter>1 Engine\GameObject\Creature\Core\CollisionCheck</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -507,6 +513,12 @@
     </ClCompile>
     <ClCompile Include="jsCollisionBlock.cpp">
       <Filter>1 Engine\GameObject\CollisionBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="jsHead.cpp">
+      <Filter>1 Engine\GameObject\Creature\Core\CollisionCheck</Filter>
+    </ClCompile>
+    <ClCompile Include="jsFoot.cpp">
+      <Filter>1 Engine\GameObject\Creature\Core\CollisionCheck</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

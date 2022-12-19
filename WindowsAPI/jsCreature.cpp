@@ -7,8 +7,8 @@
 
 // object
 #include "jsObject.h"
-#include "jsGroundCheck.h"
-#include "jsCeilingCheck.h"
+#include "jsFoot.h"
+#include "jsHead.h"
 
 namespace js
 {
@@ -77,12 +77,12 @@ namespace js
 		mRigidbody = AddComponent<Rigidbody>();
 
 		// 벽 충돌 체크 오브젝트 생성 및 할당
-		mFootObject = object::Instantiate<GroundCheck>(eColliderLayer::CollisionCheck);
+		mFootObject = object::Instantiate<Foot>(eColliderLayer::CollisionCheck);
 		mFootObject->SetOwner(this);
-		mFootCollider = mFootObject->AddComponent<Collider>();
-		mHeadObject = object::Instantiate<CeilingCheck>(eColliderLayer::CollisionCheck);
+		mFootCollider = mFootObject->GetComponent<Collider>();
+		mHeadObject = object::Instantiate<Head>(eColliderLayer::CollisionCheck);
 		mHeadObject->SetOwner(this);
-		mHeadCollider = mHeadObject->AddComponent<Collider>();
+		mHeadCollider = mHeadObject->GetComponent<Collider>();
 	}
 
 	void Creature::SelfHit(GameObject* attaker, float damage, eStagger stagger, float power)

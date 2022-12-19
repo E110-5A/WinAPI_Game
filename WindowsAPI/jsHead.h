@@ -1,15 +1,15 @@
 #pragma once
-#include "jsGameObject.h"
+#include "jsCollisionCheck.h"
 
 namespace js
 {
-	class Creature;
 	class Collider;
-	class CollisionCheck : public GameObject
+	class Creature;
+	class Head : public CollisionCheck
 	{
 	public:
-		CollisionCheck();
-		virtual ~CollisionCheck();
+		Head();
+		~Head();
 
 		virtual void Initialize() override;
 		virtual void Tick() override;
@@ -19,14 +19,8 @@ namespace js
 		virtual void OnCollisionStay(Collider* other)override;
 		virtual void OnCollisionExit(Collider* other)override;
 
-		void SetOwner(Creature* owner) { mOwner = owner; }
-		Creature* GetOwner() { return mOwner; }
-
-		// 바닥에 충돌했을때 ground 설정
-		virtual void Process() {}
-
 	protected:
-		Creature* mOwner;
-		Collider* mCollider;
-	};	
+		// 천장에 충돌했을때
+		virtual void Process() override;
+	};
 }

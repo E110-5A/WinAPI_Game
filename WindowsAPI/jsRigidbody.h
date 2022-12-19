@@ -19,13 +19,14 @@ namespace js
 		void SetVelocity(Vector2 velocity) { mVelocity = velocity; }
 
 
+		// unit : 속도 통제 방향, inner : 현재 속도
+		void EraseVelocity(Vector2 unit, Vector2 inner);
+
 	private:
 		void GravityAction();
 		void FrictionAction();
 		void LimitVelocityAction();
 
-		// unit : 속도 통제 방향, inner : 현재 속도
-		void VelocityControl(Vector2 unit, Vector2 inner);
 
 	private:
 		float	mMass;		// 질량

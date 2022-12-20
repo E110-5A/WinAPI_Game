@@ -28,7 +28,7 @@
 #include "jsBGObj.h"
 #include "jsPlatform.h"
 #include "jsLadder.h"
-
+#include "jsPropellant.h"
 
 // component
 #include "jsCollider.h"
@@ -110,17 +110,19 @@ namespace js
 		mainGround->SetColliderSize(Size(GRID_SIZE * 16, GRID_SIZE));
 		mainGround->SetColliderOffset(Vector2(GRID_SIZE * 8, GRID_SIZE / 2));
 
-		Platform* secondGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(64.0f, 512.0f));
-		secondGround->SetColliderSize(Size(GRID_SIZE * 16, GRID_SIZE));
-		secondGround->SetColliderOffset(Vector2(GRID_SIZE * 8, GRID_SIZE / 2));
+		Platform* secondGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(128.0f, 512.0f));
+		secondGround->SetColliderSize(Size(GRID_SIZE * 5, GRID_SIZE));
+		secondGround->SetColliderOffset(Vector2(GRID_SIZE * 5 / 2, GRID_SIZE / 2));
 
-		/*Platform* rock = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(256.0f, 576.0f));
-		rock->SetColliderSize(Size(GRID_SIZE, GRID_SIZE));
-		rock->SetColliderOffset(Pos(GRID_SIZE / 2, GRID_SIZE / 2));*/
+		Platform* thirdGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(702.0f, 448.0f));
+		thirdGround->SetColliderSize(Size(GRID_SIZE * 5, GRID_SIZE * 2));
+		thirdGround->SetColliderOffset(Vector2(GRID_SIZE * 5 / 2, GRID_SIZE * 2 / 2));
 
 		Ladder* ladder = object::Instantiate<Ladder>(eColliderLayer::Ladder, Pos(256.0f, 512.0f));
 		ladder->SetColliderSize(Size(GRID_SIZE, GRID_SIZE * 2));
 		ladder->SetColliderOffset(Vector2(GRID_SIZE / 2, GRID_SIZE * 2 / 2));
+
+		Propellant* propellant = object::Instantiate<Propellant>(eColliderLayer::EventObject, Pos(610, 550));
 	}
 
 	void TestScene::ObjectTest()

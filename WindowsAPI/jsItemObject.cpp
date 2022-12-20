@@ -30,7 +30,7 @@ namespace js
     {
         EventObject::Initialize();
         // 아이템 이미지 세팅
-        SetImage(L"Items", L"..\\Resources\\Image\\Item\\Items.bmp");
+        SetImage(L"Items", L"..\\Resources\\Image\\EventObject\\Items.bmp");
 
         // 콜라이더 설정
         mEventCollider->SetSize(Size(ITEM_SIZE * TILE_SCALE, ITEM_SIZE * TILE_SCALE));

@@ -136,9 +136,9 @@ namespace js
 		}
 
 		// 기타 오브젝트 설정
-		EventObject* smallBox = object::Instantiate<SmallChest>(eColliderLayer::EventObject, Pos(70.0f, 600.0f));
-		EventObject* largeBox = object::Instantiate<LargeChest>(eColliderLayer::EventObject, Pos(140.0f, 600.0f));
-		EventObject* goldenBox = object::Instantiate<GoldenChest>(eColliderLayer::EventObject, Pos(220.0f, 600.0f));
+		EventObject* smallBox = object::Instantiate<SmallChest>(eColliderLayer::EventObject, Pos(70.0f, 610.0f));
+		EventObject* largeBox = object::Instantiate<LargeChest>(eColliderLayer::EventObject, Pos(140.0f, 610.0f));
+		EventObject* goldenBox = object::Instantiate<GoldenChest>(eColliderLayer::EventObject, Pos(220.0f, 610.0f));
 		
 		// 몬스터 설정
 		//Monster* imp = object::Instantiate<Imp>(  eColliderLayer::Monster, Pos(700.f, 550.0f));
@@ -159,6 +159,7 @@ namespace js
 		CollisionManager::SetLayer(eColliderLayer::Ladder, eColliderLayer::Player, true);
 
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::EventObject, true);
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Item, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::DamagingObj, true);
 		
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::EventObject, true);

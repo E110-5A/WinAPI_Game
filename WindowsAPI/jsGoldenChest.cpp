@@ -35,11 +35,7 @@ namespace js
     void GoldenChest::Initialize()
     {
         Chest::Initialize();
-        SetImage(L"GoldBox", L"..\\Resources\\Image\\Item\\GoldBox.bmp");
-        mEventCollider->SetSize(Size(80.0f, 45.0f));
-        mEventCollider->SetOffset(Vector2(23.0f, 10.0f));
-        // 상자와 대응하는 아이템 생성
-        mItemObject = object::Instantiate<ItemObject>(eColliderLayer::EventObject);
+        SetIndex((UINT)eChestIndex::Golden);
     }
 
     void GoldenChest::Tick()
@@ -54,6 +50,7 @@ namespace js
 
     void GoldenChest::OnCollisionEnter(Collider* other)
     {
+        Chest::OnCollisionEnter(other);
     }
     void GoldenChest::OnCollisionStay(Collider* other)
     {
@@ -61,6 +58,7 @@ namespace js
     }
     void GoldenChest::OnCollisionExit(Collider* other)
     {
+        Chest::OnCollisionExit(other);
     }
     void GoldenChest::Trigger()
     {
@@ -73,5 +71,6 @@ namespace js
 
         // 비활성화 하기
         mAble = false;
+        SetIndex((UINT)eChestIndex::Golden_Open);
     }
 }

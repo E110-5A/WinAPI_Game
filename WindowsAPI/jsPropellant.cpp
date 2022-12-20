@@ -12,9 +12,11 @@ namespace js
 	Propellant::~Propellant()
 	{
 	}
-
+	// Propellant.bmp
 	void Propellant::Initialize()
 	{
+		SetImage(L"GoldBox", L"..\\Resources\\Image\\EventObject\\Propellant.bmp");
+
 	}
 	void Propellant::Tick()
 	{

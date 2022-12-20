@@ -33,11 +33,7 @@ namespace js
     void SmallChest::Initialize()
     {
         Chest::Initialize();
-        // 이미지
-        SetImage(L"SmallBox", L"..\\Resources\\Image\\Item\\SmallBox.bmp");
-        // 충돌체
-        mEventCollider->SetSize(Size(50.0f, 35.0f));
-        mEventCollider->SetOffset(Vector2(15.0f, 12.0f));
+        SetIndex((UINT)eChestIndex::Small);
     }
 
     void SmallChest::Tick()
@@ -51,6 +47,7 @@ namespace js
 
     void SmallChest::OnCollisionEnter(Collider* other)
     {
+        Chest::OnCollisionEnter(other);
     }
     void SmallChest::OnCollisionStay(Collider* other)
     {
@@ -58,6 +55,7 @@ namespace js
     }
     void SmallChest::OnCollisionExit(Collider* other)
     {
+        Chest::OnCollisionExit(other);
     }
 
     void SmallChest::Trigger()
@@ -80,5 +78,6 @@ namespace js
 
         // 비활성화 하기
         mAble = false;
+        SetIndex((UINT)eChestIndex::Small_Open);
     }
 }

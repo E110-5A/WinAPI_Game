@@ -32,12 +32,7 @@ namespace js
     void LargeChest::Initialize()
     {
         Chest::Initialize();
-
-        SetImage(L"LargeBox", L"..\\Resources\\Image\\Item\\LargeBox.bmp");
-        mEventCollider->SetSize(Size(60.0f, 40.0f));
-        mEventCollider->SetOffset(Vector2(19.0f, 12.0f));
-        // 상자와 대응하는 아이템 생성
-        mItemObject = object::Instantiate<ItemObject>(eColliderLayer::EventObject);
+        SetIndex((UINT)eChestIndex::Large);
     }
 
     void LargeChest::Tick()
@@ -51,6 +46,7 @@ namespace js
 
     void LargeChest::OnCollisionEnter(Collider* other)
     {
+        Chest::OnCollisionEnter(other);
     }
     void LargeChest::OnCollisionStay(Collider* other)
     {
@@ -58,6 +54,7 @@ namespace js
     }
     void LargeChest::OnCollisionExit(Collider* other)
     {
+        Chest::OnCollisionExit(other);
     }
 
     void LargeChest::Trigger()
@@ -83,5 +80,7 @@ namespace js
 
         // 비활성화 하기
         mAble = false;
+        SetIndex((UINT)eChestIndex::Large_Open);
+
     }
 }

@@ -100,7 +100,7 @@ enum class eComponentType
 enum class eColliderLayer
 {
 	Default,					//	0	//	// None
-	BackGroundImage,			//	1		// 이미지만 존재하는 배경 이미지
+	BackGroundImage,			//	1		// 제일 바닥에 깔리는 이미지
 	Tile,						//	2		// 타일로 존재하는 배경 오브젝트
 	BGObj,						//	3		// 이미지 외에 컴포넌트가 필요한 배경 오브젝트
 
@@ -109,7 +109,7 @@ enum class eColliderLayer
 	EventObject,				//	4		// 트리거를 가진 오브젝트
 	Platform,					//	5		// 벽
 	Ladder,						//	6		// 사다리
-	Propellant,					//	7		// 오브젝트를 위로 날려버림
+	Item,						//	7		// 오브젝트를 위로 날려버림
 	Head,						//	8		// Creature 머리충돌
 	Foot,						//	9		// Creature 바닥충돌
 

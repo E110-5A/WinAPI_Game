@@ -81,11 +81,7 @@ namespace js
 				target->GetRigidbody()->SetGround(isGround);
 			}
 		}
-		else
-		{
-			// Ground setting
-			target->GetRigidbody()->SetGround(isGround);
-		}
+		
 	}
 
 	void Platform::TargetJumpCountReset(GameObject* foot)

@@ -1,7 +1,10 @@
 #include "jsUIManager.h"
-#include "jsHUD.h"
-#include "jsButton.h"
+
 #include "jsPanel.h"
+#include "jsButton.h"
+#include "jsHUD.h"
+#include "jsBarUI.h"
+#include "jsIcon.h"
 
 namespace js
 {
@@ -15,48 +18,20 @@ namespace js
 		// 여기서 UI 메모리를 할당하면 된다
 
 		//	Title Scene
-
-		Button* selectBtn = new Button(eUIType::SelectBtn);
-		mUIs.insert(std::make_pair(eUIType::SelectBtn, selectBtn));
-		selectBtn->ImageLoad(L"SelectBtn", L"..\\Resources\\Image\\Button\\Title_Play.bmp");
-		selectBtn->SetPos(Vector2(470.0f, 300.0f));
-		selectBtn->SetFunc(eBtnType::GoToSelectScene);
-
-		Button* optionBtn = new Button(eUIType::OptionBtn);
-		mUIs.insert(std::make_pair(eUIType::OptionBtn, optionBtn));
-		optionBtn->ImageLoad(L"OptionBtn", L"..\\Resources\\Image\\Button\\Title_Options.bmp");
-		optionBtn->SetPos(Vector2(470.0f, 370.0f));
-		optionBtn->SetFunc(eBtnType::GoToOption);
-
-		Button* quitBtn = new Button(eUIType::QuitBtn);
-		mUIs.insert(std::make_pair(eUIType::QuitBtn, quitBtn));
-		quitBtn->ImageLoad(L"QuitBtn", L"..\\Resources\\Image\\Button\\Title_Quit.bmp");
-		quitBtn->SetPos(Vector2(470.0f, 440.0f));
-		quitBtn->SetFunc(eBtnType::GoToTitleScene);
-
-
-
-
-
-
+		TitleSceneUI();
+		
 		// Select Scene
-
-		Button* playBtn = new Button(eUIType::PlayBtn);
-		mUIs.insert(std::make_pair(eUIType::PlayBtn, playBtn));
-		playBtn->ImageLoad(L"PlayBtn", L"..\\Resources\\Image\\Button\\Select_Play.bmp");
-		playBtn->SetPos(Vector2(560.0f, 620.0f));
-		playBtn->SetFunc(eBtnType::GoToPlayScene);
-
-
-
+		SelectSceneUI();
+		
+		InGameUI();
 		//// UI 테스트
 		//Button* btn = new Button(eUIType::TEST);
 		//mUIs.insert(std::make_pair(eUIType::TEST, btn));
 		//btn->SetPos(Vector2(0.0f, 0.0f));
 		//btn->ImageLoad(L"HPBAR", L"..\\Resources\\Image\\UI\\HPBAR.bmp");
 
-		//HUD* hud = new HUD(eUIType::PLAYER_INFO);
-		//mUIs.insert(std::make_pair(eUIType::PLAYER_INFO, hud));
+		//HUD* hud = new HUD(eUIType::PlayerInfo);
+		//mUIs.insert(std::make_pair(eUIType::PlayerInfo, hud));
 		//hud->SetPos(Vector2(0.0f, 0.0f));
 		//hud->ImageLoad(L"PlayerInfo", L"..\\Resources\\Image\\UI\\PlayerHud.bmp");
 
@@ -102,8 +77,6 @@ namespace js
 			OnLoad(requestUI);
 		}
 	}
-
-
 	void UIManager::Render(HDC hdc)
 	{
 		std::stack<UIBase*> uiBases = mUIBases;
@@ -151,12 +124,10 @@ namespace js
 		}
 		mUIBases.push(addUI);
 	}
-
 	void UIManager::OnFail()
 	{
 		mCurrentData = nullptr;
 	}
-
 	void UIManager::Release()
 	{
 		for (auto ui : mUIs)
@@ -215,5 +186,86 @@ namespace js
 
 			mUIBases.push(uiBase);
 		}
+	}
+
+	void UIManager::TitleSceneUI()
+	{
+		Button* selectBtn = new Button(eUIType::SelectBtn);
+		mUIs.insert(std::make_pair(eUIType::SelectBtn, selectBtn));
+		selectBtn->ImageLoad(L"SelectBtn", L"..\\Resources\\Image\\Button\\Title_Play.bmp");
+		selectBtn->SetPos(Vector2(470.0f, 300.0f));
+		selectBtn->SetFunc(eBtnType::GoToSelectScene);
+
+		Button* optionBtn = new Button(eUIType::OptionBtn);
+		mUIs.insert(std::make_pair(eUIType::OptionBtn, optionBtn));
+		optionBtn->ImageLoad(L"OptionBtn", L"..\\Resources\\Image\\Button\\Title_Options.bmp");
+		optionBtn->SetPos(Vector2(470.0f, 370.0f));
+		optionBtn->SetFunc(eBtnType::GoToOption);
+
+		Button* quitBtn = new Button(eUIType::QuitBtn);
+		mUIs.insert(std::make_pair(eUIType::QuitBtn, quitBtn));
+		quitBtn->ImageLoad(L"QuitBtn", L"..\\Resources\\Image\\Button\\Title_Quit.bmp");
+		quitBtn->SetPos(Vector2(470.0f, 440.0f));
+		quitBtn->SetFunc(eBtnType::GoToTitleScene);
+	}
+	void UIManager::SelectSceneUI()
+	{
+		Button* playBtn = new Button(eUIType::PlayBtn);
+		mUIs.insert(std::make_pair(eUIType::PlayBtn, playBtn));
+		playBtn->ImageLoad(L"PlayBtn", L"..\\Resources\\Image\\Button\\Select_Play.bmp");
+		playBtn->SetPos(Vector2(560.0f, 620.0f));
+		playBtn->SetFunc(eBtnType::GoToPlayScene);
+	}
+	void UIManager::InGameUI()
+	{		
+		// PlayerInfo
+		Panel* playerInfoPanel = new Panel(eUIType::PlayerInfo);
+		mUIs.insert(std::make_pair(eUIType::PlayerInfo, playerInfoPanel));
+		playerInfoPanel->SetPos(Vector2((Window_Width / 2) - 170, Window_Height - 128));
+		playerInfoPanel->ImageLoad(L"PlayerInfoPanel", L"..\\Resources\\Image\\UI\\InGame\\PlayerInfoPanel.bmp");
+
+		BarUI* hpBar = new BarUI(eUIType::HpBar);
+		mUIs.insert(std::make_pair(eUIType::HpBar, hpBar));
+		hpBar->SetPos(Vector2(10.0f, 74.0f));
+		hpBar->ImageLoad(L"HpBar", L"..\\Resources\\Image\\UI\\InGame\\HPBar.bmp");
+
+		BarUI* expBar = new BarUI(eUIType::ExpBar);
+		mUIs.insert(std::make_pair(eUIType::ExpBar, expBar));
+		expBar->SetPos(Vector2(10.0f, 100.0f));
+		expBar->ImageLoad(L"ExpBar", L"..\\Resources\\Image\\UI\\InGame\\ExpBar.bmp");
+		
+
+		
+
+		Icon* Z = new Icon(eUIType::ExpBar);
+		mUIs.insert(std::make_pair(eUIType::Z, Z));
+		Z->SetPos(Vector2(78.0f, 16.0f));
+		Z->ImageLoad(L"Z", L"..\\Resources\\Image\\UI\\InGame\\Z.bmp");
+
+
+		Icon* X = new Icon(eUIType::ExpBar);
+		mUIs.insert(std::make_pair(eUIType::X, X));
+		X->SetPos(Vector2(124.0f, 16.0f));
+		X->ImageLoad(L"X", L"..\\Resources\\Image\\UI\\InGame\\X.bmp");
+
+
+		Icon* C = new Icon(eUIType::ExpBar);
+		mUIs.insert(std::make_pair(eUIType::C, C));
+		C->SetPos(Vector2(170.0f, 16.0f));
+		C->ImageLoad(L"C", L"..\\Resources\\Image\\UI\\InGame\\C.bmp");
+
+
+		Icon* V = new Icon(eUIType::ExpBar);
+		mUIs.insert(std::make_pair(eUIType::V, V));
+		V->SetPos(Vector2(216.0f, 16.0f));
+		V->ImageLoad(L"V", L"..\\Resources\\Image\\UI\\InGame\\V.bmp");
+
+
+		playerInfoPanel->AddChild(hpBar);
+		playerInfoPanel->AddChild(expBar);
+		playerInfoPanel->AddChild(Z);
+		playerInfoPanel->AddChild(X);
+		playerInfoPanel->AddChild(C);
+		playerInfoPanel->AddChild(V);
 	}
 }

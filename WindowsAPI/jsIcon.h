@@ -1,14 +1,13 @@
 #pragma once
-#include "jsUIBase.h"
+#include "jsHUD.h"
 
 namespace js
 {
-	class GameObject;
-	class HUD : public UIBase
+	class Icon : public HUD
 	{
 	public:
-		HUD(eUIType type);
-		virtual ~HUD();
+		Icon(eUIType type);
+		~Icon();
 
 		virtual void OnInit() override;
 		virtual void OnActive() override;
@@ -16,6 +15,12 @@ namespace js
 		virtual void OnTick() override;
 		virtual void OnRender(HDC hdc) override;
 		virtual void OnClear() override;
-			
+
+		void SetMaxValue(float& maxValue) { mMaxValue = maxValue; }
+		void SetCurValue(float& curValue) { mCurValue = curValue; }
+
+	private:
+		float		mMaxValue;
+		float		mCurValue;
 	};
 }

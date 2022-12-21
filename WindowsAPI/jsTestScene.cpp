@@ -5,6 +5,7 @@
 #include "jsInput.h"
 #include "jsSceneManager.h"
 #include "jsCollisionManager.h"
+#include "jsCamera.h"
 
 // tool
 #include "jsMapToolScene.h"
@@ -13,7 +14,8 @@
 #include "jsUIManager.h"
 #include "jsHUD.h"
 #include "jsButton.h"
-
+#include "jsBarUI.h"
+#include "jsIcon.h"
 // obj
 #include "jsPlayer.h"
 #include "jsObject.h"
@@ -62,8 +64,8 @@ namespace js
 
 		// ui 추가
 		/*UIManager::Push(eUIType::TEST);
-		UIManager::Push(eUIType::PLAYER_INFO);
-		HUD* hud = UIManager::GetUIInstant<HUD>(eUIType::PLAYER_INFO);
+		UIManager::Push(eUIType::PlayerInfo);
+		HUD* hud = UIManager::GetUIInstant<HUD>(eUIType::PlayerInfo);
 		hud->SetTarget(pPlayer);
 		UIManager::Push(eUIType::ITEM_SELECT);*/
 	}
@@ -128,13 +130,13 @@ namespace js
 	void TestScene::ObjectTest()
 	{
 		// 플레이어 설정
-		Player* pPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 576.0f));
-
+		mPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 576.0f));
+		PlayerManager::SetPlayer(mPlayer);
 		// 투사체 풀링
 		for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 		{
 			mPlayerAttack[idx] = object::Instantiate<PlayerProjectile>(eColliderLayer::Player_Projectile);
-			mPlayerAttack[idx]->SetPlayerInfo(pPlayer);
+			mPlayerAttack[idx]->SetPlayerInfo(mPlayer);
 		}
 
 		// 기타 오브젝트 설정
@@ -148,8 +150,7 @@ namespace js
 		Monster* imp3 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 550.0f));*/
 	}
 
-	// 충돌 및 UI 설정
-	void TestScene::Enter()
+	void TestScene::SetLayer()
 	{
 		CollisionManager::SetLayer(eColliderLayer::Platform, eColliderLayer::Head, true);
 		CollisionManager::SetLayer(eColliderLayer::Platform, eColliderLayer::Foot, true);
@@ -163,13 +164,62 @@ namespace js
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::EventObject, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Item, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::DamagingObj, true);
-		
+
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::EventObject, true);
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player_Projectile, true);
+	}
+
+	void TestScene::SetUI()
+	{
+		Camera::SetTarget(mPlayer);
+		// ui 추가
+		UIManager::Push(eUIType::PlayerInfo);
+		BarUI* hpBar = UIManager::GetUIInstant<BarUI>(eUIType::HpBar);
+		hpBar->SetMaxValue(PlayerManager::GetPlayerStat().playerHealth.maxHP);
+		hpBar->SetCurValue(PlayerManager::GetPlayerStat().playerHealth.curHP);
+
+		BarUI* expBar = UIManager::GetUIInstant<BarUI>(eUIType::ExpBar);
+		expBar->SetMaxValue(PlayerManager::GetPlayerInfo().maxExp);
+		expBar->SetCurValue(PlayerManager::GetPlayerInfo().curExp);
+
+		Player* player = PlayerManager::GetPlayer();
+		float zCooldown = player->GetDubleTabInfo().coolDown;
+		float zTime = player->GetDubleTabInfo().coolDownTime;
+		float xCooldown = player->GetFMJInfo().coolDown;
+		float xTime = player->GetFMJInfo().coolDownTime;
+
+		float cCooldown = player->GetTacticalDiveInfo().coolDown;
+		float cTime = player->GetTacticalDiveInfo().coolDownTime;
+		float vCooldown = player->GetSupressiveFireInfo().coolDown;
+		float vTime = player->GetSupressiveFireInfo().coolDownTime;
+
+		Icon* z = UIManager::GetUIInstant<Icon>(eUIType::Z);
+		z->SetMaxValue(zCooldown);
+		z->SetCurValue(zTime);
+		Icon* x = UIManager::GetUIInstant<Icon>(eUIType::X);
+		x->SetMaxValue(xCooldown);
+		x->SetCurValue(xTime);
+		Icon* c = UIManager::GetUIInstant<Icon>(eUIType::C);
+		c->SetMaxValue(cCooldown);
+		c->SetCurValue(cTime);
+		Icon* v = UIManager::GetUIInstant<Icon>(eUIType::V);
+		v->SetMaxValue(vCooldown);
+		v->SetCurValue(vTime);
+	}
+
+	// 충돌 및 UI 설정
+	void TestScene::Enter()
+	{
+		SetLayer();
+		SetUI();
+		
 	}
 
 	// UI 끄고 나가셈
 	void TestScene::Exit()
 	{
+		UIManager::Pop(eUIType::PlayerInfo);
+		UIManager::Pop(eUIType::HpBar);
+		UIManager::Pop(eUIType::ExpBar);
 	}
 }

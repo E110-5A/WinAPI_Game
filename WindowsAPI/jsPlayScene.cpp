@@ -1,14 +1,17 @@
 #include "jsPlayScene.h"
-#include "jsPlayer.h"
-#include "jsSceneManager.h"
 #include "jsInput.h"
+#include "jsSceneManager.h"
 #include "jsCollisionManager.h"
+#include "jsUIManager.h"
 #include "jsCamera.h"
-#include "jsObject.h"
 
+
+#include "jsObject.h"
+#include "jsPlayer.h"
 #include "jsBGObj.h"
 #include "jsMonster.h"
 #include "jsPlatform.h"
+
 namespace js
 {
 	PlayScene::PlayScene()
@@ -74,9 +77,11 @@ namespace js
 		Scene* scene = SceneManager::GetPlayScene();
 		std::vector<GameObject*> pPlayer = scene->GetGameObjects(eColliderLayer::Player);
 		// 일단 플레이어 오브젝트 풀을 가져옴 여기서 플레이어를 짚어서 넘겨야함
-
-
 		Camera::SetTarget(pPlayer.at(0));
+
+		UIManager::Push(eUIType::PlayerInfo);
+		UIManager::Push(eUIType::HpBar);
+		UIManager::Push(eUIType::ExpBar);
 
 	}
 	void PlayScene::Exit()

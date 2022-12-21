@@ -51,9 +51,16 @@ enum class eUIType
 
 	PlayBtn,		// select
 
-	PLAYER_INFO,	// 인게임 HUD
-	ITEM_SELECT,	// 인게임 HUD
-	OPTION,			// 
+	PlayerInfo,		// 인게임 Panel
+	HpBar,			// 인게임 Hp
+	ExpBar,			// 인게임 Exp
+	Z,				// 스킬 아이콘
+	X,				//
+	C,				//
+	V,				//
+
+	ItemInventory,	// 인게임 HUD
+	Option,			// 
 
 	END,
 };

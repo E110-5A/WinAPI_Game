@@ -141,9 +141,11 @@ struct PlayerStat
 };
 struct PlayerInfo
 {
-	float	maxExp;
-	float	curExp;
-	float	gold;
+	PlayerStat	stat;
+	int			level;
+	float		maxExp;
+	float		curExp;
+	int			gold;
 };
 struct ItemInfo
 {

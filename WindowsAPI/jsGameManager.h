@@ -3,27 +3,31 @@
 
 namespace js
 {
-	//struct GameInfo
-	//{
-	//	int		inLevel;		// 인게임 플레이어 레벨
-	//	int		inStage;		// 인게임 스테이지
-	//	int		inGold;			// 인게임 골드량
-	//	int		inMaxExe;		// 인게임 최대 경험치
-	//	int		inCurExe;		// 인게임 현재 경험치
-	//	float	inMaxHP;		// 인게임 최대HP
-	//	float	inCurHP;		// 인게임 현재HP
-	//};
-
 	class GameManager
 	{
 	public:
-		// 게임 정보 관리 (플레이어 골드, 경험치, 게임 진행도)
 
-		// 승리조건
+		void Initialize();		// ...? 게임매니저와 플레이어 매니저를 합치는게 나을수도 있을듯
+		void Tick();			// 주기적으로 업데이트 할 정보가 있음 ㅇㅇ;
+		// Render() UI요소는 씬에서 해결하니까 굳이 필요 없을듯
 
+
+		void PlayerLevelUp();	// playerManager::LevelUp() 호출
+
+		
+		float GetDifficultyTime() { return mDifficultyTime; }
+		float GetPlayerGold() { return mPlayerInfo.gold; }
+
+		// 게임 승리조건 달성시 Teleport 객체가 호출 -> 씬 초기화 과정을 거친 뒤, 스테이지를 넘기고 ObjectPool 세팅
+		void StageClear();
 
 	private:
-		//int			mPlayerLevel;
-		//GameInfo*	mGameInfo;
+		// 씬에서 사용할 풀 객체
+		
+		
+		// 게임 정보
+		PlayerInfo	mPlayerInfo;
+		float		mDifficultyTime;	// 2~5분마다 몬스터가 강해짐
+
 	};
 }

@@ -113,6 +113,15 @@
     <Filter Include="1 Engine\GameObject\CollisionBlock\Ladder">
       <UniqueIdentifier>{36e80258-c96e-43dc-8949-baf9e3927d8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1 Engine\GameObject\UI\HUD">
+      <UniqueIdentifier>{8c83b5ab-9b44-439c-b38f-008e5cec518a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\UI\Button">
+      <UniqueIdentifier>{60fa338e-1627-4d43-a505-937a61347620}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1 Engine\GameObject\UI\Panel">
+      <UniqueIdentifier>{cff2f6c1-1e4f-4e8f-80f0-16a711f3936c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -186,15 +195,6 @@
     </ClInclude>
     <ClInclude Include="jsUIBase.h">
       <Filter>1 Engine\GameObject\UI\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="jsButton.h">
-      <Filter>1 Engine\GameObject\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="jsHUD.h">
-      <Filter>1 Engine\GameObject\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="jsPanel.h">
-      <Filter>1 Engine\GameObject\UI</Filter>
     </ClInclude>
     <ClInclude Include="jsSound.h">
       <Filter>1 Engine\Resource</Filter>
@@ -316,6 +316,21 @@
     <ClInclude Include="jsPropellant.h">
       <Filter>1 Engine\GameObject\EventObj\Propellant</Filter>
     </ClInclude>
+    <ClInclude Include="jsHUD.h">
+      <Filter>1 Engine\GameObject\UI\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="jsButton.h">
+      <Filter>1 Engine\GameObject\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="jsPanel.h">
+      <Filter>1 Engine\GameObject\UI\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="jsBarUI.h">
+      <Filter>1 Engine\GameObject\UI\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="jsIcon.h">
+      <Filter>1 Engine\GameObject\UI\HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -384,15 +399,6 @@
     </ClCompile>
     <ClCompile Include="jsUIBase.cpp">
       <Filter>1 Engine\GameObject\UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="jsButton.cpp">
-      <Filter>1 Engine\GameObject\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="jsHUD.cpp">
-      <Filter>1 Engine\GameObject\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="jsPanel.cpp">
-      <Filter>1 Engine\GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="jsSound.cpp">
       <Filter>1 Engine\Resource</Filter>
@@ -513,6 +519,21 @@
     </ClCompile>
     <ClCompile Include="jsPropellant.cpp">
       <Filter>1 Engine\GameObject\EventObj\Propellant</Filter>
+    </ClCompile>
+    <ClCompile Include="jsHUD.cpp">
+      <Filter>1 Engine\GameObject\UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="jsButton.cpp">
+      <Filter>1 Engine\GameObject\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="jsPanel.cpp">
+      <Filter>1 Engine\GameObject\UI\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="jsBarUI.cpp">
+      <Filter>1 Engine\GameObject\UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="jsIcon.cpp">
+      <Filter>1 Engine\GameObject\UI\HUD</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

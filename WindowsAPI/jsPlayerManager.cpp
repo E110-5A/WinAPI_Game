@@ -8,14 +8,16 @@
 
 namespace js
 {
+	Player*		PlayerManager::mPlayer = nullptr;
+	PlayerInfo	PlayerManager::mPlayerInfo = {};
 	PlayerStat	PlayerManager::mDefaultStat = {};
-	PlayerStat	PlayerManager::mPlayerStat = {};
-	int			PlayerManager::mPlayerLevel = 0;
+
 	int			PlayerManager::mPlayerItems[(UINT)eItemList::End] = {};
+
 	void PlayerManager::Initialize()
 	{
-		InitStat(mDefaultStat);
-		InitStat(mPlayerStat);
+		InitStat(mPlayerInfo.stat);
+		mDefaultStat = mPlayerInfo.stat;
 		PlayerLevelUp();
 	}
 
@@ -36,11 +38,11 @@ namespace js
 
 	void PlayerManager::PlayerLevelUp()
 	{
-		++mPlayerLevel;
-		mPlayerStat.playerHealth.maxHP = (mDefaultStat.playerHealth.maxHP + (32 * mPlayerLevel));
-		mPlayerStat.playerHealth.healthRegen = (mDefaultStat.playerHealth.healthRegen + (0.12 * mPlayerLevel));
-		mPlayerStat.playerHealth.defance = (mDefaultStat.playerHealth.defance + (2 * mPlayerLevel));
-		mPlayerStat.playerOffence.damage = (mDefaultStat.playerOffence.damage + (3 * mPlayerLevel));
+		++mPlayerInfo.level;
+		mPlayerInfo.stat.playerHealth.maxHP = (mDefaultStat.playerHealth.maxHP + (32 * mPlayerInfo.level) - 32);
+		mPlayerInfo.stat.playerHealth.healthRegen = (mDefaultStat.playerHealth.healthRegen + (0.12 * mPlayerInfo.level) - 0.12);
+		mPlayerInfo.stat.playerHealth.defance = (mDefaultStat.playerHealth.defance + (2 * mPlayerInfo.level) - 2);
+		mPlayerInfo.stat.playerOffence.damage = (mDefaultStat.playerOffence.damage + (3 * mPlayerInfo.level) - 3);
 	}
 
 	void PlayerManager::PickUpItems(eItemList item)

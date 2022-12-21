@@ -33,6 +33,12 @@ namespace js
 			return dynamic_cast<T*>(mUIs[type]);
 		}
 
+
+		static void TitleSceneUI();
+		static void SelectSceneUI();
+
+		static void InGameUI();
+
 	private:
 		static std::unordered_map<eUIType, UIBase*> mUIs;
 		static std::queue<eUIType>					mRequestUIQueue;

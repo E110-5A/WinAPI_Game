@@ -77,13 +77,15 @@ namespace js
 	void Creature::SetComponent()
 	{
 		mAnimator = AddComponent<Animator>();
-		mBodyCollider = AddComponent<Collider>();
 		mRigidbody = AddComponent<Rigidbody>();
 
-		// 벽 충돌 체크 오브젝트 생성 및 할당
+		// body
+		mBodyCollider = AddComponent<Collider>();
+		// foot
 		mFootObject = object::Instantiate<Foot>(eColliderLayer::Foot);
 		mFootObject->SetOwner(this);
 		mFootCollider = mFootObject->GetComponent<Collider>();
+		// head
 		mHeadObject = object::Instantiate<Head>(eColliderLayer::Head);
 		mHeadObject->SetOwner(this);
 		mHeadCollider = mHeadObject->GetComponent<Collider>();

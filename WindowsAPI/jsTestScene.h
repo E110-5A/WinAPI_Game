@@ -16,6 +16,8 @@ namespace js
 		void TileLoadTest();
 		void BGTest();
 		void ObjectTest();
+		void SetLayer();
+		void SetUI();
 
 		void Tick() override;
 		void Render(HDC hdc) override;
@@ -26,5 +28,6 @@ namespace js
 
 	private:
 		PlayerProjectile*	mPlayerAttack[PLAYER_PROJECTILE_POOL];
+		Player* mPlayer;
 	};
 }

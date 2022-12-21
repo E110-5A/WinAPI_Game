@@ -63,7 +63,6 @@ namespace js
 			++mWeaponID;
 		}
 
-
 		//
 		void SetBlocking(bool isBlock) { mBlocking = isBlock; }
 		bool GetBlocking() { return mBlocking; }
@@ -80,6 +79,12 @@ namespace js
 		void SetState(ePlayerState state) { mState = state; }
 		ePlayerState GetState() { return mState; }
 
+
+		//
+		SkillInfo& GetDubleTabInfo() { return mDubleTab; }
+		SkillInfo& GetFMJInfo() { return mFMJ; }
+		SkillInfo& GetTacticalDiveInfo() { return mTacticalDive; }
+		SkillInfo& GetSupressiveFireInfo() { return mSupressiveFire; }
 
 	private:
 		void Idle();

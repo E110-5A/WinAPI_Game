@@ -12,6 +12,7 @@
 #include "jsCreature.h"
 #include "jsPlayer.h"
 #include "jsLadder.h"
+#include "jsPlatform.h"
 
 namespace js
 {
@@ -86,11 +87,6 @@ namespace js
 		Player* player = dynamic_cast<Player*>(mOwner);
 		if (nullptr != player)
 		{
-			// 사다리를 타고 난 뒤에 땅에 닿은 경우
-			if (ePlayerState::Idle == player->GetState())
-			{
-				player->SetGround(true);
-			}
 			// 사다리 타다가 땅에 닿은 경우
 			if (ePlayerState::Climb == player->GetState() && false == player->GetBlocking())
 			{
@@ -103,5 +99,4 @@ namespace js
 			}
 		}
 	}
-
 }

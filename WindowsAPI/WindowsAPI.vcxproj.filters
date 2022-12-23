@@ -331,6 +331,7 @@
     <ClInclude Include="jsIcon.h">
       <Filter>1 Engine\GameObject\UI\HUD</Filter>
     </ClInclude>
+    <ClInclude Include="jsDamageObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -535,5 +536,6 @@
     <ClCompile Include="jsIcon.cpp">
       <Filter>1 Engine\GameObject\UI\HUD</Filter>
     </ClCompile>
+    <ClCompile Include="jsDamageObject.cpp" />
   </ItemGroup>
 </Project>

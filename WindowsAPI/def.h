@@ -125,7 +125,7 @@ enum class eColliderLayer
 	Player,						//	10		// 
 	Player_Projectile,			//	11		// 플레이어가 매개가 되는 투사체 (스킬과 아이템효과)
 	Monster,					//	12		// 플레이어 투사체에 의해서만 피해를 입음
-	DamagingObj,				//	13		// 용암바닥, 몬스터 투사체 등
+	DamageObject,				//	13		// 용암바닥, 몬스터 투사체 등
 
 	UI = _COLLIDER_LAYER - 1,	//	14
 	End = _COLLIDER_LAYER,		//	15

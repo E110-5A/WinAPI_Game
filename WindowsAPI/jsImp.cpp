@@ -38,11 +38,11 @@ namespace js
         // 애니메이션 스프라이트 불러오기
         SetImage(Resources::Load<Image>(L"Imp", L"..\\Resources\\Image\\Enemy\\imp.bmp"));
         SetMonsterStat(310.0f, 0, 0, 13, 1, 1, 16.0f);
-        SetComponent();		
+        InitComponent();
     }
-    void Imp::SetComponent()
+    void Imp::InitComponent()
     {
-        Monster::SetComponent();
+        Monster::InitComponent();
         // animator
         SetAnimator();
         mAnimator->Play(L"ImpIdleL");

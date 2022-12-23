@@ -28,6 +28,5 @@ namespace js
 
 	private:
 		PlayerProjectile*	mPlayerAttack[PLAYER_PROJECTILE_POOL];
-		Player* mPlayer;
 	};
 }

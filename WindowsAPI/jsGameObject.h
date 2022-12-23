@@ -23,7 +23,6 @@ namespace js
 		virtual void OnCollisionStay(Collider* other);
 		virtual void OnCollisionExit(Collider* other);
 
-		virtual void SetComponent() {}
 
 		// 오브젝트 변수 설정
 		void SetPos(Pos pos) { mPos = pos; }

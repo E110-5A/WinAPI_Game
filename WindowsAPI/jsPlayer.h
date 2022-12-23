@@ -45,7 +45,8 @@ namespace js
 		virtual void Initialize() override;
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
-		virtual void SetComponent() override;
+		virtual void InitComponent() override;
+		virtual void AddComponentScene() override;
 
 		// 애니메이션
 		//void ReturnIdle();

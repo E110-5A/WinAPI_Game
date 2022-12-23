@@ -29,10 +29,10 @@ namespace js
 	void EventObject::Initialize()
 	{
 		SetScale(Vector2(2.0f, 2.0f));
-		SetComponent();
+		InitComponent();
 	}
 
-	void EventObject::SetComponent()
+	void EventObject::InitComponent()
 	{
 		mEventCollider = AddComponent<Collider>();
 	}

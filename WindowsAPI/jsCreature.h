@@ -27,11 +27,12 @@ namespace js
 		virtual void OnCollisionExit(Collider* other)override;
 		
 		// √ ±‚»≠
-		virtual void SetComponent() override;
+		virtual void InitComponent();
+		virtual void AddComponentScene();
 
-		void SetPlayerHealth(Health stat) { mHealthStat = stat; }
-		void SetPlayerOffence(Offence stat) { mOffenceStat = stat; }
-		void SetPlayerUtility(Utility stat) { mUtilityStat = stat; }
+		void SetPlayerHealth(Health& stat) { mHealthStat = stat; }
+		void SetPlayerOffence(Offence& stat) { mOffenceStat = stat; }
+		void SetPlayerUtility(Utility& stat) { mUtilityStat = stat; }
 		void SetMonsterStat(float hp, float regen, float defance, float damage, float attackSpeed, float range, float moveSpeed)
 		{
 			mHealthStat.maxHP = hp;

@@ -6,6 +6,7 @@
 #include "jsSceneManager.h"
 #include "jsCollisionManager.h"
 #include "jsCamera.h"
+#include "jsGameManager.h"
 
 // tool
 #include "jsMapToolScene.h"
@@ -25,6 +26,7 @@
 #include "jsLargeChest.h"
 #include "jsGoldenChest.h"
 #include "jsItemObject.h"
+#include "jsDamageObject.h"
 
 // env
 #include "jsBGObj.h"
@@ -59,8 +61,6 @@ namespace js
 
 		// 오브젝트 추가
 		ObjectTest();
-
-
 
 		// ui 추가
 		/*UIManager::Push(eUIType::TEST);
@@ -129,15 +129,18 @@ namespace js
 
 	void TestScene::ObjectTest()
 	{
-		// 플레이어 설정
-		mPlayer = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 576.0f));
-		PlayerManager::SetPlayer(mPlayer);
-		// 투사체 풀링
-		for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
-		{
-			mPlayerAttack[idx] = object::Instantiate<PlayerProjectile>(eColliderLayer::Player_Projectile);
-			mPlayerAttack[idx]->SetPlayerInfo(mPlayer);
-		}
+		GameManager::AddObject();
+		Player* player = GameManager::GetPlayer();
+		player->SetPos(Pos(440.f, 576.f));
+
+		//// 플레이어 설정
+		//Player* player = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 576.0f));
+		//// 투사체 풀링
+		//for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
+		//{
+		//	mPlayerAttack[idx] = object::Instantiate<PlayerProjectile>(eColliderLayer::Player_Projectile);
+		//	mPlayerAttack[idx]->SetPlayerInfo(player);
+		//}
 
 		// 기타 오브젝트 설정
 		EventObject* smallBox = object::Instantiate<SmallChest>(eColliderLayer::EventObject, Pos(70.0f, 610.0f));
@@ -148,6 +151,9 @@ namespace js
 		//Monster* imp = object::Instantiate<Imp>(  eColliderLayer::Monster, Pos(700.f, 550.0f));
 		/*Monster* imp2 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(750.f, 550.0f));
 		Monster* imp3 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 550.0f));*/
+
+		// 플레이어 상호작용 테스트
+		DamageObject* damageTest = object::Instantiate<DamageObject>(eColliderLayer::DamageObject, Pos(GRID_SIZE*5,GRID_SIZE*9));
 	}
 
 	void TestScene::SetLayer()
@@ -163,7 +169,7 @@ namespace js
 
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::EventObject, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Item, true);
-		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::DamagingObj, true);
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::DamageObject, true);
 
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::EventObject, true);
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player_Projectile, true);
@@ -171,7 +177,6 @@ namespace js
 
 	void TestScene::SetUI()
 	{
-		Camera::SetTarget(mPlayer);
 		// ui 추가
 		UIManager::Push(eUIType::PlayerInfo);
 		BarUI* hpBar = UIManager::GetUIInstant<BarUI>(eUIType::HpBar);
@@ -211,7 +216,7 @@ namespace js
 	void TestScene::Enter()
 	{
 		SetLayer();
-		SetUI();
+		//SetUI();
 		
 	}
 

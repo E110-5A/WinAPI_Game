@@ -3,31 +3,54 @@
 
 namespace js
 {
+	class Player;
+	class PlayerProjectile;
 	class GameManager
 	{
 	public:
+		static void Initialize();
 
-		void Initialize();		// ...? 게임매니저와 플레이어 매니저를 합치는게 나을수도 있을듯
-		void Tick();			// 주기적으로 업데이트 할 정보가 있음 ㅇㅇ;
-		// Render() UI요소는 씬에서 해결하니까 굳이 필요 없을듯
+		static void InitObject();
+		static void AddObject();
+		static void InitStat(PlayerStat& stat);
+		static void Tick();
+
+		// 기능 함수
+		static void AddObjects();
+		static void PlayerLevelUp();
+		static void Damaged() {}
 
 
-		void PlayerLevelUp();	// playerManager::LevelUp() 호출
 
-		
-		float GetDifficultyTime() { return mDifficultyTime; }
-		float GetPlayerGold() { return mPlayerInfo.gold; }
+		// 객체 가져오기
+		static Player* GetPlayer() { return mPlayer; }
 
-		// 게임 승리조건 달성시 Teleport 객체가 호출 -> 씬 초기화 과정을 거친 뒤, 스테이지를 넘기고 ObjectPool 세팅
-		void StageClear();
+		// 플레이어 스텟 가져오기
+		static PlayerInfo& GetPlayerInfo() { return mPlayerInfo; }
+		static PlayerStat& GetPlayerStat() { return mPlayerInfo.stat; }
+
+		// 아이템 함수
+		static void PickUpItems(eItemList item);
+		static int* GetItemList() { return mPlayerItems; }
+
+
+		static void StageClear();
 
 	private:
-		// 씬에서 사용할 풀 객체
-		
+		// 씬에서 사용할 객체
+		static Player*				mPlayer;
+		static PlayerProjectile*	mPlayerAttack[PLAYER_PROJECTILE_POOL];
+		// 몬스터 풀, 상자 풀 추가될 예정
+
+
+
+		// 플레이어 정보
+		static PlayerInfo	mPlayerInfo;
+		static PlayerStat	mDefaultStat;		// 기초 스텟
+		static int			mPlayerItems[(UINT)eItemList::End];
 		
 		// 게임 정보
-		PlayerInfo	mPlayerInfo;
-		float		mDifficultyTime;	// 2~5분마다 몬스터가 강해짐
+		static float		mDifficultyTime;	// 2~5분마다 몬스터가 강해짐
 
 	};
 }

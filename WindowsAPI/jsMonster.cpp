@@ -30,9 +30,9 @@ namespace js
 	{
 		SetType(eColliderLayer::Monster);
 	}
-	void Monster::SetComponent()
+	void Monster::InitComponent()
 	{
-		Creature::SetComponent();
+		Creature::InitComponent();
 	}
 	void Monster::Tick()
 	{

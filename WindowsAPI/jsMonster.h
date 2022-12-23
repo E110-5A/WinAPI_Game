@@ -21,7 +21,7 @@ namespace js
 		virtual ~Monster();
 
 		virtual void Initialize();
-		virtual void SetComponent() override;
+		virtual void InitComponent() override;
 
 		// 부모 함수 호출
 		virtual void Tick() override;

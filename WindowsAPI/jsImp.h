@@ -14,7 +14,7 @@ namespace js
 		~Imp();
 
 		virtual void Initialize()override;
-		virtual void SetComponent() override;
+		virtual void InitComponent() override;
 		void SetAnimator();
 
 		virtual void Tick() override;

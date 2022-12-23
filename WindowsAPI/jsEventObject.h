@@ -33,7 +33,7 @@ namespace js
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 
-		virtual void SetComponent() override;
+		virtual void InitComponent();
 
 		virtual void OnCollisionEnter(Collider* other) override;
 		virtual void OnCollisionStay(Collider* other) override;

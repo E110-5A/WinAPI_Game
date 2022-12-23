@@ -48,7 +48,7 @@ namespace js
 
 	void Creature::Initialize()
 	{
-		SetComponent();
+		InitComponent();
 	}
 
 	void Creature::Tick()
@@ -74,7 +74,7 @@ namespace js
 	{
 	}
 
-	void Creature::SetComponent()
+	void Creature::InitComponent()
 	{
 		mAnimator = AddComponent<Animator>();
 		mRigidbody = AddComponent<Rigidbody>();
@@ -82,13 +82,22 @@ namespace js
 		// body
 		mBodyCollider = AddComponent<Collider>();
 		// foot
-		mFootObject = object::Instantiate<Foot>(eColliderLayer::Foot);
+		mFootObject = new Foot();
+		mFootObject->SetType(eColliderLayer::Foot);
 		mFootObject->SetOwner(this);
 		mFootCollider = mFootObject->GetComponent<Collider>();
 		// head
-		mHeadObject = object::Instantiate<Head>(eColliderLayer::Head);
+		mHeadObject = new Head();
+		mHeadObject->SetType(eColliderLayer::Head);
 		mHeadObject->SetOwner(this);
 		mHeadCollider = mHeadObject->GetComponent<Collider>();
+	}
+
+	void Creature::AddComponentScene()
+	{
+		Scene* scene = SceneManager::GetPlayScene();
+		scene->AddGameObject(mFootObject, eColliderLayer::Foot);
+		scene->AddGameObject(mHeadObject, eColliderLayer::Head);
 	}
 
 	void Creature::BodyCollision(GameObject* other)

@@ -5,7 +5,7 @@
 #include "jsInput.h"
 #include "jsSceneManager.h"
 #include "jsCamera.h"
-#include "jsPlayerManager.h"
+#include "jsGameManager.h"
 
 // 리소스
 #include "jsImage.h"
@@ -24,6 +24,7 @@
 #include "jsMonster.h"
 #include "jsFoot.h"
 #include "jsHead.h"
+#include "jsDamageObject.h"
 
 namespace js
 {
@@ -51,24 +52,24 @@ namespace js
 		SetType(eColliderLayer::Player);
 		SetName(L"Player");
 		// 스텟 연동
-		SetPlayerHealth(PlayerManager::GetInstance().GetPlayerStat().playerHealth);
-		SetPlayerOffence(PlayerManager::GetInstance().GetPlayerStat().playerOffence);
-		SetPlayerUtility(PlayerManager::GetInstance().GetPlayerStat().playerUtility);
+		SetPlayerHealth(GameManager::GetPlayerStat().playerHealth);
+		SetPlayerOffence(GameManager::GetPlayerStat().playerOffence);
+		SetPlayerUtility(GameManager::GetPlayerStat().playerUtility);
 
 		// 애니메이션 스프라이트 로딩
 		if (nullptr == mSpriteImage)
 			SetImage(Resources::Load<Image>(L"Player", L"..\\Resources\\Image\\Player\\player.bmp"));
 		
-		SetComponent();
+		InitComponent();
 
 		InitSkill(mDubleTab, 60.f, 50.f, 2, mOffenceStat.attackSpeed * 0.14f, mOffenceStat.attackSpeed * 0.4f);
 		InitSkill(mFMJ, 230.f, 120.f, 1, 0.60f, 3.0f, eStagger::Nomal);
 		InitSkill(mTacticalDive, 0.f, mUtilityStat.moveSpeed * 100.f, 1, 0.70f, 5.0f);
 		InitSkill(mSupressiveFire, 800.f, 60.f, 6, mOffenceStat.attackSpeed * 0.14f, 5.0f, eStagger::Heave);
 	}
-	void Player::SetComponent()
+	void Player::InitComponent()
 	{
-		Creature::SetComponent();
+		Creature::InitComponent();
 		InitAnim();
 
 		mBodyCollider->SetSize(Size(PLAYER_SIZE_X, PLAYER_SIZE_Y) * GetScale());
@@ -79,6 +80,10 @@ namespace js
 
 		mHeadCollider->SetSize(Size(10, 5));
 		mHeadCollider->SetOffset(Vector2(-10, -18));
+	}
+	void Player::AddComponentScene()
+	{
+		Creature::AddComponentScene();
 	}
 	void Player::InitAnim()
 	{
@@ -865,11 +870,20 @@ namespace js
 		}
 		
 		// 공격 받음
-		if (type == eColliderLayer::DamagingObj)
+		if (type == eColliderLayer::DamageObject)
 		{
 			Creature* attacker = dynamic_cast<Creature*>(other->GetOwner());
-			Offence offence = attacker->GetOffence();
-			Creature::SelfHit(other->GetOwner(), offence.damage, eStagger::Nomal);
+			Offence offence= {};
+			if (nullptr != attacker)
+				offence = attacker->GetOffence();
+			else
+			{
+				DamageObject* damageObject = dynamic_cast<DamageObject*>(other->GetOwner());
+				offence = damageObject->GetOffence();
+
+			}
+
+			SelfHit(other->GetOwner(), offence.damage, eStagger::Nomal);
 		}
 	}
 	void Player::OnCollisionStay(Collider* other)

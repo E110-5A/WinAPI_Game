@@ -3,11 +3,22 @@
 
 namespace js
 {
+	enum class eBarType
+	{
+		HP,
+		EXP,
+	};
+
+	class Creature;
 	class BarUI : public HUD
 	{
 	public:
 		BarUI(eUIType type);
 		~BarUI();
+
+		void SetType(eBarType type) { mBarType = type; }
+
+
 
 		virtual void OnInit() override;
 		virtual void OnActive() override;
@@ -16,12 +27,19 @@ namespace js
 		virtual void OnRender(HDC hdc) override;
 		virtual void OnClear() override;
 
-		void SetMaxValue(float& maxValue) { mMaxValue = maxValue; }
-		void SetCurValue(float& curValue) { mCurValue = curValue; }
+
+
+		void SetHealth(Health* hp) { mHealth = hp; }
+		void SetExp(PlayerInfo* exp) { mExp = exp; }
 
 	private:
-		GameObject* mTarget;
-		float		mMaxValue;
-		float		mCurValue;
+		eBarType	mBarType;
+		Creature*	mTarget;
+
+		Health*		mHealth;
+		PlayerInfo*	mExp;
+
+		float mMax;
+		float mCur;
 	};
 }

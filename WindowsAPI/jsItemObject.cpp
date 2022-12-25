@@ -3,7 +3,7 @@
 // manager
 #include "jsCamera.h"
 #include "jsTime.h"
-#include "jsPlayerManager.h"
+#include "jsGameManager.h"
 
 // resource
 #include "jsResources.h"
@@ -112,7 +112,7 @@ namespace js
     void ItemObject::PickUp()
     {
         // 게임매니저의 아이템리스트 갱신;
-        PlayerManager::PickUpItems(mIndex);
+        GameManager::PickUpItems(mIndex);
         InActive();
     }
     void ItemObject::OnCollisionEnter(Collider* other)

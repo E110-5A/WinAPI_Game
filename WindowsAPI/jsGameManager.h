@@ -12,11 +12,10 @@ namespace js
 
 		static void InitObject();
 		static void AddObject();
-		static void InitStat(PlayerStat& stat);
+		static void InitStat(PlayerInfo* info);
 		static void Tick();
 
 		// 기능 함수
-		static void AddObjects();
 		static void PlayerLevelUp();
 		static void Damaged() {}
 
@@ -26,8 +25,7 @@ namespace js
 		static Player* GetPlayer() { return mPlayer; }
 
 		// 플레이어 스텟 가져오기
-		static PlayerInfo& GetPlayerInfo() { return mPlayerInfo; }
-		static PlayerStat& GetPlayerStat() { return mPlayerInfo.stat; }
+		static PlayerInfo* GetPlayerInfo() { return mPlayerInfo; }
 
 		// 아이템 함수
 		static void PickUpItems(eItemList item);
@@ -45,8 +43,8 @@ namespace js
 
 
 		// 플레이어 정보
-		static PlayerInfo	mPlayerInfo;
-		static PlayerStat	mDefaultStat;		// 기초 스텟
+		static PlayerInfo*	mPlayerInfo;
+		static PlayerStat*	mDefaultStat;		// 기초 스텟
 		static int			mPlayerItems[(UINT)eItemList::End];
 		
 		// 게임 정보

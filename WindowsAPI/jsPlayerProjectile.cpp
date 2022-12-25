@@ -43,7 +43,7 @@ namespace js
 		mOwner = owner;
 		owner->SetWeapon(this);
 		// 충돌체 크기 설정
-		mInfo.range = mOwner->GetOffence().range;
+		mInfo.range = mOwner->GetPlayerInfo()->stat->playerOffence->range;
 		Collider* onwerCollider = mOwner->GetComponent<Collider>();
 		float colliderSizeY = onwerCollider->GetSize().y;
 		mCollider->SetSize(Size(mInfo.range, colliderSizeY));

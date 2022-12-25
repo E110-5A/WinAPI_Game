@@ -128,13 +128,13 @@ namespace js
 	void Creature::SelfDamaged(float damage)
 	{
 		// 방어력 계산해서 피 까기
-		float finalDamage = damage - mHealthStat.defance;
+		float finalDamage = damage - mHealthStat->defance;
 
 		// 최소 피해량
-		if (1 > damage - mHealthStat.defance)
+		if (1 > damage - mHealthStat->defance)
 			finalDamage = 1;
 
-		mHealthStat.curHP -= finalDamage;
+		mHealthStat->curHP -= finalDamage;
 	}
 	void Creature::SelfKnockBack(float dir, eStagger stagger, float power)
 	{

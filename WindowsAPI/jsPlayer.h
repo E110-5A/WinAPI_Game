@@ -41,6 +41,8 @@ namespace js
 
 		void InitAnim();
 		void InitSkill(SkillInfo& skill, float damage, float power, int maxCount, float castDelay, float coolDown, eStagger	stagger = eStagger::Light);
+		void SetPlayerInfo(PlayerInfo* info) { mPlayerInfo = info; }
+		PlayerInfo* GetPlayerInfo() { return mPlayerInfo; }
 
 		virtual void Initialize() override;
 		virtual void Tick() override;
@@ -107,6 +109,8 @@ namespace js
 
 	private:
 		ePlayerState		mState;
+		PlayerInfo*			mPlayerInfo;
+
 
 		PlayerProjectile*	mWeapon[PLAYER_PROJECTILE_POOL];
 		int					mWeaponID;

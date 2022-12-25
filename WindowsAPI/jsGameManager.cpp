@@ -2,7 +2,6 @@
 
 // manager
 #include "jsTime.h"
-#include "jsPlayerManager.h"
 #include "jsSceneManager.h"
 
 // scene
@@ -17,8 +16,8 @@ namespace js
 	Player*				GameManager::mPlayer = nullptr;
 	PlayerProjectile*	GameManager::mPlayerAttack[PLAYER_PROJECTILE_POOL] = {};
 
-	PlayerInfo	GameManager::mPlayerInfo = {};
-	PlayerStat	GameManager::mDefaultStat = {};
+	PlayerInfo*	GameManager::mPlayerInfo = nullptr;
+	PlayerStat*	GameManager::mDefaultStat = nullptr;
 	int			GameManager::mPlayerItems[(UINT)eItemList::End] = {};
 
 	float		GameManager::mDifficultyTime = 0.0f;
@@ -27,14 +26,15 @@ namespace js
 
 	void GameManager::Initialize()
 	{
-		// 오브젝트 할당
-		InitObject();
-
 		// 플레이어 설정
-		InitStat(mPlayerInfo.stat);
-		mDefaultStat = mPlayerInfo.stat;
+		mPlayerInfo = new PlayerInfo();
+		mDefaultStat = new PlayerStat();
+		InitStat(mPlayerInfo);
+		mDefaultStat = mPlayerInfo->stat;
 		PlayerLevelUp();
 
+		// 오브젝트 할당
+		InitObject();
 	}
 	void GameManager::InitObject()
 	{
@@ -62,43 +62,43 @@ namespace js
 	}
 
 
-	void GameManager::InitStat(PlayerStat& stat)
+	void GameManager::InitStat(PlayerInfo* info)
 	{
-		stat.playerHealth.maxHP = 110;
-		stat.playerHealth.curHP = 110;
-		stat.playerHealth.healthRegen = 0.6;
-		stat.playerHealth.defance = 0;
-		stat.playerOffence.damage = 12;
-		stat.playerOffence.attackSpeed = 1;
-		stat.playerOffence.range = 700;
-		stat.playerUtility.moveSpeed = 1.3;
-		stat.playerUtility.maxJumpCount = 1;
-		stat.playerUtility.curJumpCount = 0;
-		stat.playerUtility.jumpPower = 600;
+		info->stat->playerHealth->maxHP = 110;
+		info->stat->playerHealth->curHP = 110;
+		info->stat->playerHealth->healthRegen = 0.6;
+		info->stat->playerHealth->defance = 0;
+		info->stat->playerOffence->damage = 12;
+		info->stat->playerOffence->attackSpeed = 1;
+		info->stat->playerOffence->range = 700;
+		info->stat->playerUtility->moveSpeed = 1.3;
+		info->stat->playerUtility->maxJumpCount = 1;
+		info->stat->playerUtility->curJumpCount = 0;
+		info->stat->playerUtility->jumpPower = 600;
+
+		info->maxExp = 10;
 	}
 	void GameManager::Tick()
 	{
 		mDifficultyTime += Time::GetDeltaTime();
 
 		// 레벨관련 로직
-		if (mPlayerInfo.curExp >= mPlayerInfo.maxExp)
+		if (mPlayerInfo->curExp >= mPlayerInfo->maxExp)
 		{
-			float overExp = mPlayerInfo.curExp - mPlayerInfo.maxExp;
+			float overExp = mPlayerInfo->curExp - mPlayerInfo->maxExp;
 			PlayerLevelUp();
-			mPlayerInfo.curExp = overExp;
+			mPlayerInfo->curExp = overExp;
 		}
-	}
-	void GameManager::AddObjects()
-	{
-		Scene* scene = SceneManager::GetPlayScene();
 	}
 	void GameManager::PlayerLevelUp()
 	{
-		++mPlayerInfo.level;
-		mPlayerInfo.stat.playerHealth.maxHP = (mDefaultStat.playerHealth.maxHP + (32 * mPlayerInfo.level) - 32);
-		mPlayerInfo.stat.playerHealth.healthRegen = (mDefaultStat.playerHealth.healthRegen + (0.12 * mPlayerInfo.level) - 0.12);
-		mPlayerInfo.stat.playerHealth.defance = (mDefaultStat.playerHealth.defance + (2 * mPlayerInfo.level) - 2);
-		mPlayerInfo.stat.playerOffence.damage = (mDefaultStat.playerOffence.damage + (3 * mPlayerInfo.level) - 3);
+		++mPlayerInfo->level;
+		mPlayerInfo->stat->playerHealth->maxHP = (mDefaultStat->playerHealth->maxHP + (32 * mPlayerInfo->level) - 32);
+		mPlayerInfo->stat->playerHealth->healthRegen = (mDefaultStat->playerHealth->healthRegen + (0.12 * mPlayerInfo->level) - 0.12);
+		mPlayerInfo->stat->playerHealth->defance = (mDefaultStat->playerHealth->defance + (2 * mPlayerInfo->level) - 2);
+		mPlayerInfo->stat->playerOffence->damage = (mDefaultStat->playerOffence->damage + (3 * mPlayerInfo->level) - 3);
+		
+		mPlayerInfo->maxExp += mPlayerInfo->maxExp / 2;
 	}
 	void GameManager::PickUpItems(eItemList item)
 	{

@@ -29,14 +29,16 @@
 namespace js
 {
 	Player::Player()
-		: mWeaponID(0)
+		: mPlayerInfo(nullptr)
+		, mWeaponID(0)
 		, mBlocking(false)
 	{
 		SetPos(Pos(400.f, 1000.f));
 		Initialize();
 	}
 	Player::Player(Pos pos)
-		: mWeaponID(0)
+		: mPlayerInfo(nullptr)
+		, mWeaponID(0)
 		, mBlocking(false)
 	{
 		SetPos(pos);
@@ -52,20 +54,20 @@ namespace js
 		SetType(eColliderLayer::Player);
 		SetName(L"Player");
 		// 스텟 연동
-		SetPlayerHealth(GameManager::GetPlayerStat().playerHealth);
-		SetPlayerOffence(GameManager::GetPlayerStat().playerOffence);
-		SetPlayerUtility(GameManager::GetPlayerStat().playerUtility);
-
+		SetPlayerInfo(GameManager::GetPlayerInfo());
+		SetStat(mPlayerInfo->stat->playerHealth, mPlayerInfo->stat->playerOffence, mPlayerInfo->stat->playerUtility);
 		// 애니메이션 스프라이트 로딩
 		if (nullptr == mSpriteImage)
 			SetImage(Resources::Load<Image>(L"Player", L"..\\Resources\\Image\\Player\\player.bmp"));
 		
 		InitComponent();
 
-		InitSkill(mDubleTab, 60.f, 50.f, 2, mOffenceStat.attackSpeed * 0.14f, mOffenceStat.attackSpeed * 0.4f);
+		InitSkill(mDubleTab, 60.f, 50.f, 2
+			, mPlayerInfo->stat->playerOffence->attackSpeed* 0.14f, mPlayerInfo->stat->playerOffence->attackSpeed * 0.4f);
 		InitSkill(mFMJ, 230.f, 120.f, 1, 0.60f, 3.0f, eStagger::Nomal);
-		InitSkill(mTacticalDive, 0.f, mUtilityStat.moveSpeed * 100.f, 1, 0.70f, 5.0f);
-		InitSkill(mSupressiveFire, 800.f, 60.f, 6, mOffenceStat.attackSpeed * 0.14f, 5.0f, eStagger::Heave);
+		InitSkill(mTacticalDive, 0.f, mPlayerInfo->stat->playerUtility->moveSpeed * 100.f, 1, 0.70f, 5.0f);
+		InitSkill(mSupressiveFire, 800.f, 60.f, 6
+			, mPlayerInfo->stat->playerOffence->attackSpeed * 0.14f, 5.0f, eStagger::Heave);
 	}
 	void Player::InitComponent()
 	{
@@ -425,11 +427,11 @@ namespace js
 		// ground off
 		mRigidbody->SetGround(false);
 		// count +
-		++mUtilityStat.curJumpCount;
+		++mPlayerInfo->stat->playerUtility->curJumpCount;
 
 		// set velocity
 		Vector2 velocity = mRigidbody->GetVelocity();
-		velocity.y = -mUtilityStat.jumpPower;
+		velocity.y = -mPlayerInfo->stat->playerUtility->jumpPower;
 		mRigidbody->SetVelocity(velocity);
 	}
 
@@ -480,7 +482,7 @@ namespace js
 			mState = ePlayerState::Move;
 		}
 		// Jump 상태 
-		if (KEY_PRESSE(eKeyCode::SPACE) && mUtilityStat.curJumpCount < mUtilityStat.maxJumpCount)
+		if (KEY_PRESSE(eKeyCode::SPACE) && mPlayerInfo->stat->playerUtility->curJumpCount < mPlayerInfo->stat->playerUtility->maxJumpCount)
 		{
 			if (Vector2::Right == mDir)
 				mAnimator->Play(L"PJumpR");
@@ -556,14 +558,14 @@ namespace js
 		{
 			SetDir(Vector2::Left);
 			Vector2 curVelocity = mRigidbody->GetVelocity();
-			curVelocity.x = mDir.x * mUtilityStat.moveSpeed * 100;
+			curVelocity.x = mDir.x * mPlayerInfo->stat->playerUtility->moveSpeed * 100;
 			mRigidbody->SetVelocity(curVelocity);
 		}
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			SetDir(Vector2::Right);
 			Vector2 curVelocity = mRigidbody->GetVelocity();
-			curVelocity.x = mDir.x * mUtilityStat.moveSpeed * 100;
+			curVelocity.x = mDir.x * mPlayerInfo->stat->playerUtility->moveSpeed * 100;
 			mRigidbody->SetVelocity(curVelocity);
 		}
 
@@ -574,7 +576,7 @@ namespace js
 			mState = ePlayerState::Idle;
 		}
 		// Jump 상태
-		if (KEY_PRESSE(eKeyCode::SPACE) && mUtilityStat.curJumpCount < mUtilityStat.maxJumpCount)
+		if (KEY_PRESSE(eKeyCode::SPACE) && mPlayerInfo->stat->playerUtility->curJumpCount < mPlayerInfo->stat->playerUtility->maxJumpCount)
 		{
 			if (Vector2::Right == mDir)
 				mAnimator->Play(L"PJumpR");
@@ -646,7 +648,7 @@ namespace js
 		}
 
 		// 로직
-		if (KEY_DOWN(eKeyCode::SPACE) && mUtilityStat.curJumpCount < mUtilityStat.maxJumpCount)
+		if (KEY_DOWN(eKeyCode::SPACE) && mPlayerInfo->stat->playerUtility->curJumpCount < mPlayerInfo->stat->playerUtility->maxJumpCount)
 		{
 			JumpProcess();			
 		}
@@ -654,7 +656,7 @@ namespace js
 		{
 			SetDir(Vector2::Left);
 			Vector2 curVelocity = mRigidbody->GetVelocity();
-			curVelocity.x = mDir.x * mUtilityStat.moveSpeed * 100;
+			curVelocity.x = mDir.x * mPlayerInfo->stat->playerUtility->moveSpeed * 100;
 			mRigidbody->SetVelocity(curVelocity);
 			/*SetDir(Vector2::Left);
 			GetComponent<Rigidbody>()->AddForce(Vector2::Left * mUtilityStat.moveSpeed)*/;
@@ -663,7 +665,7 @@ namespace js
 		{
 			SetDir(Vector2::Right);
 			Vector2 curVelocity = mRigidbody->GetVelocity();
-			curVelocity.x = mDir.x * mUtilityStat.moveSpeed * 100;
+			curVelocity.x = mDir.x * mPlayerInfo->stat->playerUtility->moveSpeed * 100;
 			mRigidbody->SetVelocity(curVelocity);
 			/*SetDir(Vector2::Right);
 			GetComponent<Rigidbody>()->AddForce(Vector2::Right * mUtilityStat.moveSpeed);*/
@@ -815,13 +817,13 @@ namespace js
 		if (KEY_PRESSE(eKeyCode::UP))
 		{
 			Vector2 curPos = GetPos();
-			curPos.y += -mUtilityStat.moveSpeed * 100 * Time::GetDeltaTime();
+			curPos.y += -mPlayerInfo->stat->playerUtility->moveSpeed * 100 * Time::GetDeltaTime();
 			SetPos(curPos);
 		}
 		if (KEY_PRESSE(eKeyCode::DOWN))
 		{
 			Vector2 curPos = GetPos();
-			curPos.y += +mUtilityStat.moveSpeed * 100 * Time::GetDeltaTime();
+			curPos.y += +mPlayerInfo->stat->playerUtility->moveSpeed * 100 * Time::GetDeltaTime();
 			SetPos(curPos);
 		}
 
@@ -875,7 +877,7 @@ namespace js
 			Creature* attacker = dynamic_cast<Creature*>(other->GetOwner());
 			Offence offence= {};
 			if (nullptr != attacker)
-				offence = attacker->GetOffence();
+				offence = *(attacker->GetOffence());
 			else
 			{
 				DamageObject* damageObject = dynamic_cast<DamageObject*>(other->GetOwner());

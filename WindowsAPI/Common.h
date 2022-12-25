@@ -135,13 +135,40 @@ struct Utility
 };
 struct PlayerStat
 {
-	Health		playerHealth;
-	Offence		playerOffence;
-	Utility		playerUtility;
+	PlayerStat()
+		: playerHealth(nullptr)
+		, playerOffence(nullptr)
+		, playerUtility(nullptr)
+	{
+		playerHealth = new Health();
+		playerOffence = new Offence();
+		playerUtility = new Utility();
+	}
+	~PlayerStat()
+	{
+	}
+
+	Health*		playerHealth;
+	Offence*	playerOffence;
+	Utility*	playerUtility;
 };
 struct PlayerInfo
 {
-	PlayerStat	stat;
+	PlayerInfo()
+		: stat(nullptr)
+		, level(0)
+		, maxExp(0)
+		, curExp(0)
+		, gold(0)
+	{
+		stat = new PlayerStat();
+	}
+	~PlayerInfo()
+	{
+		delete stat;
+	}
+
+	PlayerStat*	stat;
 	int			level;
 	float		maxExp;
 	float		curExp;

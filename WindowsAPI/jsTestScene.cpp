@@ -179,15 +179,17 @@ namespace js
 	{
 		// ui Ãß°¡
 		UIManager::Push(eUIType::PlayerInfo);
+
 		BarUI* hpBar = UIManager::GetUIInstant<BarUI>(eUIType::HpBar);
-		hpBar->SetMaxValue(PlayerManager::GetPlayerStat().playerHealth.maxHP);
-		hpBar->SetCurValue(PlayerManager::GetPlayerStat().playerHealth.curHP);
+		hpBar->SetType(eBarType::HP);
+		hpBar->SetHealth(GameManager::GetPlayerInfo()->stat->playerHealth);
+
 
 		BarUI* expBar = UIManager::GetUIInstant<BarUI>(eUIType::ExpBar);
-		expBar->SetMaxValue(PlayerManager::GetPlayerInfo().maxExp);
-		expBar->SetCurValue(PlayerManager::GetPlayerInfo().curExp);
+		expBar->SetType(eBarType::EXP);
+		expBar->SetExp(GameManager::GetPlayerInfo());
 
-		Player* player = PlayerManager::GetPlayer();
+		Player* player = GameManager::GetPlayer();
 		float zCooldown = player->GetDubleTabInfo().coolDown;
 		float zTime = player->GetDubleTabInfo().coolDownTime;
 		float xCooldown = player->GetFMJInfo().coolDown;
@@ -216,8 +218,7 @@ namespace js
 	void TestScene::Enter()
 	{
 		SetLayer();
-		//SetUI();
-		
+		SetUI();		
 	}
 
 	// UI ²ô°í ³ª°¡¼À

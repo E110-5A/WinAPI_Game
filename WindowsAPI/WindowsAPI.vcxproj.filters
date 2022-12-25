@@ -274,9 +274,6 @@
     <ClInclude Include="jsGameManager.h">
       <Filter>1 Engine\Manager\Game</Filter>
     </ClInclude>
-    <ClInclude Include="jsPlayerManager.h">
-      <Filter>1 Engine\Manager\Game</Filter>
-    </ClInclude>
     <ClInclude Include="jsShrine.h">
       <Filter>1 Engine\GameObject\EventObj\Shrine</Filter>
     </ClInclude>
@@ -477,9 +474,6 @@
       <Filter>1 Engine\Manager\Game</Filter>
     </ClCompile>
     <ClCompile Include="jsGameManager.cpp">
-      <Filter>1 Engine\Manager\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="jsPlayerManager.cpp">
       <Filter>1 Engine\Manager\Game</Filter>
     </ClCompile>
     <ClCompile Include="jsShrine.cpp">

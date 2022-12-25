@@ -1,6 +1,5 @@
 #pragma once
 #include "jsGameObject.h"
-#include "jsPlayerManager.h"
 #include "jsRigidbody.h"
 
 namespace js
@@ -29,33 +28,33 @@ namespace js
 		// 초기화
 		virtual void InitComponent();
 		virtual void AddComponentScene();
-
-		void SetPlayerHealth(Health& stat) { mHealthStat = stat; }
-		void SetPlayerOffence(Offence& stat) { mOffenceStat = stat; }
-		void SetPlayerUtility(Utility& stat) { mUtilityStat = stat; }
+		void SetStat(Health* health, Offence* offence, Utility* utility)
+		{
+			mHealthStat = health;
+			mOffenceStat = offence;
+			mUtilityStat = utility;
+		}
 		void SetMonsterStat(float hp, float regen, float defance, float damage, float attackSpeed, float range, float moveSpeed)
 		{
-			mHealthStat.maxHP = hp;
-			mHealthStat.curHP = hp;
-			mHealthStat.healthRegen = regen;
-			mHealthStat.defance = defance;
+			mHealthStat->maxHP = hp;
+			mHealthStat->curHP = hp;
+			mHealthStat->healthRegen = regen;
+			mHealthStat->defance = defance;
 
-			mOffenceStat.damage = damage;
-			mOffenceStat.attackSpeed = attackSpeed;
-			mOffenceStat.criticalChance = 0;
-			mOffenceStat.range = range;
+			mOffenceStat->damage = damage;
+			mOffenceStat->attackSpeed = attackSpeed;
+			mOffenceStat->criticalChance = 0;
+			mOffenceStat->range = range;
 
-			mUtilityStat.moveSpeed = moveSpeed;
-			mUtilityStat.maxJumpCount = 1;
-			mUtilityStat.curJumpCount = 0;
+			mUtilityStat->moveSpeed = moveSpeed;
+			mUtilityStat->maxJumpCount = 1;
+			mUtilityStat->curJumpCount = 0;
 		}
-
-
 
 		// 기능
 		void BodyCollision(GameObject* other);
 		void SetGround(bool isGround) { mRigidbody->SetGround(isGround); }
-		void JumpCountReset() { mUtilityStat.curJumpCount = 0; }
+		void JumpCountReset() { mUtilityStat->curJumpCount = 0; }
 
 		// 가해자 오브젝트, 맞은 피해량, 스테거, 위력
 		virtual void SelfHit(GameObject* attaker, float damage, eStagger stagger, float power = 40);
@@ -69,9 +68,9 @@ namespace js
 		void SetImage(Image* image) { mSpriteImage = image; }
 		Image* GetImage() { return mSpriteImage; }
 
-		Health& GetHealth() { return mHealthStat; }
-		Offence& GetOffence() { return mOffenceStat; }
-		Utility& GetUtility() { return mUtilityStat; }
+		Health* GetHealth() { return mHealthStat; }
+		Offence* GetOffence() { return mOffenceStat; }
+		Utility* GetUtility() { return mUtilityStat; }
 
 		Animator* GetAnimator() { return mAnimator; }
 		Rigidbody* GetRigidbody() { return mRigidbody; }
@@ -85,9 +84,9 @@ namespace js
 		Collider*		mFootCollider;
 
 	protected:
-		Health			mHealthStat;
-		Offence			mOffenceStat;
-		Utility			mUtilityStat;
+		Health*			mHealthStat;
+		Offence*		mOffenceStat;
+		Utility*		mUtilityStat;
 		eStagger		mResistance;
 
 	protected:

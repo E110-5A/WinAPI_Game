@@ -16,7 +16,6 @@ namespace js
 		// 씬에서 플레이어가 호출
 		void SetPlayerInfo(Player* owner);
 
-
 		virtual void Tick() override;
 		void Process();
 

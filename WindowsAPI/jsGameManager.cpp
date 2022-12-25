@@ -96,13 +96,13 @@ namespace js
 		for (int idx = 0; idx < MONSTER_POOL; ++idx)
 		{
 			// 몬스터 추가
-			scene->AddGameObject(mMonster[idx], eColliderLayer::Monster);
+			mMonster[idx]->AddMonster();
 		}
 
 		for (int idx = 0; idx < CHEST_POOL; ++idx)
 		{
 			// 상자 추가
-			scene->AddGameObject(mChest[idx], eColliderLayer::EventObject);
+			mChest[idx]->AddChest();
 
 		}
 	}

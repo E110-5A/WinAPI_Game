@@ -30,6 +30,13 @@ namespace js
 	{
 		SetType(eColliderLayer::Monster);
 	}
+	void Monster::ImpInit()
+	{
+		
+	}
+	void Monster::ParentInit()
+	{
+	}
 	void Monster::InitComponent()
 	{
 		Creature::InitComponent();

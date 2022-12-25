@@ -1,0 +1,19 @@
+Parent_IdleR - L
+Size 	46, 66
+Length	1
+
+Parent_Spawn
+Size	48, 67
+Length	4
+
+Parent_WalkR - L
+Size	44, 66
+Length	8
+
+Parent_AttackR - L
+Size	79, 66
+Length	11
+
+Parent_DeathR - L
+Size	70, 65
+Length	12

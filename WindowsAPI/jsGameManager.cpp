@@ -20,15 +20,15 @@ namespace js
 	PlayerStat*	GameManager::mDefaultStat = nullptr;
 	int			GameManager::mPlayerItems[(UINT)eItemList::End] = {};
 
-	float		GameManager::mDifficultyTime = 0.0f;
-
-
+	float*		GameManager::mDifficultyTime = nullptr;
 
 	void GameManager::Initialize()
 	{
 		// 플레이어 설정
 		mPlayerInfo = new PlayerInfo();
 		mDefaultStat = new PlayerStat();
+		mDifficultyTime = new float;
+		*mDifficultyTime = 0;
 		InitStat(mPlayerInfo);
 		mDefaultStat = mPlayerInfo->stat;
 		PlayerLevelUp();
@@ -80,15 +80,7 @@ namespace js
 	}
 	void GameManager::Tick()
 	{
-		mDifficultyTime += Time::GetDeltaTime();
-
-		// 레벨관련 로직
-		if (mPlayerInfo->curExp >= mPlayerInfo->maxExp)
-		{
-			float overExp = mPlayerInfo->curExp - mPlayerInfo->maxExp;
-			PlayerLevelUp();
-			mPlayerInfo->curExp = overExp;
-		}
+		
 	}
 	void GameManager::PlayerLevelUp()
 	{
@@ -99,6 +91,18 @@ namespace js
 		mPlayerInfo->stat->playerOffence->damage = (mDefaultStat->playerOffence->damage + (3 * mPlayerInfo->level) - 3);
 		
 		mPlayerInfo->maxExp += mPlayerInfo->maxExp / 2;
+	}
+	void GameManager::Playing()
+	{
+		*mDifficultyTime += Time::GetDeltaTime();
+
+		// 레벨관련 로직
+		if (mPlayerInfo->curExp >= mPlayerInfo->maxExp)
+		{
+			float overExp = mPlayerInfo->curExp - mPlayerInfo->maxExp;
+			PlayerLevelUp();
+			mPlayerInfo->curExp = overExp;
+		}
 	}
 	void GameManager::PickUpItems(eItemList item)
 	{

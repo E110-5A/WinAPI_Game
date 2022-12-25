@@ -18,15 +18,13 @@ namespace js
 		// 기능 함수
 		static void PlayerLevelUp();
 		static void Damaged() {}
+		static void Playing();
 
 
-
-		// 객체 가져오기
+		// Get
 		static Player* GetPlayer() { return mPlayer; }
-
-		// 플레이어 스텟 가져오기
 		static PlayerInfo* GetPlayerInfo() { return mPlayerInfo; }
-
+		static float* GetDifficultyTime() { return mDifficultyTime; }
 		// 아이템 함수
 		static void PickUpItems(eItemList item);
 		static int* GetItemList() { return mPlayerItems; }
@@ -48,7 +46,7 @@ namespace js
 		static int			mPlayerItems[(UINT)eItemList::End];
 		
 		// 게임 정보
-		static float		mDifficultyTime;	// 2~5분마다 몬스터가 강해짐
+		static float*		mDifficultyTime;	// 2~5분마다 몬스터가 강해짐
 
 	};
 }

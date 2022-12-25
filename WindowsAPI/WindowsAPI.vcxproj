@@ -150,6 +150,7 @@
     <ClInclude Include="jsComponent.h" />
     <ClInclude Include="jsCreature.h" />
     <ClInclude Include="jsDamageObject.h" />
+    <ClInclude Include="jsDifficultyHUD.h" />
     <ClInclude Include="jsEntity.h" />
     <ClInclude Include="jsEventObject.h" />
     <ClInclude Include="jsFoot.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="jsComponent.cpp" />
     <ClCompile Include="jsCreature.cpp" />
     <ClCompile Include="jsDamageObject.cpp" />
+    <ClCompile Include="jsDifficultyHUD.cpp" />
     <ClCompile Include="jsEntity.cpp" />
     <ClCompile Include="jsEventObject.cpp" />
     <ClCompile Include="jsFoot.cpp" />

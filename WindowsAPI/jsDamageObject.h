@@ -22,6 +22,7 @@ namespace js
 
 		// 외부에서 호출됨
 		Offence GetOffence() { return mOffence; }
+
 	private:
 		Collider*	mCollider;
 		Offence		mOffence;

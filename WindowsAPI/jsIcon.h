@@ -16,11 +16,9 @@ namespace js
 		virtual void OnRender(HDC hdc) override;
 		virtual void OnClear() override;
 
-		void SetMaxValue(float& maxValue) { mMaxValue = maxValue; }
-		void SetCurValue(float& curValue) { mCurValue = curValue; }
+		void SetSkillInfo(SkillInfo* skill) { mSkillInfo = skill; }
 
 	private:
-		float		mMaxValue;
-		float		mCurValue;
+		SkillInfo* mSkillInfo;
 	};
 }

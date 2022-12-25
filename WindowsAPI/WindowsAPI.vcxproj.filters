@@ -328,7 +328,12 @@
     <ClInclude Include="jsIcon.h">
       <Filter>1 Engine\GameObject\UI\HUD</Filter>
     </ClInclude>
-    <ClInclude Include="jsDamageObject.h" />
+    <ClInclude Include="jsDamageObject.h">
+      <Filter>1 Engine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="jsDifficultyHUD.h">
+      <Filter>1 Engine\GameObject\UI\HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -530,6 +535,11 @@
     <ClCompile Include="jsIcon.cpp">
       <Filter>1 Engine\GameObject\UI\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="jsDamageObject.cpp" />
+    <ClCompile Include="jsDamageObject.cpp">
+      <Filter>1 Engine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="jsDifficultyHUD.cpp">
+      <Filter>1 Engine\GameObject\UI\HUD</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

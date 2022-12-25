@@ -10,12 +10,13 @@ namespace js
 {
 	Icon::Icon(eUIType type)
 		: HUD(type)
-		, mMaxValue(1.f)
-		, mCurValue(1.f)
+		, mSkillInfo(nullptr)
 	{
+		mSkillInfo = new SkillInfo();
 	}
 	Icon::~Icon()
 	{
+		mSkillInfo->~SkillInfo();
 	}
 
 	void Icon::OnInit()
@@ -35,10 +36,18 @@ namespace js
 		if (nullptr == mImage)
 			return;
 
-		float max = mMaxValue;
-		float cur = mMaxValue - mCurValue;
-
+		
+		float max = mSkillInfo->coolDown;
+				
+		float cur = mSkillInfo->coolDownTime;
+		
 		float ratio = (cur / max);
+
+
+
+
+		if (0 == mSkillInfo->coolDownTime || mSkillInfo->coolDownTime >= mSkillInfo->coolDown)
+			ratio = 1;
 
 		BLENDFUNCTION func = {};
 		func.BlendOp = AC_SRC_OVER;

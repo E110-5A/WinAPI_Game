@@ -192,3 +192,28 @@ struct ProjectileInfo
 	float				range;		// 사거리
 };
 
+struct SkillInfo
+{
+	SkillInfo()
+		: damage(0) ,stagger(eStagger::Light), power(0), castDelay(0), castDelayTime(0), coolDown(0), coolDownTime(0), maxCount(0), curCount(0)
+		, active(true), run(false), finish(true)
+	{
+	}
+	~SkillInfo() = default;
+
+	float		damage;				// 피해량 비율
+	eStagger	stagger;			// 관통 단계
+	float		power;				// 위력 (피해와 연관없음)
+
+	float		castDelay;			// 스킬 지연시간
+	float		castDelayTime;
+	float		coolDown;			// 스킬 재사용 대기시간
+	float		coolDownTime;
+
+	int			maxCount;			// 반복 횟수
+	int			curCount;
+
+	bool		active;				// 사용불가 상태		: 쿨다운 대기
+	bool		run;				// 진행중 상태		: 스킬 내부로직 조건용
+	bool		finish;				// 끝난 상태			: 상태 종료 조건
+};

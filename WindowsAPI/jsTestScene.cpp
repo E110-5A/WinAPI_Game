@@ -75,6 +75,7 @@ namespace js
 		// 오브젝트 tick 을 호출한다.
 		Scene::Tick();
 
+		GameManager::Playing();
 		// ESC 누를경우
 		/*
 		*  - 시간 진행 멈추기
@@ -189,29 +190,16 @@ namespace js
 		expBar->SetType(eBarType::EXP);
 		expBar->SetExp(GameManager::GetPlayerInfo());
 
+
 		Player* player = GameManager::GetPlayer();
-		float zCooldown = player->GetDubleTabInfo().coolDown;
-		float zTime = player->GetDubleTabInfo().coolDownTime;
-		float xCooldown = player->GetFMJInfo().coolDown;
-		float xTime = player->GetFMJInfo().coolDownTime;
-
-		float cCooldown = player->GetTacticalDiveInfo().coolDown;
-		float cTime = player->GetTacticalDiveInfo().coolDownTime;
-		float vCooldown = player->GetSupressiveFireInfo().coolDown;
-		float vTime = player->GetSupressiveFireInfo().coolDownTime;
-
 		Icon* z = UIManager::GetUIInstant<Icon>(eUIType::Z);
-		z->SetMaxValue(zCooldown);
-		z->SetCurValue(zTime);
+		z->SetSkillInfo(player->GetDubleTabInfo());
 		Icon* x = UIManager::GetUIInstant<Icon>(eUIType::X);
-		x->SetMaxValue(xCooldown);
-		x->SetCurValue(xTime);
+		x->SetSkillInfo(player->GetFMJInfo());
 		Icon* c = UIManager::GetUIInstant<Icon>(eUIType::C);
-		c->SetMaxValue(cCooldown);
-		c->SetCurValue(cTime);
+		c->SetSkillInfo(player->GetTacticalDiveInfo());
 		Icon* v = UIManager::GetUIInstant<Icon>(eUIType::V);
-		v->SetMaxValue(vCooldown);
-		v->SetCurValue(vTime);
+		v->SetSkillInfo(player->GetSupressiveFireInfo());
 	}
 
 	// 충돌 및 UI 설정

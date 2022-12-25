@@ -137,6 +137,7 @@
     <ClInclude Include="jsAnimation.h" />
     <ClInclude Include="jsAnimator.h" />
     <ClInclude Include="jsBarUI.h" />
+    <ClInclude Include="jsBossMonster.h" />
     <ClInclude Include="jsChest.h" />
     <ClInclude Include="jsCollisionBlock.h" />
     <ClInclude Include="jsCollisionCheck.h" />
@@ -186,7 +187,7 @@
     <ClInclude Include="jsObject.h" />
     <ClInclude Include="jsPlayer.h" />
     <ClInclude Include="jsPlayerProjectile.h" />
-    <ClInclude Include="jsPlayScene.h" />
+    <ClInclude Include="jsStage1.h" />
     <ClInclude Include="jsResource.h" />
     <ClInclude Include="jsResources.h" />
     <ClInclude Include="jsRigidbody.h" />
@@ -206,6 +207,7 @@
     <ClCompile Include="jsAnimation.cpp" />
     <ClCompile Include="jsAnimator.cpp" />
     <ClCompile Include="jsBarUI.cpp" />
+    <ClCompile Include="jsBossMonster.cpp" />
     <ClCompile Include="jsChest.cpp" />
     <ClCompile Include="jsCollisionBlock.cpp" />
     <ClCompile Include="jsCollisionCheck.cpp" />
@@ -254,7 +256,7 @@
     <ClCompile Include="jsMonster.cpp" />
     <ClCompile Include="jsPlayer.cpp" />
     <ClCompile Include="jsPlayerProjectile.cpp" />
-    <ClCompile Include="jsPlayScene.cpp" />
+    <ClCompile Include="jsStage1.cpp" />
     <ClCompile Include="jsResource.cpp" />
     <ClCompile Include="jsResources.cpp" />
     <ClCompile Include="jsRigidbody.cpp" />

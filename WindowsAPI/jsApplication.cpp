@@ -43,6 +43,9 @@ namespace js
 
 		SceneManager::Tick();
 		CollisionManager::Tick();
+
+		GameManager::Tick();
+		
 		UIManager::Tick();
 		Camera::Tick();
 

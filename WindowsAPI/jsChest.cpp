@@ -21,6 +21,7 @@ namespace js
         : mItemObject(nullptr)
         , mTextImage(nullptr)
         , mCollisionPlayer(false)
+        , mChestType(eChestType::Golden)
         , mIndex(eChestIndex::Golden)
         , mX(0)
         , mY(0)
@@ -47,7 +48,10 @@ namespace js
         SetImage(L"ChestSprite", L"..\\Resources\\Image\\EventObject\\Chests.bmp");
         mTextImage = Resources::Load<Image>(L"ChestText", L"..\\Resources\\Image\\EventObject\\ChestText.bmp");
         // 상자와 대응하는 아이템 생성
-        mItemObject = object::Instantiate<ItemObject>(eColliderLayer::Item);
+
+        mItemObject = new ItemObject();
+        mItemObject->SetType(eColliderLayer::Item);
+
         mEventCollider->SetSize(Size(ChestSizeX, ChestSizeY));
         mEventCollider->SetOffset(Vector2(ChestSizeX / 2, ChestSizeY / 2));
     }
@@ -111,7 +115,20 @@ namespace js
         if (eColliderLayer::Player == other->GetOwner()->GetType())
         {
             if (KEY_DOWN(eKeyCode::A))
-                Trigger();
+            {
+                if (eChestType::Small == mChestType)
+                {
+                    SmallChestTrigger();
+                }
+                else if (eChestType::Large == mChestType)
+                {
+                    LargeChestTrigger();
+                }
+                else if (eChestType::Golden == mChestType)
+                {
+                    GoldenChestTrigger();
+                }
+            }
         }
     }
 

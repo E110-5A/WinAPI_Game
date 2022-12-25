@@ -17,6 +17,8 @@
 #include "jsButton.h"
 #include "jsBarUI.h"
 #include "jsIcon.h"
+#include "jsDifficultyHUD.h"
+
 // obj
 #include "jsPlayer.h"
 #include "jsObject.h"
@@ -100,7 +102,7 @@ namespace js
 
 	void TestScene::TileLoadTest()
 	{
-		SceneManager::LoadMap<MapToolScene>(L"..\\Resources\\Tile\\pls", eSceneType::MapTool);
+		SceneManager::LoadMap<MapToolScene>(L"..\\Resources\\Tile\\STG1\\stage1", eSceneType::MapTool);
 	}
 
 	void TestScene::BGTest()
@@ -130,19 +132,6 @@ namespace js
 
 	void TestScene::ObjectTest()
 	{
-		GameManager::AddObject();
-		Player* player = GameManager::GetPlayer();
-		player->SetPos(Pos(440.f, 576.f));
-
-		//// 플레이어 설정
-		//Player* player = object::Instantiate<Player>(eColliderLayer::Player, Pos(440.f, 576.0f));
-		//// 투사체 풀링
-		//for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
-		//{
-		//	mPlayerAttack[idx] = object::Instantiate<PlayerProjectile>(eColliderLayer::Player_Projectile);
-		//	mPlayerAttack[idx]->SetPlayerInfo(player);
-		//}
-
 		// 기타 오브젝트 설정
 		EventObject* smallBox = object::Instantiate<SmallChest>(eColliderLayer::EventObject, Pos(70.0f, 610.0f));
 		EventObject* largeBox = object::Instantiate<LargeChest>(eColliderLayer::EventObject, Pos(140.0f, 610.0f));
@@ -200,20 +189,28 @@ namespace js
 		c->SetSkillInfo(player->GetTacticalDiveInfo());
 		Icon* v = UIManager::GetUIInstant<Icon>(eUIType::V);
 		v->SetSkillInfo(player->GetSupressiveFireInfo());
+
+		UIManager::Push(eUIType::Difficulty);
+
+		DifficultyHUD* difficultyHud = UIManager::GetUIInstant<DifficultyHUD>(eUIType::DifficultyBar);
+		difficultyHud->SetDifficulty(GameManager::GetDifficulty());
 	}
 
 	// 충돌 및 UI 설정
 	void TestScene::Enter()
 	{
+		GameManager::AddObject();
+		Player* player = GameManager::GetPlayer();
+		player->SetPos(Pos(440.f, 576.f));
+
 		SetLayer();
-		SetUI();		
+		SetUI();
+
 	}
 
 	// UI 끄고 나가셈
 	void TestScene::Exit()
 	{
-		UIManager::Pop(eUIType::PlayerInfo);
-		UIManager::Pop(eUIType::HpBar);
-		UIManager::Pop(eUIType::ExpBar);
+		
 	}
 }

@@ -12,18 +12,18 @@ namespace js
 		static __forceinline T* Instantiate(eColliderLayer type)
 		{
 			T* gameObject = new T();
+			gameObject->SetType(type);
 			Scene* scene = SceneManager::GetPlayScene();
 			scene->AddGameObject(dynamic_cast<GameObject*>(gameObject), type);
-			gameObject->SetType(type);
 			return gameObject;
 		}
 		template <typename T>
 		static __forceinline T* Instantiate(eColliderLayer type, Pos pos)
 		{
 			T* gameObject = new T(pos);
+			gameObject->SetType(type);
 			Scene* scene = SceneManager::GetPlayScene();
 			scene->AddGameObject(dynamic_cast<GameObject*>(gameObject), type);
-			gameObject->SetType(type);
 			return gameObject;
 		}
 

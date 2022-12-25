@@ -10,17 +10,30 @@
 // object
 #include "jsPlayer.h"
 #include "jsPlayerProjectile.h"
+#include "jsMonster.h"
+#include "jsChest.h"
+#include "jsBossMonster.h"
+
 
 namespace js
 {
+	// 오브젝트
 	Player*				GameManager::mPlayer = nullptr;
 	PlayerProjectile*	GameManager::mPlayerAttack[PLAYER_PROJECTILE_POOL] = {};
+	Monster*			GameManager::mMonster[MONSTER_POOL] = {};
+	Chest*				GameManager::mChest[CHEST_POOL] = {};
+	BossMonster*		GameManager::mBossMonster = nullptr;
+
+	// 게임 정보
+	bool		GameManager::mPlayable = false;
 
 	PlayerInfo*	GameManager::mPlayerInfo = nullptr;
 	PlayerStat*	GameManager::mDefaultStat = nullptr;
 	int			GameManager::mPlayerItems[(UINT)eItemList::End] = {};
 
 	float*		GameManager::mDifficultyTime = nullptr;
+	int*		GameManager::mDifficulty = nullptr;
+
 
 	void GameManager::Initialize()
 	{
@@ -28,6 +41,7 @@ namespace js
 		mPlayerInfo = new PlayerInfo();
 		mDefaultStat = new PlayerStat();
 		mDifficultyTime = new float;
+		mDifficulty = new int;
 		*mDifficultyTime = 0;
 		InitStat(mPlayerInfo);
 		mDefaultStat = mPlayerInfo->stat;
@@ -38,26 +52,58 @@ namespace js
 	}
 	void GameManager::InitObject()
 	{
-		// 플레이어와 투사체 풀 생성
+		// 플레이어 생성
 		mPlayer = new Player();
 		mPlayer->SetType(eColliderLayer::Player);
+
 		for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 		{
+			// 투사체 생성
 			mPlayerAttack[idx] = new PlayerProjectile();
 			mPlayerAttack[idx]->SetType(eColliderLayer::Player_Projectile);
 			mPlayerAttack[idx]->SetPlayerInfo(mPlayer);
+		}
+
+		
+		for (int idx = 0; idx < MONSTER_POOL; ++idx)
+		{
+			// 몬스터 생성
+			mMonster[idx] = new Monster();
+			mMonster[idx]->SetType(eColliderLayer::Monster);
+		}
+		for (int idx = 0; idx < CHEST_POOL; ++idx)
+		{
+			// 상자 생성
+			mChest[idx] = new Chest();
+			mChest[idx]->SetType(eColliderLayer::EventObject);
 		}
 	}
 
 	void GameManager::AddObject()
 	{
 		Scene* scene = SceneManager::GetPlayScene();
+
+		// 플레이어 추가
 		scene->AddGameObject(mPlayer, eColliderLayer::Player);
 		mPlayer->AddComponentScene();
 
 		for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 		{
+			// 플레이어 투사체 추가
 			scene->AddGameObject(mPlayerAttack[idx], eColliderLayer::Player_Projectile);
+		}
+
+		for (int idx = 0; idx < MONSTER_POOL; ++idx)
+		{
+			// 몬스터 추가
+			scene->AddGameObject(mMonster[idx], eColliderLayer::Monster);
+		}
+
+		for (int idx = 0; idx < CHEST_POOL; ++idx)
+		{
+			// 상자 추가
+			scene->AddGameObject(mChest[idx], eColliderLayer::EventObject);
+
 		}
 	}
 
@@ -94,7 +140,10 @@ namespace js
 	}
 	void GameManager::Playing()
 	{
-		*mDifficultyTime += Time::GetDeltaTime();
+		if (true == mPlayable)
+		{
+			*mDifficultyTime += Time::GetDeltaTime();
+		}
 
 		// 레벨관련 로직
 		if (mPlayerInfo->curExp >= mPlayerInfo->maxExp)
@@ -102,6 +151,12 @@ namespace js
 			float overExp = mPlayerInfo->curExp - mPlayerInfo->maxExp;
 			PlayerLevelUp();
 			mPlayerInfo->curExp = overExp;
+		}
+		// 난이도 관련 로직
+		if (60.0f <= *mDifficultyTime)
+		{
+			*mDifficulty += 1;
+			*mDifficultyTime = 0.0f;
 		}
 	}
 	void GameManager::PickUpItems(eItemList item)

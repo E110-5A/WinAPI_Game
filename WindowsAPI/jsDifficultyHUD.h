@@ -16,5 +16,9 @@ namespace js
 		virtual void OnRender(HDC hdc) override;
 		virtual void OnClear() override;
 
+		void SetDifficulty(int* difficulty) { mDifficulty = difficulty; }
+
+	private:
+		int* mDifficulty;
 	};
 }

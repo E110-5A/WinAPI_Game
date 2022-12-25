@@ -122,6 +122,9 @@
     <Filter Include="1 Engine\GameObject\UI\Panel">
       <UniqueIdentifier>{cff2f6c1-1e4f-4e8f-80f0-16a711f3936c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1 Engine\GameObject\Creature\BossMonster">
+      <UniqueIdentifier>{ca151cbe-acd1-4a25-8fec-2d0473beaa2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -172,7 +175,7 @@
     <ClInclude Include="jsComponent.h">
       <Filter>1 Engine\Component\Base</Filter>
     </ClInclude>
-    <ClInclude Include="jsPlayScene.h">
+    <ClInclude Include="jsStage1.h">
       <Filter>1 Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="jsTitleScene.h">
@@ -334,6 +337,9 @@
     <ClInclude Include="jsDifficultyHUD.h">
       <Filter>1 Engine\GameObject\UI\HUD</Filter>
     </ClInclude>
+    <ClInclude Include="jsBossMonster.h">
+      <Filter>1 Engine\GameObject\Creature\BossMonster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -382,7 +388,7 @@
     <ClCompile Include="jsComponent.cpp">
       <Filter>1 Engine\Component\Base</Filter>
     </ClCompile>
-    <ClCompile Include="jsPlayScene.cpp">
+    <ClCompile Include="jsStage1.cpp">
       <Filter>1 Engine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="jsTitleScene.cpp">
@@ -540,6 +546,9 @@
     </ClCompile>
     <ClCompile Include="jsDifficultyHUD.cpp">
       <Filter>1 Engine\GameObject\UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="jsBossMonster.cpp">
+      <Filter>1 Engine\GameObject\Creature\BossMonster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

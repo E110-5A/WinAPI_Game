@@ -5,6 +5,7 @@
 #include "jsHUD.h"
 #include "jsBarUI.h"
 #include "jsIcon.h"
+#include "jsDifficultyHUD.h"
 
 namespace js
 {
@@ -221,45 +222,38 @@ namespace js
 		// PlayerInfo
 		Panel* playerInfoPanel = new Panel(eUIType::PlayerInfo);
 		mUIs.insert(std::make_pair(eUIType::PlayerInfo, playerInfoPanel));
-		playerInfoPanel->SetPos(Vector2((Window_Width / 2) - 170, Window_Height - 128));
 		playerInfoPanel->ImageLoad(L"PlayerInfoPanel", L"..\\Resources\\Image\\UI\\InGame\\PlayerInfoPanel.bmp");
+		playerInfoPanel->SetPos(Vector2((Window_Width / 2) - 170, Window_Height - 128));
 
 		BarUI* hpBar = new BarUI(eUIType::HpBar);
 		mUIs.insert(std::make_pair(eUIType::HpBar, hpBar));
-		hpBar->SetPos(Vector2(10.0f, 74.0f));
 		hpBar->ImageLoad(L"HpBar", L"..\\Resources\\Image\\UI\\InGame\\HPBar.bmp");
+		hpBar->SetPos(Vector2(10.0f, 74.0f));
 
 		BarUI* expBar = new BarUI(eUIType::ExpBar);
 		mUIs.insert(std::make_pair(eUIType::ExpBar, expBar));
-		expBar->SetPos(Vector2(10.0f, 100.0f));
 		expBar->ImageLoad(L"ExpBar", L"..\\Resources\\Image\\UI\\InGame\\ExpBar.bmp");
+		expBar->SetPos(Vector2(10.0f, 100.0f));
 		
-
-		
-
-		Icon* Z = new Icon(eUIType::ExpBar);
+		Icon* Z = new Icon(eUIType::Z);
 		mUIs.insert(std::make_pair(eUIType::Z, Z));
-		Z->SetPos(Vector2(78.0f, 16.0f));
 		Z->ImageLoad(L"Z", L"..\\Resources\\Image\\UI\\InGame\\Z.bmp");
+		Z->SetPos(Vector2(78.0f, 16.0f));
 
-
-		Icon* X = new Icon(eUIType::ExpBar);
+		Icon* X = new Icon(eUIType::X);
 		mUIs.insert(std::make_pair(eUIType::X, X));
-		X->SetPos(Vector2(124.0f, 16.0f));
 		X->ImageLoad(L"X", L"..\\Resources\\Image\\UI\\InGame\\X.bmp");
+		X->SetPos(Vector2(124.0f, 16.0f));
 
-
-		Icon* C = new Icon(eUIType::ExpBar);
+		Icon* C = new Icon(eUIType::C);
 		mUIs.insert(std::make_pair(eUIType::C, C));
-		C->SetPos(Vector2(170.0f, 16.0f));
 		C->ImageLoad(L"C", L"..\\Resources\\Image\\UI\\InGame\\C.bmp");
+		C->SetPos(Vector2(170.0f, 16.0f));
 
-
-		Icon* V = new Icon(eUIType::ExpBar);
+		Icon* V = new Icon(eUIType::V);
 		mUIs.insert(std::make_pair(eUIType::V, V));
-		V->SetPos(Vector2(216.0f, 16.0f));
 		V->ImageLoad(L"V", L"..\\Resources\\Image\\UI\\InGame\\V.bmp");
-
+		V->SetPos(Vector2(216.0f, 16.0f));
 
 		playerInfoPanel->AddChild(hpBar);
 		playerInfoPanel->AddChild(expBar);
@@ -267,5 +261,17 @@ namespace js
 		playerInfoPanel->AddChild(X);
 		playerInfoPanel->AddChild(C);
 		playerInfoPanel->AddChild(V);
+
+		Panel* difficultyPanel = new Panel(eUIType::Difficulty);
+		mUIs.insert(std::make_pair(eUIType::Difficulty, difficultyPanel));
+		difficultyPanel->ImageLoad(L"Difficulty", L"..\\Resources\\Image\\UI\\InGame\\Difficulty.bmp");
+		difficultyPanel->SetPos(Vector2(Window_Width - 140, 30));
+
+		DifficultyHUD* difficultyBar = new DifficultyHUD(eUIType::DifficultyBar);
+		mUIs.insert(std::make_pair(eUIType::DifficultyBar, difficultyBar));
+		difficultyBar->ImageLoad(L"DifficultyBar", L"..\\Resources\\Image\\UI\\InGame\\DifficultyBar.bmp");
+		difficultyBar->SetPos(Vector2::Zero);
+
+		difficultyPanel->AddChild(difficultyBar);
 	}
 }

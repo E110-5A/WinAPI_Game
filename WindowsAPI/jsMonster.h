@@ -3,6 +3,12 @@
 
 namespace js
 {
+	enum class eMonsterType
+	{
+		Imp,
+		Parent,
+	};
+
 	enum class eMonsterState
 	{
 		Idle,
@@ -41,6 +47,9 @@ namespace js
 		// FSM 만들때 추후 추가할 예정
 		void SelfStun(float power);
 
+	private:
+		eMonsterType	mMonsterType;
+		eMonsterState	mState;
 	};
 }
 

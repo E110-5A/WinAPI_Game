@@ -36,7 +36,9 @@ enum class eSceneType
 	Test,
 	Title,
 	Select,
-	Play,
+	STG1,
+	STG2,
+	STG3,
 	Option,
 	End,
 };
@@ -45,19 +47,25 @@ enum class eSceneType
 enum class eUIType
 {
 	TEST,
+	// 씬 버튼
 	SelectBtn,		// title
 	OptionBtn,		// title
 	QuitBtn,		// title
 
 	PlayBtn,		// select
 
-	PlayerInfo,		// 인게임 Panel
-	HpBar,			// 인게임 Hp
-	ExpBar,			// 인게임 Exp
-	Z,				// 스킬 아이콘
-	X,				//
-	C,				//
-	V,				//
+	// 인게임
+	PlayerInfo,		
+	HpBar,			
+	ExpBar,			
+	Z,				
+	X,				
+	C,				
+	V,
+
+	Difficulty,		// 난이도
+	DifficultyBar,
+
 
 	ItemInventory,	// 인게임 HUD
 	Option,			// 
@@ -162,8 +170,9 @@ enum class eStagger
 	Heave,		// 보스 제외 기절유발
 };
 
-#define PLAYER_PROJECTILE_POOL 40
-
+#define PLAYER_PROJECTILE_POOL	40
+#define MONSTER_POOL			20
+#define CHEST_POOL				7
 // item enum
 enum class eChestType
 {

@@ -3,8 +3,7 @@
 
 namespace js
 {
-	class PlayerProjectile;
-	class ItemObject;
+	class Chest;
 	class TestScene : public Scene
 	{
 	public:
@@ -14,8 +13,8 @@ namespace js
 		void Initialize() override;
 
 		void TileLoadTest();
-		void BGTest();
-		void ObjectTest();
+		void InitBG();
+		void InitObject();
 		void SetLayer();
 		void SetUI();
 
@@ -27,6 +26,6 @@ namespace js
 		virtual void Exit();
 
 	private:
-		PlayerProjectile*	mPlayerAttack[PLAYER_PROJECTILE_POOL];
+		Chest*				mChest[CHEST_POOL];
 	};
 }

@@ -103,7 +103,7 @@ typedef ColliderID TileID;
 
 
 // Component enum
-#define _COLLIDER_LAYER 16		// 충돌체 유형
+#define _COLLIDER_LAYER 18		// 충돌체 유형
 enum class eComponentType
 {
 	Rigidbody,
@@ -121,15 +121,17 @@ enum class eColliderLayer
 
 								//	4	//
 
-	EventObject,				//	4		// 트리거를 가진 오브젝트
-	Platform,					//	5		// 벽
+	Propellant,				//	4		// 상자, 추진체
+	Chest,
+	Platform,					//	5		// 벽, 바닥
 	Ladder,						//	6		// 사다리
-	Item,						//	7		// 오브젝트를 위로 날려버림
+	Item,						//	7		// 
+
+
+
+
 	Head,						//	8		// Creature 머리충돌
 	Foot,						//	9		// Creature 바닥충돌
-
-								//  10	//
-
 	Player,						//	10		// 
 	Player_Projectile,			//	11		// 플레이어가 매개가 되는 투사체 (스킬과 아이템효과)
 	Monster,					//	12		// 플레이어 투사체에 의해서만 피해를 입음

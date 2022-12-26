@@ -57,19 +57,10 @@ namespace js
 		
 		// 맵 로딩
 		TileLoadTest();
-
 		// 배경 오브젝트
-		BGTest();
-
+		InitBG();
 		// 오브젝트 추가
-		ObjectTest();
-
-		// ui 추가
-		/*UIManager::Push(eUIType::TEST);
-		UIManager::Push(eUIType::PlayerInfo);
-		HUD* hud = UIManager::GetUIInstant<HUD>(eUIType::PlayerInfo);
-		hud->SetTarget(pPlayer);
-		UIManager::Push(eUIType::ITEM_SELECT);*/
+		InitObject();
 	}
 
 	void TestScene::Tick()
@@ -102,10 +93,10 @@ namespace js
 
 	void TestScene::TileLoadTest()
 	{
-		SceneManager::LoadMap<MapToolScene>(L"..\\Resources\\Tile\\STG1\\stage1", eSceneType::MapTool);
+		// SceneManager::LoadMap<MapToolScene>(L"..\\Resources\\Tile\\STG1\\stage1", eSceneType::MapTool);
 	}
 
-	void TestScene::BGTest()
+	void TestScene::InitBG()
 	{
 		Platform* leftGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(0.0f, 384.0f));
 		leftGround->SetColliderSize(Size(GRID_SIZE, GRID_SIZE * 5));
@@ -127,21 +118,11 @@ namespace js
 		ladder->SetColliderSize(Size(GRID_SIZE, GRID_SIZE * 2));
 		ladder->SetColliderOffset(Vector2(GRID_SIZE / 2, GRID_SIZE * 2 / 2));
 
-		Propellant* propellant = object::Instantiate<Propellant>(eColliderLayer::EventObject, Pos(610, 550));
+		Propellant* propellant = object::Instantiate<Propellant>(eColliderLayer::Propellant, Pos(610, 550));
 	}
 
-	void TestScene::ObjectTest()
+	void TestScene::InitObject()
 	{
-		// 기타 오브젝트 설정
-		EventObject* smallBox = object::Instantiate<SmallChest>(eColliderLayer::EventObject, Pos(70.0f, 610.0f));
-		EventObject* largeBox = object::Instantiate<LargeChest>(eColliderLayer::EventObject, Pos(140.0f, 610.0f));
-		EventObject* goldenBox = object::Instantiate<GoldenChest>(eColliderLayer::EventObject, Pos(220.0f, 610.0f));
-		
-		// 몬스터 설정
-		//Monster* imp = object::Instantiate<Imp>(  eColliderLayer::Monster, Pos(700.f, 550.0f));
-		/*Monster* imp2 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(750.f, 550.0f));
-		Monster* imp3 = object::Instantiate<Imp>(eColliderLayer::Monster, Pos(800.f, 550.0f));*/
-
 		// 플레이어 상호작용 테스트
 		DamageObject* damageTest = object::Instantiate<DamageObject>(eColliderLayer::DamageObject, Pos(GRID_SIZE*5,GRID_SIZE*9));
 	}
@@ -157,11 +138,11 @@ namespace js
 		CollisionManager::SetLayer(eColliderLayer::Ladder, eColliderLayer::Foot, true);
 		CollisionManager::SetLayer(eColliderLayer::Ladder, eColliderLayer::Player, true);
 
-		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::EventObject, true);
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Propellant, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Item, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::DamageObject, true);
 
-		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::EventObject, true);
+		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Propellant, true);
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player_Projectile, true);
 	}
 
@@ -203,9 +184,18 @@ namespace js
 		Player* player = GameManager::GetPlayer();
 		player->SetPos(Pos(440.f, 576.f));
 
+		// 씬에서 상자 받아오고, 그것을 연결
+		for (int idx = 0; idx < CHEST_POOL; ++idx)
+		{
+			mChest[idx] = GameManager::GetChest(idx);
+		}
+
+		mChest[0]->SetPos(Pos(70.0f, 610.0f));
+		mChest[1]->SetPos(Pos(140.0f, 610.0f));
+		mChest[2]->SetPos(Pos(220.0f, 610.0f));
+
 		SetLayer();
 		SetUI();
-
 	}
 
 	// UI 끄고 나가셈

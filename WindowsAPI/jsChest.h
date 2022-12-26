@@ -40,23 +40,7 @@ namespace js
 		virtual void OnCollisionExit(Collider* other) override;
 
 		// 씬에 추가될 때 랜덤으로 내 상자 타입이 정해짐
-		void AddChest()
-		{
-			Scene* scene = SceneManager::GetPlayScene();
-
-			srand((unsigned int)time(NULL));
-			// small 3 large 2 golden 1
-			int myType = rand() % 6;
-			if (0 <= myType && 3 > myType)
-				SetSmallChest();
-			else if (3 <= myType < 5)
-				SetLargeChest();
-			else if (5 <= myType < 6)
-				SetGoldenChest();
-
-			scene->AddGameObject(this, eColliderLayer::EventObject);
-			scene->AddGameObject(mItemObject, eColliderLayer::Item);
-		}
+		void AddChest();
 
 		void SetGoldenChest() { SetIndex((UINT)eChestIndex::Golden); }
 		void SetLargeChest() { SetIndex((UINT)eChestIndex::Large); }

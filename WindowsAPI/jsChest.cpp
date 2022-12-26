@@ -11,6 +11,7 @@
 // component
 #include "jsCollider.h"
 
+
 // object
 #include "jsObject.h"
 #include "jsItemObject.h"
@@ -26,6 +27,7 @@ namespace js
         , mX(0)
         , mY(0)
     {
+        Initialize();
     }
 
     Chest::Chest(Pos pos)
@@ -36,6 +38,7 @@ namespace js
         , mX(0)
         , mY(0)
     {
+        Initialize();
     }
 
     Chest::~Chest()
@@ -136,6 +139,28 @@ namespace js
     {
         if (eColliderLayer::Player == other->GetOwner()->GetType())
             mCollisionPlayer = false;
+    }
+    void Chest::AddChest()
+    {
+        Scene* scene = SceneManager::GetPlayScene();
+
+        // 타입 변경
+        srand((unsigned int)time(NULL));
+        // small 3 large 2 golden 1
+        int myType = rand() % 20;       // 0 ~ 19
+        if (0 <= myType && 10 > myType)
+            SetSmallChest();
+        else if (10 <= myType < 17)
+            SetLargeChest();
+        else if (17 <= myType < 20)
+            SetGoldenChest();
+
+        // 활성화
+        mAble = true;
+
+        // 씬에 추가
+        scene->AddGameObject(this, eColliderLayer::Propellant);
+        scene->AddGameObject(mItemObject, eColliderLayer::Item);
     }
     void Chest::SetIndex(UINT index)
     {

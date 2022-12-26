@@ -5,6 +5,10 @@
 #include "jsAnimator.h"
 #include "jsRigidbody.h"
 
+
+// resource
+#include "jsResources.h"
+
 // object
 #include "jsObject.h"
 #include "jsFoot.h"
@@ -49,6 +53,7 @@ namespace js
 	void Creature::Initialize()
 	{
 		InitComponent();
+		SetImage(Resources::Load<Image>(L"Monster", L"..\\Resources\\Image\\Enemy\\monster.bmp"));
 	}
 
 	void Creature::Tick()

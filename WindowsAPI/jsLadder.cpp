@@ -101,7 +101,7 @@ namespace js
 		Foot* foot = dynamic_cast<Foot*>(other->GetOwner());
 		Player* player = dynamic_cast<Player*>(foot->GetOwner());
 
-		// Climb 상태에서 벗어난 경우 (State -> Idle, Ground -> false
+		// Climb 상태에서 벗어난 경우 (State -> Stay, Ground -> false
 		if (ePlayerState::Climb == player->GetState())
 		{
 			if (Vector2::Right == player->GetDir())

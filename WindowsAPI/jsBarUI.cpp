@@ -15,15 +15,9 @@ namespace js
 		, mHealth(nullptr)
 		, mExp(nullptr)
 	{
-		mTarget = new Creature();
-		mHealth = new Health();
-		mExp = new PlayerInfo();
 	}
 	BarUI::~BarUI()
 	{
-		delete mTarget;
-		delete mHealth;
-		delete mExp;
 	}
 
 	void BarUI::OnInit()

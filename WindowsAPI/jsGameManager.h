@@ -13,8 +13,12 @@ namespace js
 	public:
 		static void Initialize();
 
+
 		static void InitObject();
+
+		// 현재 씬에 오브젝트 추가
 		static void AddObject();
+		
 		static void InitStat(PlayerInfo* info);
 		static void Tick();
 
@@ -23,9 +27,14 @@ namespace js
 		static void Damaged() {}
 		static void Playing();
 
+		// 몬스터 리스폰 기능 (able = true, rand type, rand Pos
+
+		// 상자 세팅
+		static Chest* GetChest(int idx) { return mChest[idx]; }
+
 		static void SetPlayable(bool Playable) { mPlayable = Playable; }
 
-		// Get
+		// Info
 		static Player* GetPlayer() { return mPlayer; }
 		static PlayerInfo* GetPlayerInfo() { return mPlayerInfo; }
 		static int* GetDifficulty() { return mDifficulty; }
@@ -36,6 +45,11 @@ namespace js
 
 		static void StageClear();
 
+
+		static void Release()
+		{
+			delete mPlayerInfo;
+		}
 	private:
 		// 씬에서 사용할 객체
 
@@ -57,5 +71,7 @@ namespace js
 		static bool			mPlayable;
 		static int*			mDifficulty;
 		static float*		mDifficultyTime;	// 2~5분마다 몬스터가 강해짐
+
+		// 60초마다 difficulty가 1 증가함 최대 9까지 있음
 	};
 }

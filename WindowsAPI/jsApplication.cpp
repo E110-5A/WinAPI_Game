@@ -99,6 +99,7 @@ namespace js
 		SceneManager::Release();
 		Resources::Release();
 		UIManager::Release();
+		GameManager::Release();
 
 		ReleaseDC(mWindowData.hWnd, mWindowData.hdc);
 		ReleaseDC(mWindowData.hWnd, mWindowData.backBuffer);

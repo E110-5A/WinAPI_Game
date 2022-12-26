@@ -147,11 +147,11 @@ namespace js
 		CollisionManager::SetLayer(eColliderLayer::Ladder, eColliderLayer::Foot, true);
 		CollisionManager::SetLayer(eColliderLayer::Ladder, eColliderLayer::Player, true);
 
-		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::EventObject, true);
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Propellant, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Item, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::DamageObject, true);
 
-		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::EventObject, true);
+		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Propellant, true);
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player_Projectile, true);
 	}
 }

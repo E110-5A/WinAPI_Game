@@ -484,7 +484,7 @@ namespace js
 		}		
 
 		// 상태 변동
-		// Move 상태 
+		// Chase 상태 
 		if (KEY_PRESSE(eKeyCode::LEFT) || KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			mState = ePlayerState::Move;
@@ -578,7 +578,7 @@ namespace js
 		}
 
 		// 상태 변동
-		// Idle 상태 
+		// Stay 상태 
 		if (KEY_UP(eKeyCode::LEFT) || KEY_UP(eKeyCode::RIGHT))
 		{
 			mState = ePlayerState::Idle;
@@ -680,7 +680,7 @@ namespace js
 		}
 
 		// 상태 변동
-		// Idle 상태 
+		// Stay 상태 
 		if (true == mRigidbody->IsGrounded())
 		{
 			if (Vector2::Right == mDir)
@@ -748,7 +748,7 @@ namespace js
 		}
 		
 		// 상태 변동
-		// Idle 상태
+		// Stay 상태
 		if (true == mDubleTab->finish)
 		{
 			if (Vector2::Right == mDir)
@@ -766,7 +766,7 @@ namespace js
 			Skill(eProjectileType::FMJ);
 
 		// 상태 변동
-		// Idle 상태 
+		// Stay 상태 
 		if (true == mFMJ->finish)
 		{
 			if (Vector2::Right == mDir)
@@ -784,7 +784,7 @@ namespace js
 			Skill(eProjectileType::TacticalDive);
 		
 		// 상태 변동
-		// Idle 상태 
+		// Stay 상태 
 		if (true == mTacticalDive->finish)
 		{
 			if (Vector2::Right == mDir)
@@ -801,7 +801,7 @@ namespace js
 			Skill(eProjectileType::SuppresiveFire);
 
 		// 상태 변동
-		// Idle 상태 
+		// Stay 상태 
 		if (true == mSupressiveFire->finish)
 		{
 			if (Vector2::Right == mDir)

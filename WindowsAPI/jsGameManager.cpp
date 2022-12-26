@@ -27,9 +27,9 @@ namespace js
 	// 게임 정보
 	bool		GameManager::mPlayable = false;
 
+	int			GameManager::mPlayerItems[(UINT)eItemList::End] = {};
 	PlayerInfo*	GameManager::mPlayerInfo = nullptr;
 	PlayerStat*	GameManager::mDefaultStat = nullptr;
-	int			GameManager::mPlayerItems[(UINT)eItemList::End] = {};
 
 	float*		GameManager::mDifficultyTime = nullptr;
 	int*		GameManager::mDifficulty = nullptr;
@@ -42,7 +42,6 @@ namespace js
 		mDefaultStat = new PlayerStat();
 		mDifficultyTime = new float;
 		mDifficulty = new int;
-		*mDifficultyTime = 0;
 		InitStat(mPlayerInfo);
 		mDefaultStat = mPlayerInfo->stat;
 		PlayerLevelUp();
@@ -62,9 +61,7 @@ namespace js
 			mPlayerAttack[idx] = new PlayerProjectile();
 			mPlayerAttack[idx]->SetType(eColliderLayer::Player_Projectile);
 			mPlayerAttack[idx]->SetPlayerInfo(mPlayer);
-		}
-
-		
+		}		
 		for (int idx = 0; idx < MONSTER_POOL; ++idx)
 		{
 			// 몬스터 생성
@@ -75,7 +72,7 @@ namespace js
 		{
 			// 상자 생성
 			mChest[idx] = new Chest();
-			mChest[idx]->SetType(eColliderLayer::EventObject);
+			mChest[idx]->SetType(eColliderLayer::Chest);
 		}
 	}
 
@@ -90,18 +87,19 @@ namespace js
 		for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 		{
 			// 플레이어 투사체 추가
-			scene->AddGameObject(mPlayerAttack[idx], eColliderLayer::Player_Projectile);
+			scene->AddGameObject(mPlayerAttack[idx], eColliderLayer::Player_Projectile);			
 		}
 
 		for (int idx = 0; idx < MONSTER_POOL; ++idx)
 		{
-			// 몬스터 추가
+			// 몬스터 추가, 몬스터 초기화
 			mMonster[idx]->AddMonster();
+			mMonster[idx]->AddComponentScene();
 		}
 
 		for (int idx = 0; idx < CHEST_POOL; ++idx)
 		{
-			// 상자 추가
+			// 상자 추가, 상자 초기화
 			mChest[idx]->AddChest();
 
 		}

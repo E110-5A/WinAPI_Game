@@ -146,6 +146,9 @@ struct PlayerStat
 	}
 	~PlayerStat()
 	{
+		delete playerHealth;
+		delete playerOffence;
+		delete playerUtility;
 	}
 
 	Health*		playerHealth;

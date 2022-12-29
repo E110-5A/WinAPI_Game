@@ -48,6 +48,14 @@ namespace js
 	}
 	Creature::~Creature()
 	{
+		if (nullptr != mHealthStat)
+			delete mHealthStat;
+
+		if (nullptr != mOffenceStat)
+			delete mOffenceStat;
+
+		if (nullptr != mUtilityStat)
+			delete mUtilityStat;		
 	}
 
 	void Creature::Initialize()

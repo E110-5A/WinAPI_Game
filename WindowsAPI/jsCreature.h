@@ -36,16 +36,19 @@ namespace js
 		}
 		void SetMonsterStat(float hp, float regen, float defance, float damage, float attackSpeed, float range, float moveSpeed)
 		{
+			mHealthStat = new Health;
 			mHealthStat->maxHP = hp;
 			mHealthStat->curHP = hp;
 			mHealthStat->healthRegen = regen;
 			mHealthStat->defance = defance;
 
+			mOffenceStat = new Offence;
 			mOffenceStat->damage = damage;
 			mOffenceStat->attackSpeed = attackSpeed;
 			mOffenceStat->criticalChance = 0;
 			mOffenceStat->range = range;
 
+			mUtilityStat = new Utility;
 			mUtilityStat->moveSpeed = moveSpeed;
 			mUtilityStat->maxJumpCount = 1;
 			mUtilityStat->curJumpCount = 0;

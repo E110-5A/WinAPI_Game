@@ -13,6 +13,7 @@
 
 // 오브젝트
 #include "jsPlayerProjectile.h"
+#include "jsPlatform.h"
 
 namespace js
 {
@@ -31,9 +32,9 @@ namespace js
 
 	void Monster::Initialize()
 	{
-		SetType(eColliderLayer::Monster);
 		Creature::Initialize();
 		SetAnimator();
+		SetAble(false);
 	}
 	void Monster::SetAnimator()
 	{
@@ -62,7 +63,39 @@ namespace js
 			, Vector2(-5.f, 0.f), 8, 0.1f);
 		mAnimator->CreateAnimation(L"ImpDeathL", mSpriteImage, Pos(0.f, 197.f), Size(26.0f, 21.f)
 			, Vector2(-5.f, 0.f), 8, 0.1f);
+
+
+		// Parent Animation
+		mAnimator->CreateAnimation(L"ParentIdleR", mSpriteImage, Pos(0.f, 0.f), Size(17.f, 21.f)
+			, Vector2(0.f, 0.f), 1, 0.1f);
+		mAnimator->CreateAnimation(L"ParentIdleL", mSpriteImage, Pos(0.f, 21.f), Size(17.f, 21.f)
+			, Vector2(0.f, 0.f), 1, 0.1f);
+
+		mAnimator->CreateAnimation(L"ParentMoveR", mSpriteImage, Pos(0.f, 42.f), Size(18.0f, 25.f)
+			, Vector2(0.f, 0.f), 6, 0.1f);
+		mAnimator->CreateAnimation(L"ParentMoveL", mSpriteImage, Pos(0.f, 67.f), Size(18.0f, 25.f)
+			, Vector2(0.f, 0.f), 6, 0.1f);
+
+		mAnimator->CreateAnimation(L"ParentTeleportR", mSpriteImage, Pos(0.f, 92.f), Size(17.f, 21.f)
+			, Vector2(0.f, 0.f), 3, 0.1f);
+		mAnimator->CreateAnimation(L"ParentTeleportL", mSpriteImage, Pos(0.f, 113.f), Size(17.f, 21.f)
+			, Vector2(0.f, 0.f), 3, 0.1f);
+
+		mAnimator->CreateAnimation(L"ParentAttackR", mSpriteImage, Pos(0.f, 134.f), Size(33.f, 21.f)
+			, Vector2(-7.f, 0.f), 11, 0.1f);
+		mAnimator->CreateAnimation(L"ParentAttackL", mSpriteImage, Pos(0.f, 155.f), Size(33.f, 21.f)
+			, Vector2(-10.f, 0.f), 11, 0.1f);
+
+		mAnimator->CreateAnimation(L"ParentDeathR", mSpriteImage, Pos(0.f, 176.f), Size(26.0f, 21.f)
+			, Vector2(-5.f, 0.f), 8, 0.1f);
+		mAnimator->CreateAnimation(L"ParentDeathL", mSpriteImage, Pos(0.f, 197.f), Size(26.0f, 21.f)
+			, Vector2(-5.f, 0.f), 8, 0.1f);
+
+		mAnimator->GetCompleteEvents(L"ImpTeleportR") = std::bind(&Monster::ReturnIdle, this);
+		mAnimator->GetCompleteEvents(L"ParentDeathR") = std::bind(&Monster::ReturnIdle, this);
+
 	}
+
 	void Monster::ImpInit()
 	{
 		// 충돌체
@@ -73,46 +106,293 @@ namespace js
 		mBodyCollider->SetOffset(Vector2(8.f, 13.f));
 		mFootCollider->SetSize(Size(15, 5) * GetScale());
 		mFootCollider->SetOffset(Vector2(8, 38.f));
-
 	}
+
 	void Monster::ParentInit()
 	{
 		// 충돌체
+		SetMonsterStat(315.0f, 0, 0, 15, 1, 600, 15.0f);
+		
+		// collider
+		mBodyCollider->SetSize(Size(20.f, 25.f) * GetScale());
+		mBodyCollider->SetOffset(Vector2(8.f, 13.f));
+		mFootCollider->SetSize(Size(15, 5) * GetScale());
+		mFootCollider->SetOffset(Vector2(8, 38.f));
 	}
-	
+
+	void Monster::Spawn(Platform* spawnPlatform)
+	{
+		srand((unsigned int)time(NULL));
+		// 스폰 위치 정하기 // Platform Pos , Size 값 받아와서 랜덤 돌리기
+		Vector2 spawnLT = spawnPlatform->GetPos();
+		float spawnWidth = spawnPlatform->GetComponent<Collider>()->GetSize().x;
+		float spawnPosX = (rand() % (int)spawnWidth);
+		float monsterHight = mBodyCollider->GetSize().y;
+
+		// 스폰 위치 설정
+		SetPos(Vector2(spawnPosX, spawnLT.y - monsterHight));
+
+		// 몬스터 타입 설정
+		/*int spawnType = (rand() % (int)eMonsterType::End);
+		mMonsterType = (eMonsterType)spawnType;*/
+
+		// 디버깅용
+		mMonsterType = eMonsterType::Imp;
+		// 몬스터 초기화
+		switch (mMonsterType)
+		{
+		case eMonsterType::Imp:
+		{
+			ImpInit();
+			mAnimator->Play(L"ImpTeleportR");				
+		}
+		break;
+		case eMonsterType::Parent:
+		{
+			ImpInit();
+			mAnimator->Play(L"ParentDeathR");
+		}
+		break;
+		}
+
+		// 활성화
+		mAble = true;
+	}
+
+	// Spawn 애니메이션 끝나면 실행될 내용
+	void Monster::ReturnIdle()
+	{
+		// 애니메이션
+		
+
+		switch (mMonsterType)
+		{
+		case eMonsterType::Imp:
+		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"ImpIdleR");
+			else
+				mAnimator->Play(L"ImpIdleL");
+		}
+		break;
+		case eMonsterType::Parent:
+		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"ParentIdleR");
+			else
+				mAnimator->Play(L"ParentIdleL");
+		}
+		break;
+		}
+
+		// 상태 변경
+		mState = eMonsterState::Stay;
+	}
+
+
 	void Monster::Tick()
 	{
-		Creature::Tick();
+		if (false == IsAble())
+			return;
 
+		Creature::Tick();
 
 		switch (mState)
 		{
-
+		case eMonsterState::Stay:
+		{
+			Stay();
+		}
+		break;
+		case eMonsterState::Chase:
+		{
+			Chase();
+		}
+		break;
+		case eMonsterState::Skill:
+		{
+			Skill();
+		}
+		break;
+		case eMonsterState::Stun:
+		{
+			Stun();
+		}
+		break;
+		case eMonsterState::Death:
+		{
+			Death();
+		}
+		break;
 		}
 	}
+
 	void Monster::Render(HDC hdc)
 	{
+		if (false == IsAble())
+			return;
 		Creature::Render(hdc);
 	}
 
 	void Monster::Stay()
 	{
+		// 애니메이션
+		switch (mMonsterType)
+		{
+		case eMonsterType::Imp:
+		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"ImpIdleR");
+			else
+				mAnimator->Play(L"ImpIdleL");
+		}
+		break;
+		case eMonsterType::Parent:
+		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"ParentIdleR");
+			else
+				mAnimator->Play(L"ParentIdleL");
+		}
+		break;
+		}
+
+		// 로직
+		 
+		// 상태변경 조건
+		
+		// 플레이어가 인지범위 내에 있으면 Chase
+		// 플레이어가 공격범위 내에 있으면 Skill
 	}
 
 	void Monster::Chase()
 	{
+		// 애니메이션
+		switch (mMonsterType)
+		{
+		case eMonsterType::Imp:
+		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"ImpIdleR");
+			else
+				mAnimator->Play(L"ImpIdleL");
+		}
+		break;
+		case eMonsterType::Parent:
+		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"ParentIdleR");
+			else
+				mAnimator->Play(L"ParentIdleL");
+		}
+		break;
+		}
+
+		// 로직
+
+		// 상태변경 조건
+		// 플레이어가 인지범위 밖에 있으면 Stay
+		// 플레이어가 공격범위 내에 있으면 Skill
 	}
 
 	void Monster::Skill()
 	{
+		// 애니메이션
+		switch (mMonsterType)
+		{
+		case eMonsterType::Imp:
+		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"ImpIdleR");
+			else
+				mAnimator->Play(L"ImpIdleL");
+		}
+		break;
+		case eMonsterType::Parent:
+		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"ParentIdleR");
+			else
+				mAnimator->Play(L"ParentIdleL");
+		}
+		break;
+		}
+
+		// 로직
+
+		// 상태변경 조건
+		// 공격이 끝나면 Stay
 	}
 
 	void Monster::Stun()
 	{
+		// 애니메이션
+		switch (mMonsterType)
+		{
+		case eMonsterType::Imp:
+		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"ImpIdleR");
+			else
+				mAnimator->Play(L"ImpIdleL");
+		}
+		break;
+		case eMonsterType::Parent:
+		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"ParentIdleR");
+			else
+				mAnimator->Play(L"ParentIdleL");
+		}
+		break;
+		}
+
+		// 로직
+
+		// 상태변경 조건
+		// 초 세기
 	}
 
 	void Monster::Death()
 	{
+		// 애니메이션
+		switch (mMonsterType)
+		{
+		case eMonsterType::Imp:
+		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"ImpIdleR");
+			else
+				mAnimator->Play(L"ImpIdleL");
+		}
+		break;
+		case eMonsterType::Parent:
+		{
+			Vector2 dir = GetDir();
+			if (dir == Vector2::Right)
+				mAnimator->Play(L"ParentIdleR");
+			else
+				mAnimator->Play(L"ParentIdleL");
+		}
+		break;
+		}
+
+		// 로직
+
+		// 상태변경 조건
+		// 비활성화
+		// 경험치 드랍
 	}
 	
 	void Monster::OnCollisionEnter(Collider* other)

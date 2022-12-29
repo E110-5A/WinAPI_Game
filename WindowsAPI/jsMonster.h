@@ -13,6 +13,7 @@ namespace js
 	{
 		Imp,
 		Parent,
+		End,
 	};
 
 	enum class eMonsterState
@@ -27,6 +28,7 @@ namespace js
 	class Image;
 	class SceneManager;
 	class Scene;
+	class Platform;
 	class Monster : public Creature
 	{
 	public:
@@ -38,11 +40,16 @@ namespace js
 
 		void SetAnimator();
 
+		// 충돌체, 스텟
 		void ImpInit();
+		
+		// 충돌체, 스텟
 		void ParentInit();
 
+		// 게임매니저에 의해서 스폰됨
+		void Spawn(Platform* spawnPlatform);
 
-
+		void ReturnIdle();
 
 		// 부모 함수 호출
 		virtual void Tick() override;
@@ -59,14 +66,6 @@ namespace js
 		void AddMonster()
 		{
 			Scene* scene = SceneManager::GetPlayScene();
-			// 타입 정하기
-			srand((unsigned int)time(NULL));
-			// 0, 1
-			int myType = rand() % 2;
-			if (0 == myType)
-				mMonsterType = eMonsterType::Imp;
-			else if (1 == myType)
-				mMonsterType = eMonsterType::Parent;
 			// 씬에 추가
 			scene->AddGameObject(this, eColliderLayer::Monster);
 		}

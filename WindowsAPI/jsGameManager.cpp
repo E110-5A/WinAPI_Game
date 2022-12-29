@@ -23,17 +23,18 @@ namespace js
 	Monster*			GameManager::mMonster[MONSTER_POOL] = {};
 	Chest*				GameManager::mChest[CHEST_POOL] = {};
 	BossMonster*		GameManager::mBossMonster = nullptr;
+	Platform*			GameManager::mSpawnPlatform = nullptr;
 
 	// 게임 정보
-	bool		GameManager::mPlayable = false;
+	bool			GameManager::mPlayable = false;
 
-	int			GameManager::mPlayerItems[(UINT)eItemList::End] = {};
-	PlayerInfo*	GameManager::mPlayerInfo = nullptr;
-	PlayerStat*	GameManager::mDefaultStat = nullptr;
+	int				GameManager::mPlayerItems[(UINT)eItemList::End] = {};
+	PlayerInfo*		GameManager::mPlayerInfo = nullptr;
+	PlayerStat*		GameManager::mDefaultStat = nullptr;
 
-	float*		GameManager::mDifficultyTime = nullptr;
-	int*		GameManager::mDifficulty = nullptr;
-
+	float*			GameManager::mDifficultyTime = nullptr;
+	int*			GameManager::mDifficulty = nullptr;
+	float			GameManager::mSpawnTime = 0;
 
 	void GameManager::Initialize()
 	{
@@ -46,6 +47,8 @@ namespace js
 		mDefaultStat = mPlayerInfo->stat;
 		PlayerLevelUp();
 
+		*mDifficultyTime = 0;
+		*mDifficulty = 0;
 		// 오브젝트 할당
 		InitObject();
 	}
@@ -136,12 +139,35 @@ namespace js
 		
 		mPlayerInfo->maxExp += mPlayerInfo->maxExp / 2;
 	}
+	void GameManager::RespawnMonster()
+	{
+		mSpawnTime += Time::GetDeltaTime();
+		int MonsterTO = 0;
+		// 스폰타임이 된다면
+		if (3 + (float)(*mDifficulty) <= mSpawnTime)
+		{
+			// 현재 난이도 * 2만큼 스폰 호출
+			while (MonsterTO <= (*mDifficulty) * 2)
+			{
+				for (int idx = 0; idx < MONSTER_POOL; ++idx)
+				{
+					if (mMonster[idx]->IsAble() == false)
+					{
+						mMonster[idx]->Spawn(mSpawnPlatform);
+						++MonsterTO;
+						break;
+					}
+				}
+			}
+			mSpawnTime = 0.0f;
+		}		
+	}
 	void GameManager::Playing()
 	{
-		if (true == mPlayable)
-		{
-			*mDifficultyTime += Time::GetDeltaTime();
-		}
+		if (false == mPlayable)
+			return;
+
+		(*mDifficultyTime) += Time::GetDeltaTime();
 
 		// 레벨관련 로직
 		if (mPlayerInfo->curExp >= mPlayerInfo->maxExp)
@@ -156,6 +182,7 @@ namespace js
 			*mDifficulty += 1;
 			*mDifficultyTime = 0.0f;
 		}
+		RespawnMonster();
 	}
 	void GameManager::PickUpItems(eItemList item)
 	{

@@ -7,34 +7,42 @@ namespace js
 	class PlayerProjectile;
 	class Monster;
 	class Chest;
+	class Platform;
 	class BossMonster;
 	class GameManager
 	{
 	public:
+		
 		static void Initialize();
-
-
+		// 오브젝트 생성
 		static void InitObject();
-
-		// 현재 씬에 오브젝트 추가
-		static void AddObject();
 		
 		static void InitStat(PlayerInfo* info);
 		static void Tick();
 
-		// 기능 함수
-		static void PlayerLevelUp();
-		static void Damaged() {}
-		static void Playing();
+		// 오브젝트 추가 (씬에서 호출)
+		static void AddObject();
 
-		// 몬스터 리스폰 기능 (able = true, rand type, rand Pos
+
+		// 게임이 진행중인 경우 호출
+		static void Playing();
+		static void SetPlayable(bool Playable) { mPlayable = Playable; }	// 맨처음 시작할 때 씬에서 한번은 호출해줘야함
+		static void PlayerLevelUp();
+
+		static void Damaged() {} // 안씀
+
+
+		// 몬스터 리스폰 기능 (able = true, rand type, rand Pos)
+		static void SetSpawnPlatform(Platform* prevPlatform) { mSpawnPlatform = prevPlatform; }
+		static void RespawnMonster();
+		static Platform* GetSpawnPlatform() { return mSpawnPlatform; }
+
 
 		// 상자 세팅
 		static Chest* GetChest(int idx) { return mChest[idx]; }
 
-		static void SetPlayable(bool Playable) { mPlayable = Playable; }
 
-		// Info
+		// Get Info
 		static Player* GetPlayer() { return mPlayer; }
 		static PlayerInfo* GetPlayerInfo() { return mPlayerInfo; }
 		static int* GetDifficulty() { return mDifficulty; }
@@ -43,7 +51,8 @@ namespace js
 		static void PickUpItems(eItemList item);
 		static int* GetItemList() { return mPlayerItems; }
 
-		static void StageClear();
+
+		static void StageClear(); // 안쓰는 기능
 
 
 		static void Release()
@@ -60,7 +69,7 @@ namespace js
 		static Chest*				mChest[CHEST_POOL];
 		static BossMonster*			mBossMonster;
 
-
+		static Platform*			mSpawnPlatform;
 
 		// 플레이어 정보
 		static PlayerInfo*	mPlayerInfo;
@@ -71,6 +80,7 @@ namespace js
 		static bool			mPlayable;
 		static int*			mDifficulty;
 		static float*		mDifficultyTime;	// 2~5분마다 몬스터가 강해짐
+		static float		mSpawnTime;
 
 		// 60초마다 difficulty가 1 증가함 최대 9까지 있음
 	};

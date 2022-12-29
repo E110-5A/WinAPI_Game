@@ -102,9 +102,9 @@ namespace js
 		leftGround->SetColliderSize(Size(GRID_SIZE, GRID_SIZE * 5));
 		leftGround->SetColliderOffset(Vector2(GRID_SIZE / 2, GRID_SIZE * 5 / 2));
 
-		Platform* mainGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(64.0f, 640.0f));
+		/*Platform* mainGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(64.0f, 640.0f));
 		mainGround->SetColliderSize(Size(GRID_SIZE * 16, GRID_SIZE));
-		mainGround->SetColliderOffset(Vector2(GRID_SIZE * 8, GRID_SIZE / 2));
+		mainGround->SetColliderOffset(Vector2(GRID_SIZE * 8, GRID_SIZE / 2));*/
 
 		Platform* secondGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(128.0f, 512.0f));
 		secondGround->SetColliderSize(Size(GRID_SIZE * 5, GRID_SIZE));
@@ -180,6 +180,12 @@ namespace js
 	// Ãæµ¹ ¹× UI ¼³Á¤
 	void TestScene::Enter()
 	{
+		Platform* mainGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(64.0f, 640.0f));
+		mainGround->SetColliderSize(Size(GRID_SIZE * 16, GRID_SIZE));
+		mainGround->SetColliderOffset(Vector2(GRID_SIZE * 8, GRID_SIZE / 2));
+
+		GameManager::SetSpawnPlatform(mainGround);
+
 		GameManager::AddObject();
 		Player* player = GameManager::GetPlayer();
 		player->SetPos(Pos(440.f, 576.f));
@@ -196,6 +202,7 @@ namespace js
 
 		SetLayer();
 		SetUI();
+		GameManager::SetPlayable(true);
 	}
 
 	// UI ²ô°í ³ª°¡¼À

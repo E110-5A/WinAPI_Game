@@ -44,7 +44,7 @@ namespace js
 
 		// 풀링 기능
 		bool IsAble() { return mAble; }
-
+		void SetAble(bool power) { mAble = power; }
 
 		// 컴포넌트 기능
 		void AddComponent(Component* component);

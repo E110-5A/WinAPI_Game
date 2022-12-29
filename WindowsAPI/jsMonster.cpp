@@ -2,6 +2,8 @@
 
 // 매니저
 #include "jsCamera.h"
+#include "jsGameManager.h"
+
 // 리소스
 #include "jsResources.h"
 #include "jsImage.h"
@@ -33,6 +35,7 @@ namespace js
 	void Monster::Initialize()
 	{
 		Creature::Initialize();
+		mTarget = GameManager::GetPlayer();
 		SetAnimator();
 		SetAble(false);
 	}
@@ -66,6 +69,9 @@ namespace js
 
 
 		// Parent Animation
+		mAnimator->CreateAnimation(L"ParentSpawn", mSpriteImage, Pos(0.f, 92.f), Size(17.f, 21.f)
+			, Vector2(0.f, 0.f), 3, 0.1f);
+
 		mAnimator->CreateAnimation(L"ParentIdleR", mSpriteImage, Pos(0.f, 0.f), Size(17.f, 21.f)
 			, Vector2(0.f, 0.f), 1, 0.1f);
 		mAnimator->CreateAnimation(L"ParentIdleL", mSpriteImage, Pos(0.f, 21.f), Size(17.f, 21.f)
@@ -75,12 +81,6 @@ namespace js
 			, Vector2(0.f, 0.f), 6, 0.1f);
 		mAnimator->CreateAnimation(L"ParentMoveL", mSpriteImage, Pos(0.f, 67.f), Size(18.0f, 25.f)
 			, Vector2(0.f, 0.f), 6, 0.1f);
-
-		mAnimator->CreateAnimation(L"ParentTeleportR", mSpriteImage, Pos(0.f, 92.f), Size(17.f, 21.f)
-			, Vector2(0.f, 0.f), 3, 0.1f);
-		mAnimator->CreateAnimation(L"ParentTeleportL", mSpriteImage, Pos(0.f, 113.f), Size(17.f, 21.f)
-			, Vector2(0.f, 0.f), 3, 0.1f);
-
 		mAnimator->CreateAnimation(L"ParentAttackR", mSpriteImage, Pos(0.f, 134.f), Size(33.f, 21.f)
 			, Vector2(-7.f, 0.f), 11, 0.1f);
 		mAnimator->CreateAnimation(L"ParentAttackL", mSpriteImage, Pos(0.f, 155.f), Size(33.f, 21.f)
@@ -104,8 +104,13 @@ namespace js
 		// collider
 		mBodyCollider->SetSize(Size(20.f, 25.f) * GetScale());
 		mBodyCollider->SetOffset(Vector2(8.f, 13.f));
+		
 		mFootCollider->SetSize(Size(15, 5) * GetScale());
 		mFootCollider->SetOffset(Vector2(8, 38.f));
+
+		mHeadCollider->SetSize(Size(15, 5) * GetScale());
+		mHeadCollider->SetOffset(Vector2(8, 18.f));
+
 	}
 
 	void Monster::ParentInit()
@@ -116,8 +121,12 @@ namespace js
 		// collider
 		mBodyCollider->SetSize(Size(20.f, 25.f) * GetScale());
 		mBodyCollider->SetOffset(Vector2(8.f, 13.f));
+
 		mFootCollider->SetSize(Size(15, 5) * GetScale());
 		mFootCollider->SetOffset(Vector2(8, 38.f));
+
+		mHeadCollider->SetSize(Size(15, 5) * GetScale());
+		mHeadCollider->SetOffset(Vector2(8, 18.f));
 	}
 
 	void Monster::Spawn(Platform* spawnPlatform)
@@ -128,9 +137,10 @@ namespace js
 		float spawnWidth = spawnPlatform->GetComponent<Collider>()->GetSize().x;
 		float spawnPosX = (rand() % (int)spawnWidth);
 		float monsterHight = mBodyCollider->GetSize().y;
+		float monsterWidth = mBodyCollider->GetSize().x;
 
 		// 스폰 위치 설정
-		SetPos(Vector2(spawnPosX, spawnLT.y - monsterHight));
+		SetPos(Vector2(spawnPosX + monsterWidth, spawnLT.y - monsterHight));
 
 		// 몬스터 타입 설정
 		/*int spawnType = (rand() % (int)eMonsterType::End);
@@ -144,13 +154,15 @@ namespace js
 		case eMonsterType::Imp:
 		{
 			ImpInit();
-			mAnimator->Play(L"ImpTeleportR");				
+			mEyesight = mBodyCollider->GetSize().x * 6;
+			mAnimator->Play(L"ImpTeleportR", false);
 		}
 		break;
 		case eMonsterType::Parent:
 		{
 			ImpInit();
-			mAnimator->Play(L"ParentDeathR");
+			mEyesight = mBodyCollider->GetSize().x * 6;
+			mAnimator->Play(L"ParentSpawn", false);
 		}
 		break;
 		}
@@ -163,8 +175,6 @@ namespace js
 	void Monster::ReturnIdle()
 	{
 		// 애니메이션
-		
-
 		switch (mMonsterType)
 		{
 		case eMonsterType::Imp:
@@ -233,7 +243,15 @@ namespace js
 	{
 		if (false == IsAble())
 			return;
+		Vector2 pos = GetPos();
+		Vector2 size = mBodyCollider->GetSize();
+		Rectangle(hdc, pos.x - mEyesight / 2, pos.y, pos.x + mEyesight / 2, pos.y + size.y);
+		
+		
+		
 		Creature::Render(hdc);
+
+
 	}
 
 	void Monster::Stay()

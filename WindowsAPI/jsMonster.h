@@ -89,6 +89,7 @@ namespace js
 
 	private:
 		eMonsterType	mMonsterType;
+		int				mEyesight;
 
 		eMonsterState	mState;
 		Player*			mTarget;

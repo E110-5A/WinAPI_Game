@@ -1,5 +1,8 @@
 #include "jsPlatform.h"
 
+// manager
+#include "jsGameManager.h"
+
 // component
 #include "jsCollider.h"
 #include "jsRigidbody.h"
@@ -47,6 +50,9 @@ namespace js
 			// 대상의 Ground상태 변경, 점프카운트 초기화, Climb 예외처리
 			TargetSetGround(target, true);
 			TargetJumpCountReset(target);
+
+			if (eColliderLayer::Player == dynamic_cast<Foot*>(target)->GetOwner()->GetType())
+				GameManager::SetSpawnPlatform(this);
 		}
 	}
 	void Platform::OnCollisionStay(Collider* other)
@@ -80,6 +86,10 @@ namespace js
 				// Ground setting
 				target->GetRigidbody()->SetGround(isGround);
 			}
+		}
+		if (eColliderLayer::Monster == target->GetType())
+		{
+			target->GetRigidbody()->SetGround(isGround);
 		}
 		
 	}

@@ -144,7 +144,7 @@ namespace js
 		mSpawnTime += Time::GetDeltaTime();
 		int MonsterTO = 0;
 		// 스폰타임이 된다면
-		if (10 + (float)(*mDifficulty) <= mSpawnTime)
+		if (5 + (float)(*mDifficulty) <= mSpawnTime)
 		{
 			// 현재 난이도 * 2만큼 스폰 호출
 			while (MonsterTO <= (*mDifficulty) * 2)

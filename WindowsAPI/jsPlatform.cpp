@@ -51,6 +51,7 @@ namespace js
 			TargetSetGround(target, true);
 			TargetJumpCountReset(target);
 
+			// 플레이어가 충돌한 경우, 몬스터 스폰지점을 해당 플랫폼으로 변경
 			if (eColliderLayer::Player == dynamic_cast<Foot*>(target)->GetOwner()->GetType())
 				GameManager::SetSpawnPlatform(this);
 		}
@@ -58,8 +59,6 @@ namespace js
 	void Platform::OnCollisionStay(Collider* other)
 	{
 		GameObject* tempObj = other->GetOwner();
-
-
 	}
 	void Platform::OnCollisionExit(Collider* other)
 	{

@@ -29,6 +29,7 @@ namespace js
 	class SceneManager;
 	class Scene;
 	class Platform;
+	class Player;
 	class Monster : public Creature
 	{
 	public:
@@ -39,7 +40,7 @@ namespace js
 		virtual void Initialize();
 
 		void SetAnimator();
-
+		void ReturnIdle();
 		// 충돌체, 스텟
 		void ImpInit();
 		
@@ -49,7 +50,6 @@ namespace js
 		// 게임매니저에 의해서 스폰됨
 		void Spawn(Platform* spawnPlatform);
 
-		void ReturnIdle();
 
 		// 부모 함수 호출
 		virtual void Tick() override;

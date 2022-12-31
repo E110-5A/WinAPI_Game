@@ -30,6 +30,7 @@ namespace js
 	class Scene;
 	class Platform;
 	class Player;
+	class MonsterAttack;
 	class Monster : public Creature
 	{
 	public:
@@ -42,10 +43,11 @@ namespace js
 		void SetAnimator();
 		void ReturnIdle();
 		// 충돌체, 스텟
-		void ImpInit();
+		void InitImp();
 		
 		// 충돌체, 스텟
-		void ParentInit();
+		void InitParent();
+		void InitSkill(float damage, float castDelay, float coolDown);
 
 		// 게임매니저에 의해서 스폰됨
 		void Spawn(Platform* spawnPlatform);
@@ -59,21 +61,22 @@ namespace js
 		// 상태
 		void Stay();
 		void Chase();
-		void Skill();
+		void Attack();
 		void Stun();
 		void Death();
+
+		void Cooldown();
+		void SkillProcess();
+		void Skill();
+		void DeadCheck();
 
 		void AddMonster()
 		{
 			Scene* scene = SceneManager::GetPlayScene();
 			// 씬에 추가
 			scene->AddGameObject(this, eColliderLayer::Monster);
+			scene->AddGameObject((GameObject*)mDamageObj, eColliderLayer::DamageObject);
 		}
-
-		// 리스폰 기능
-
-
-
 
 		// None
 		virtual void OnCollisionEnter(Collider* other) override;
@@ -93,6 +96,14 @@ namespace js
 
 		eMonsterState	mState;
 		Player*			mTarget;
+
+
+		MonsterSkillInfo*	mSkillInfo;
+		MonsterAttack*	mDamageObj;
+
+
+	private:
+		int				mDropExp;
 	};
 }
 

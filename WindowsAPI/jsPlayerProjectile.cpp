@@ -130,9 +130,8 @@ namespace js
 
 	void PlayerProjectile::OnCollisionEnter(Collider* other)
 	{
-		// 몬스터 객체에 있는 Damaged 호출
+		// 타겟 찾기
 		GameObject* attacker = other->GetOwner();
-
 		if (eColliderLayer::Monster == attacker->GetType())
 		{
 			Monster* target = dynamic_cast<Monster*>(attacker);

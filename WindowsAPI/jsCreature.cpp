@@ -157,7 +157,7 @@ namespace js
 			// 넉백
 			Vector2 knockBack = mRigidbody->GetVelocity();
 			knockBack.x = dir * power * 2.5f;
-			mRigidbody->SetVelocity(knockBack);
+			mRigidbody->AddForce(knockBack);
 
 			// 관통력이 쌔면 기절
 			if (eStagger::Heave == stagger)

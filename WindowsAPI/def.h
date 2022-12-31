@@ -173,7 +173,7 @@ enum class eStagger
 };
 
 #define PLAYER_PROJECTILE_POOL	40
-#define MONSTER_POOL			20
+#define MONSTER_POOL			45
 #define CHEST_POOL				7
 // item enum
 enum class eChestType

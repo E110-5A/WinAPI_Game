@@ -142,23 +142,25 @@ namespace js
 	void GameManager::RespawnMonster()
 	{
 		mSpawnTime += Time::GetDeltaTime();
-		int MonsterTO = 0;
-		// 스폰타임이 된다면
+
+		int count = 0;
+		int monsterTO = 1 + (*mDifficulty) / 2;
+
+
+		// (5 + 난이도)초마다 몬스터 스폰
 		if (5 + (float)(*mDifficulty) <= mSpawnTime)
 		{
-			// 현재 난이도 * 2만큼 스폰 호출
-			while (MonsterTO <= (*mDifficulty) * 2)
+			// 몬스터 풀에서 가용인원을 스폰함
+			for (int idx = 0; idx < MONSTER_POOL; ++idx)
 			{
-				for (int idx = 0; idx < MONSTER_POOL; ++idx)
+				if (false == mMonster[idx]->IsAble())
 				{
-					if (mMonster[idx]->IsAble() == false)
-					{
-						mMonster[idx]->Spawn(mSpawnPlatform);
-						++MonsterTO;
-						break;
-					}
+					mMonster[idx]->Spawn(mSpawnPlatform);
+					break;
 				}
 			}
+
+			// 마지막에 스폰시간 초기화
 			mSpawnTime = 0.0f;
 		}		
 	}

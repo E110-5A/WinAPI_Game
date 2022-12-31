@@ -121,11 +121,17 @@ namespace js
 
 	void Animator::Play(const std::wstring& name, bool bLoop)
 	{
+		// 애니메이션에 할당된 이벤트가 있는지 확인
 		Animator::Events* events = FindEvents(name);
 		if (nullptr != events)
 			events->mStartEvent();
+
+		// 지금까지 실행한 애니메이션을 기록하기
 		Animation* prevAnimation = mCurAnimation;
+
+		// 입력한 애니메이션으로 변경
 		mCurAnimation = FindAnimation(name);
+
 		mCurAnimation->Reset();
 		mIsLoop = bLoop;
 

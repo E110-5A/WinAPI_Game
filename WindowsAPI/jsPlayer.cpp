@@ -744,7 +744,7 @@ namespace js
 		if (KEY_PRESSE(eKeyCode::Z))
 		{
 			if (false == mDubleTab->active)
-				Skill(eProjectileType::DoubleTab);
+				mDubleTab->run = true;
 		}
 		
 		// 상태 변동
@@ -763,7 +763,7 @@ namespace js
 	{
 		// 로직
 		if (false == mFMJ->active)
-			Skill(eProjectileType::FMJ);
+			mFMJ->run = true;
 
 		// 상태 변동
 		// Stay 상태 
@@ -781,7 +781,7 @@ namespace js
 	{
 		// 로직		
 		if (false == mTacticalDive->active)
-			Skill(eProjectileType::TacticalDive);
+			mTacticalDive->run = true;
 		
 		// 상태 변동
 		// Stay 상태 
@@ -798,7 +798,7 @@ namespace js
 	void Player::SupressiveFire()
 	{
 		if (false == mSupressiveFire->active)
-			Skill(eProjectileType::SuppresiveFire);
+			mSupressiveFire->run = true;
 
 		// 상태 변동
 		// Stay 상태 

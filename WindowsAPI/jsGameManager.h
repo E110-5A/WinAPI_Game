@@ -27,6 +27,9 @@ namespace js
 		// 게임이 진행중인 경우 호출
 		static void Playing();
 		static void SetPlayable(bool Playable) { mPlayable = Playable; }	// 맨처음 시작할 때 씬에서 한번은 호출해줘야함
+
+
+		static void AddExp(float exp) { mPlayerInfo->curExp += exp; }
 		static void PlayerLevelUp();
 
 		static void Damaged() {} // 안씀

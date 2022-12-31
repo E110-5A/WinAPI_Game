@@ -19,7 +19,7 @@ namespace js
 		virtual void Tick() override;
 		void Process();
 
-		virtual void Render(HDC _hdc) override;
+		virtual void Render(HDC hdc) override;
 		
 		// CollisionEnter 에서 호출
 		void AddTarget(Monster* target);

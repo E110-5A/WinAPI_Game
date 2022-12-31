@@ -217,3 +217,27 @@ struct SkillInfo
 	bool		run;				// 진행중 상태		: 스킬 내부로직 조건용
 	bool		finish;				// 끝난 상태			: 상태 종료 조건
 };
+
+struct MonsterSkillInfo
+{
+	MonsterSkillInfo()
+		: damage(0), castDelay(0), castDelayTime(0), coolDown(0), coolDownTime(0), maxCount(0), curCount(0)
+		, active(true), run(false), finish(true)
+	{
+	}
+	~MonsterSkillInfo() = default;
+
+	float		damage;				// 피해량 비율
+
+	float		castDelay;			// 스킬 지연시간
+	float		castDelayTime;
+	float		coolDown;			// 스킬 재사용 대기시간
+	float		coolDownTime;
+
+	int			maxCount;			// 반복 횟수 (필요한가?)
+	int			curCount;
+
+	bool		active;				// 사용불가 상태		: 쿨다운 대기
+	bool		run;				// 진행중 상태		: 스킬 내부로직 조건용
+	bool		finish;				// 끝난 상태			: 상태 종료 조건
+};

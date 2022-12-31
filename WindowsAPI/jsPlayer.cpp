@@ -801,7 +801,7 @@ namespace js
 			mSupressiveFire->run = true;
 
 		// 상태 변동
-		// Stay 상태 
+		// Stay 상태
 		if (true == mSupressiveFire->finish)
 		{
 			if (Vector2::Right == mDir)

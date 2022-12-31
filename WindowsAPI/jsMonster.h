@@ -42,6 +42,8 @@ namespace js
 
 		void SetAnimator();
 		void ReturnIdle();
+		void DeathAnimation();
+
 		// Ãæµ¹Ã¼, ½ºÅÝ
 		void InitImp();
 		

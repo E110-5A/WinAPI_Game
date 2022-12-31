@@ -116,6 +116,10 @@ namespace js
 		mAnimator->GetCompleteEvents(L"ParentMoveR") = std::bind(&Monster::ReturnIdle, this);
 		mAnimator->GetCompleteEvents(L"ParentAttackR") = std::bind(&Monster::ReturnIdle, this);
 		mAnimator->GetCompleteEvents(L"ParentAttackR") = std::bind(&Monster::ReturnIdle, this);*/
+		mAnimator->GetEndEvents(L"ImpDeathR") = std::bind(&Monster::DeathAnimation, this);
+		mAnimator->GetEndEvents(L"ImpDeathL") = std::bind(&Monster::DeathAnimation, this);
+		mAnimator->GetEndEvents(L"ParentDeathR") = std::bind(&Monster::DeathAnimation, this);
+		mAnimator->GetEndEvents(L"ParentDeathL") = std::bind(&Monster::DeathAnimation, this);
 	}
 
 	void Monster::ReturnIdle()
@@ -125,6 +129,12 @@ namespace js
 			mAnimator->Play(L"ImpIdleR");
 		else
 			mAnimator->Play(L"ImpIdleL");
+	}
+
+	void Monster::DeathAnimation()
+	{
+		// 비활성화
+		SetAble(false);
 	}
 
 	void Monster::InitImp()
@@ -292,12 +302,66 @@ namespace js
 		if (targetDistance <= mEyesight / 2)
 		{
 			mState = eMonsterState::Chase;
+			switch (mMonsterType)
+			{
+			case eMonsterType::Imp:
+			{
+				if (Vector2::Right == GetDir())
+				{
+					mAnimator->Play(L"ImpMoveR");
+				}
+				else
+				{
+					mAnimator->Play(L"ImpMoveL");
+				}
+			}
+			break;
+			case eMonsterType::Parent:
+			{
+				if (Vector2::Right == GetDir())
+				{
+					mAnimator->Play(L"ParentMoveR");
+				}
+				else
+				{
+					mAnimator->Play(L"ParentMoveL");
+				}
+			}
+			break;
+			}
 		}
 
 		// Attack | mOffenceStat->range
 		if (targetDistance <= mOffenceStat->range - 50)
 		{
 			mState = eMonsterState::Skill;
+			switch (mMonsterType)
+			{
+			case eMonsterType::Imp:
+			{
+				if (Vector2::Right == GetDir())
+				{
+					mAnimator->Play(L"ImpAttackR");
+				}
+				else
+				{
+					mAnimator->Play(L"ImpAttackL");
+				}
+			}
+			break;
+			case eMonsterType::Parent:
+			{
+				if (Vector2::Right == GetDir())
+				{
+					mAnimator->Play(L"ParentAttackR");
+				}
+				else
+				{
+					mAnimator->Play(L"ParentAttackL");
+				}
+			}
+			break;
+			}
 		}
 	}
 
@@ -315,11 +379,40 @@ namespace js
 		// 플레이어 방향으로 이동
 		mRigidbody->AddForce(GetDir() * 10 * mUtilityStat->moveSpeed * Time::GetDeltaTime());
 		
+
+
 		// 상태변경 조건
 		// Attack | mOffenceStat->range
 		if (targetDistance <= mOffenceStat->range - 50)
 		{
 			mState = eMonsterState::Skill;
+			switch (mMonsterType)
+			{
+			case eMonsterType::Imp:
+			{
+				if (Vector2::Right == GetDir())
+				{
+					mAnimator->Play(L"ImpAttackR");
+				}
+				else
+				{
+					mAnimator->Play(L"ImpAttackL");
+				}
+			}
+			break;
+			case eMonsterType::Parent:
+			{
+				if (Vector2::Right == GetDir())
+				{
+					mAnimator->Play(L"ParentAttackR");
+				}
+				else
+				{
+					mAnimator->Play(L"ParentAttackL");
+				}
+			}
+			break;
+			}
 		}
 	}
 
@@ -333,6 +426,33 @@ namespace js
 		{
 			mState = eMonsterState::Stay;
 			mSkillInfo->finish = false;
+			switch (mMonsterType)
+			{
+			case eMonsterType::Imp:
+			{
+				if (Vector2::Right == GetDir())
+				{
+					mAnimator->Play(L"ImpIdleR");
+				}
+				else
+				{
+					mAnimator->Play(L"ImpIdleL");
+				}
+			}
+			break;
+			case eMonsterType::Parent:
+			{
+				if (Vector2::Right == GetDir())
+				{
+					mAnimator->Play(L"ParentIdleR");
+				}
+				else
+				{
+					mAnimator->Play(L"ParentIdleL");
+				}
+			}
+			break;
+			}
 		}
 	}
 
@@ -343,12 +463,12 @@ namespace js
 
 	void Monster::Death()
 	{
+		
 		// 경험치 드랍
 		int bonusExp = (*GameManager::GetDifficulty()) / 2;
 		GameManager::AddExp(mDropExp + bonusExp);
 
-		// 비활성화
-		SetAble(false);
+		
 	}
 
 	void Monster::Cooldown()
@@ -402,6 +522,26 @@ namespace js
 		if (0 >= mHealthStat->curHP)
 		{
 			mState = eMonsterState::Death;
+			// 애니메이션 재생
+			switch (mMonsterType)
+			{
+			case eMonsterType::Imp:
+			{
+				if (Vector2::Right == GetDir())
+					mAnimator->Play(L"ImpDeathR", false);
+				else
+					mAnimator->Play(L"ImpDeathL", false);
+			}
+			break;
+			case eMonsterType::Parent:
+			{
+				if (Vector2::Right == GetDir())
+					mAnimator->Play(L"ParentDeathR", false);
+				else
+					mAnimator->Play(L"ParentDeathL", false);
+			}
+			break;
+			}
 		}
 	}
 	

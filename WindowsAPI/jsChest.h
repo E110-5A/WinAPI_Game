@@ -40,11 +40,11 @@ namespace js
 		virtual void OnCollisionExit(Collider* other) override;
 
 		// 씬에 추가될 때 랜덤으로 내 상자 타입이 정해짐
-		void AddChest();
+		void AddChest(int type);
 
-		void SetGoldenChest() { SetIndex((UINT)eChestIndex::Golden); }
-		void SetLargeChest() { SetIndex((UINT)eChestIndex::Large); }
-		void SetSmallChest() { SetIndex((UINT)eChestIndex::Small); }
+		void SetGoldenChest() { SetIndex((UINT)eChestIndex::Golden); mChestType = eChestType::Golden; }
+		void SetLargeChest() { SetIndex((UINT)eChestIndex::Large); mChestType = eChestType::Large; }
+		void SetSmallChest() { SetIndex((UINT)eChestIndex::Small); mChestType = eChestType::Small; }
 
 		void GoldenChestTrigger()
 		{
@@ -107,7 +107,7 @@ namespace js
 		}
 
 		void SetIndex(UINT index);
-				
+
 	protected:
 		Image*		mTextImage;
 		ItemObject* mItemObject;

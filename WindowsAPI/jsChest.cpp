@@ -34,6 +34,7 @@ namespace js
         : mItemObject(nullptr)
         , mTextImage(nullptr)
         , mCollisionPlayer(false)
+        , mChestType(eChestType::Golden)
         , mIndex(eChestIndex::Golden)
         , mX(0)
         , mY(0)
@@ -53,17 +54,17 @@ namespace js
         // 상자와 대응하는 아이템 생성
 
         mItemObject = new ItemObject();
-        mItemObject->SetType(eColliderLayer::Item);
 
         mEventCollider->SetSize(Size(ChestSizeX, ChestSizeY));
         mEventCollider->SetOffset(Vector2(ChestSizeX / 2, ChestSizeY / 2));
+        SetAble(false);
     }
 
     void Chest::Tick()
     {
-        if (false == mAble)
+        if (false == IsAble())
             return;
-
+            
         EventObject::Tick();
     }
 
@@ -80,7 +81,7 @@ namespace js
         func.SourceConstantAlpha = 255;
 
         // CollisionText Render
-        if (mCollisionPlayer && mAble)
+        if (mCollisionPlayer && IsAble())
         {
             AlphaBlend(hdc,
                 pos.x - 100, pos.y - 50,
@@ -100,7 +101,7 @@ namespace js
             ChestSizeX, ChestSizeY, func);
 
         // Collider Render
-        if (mAble)
+        if (IsAble())
             EventObject::Render(hdc);
     }
 
@@ -112,7 +113,7 @@ namespace js
 
     void Chest::OnCollisionStay(Collider* other)
     {
-        if (false == mAble)
+        if (false == IsAble())
             return;
 
         if (eColliderLayer::Player == other->GetOwner()->GetType())
@@ -140,28 +141,26 @@ namespace js
         if (eColliderLayer::Player == other->GetOwner()->GetType())
             mCollisionPlayer = false;
     }
-    void Chest::AddChest()
+
+    void Chest::AddChest(int type)
     {
         Scene* scene = SceneManager::GetPlayScene();
 
-        // 타입 변경
-        srand((unsigned int)time(NULL));
-        // small 3 large 2 golden 1
-        int myType = rand() % 20;       // 0 ~ 19
-        if (0 <= myType && 10 > myType)
+        if (0 <= type && 5 > type)
             SetSmallChest();
-        else if (10 <= myType < 17)
+        else if (5 <= type && 8 < type)
             SetLargeChest();
-        else if (17 <= myType < 20)
+        else if (8 <= type && 10 < type)
             SetGoldenChest();
 
         // 활성화
-        mAble = true;
+        SetAble(true);
 
         // 씬에 추가
-        scene->AddGameObject(this, eColliderLayer::Propellant);
+        scene->AddGameObject(this, eColliderLayer::Chest);
         scene->AddGameObject(mItemObject, eColliderLayer::Item);
     }
+
     void Chest::SetIndex(UINT index)
     {
         // 인덱스 변경

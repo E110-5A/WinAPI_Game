@@ -139,6 +139,7 @@ namespace js
 		CollisionManager::SetLayer(eColliderLayer::Ladder, eColliderLayer::Player, true);
 
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Propellant, true);
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Chest, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Item, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::DamageObject, true);
 

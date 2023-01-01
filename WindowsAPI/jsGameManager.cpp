@@ -82,7 +82,7 @@ namespace js
 	void GameManager::AddObject()
 	{
 		Scene* scene = SceneManager::GetPlayScene();
-
+		srand((unsigned int)time(NULL));
 		// 플레이어 추가
 		scene->AddGameObject(mPlayer, eColliderLayer::Player);
 		mPlayer->AddComponentScene();
@@ -102,8 +102,11 @@ namespace js
 
 		for (int idx = 0; idx < CHEST_POOL; ++idx)
 		{
+			// 타입 변경			
+			// small 3 large 2 golden 1
+			int myType = rand() % 10;       // 0 ~ 9
 			// 상자 추가, 상자 초기화
-			mChest[idx]->AddChest();
+			mChest[idx]->AddChest(myType);
 
 		}
 	}

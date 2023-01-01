@@ -127,9 +127,6 @@ enum class eColliderLayer
 	Ladder,						//	6		// 사다리
 	Item,						//	7		// 
 
-
-
-
 	Head,						//	8		// Creature 머리충돌
 	Foot,						//	9		// Creature 바닥충돌
 	Player,						//	10		// 
@@ -162,6 +159,14 @@ enum class eProjectileType
 	TacticalDive,		// 3번 기술
 	SuppresiveFire,		// 4번 기술
 
+	End,
+};
+
+enum class eBossAttackType
+{
+	A,			// 1번 기술
+	B,				// 2번 기술
+	
 	End,
 };
 

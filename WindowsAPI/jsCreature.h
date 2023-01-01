@@ -16,7 +16,7 @@ namespace js
 		Creature(Pos pos);
 		virtual ~Creature();
 
-		// 상속 함수
+		// 컴포넌트, 이미지 세팅
 		virtual void Initialize() override;
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
@@ -77,7 +77,7 @@ namespace js
 
 		Animator* GetAnimator() { return mAnimator; }
 		Rigidbody* GetRigidbody() { return mRigidbody; }
-
+		Collider* GetBodyCollider() { return mBodyCollider; }
 
 	protected:
 		Animator*		mAnimator;

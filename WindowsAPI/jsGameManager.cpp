@@ -13,7 +13,9 @@
 #include "jsMonster.h"
 #include "jsChest.h"
 #include "jsBossMonster.h"
+#include "jsPlatform.h"
 
+#include "jsCollider.h"
 
 namespace js
 {
@@ -142,9 +144,12 @@ namespace js
 		
 		mPlayerInfo->maxExp += mPlayerInfo->maxExp / 2;
 	}
-	void GameManager::RespawnMonster()
+	void GameManager::SpawnMonster()
 	{
+		srand((unsigned int)time(NULL));
 		mSpawnTime += Time::GetDeltaTime();
+
+		
 
 		int count = 0;
 		int monsterTO = 1 + (*mDifficulty) / 2;
@@ -158,6 +163,15 @@ namespace js
 			{
 				if (false == mMonster[idx]->IsAble())
 				{
+					// 스폰 위치 정하기 // Platform Pos , Size 값 받아와서 랜덤 돌리기
+					Vector2 spawnLT = mSpawnPlatform->GetPos();
+					float spawnWidth = mSpawnPlatform->GetComponent<Collider>()->GetSize().x;
+					float spawnPosX = (rand() % (int)spawnWidth);
+					float monsterHight = mMonster[idx]->GetBodyCollider()->GetSize().y;
+					float monsterWidth = mMonster[idx]->GetBodyCollider()->GetSize().x;
+
+					// 스폰 위치 설정
+					mMonster[idx]->SetPos(Vector2(spawnPosX + monsterWidth, spawnLT.y - monsterHight));
 					mMonster[idx]->Spawn(mSpawnPlatform);
 					break;
 				}
@@ -187,7 +201,7 @@ namespace js
 			*mDifficulty += 1;
 			*mDifficultyTime = 0.0f;
 		}
-		RespawnMonster();
+		SpawnMonster();
 	}
 	void GameManager::PickUpItems(eItemList item)
 	{

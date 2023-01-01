@@ -1,0 +1,16 @@
+colosus
+
+idle
+size	86, 119
+
+move
+size	86, 119
+
+attack1
+size	106, 119
+
+attack2
+size	174, 119
+
+death
+size	140, 141

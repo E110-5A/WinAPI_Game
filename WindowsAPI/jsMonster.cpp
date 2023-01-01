@@ -139,7 +139,7 @@ namespace js
 
 	void Monster::InitImp()
 	{
-		// 충돌체
+		// stat
 		SetMonsterStat(310.0f, 0, 0, 13, 1, 100, 16.0f);
 
 		// collider
@@ -198,18 +198,7 @@ namespace js
 	{
 		// 활성화
 		SetAble(true);
-
-		srand((unsigned int)time(NULL));
-		// 스폰 위치 정하기 // Platform Pos , Size 값 받아와서 랜덤 돌리기
-		Vector2 spawnLT = spawnPlatform->GetPos();
-		float spawnWidth = spawnPlatform->GetComponent<Collider>()->GetSize().x;
-		float spawnPosX = (rand() % (int)spawnWidth);
-		float monsterHight = mBodyCollider->GetSize().y;
-		float monsterWidth = mBodyCollider->GetSize().x;
-
-		// 스폰 위치 설정
-		SetPos(Vector2(spawnPosX + monsterWidth, spawnLT.y - monsterHight));
-
+		
 		// 몬스터 타입 설정
 		/*int spawnType = (rand() % (int)eMonsterType::End);
 		mMonsterType = (eMonsterType)spawnType;*/
@@ -222,7 +211,7 @@ namespace js
 		case eMonsterType::Imp:
 		{
 			InitImp();
-			mEyesight = mOffenceStat->range * 3;
+			mEyesight = mBodyCollider->GetSize().x * 6;
 			mAnimator->Play(L"ImpIdleR");
 		}
 		break;
@@ -543,6 +532,14 @@ namespace js
 			break;
 			}
 		}
+	}
+
+	void Monster::AddMonster()
+	{
+		Scene* scene = SceneManager::GetPlayScene();
+		// 씬에 추가
+		scene->AddGameObject(this, eColliderLayer::Monster);
+		scene->AddGameObject(mDamageObj, eColliderLayer::DamageObject);
 	}
 	
 	void Monster::OnCollisionEnter(Collider* other)

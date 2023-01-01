@@ -3,12 +3,12 @@
 
 namespace js
 {
-	class Monster;
+	class Creature;
 	class MonsterAttack : public GameObject
 	{
 	public:
 		MonsterAttack();
-		MonsterAttack(Monster* owner);
+		MonsterAttack(Creature* owner);
 
 		~MonsterAttack();
 
@@ -38,7 +38,7 @@ namespace js
 
 	private:
 		Collider*			mCollider;
-		Monster*			mOwner;
+		Creature*			mOwner;
 		MonsterSkillInfo	mInfo;
 	private:
 		float				mRange;

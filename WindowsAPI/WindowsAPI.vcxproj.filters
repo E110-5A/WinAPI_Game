@@ -122,9 +122,6 @@
     <Filter Include="1 Engine\GameObject\UI\Panel">
       <UniqueIdentifier>{cff2f6c1-1e4f-4e8f-80f0-16a711f3936c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1 Engine\GameObject\Creature\BossMonster">
-      <UniqueIdentifier>{ca151cbe-acd1-4a25-8fec-2d0473beaa2b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -338,7 +335,7 @@
       <Filter>1 Engine\GameObject\UI\HUD</Filter>
     </ClInclude>
     <ClInclude Include="jsBossMonster.h">
-      <Filter>1 Engine\GameObject\Creature\BossMonster</Filter>
+      <Filter>1 Engine\GameObject\Creature\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -548,7 +545,7 @@
       <Filter>1 Engine\GameObject\UI\HUD</Filter>
     </ClCompile>
     <ClCompile Include="jsBossMonster.cpp">
-      <Filter>1 Engine\GameObject\Creature\BossMonster</Filter>
+      <Filter>1 Engine\GameObject\Creature\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

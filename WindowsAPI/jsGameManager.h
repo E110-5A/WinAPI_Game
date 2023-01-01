@@ -37,7 +37,7 @@ namespace js
 
 		// 몬스터 리스폰 기능 (able = true, rand type, rand Pos)
 		static void SetSpawnPlatform(Platform* prevPlatform) { mSpawnPlatform = prevPlatform; }
-		static void RespawnMonster();
+		static void SpawnMonster();
 		static Platform* GetSpawnPlatform() { return mSpawnPlatform; }
 
 
@@ -62,6 +62,7 @@ namespace js
 		{
 			delete mPlayerInfo;
 		}
+
 	private:
 		// 씬에서 사용할 객체
 

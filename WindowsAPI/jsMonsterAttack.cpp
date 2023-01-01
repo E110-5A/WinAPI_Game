@@ -15,7 +15,7 @@ namespace js
 	MonsterAttack::MonsterAttack()
 	{
 	}
-	MonsterAttack::MonsterAttack(Monster* owner)
+	MonsterAttack::MonsterAttack(Creature* owner)
 	{
 		mOwner = owner;
 		mCollider = AddComponent<Collider>();

@@ -26,8 +26,6 @@ namespace js
 	};
 
 	class Image;
-	class SceneManager;
-	class Scene;
 	class Platform;
 	class Player;
 	class MonsterAttack;
@@ -72,13 +70,7 @@ namespace js
 		void Skill();
 		void DeadCheck();
 
-		void AddMonster()
-		{
-			Scene* scene = SceneManager::GetPlayScene();
-			// ¾À¿¡ Ãß°¡
-			scene->AddGameObject(this, eColliderLayer::Monster);
-			scene->AddGameObject((GameObject*)mDamageObj, eColliderLayer::DamageObject);
-		}
+		void AddMonster();
 
 		// None
 		virtual void OnCollisionEnter(Collider* other) override;
@@ -101,7 +93,7 @@ namespace js
 
 
 		MonsterSkillInfo*	mSkillInfo;
-		MonsterAttack*	mDamageObj;
+		MonsterAttack*		mDamageObj;
 
 
 	private:

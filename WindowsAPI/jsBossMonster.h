@@ -56,7 +56,7 @@ namespace js
 		void Skill(eBossAttackType type);
 		void DeadCheck();
 
-		void AddMonster();
+		void AddBoss();
 
 		// None
 		virtual void OnCollisionEnter(Collider* other) override;
@@ -64,8 +64,8 @@ namespace js
 		virtual void OnCollisionExit(Collider* other) override;
 
 		// 충돌 기능
-		void SelfHit(GameObject* attaker, float damage, eStagger stagger, float power);
-		void SelfDamaged(float damage);
+		virtual void SelfHit(GameObject* attaker, float damage, eStagger stagger, float power) override;
+		virtual void SelfDamaged(float damage) override;
 
 	private:
 		eBossType			mBossType;

@@ -61,7 +61,6 @@ namespace js
 	void Creature::Initialize()
 	{
 		InitComponent();
-		SetImage(Resources::Load<Image>(L"Monster", L"..\\Resources\\Image\\Enemy\\monster.bmp"));
 	}
 
 	void Creature::Tick()

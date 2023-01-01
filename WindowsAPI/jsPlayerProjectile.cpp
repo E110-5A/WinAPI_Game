@@ -7,8 +7,9 @@
 #include "jsCollider.h"
 
 // 오브젝트
-#include "jsPlayer.h"
 #include "jsObject.h"
+#include "jsPlayer.h"
+#include "jsCreature.h"
 #include "jsMonster.h"
 
 namespace js
@@ -78,7 +79,7 @@ namespace js
 
 	void PlayerProjectile::FMJ()
 	{
-		std::vector<Monster*>::iterator iter = mTarget.begin();
+		std::vector<Creature*>::iterator iter = mTarget.begin();
 		for (; iter != mTarget.end(); ++iter)
 		{
 			// 몬스터 위치 가져오기
@@ -95,7 +96,7 @@ namespace js
 		GameObject::Render(hdc);
 	}
 
-	void PlayerProjectile::AddTarget(Monster* target)
+	void PlayerProjectile::AddTarget(Creature* target)
 	{
 		mTarget.push_back(target);
 	}
@@ -103,10 +104,10 @@ namespace js
 	{
 		// vector에 추가된 몬스터를 순회하며 가장 가까운 적 찾기
 		float minLenth = mInfo.range + 1.0f;
-		Monster* target = nullptr;
+		Creature* target = nullptr;
 
 		// 타겟 순회하기
-		std::vector<Monster*>::iterator iter = mTarget.begin();
+		std::vector<Creature*>::iterator iter = mTarget.begin();
 		for (; iter != mTarget.end(); ++iter)
 		{
 			// 몬스터 위치 가져오기
@@ -125,7 +126,7 @@ namespace js
 			}
 		}
 		if (nullptr != target)
-			target->SelfHit(this, mInfo.damage, mInfo.stagger, mInfo.power);
+			target->SelfHit(this, mInfo.damage * mOwner->GetOffence()->damage, mInfo.stagger, mInfo.power);
 	}
 
 	void PlayerProjectile::OnCollisionEnter(Collider* other)
@@ -134,7 +135,7 @@ namespace js
 		GameObject* attacker = other->GetOwner();
 		if (eColliderLayer::Monster == attacker->GetType())
 		{
-			Monster* target = dynamic_cast<Monster*>(attacker);
+			Creature* target = dynamic_cast<Creature*>(attacker);
 			if (nullptr != target)
 				AddTarget(target);
 		}

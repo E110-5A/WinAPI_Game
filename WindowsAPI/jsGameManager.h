@@ -37,8 +37,9 @@ namespace js
 
 		// 몬스터 리스폰 기능 (able = true, rand type, rand Pos)
 		static void SetSpawnPlatform(Platform* prevPlatform) { mSpawnPlatform = prevPlatform; }
-		static void SpawnMonster();
 		static Platform* GetSpawnPlatform() { return mSpawnPlatform; }
+		static void SpawnMonster();
+		static void SpawnBoss();
 
 
 		// 상자 세팅

@@ -78,9 +78,9 @@ namespace js
 		virtual void OnCollisionExit(Collider* other) override;
 
 		// 충돌 기능
-		void SelfHit(GameObject* attaker, float damage, eStagger stagger, float power);
-		void SelfDamaged(float damage);
-		void SelfKnockBack(float dir, eStagger stagger, float power);
+		virtual void SelfHit(GameObject* attaker, float damage, eStagger stagger, float power) override;
+		virtual void SelfDamaged(float damage) override;
+		virtual void SelfKnockBack(float dir, eStagger stagger, float power) override;
 		// FSM 만들때 추후 추가할 예정
 		void SelfStun(float power);
 

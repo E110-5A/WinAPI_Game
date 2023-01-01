@@ -34,7 +34,7 @@ namespace js
 	void BossMonster::Initialize()
 	{
 		Creature::Initialize();
-		SetImage(Resources::Load<Image>(L"Monster", L"..\\Resources\\Image\\Enemy\\boss.bmp"));
+		SetImage(Resources::Load<Image>(L"Boss", L"..\\Resources\\Image\\Enemy\\boss.bmp"));
 		SetAnimator();
 		mResistance = eStagger::Heave;
 		
@@ -55,33 +55,33 @@ namespace js
 			, Vector2(0.f, 0.f), 1, 0.1f);
 
 		mAnimator->CreateAnimation(L"ColossusMoveR", mSpriteImage, Pos(0.f, 119.f), Size(86.f, 119.f)
-			, Vector2(0.f, 0.f), 10, 0.1f);
+			, Vector2(0.f, 0.f), 10, 0.15f);
 		mAnimator->CreateAnimation(L"ColossusMoveL", mSpriteImage, Pos(0.f, 238.f), Size(86.f, 119.f)
-			, Vector2(0.f, 0.f), 10, 0.1f);
+			, Vector2(0.f, 0.f), 10, 0.15f);
 
 		mAnimator->CreateAnimation(L"ColossusAttack1R", mSpriteImage, Pos(0.f, 357.f), Size(106.f, 119.f)
-			, Vector2(0.f, 0.f), 9, 0.1f);
+			, Vector2(0.f, 0.f), 9, 0.15f);
 		mAnimator->CreateAnimation(L"ColossusAttack1L", mSpriteImage, Pos(0.f, 476.f), Size(106.f, 119.f)
-			, Vector2(0.f, 0.f), 9, 0.1f);
+			, Vector2(0.f, 0.f), 9, 0.15f);
 
 		mAnimator->CreateAnimation(L"ColossusAttack2R", mSpriteImage, Pos(0.f, 595.f), Size(174.f, 119.f)
-			, Vector2(0.f, 0.f), 15, 0.1f);
+			, Vector2(0.f, 0.f), 15, 0.15f);
 		mAnimator->CreateAnimation(L"ColossusAttack2L", mSpriteImage, Pos(0.f, 714.f), Size(174.f, 119.f)
-			, Vector2(0.f, 0.f), 15, 0.1f);
+			, Vector2(0.f, 0.f), 15, 0.15f);
 
 		mAnimator->CreateAnimation(L"ColossusDeathR", mSpriteImage, Pos(0.f, 833.f), Size(140.0f, 141.f)
-			, Vector2(0.f, 0.f), 15, 0.1f);
+			, Vector2(0.f, 0.f), 15, 0.15f);
 		mAnimator->CreateAnimation(L"ColossusDeathL", mSpriteImage, Pos(0.f, 974.f), Size(140.0f, 141.f)
-			, Vector2(0.f, 0.f), 15, 0.1f);
+			, Vector2(0.f, 0.f), 15, 0.15f);
 	}
 
 	void BossMonster::InitColossus()
 	{
-		SetMonsterStat(1400.f, 0, 0, 40, 1, 300, 13.f);
+		SetMonsterStat(1400.f, 0, 0, 40, 1, 200, 13.f);
 		
 		mBodyCollider->SetSize(Size(86.f, 119.f));
-		mFootCollider->SetSize(Size(86.f, 20.f));
-		mFootCollider->SetOffset(Vector2(0, 100.f));
+		mFootCollider->SetSize(Size(86.f, 40.f));
+		mFootCollider->SetOffset(Vector2(0, 60.f));
 
 
 		mAnimator->Play(L"ColossusIdleR");
@@ -113,7 +113,7 @@ namespace js
 		// 디버깅용
 		mBossType = eBossType::Colossus;
 		InitColossus();
-		mEyesight = mBodyCollider->GetSize().x * 6;
+		mEyesight = mBodyCollider->GetSize().x * 10;
 
 		mState = eBossState::Stay;
 	}
@@ -169,6 +169,7 @@ namespace js
 
 		Rectangle(hdc, pos.x - mEyesight / 2, pos.y, pos.x + mEyesight / 2, pos.y + size.y);
 	}
+
 	void BossMonster::Stay()
 	{
 		// 대상과 나 사이의 거리
@@ -253,13 +254,9 @@ namespace js
 			mAttack1->finish = false;
 
 			if (Vector2::Right == GetDir())
-			{
-				mAnimator->Play(L"ImpIdleR");
-			}
+				mAnimator->Play(L"ColossusIdleR");
 			else
-			{
-				mAnimator->Play(L"ImpIdleL");
-			}			
+				mAnimator->Play(L"ColossusIdleL");
 		}
 	}
 	void BossMonster::Attack2()
@@ -273,13 +270,9 @@ namespace js
 			mAttack2->finish = false;
 
 			if (Vector2::Right == GetDir())
-			{
-				mAnimator->Play(L"ImpIdleR");
-			}
+				mAnimator->Play(L"ColossusIdleR");
 			else
-			{
-				mAnimator->Play(L"ImpIdleL");
-			}
+				mAnimator->Play(L"ColossusIdleL");
 		}
 	}
 	void BossMonster::Death()
@@ -358,19 +351,34 @@ namespace js
 	}
 	void BossMonster::Skill(eBossAttackType type)
 	{
-		mDamageObj->Active();
-		mSkillInfo->active = true;
-		mSkillInfo->run = true;
+		switch (type)
+		{
+		case eBossAttackType::A:
+		{
+			mDamageObj->Active();
+			mAttack1->active = true;
+			mAttack1->run = true;
+		}
+		break;
+		case eBossAttackType::B:
+		{
+			mDamageObj->Active();
+			mAttack2->active = true;
+			mAttack2->run = true;
+		}
+		break;
+		}
+		
 	}
 	void BossMonster::DeadCheck()
 	{
 	}
-	void BossMonster::AddMonster()
+	void BossMonster::AddBoss()
 	{
 		Scene* scene = SceneManager::GetPlayScene();
 		// 씬에 추가
 		scene->AddGameObject(this, eColliderLayer::Monster);
-		scene->AddGameObject((GameObject*)mDamageObj, eColliderLayer::DamageObject);
+		scene->AddGameObject(mDamageObj, eColliderLayer::DamageObject);
 	}
 	void BossMonster::OnCollisionEnter(Collider* other)
 	{
@@ -383,8 +391,17 @@ namespace js
 	}
 	void BossMonster::SelfHit(GameObject* attaker, float damage, eStagger stagger, float power)
 	{
+		SelfDamaged(damage);
 	}
 	void BossMonster::SelfDamaged(float damage)
 	{
+		// 방어력 계산해서 피 까기
+		float finalDamage = damage - mHealthStat->defance;
+
+		// 최소 피해량
+		if (1 > damage - mHealthStat->defance)
+			finalDamage = 1;
+
+		mHealthStat->curHP -= finalDamage;
 	}
 }

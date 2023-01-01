@@ -22,7 +22,7 @@ namespace js
 		virtual void Render(HDC hdc) override;
 		
 		// CollisionEnter 에서 호출
-		void AddTarget(Monster* target);
+		void AddTarget(Creature* target);
 		
 		// 종료 시점에 호출
 		void FindTarget();
@@ -49,7 +49,7 @@ namespace js
 
 	private:
 		ProjectileInfo			mInfo;
-		std::vector<Monster*>	mTarget;
+		std::vector<Creature*>	mTarget;
 
 		float					mDeltaTime;
 		float					mLifeTime;

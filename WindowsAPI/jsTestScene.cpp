@@ -75,6 +75,10 @@ namespace js
 		*  - 메뉴 UI 불러오기
 		*
 		*/
+		if (KEY_DOWN(eKeyCode::E))
+		{
+			GameManager::SpawnBoss();
+		}
 		if (KEY_DOWN(eKeyCode::N))
 		{
 			SceneManager::ChangeScene(eSceneType::Title);
@@ -110,9 +114,9 @@ namespace js
 		secondGround->SetColliderSize(Size(GRID_SIZE * 5, GRID_SIZE));
 		secondGround->SetColliderOffset(Vector2(GRID_SIZE * 5 / 2, GRID_SIZE / 2));
 
-		Platform* thirdGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(702.0f, 448.0f));
-		thirdGround->SetColliderSize(Size(GRID_SIZE * 5, GRID_SIZE * 2));
-		thirdGround->SetColliderOffset(Vector2(GRID_SIZE * 5 / 2, GRID_SIZE * 2 / 2));
+		//Platform* thirdGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(702.0f, 448.0f));
+		//thirdGround->SetColliderSize(Size(GRID_SIZE * 5, GRID_SIZE * 2));
+		//thirdGround->SetColliderOffset(Vector2(GRID_SIZE * 5 / 2, GRID_SIZE * 2 / 2));
 
 		Ladder* ladder = object::Instantiate<Ladder>(eColliderLayer::Ladder, Pos(256.0f, 512.0f));
 		ladder->SetColliderSize(Size(GRID_SIZE, GRID_SIZE * 2));

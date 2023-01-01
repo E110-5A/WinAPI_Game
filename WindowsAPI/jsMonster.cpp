@@ -42,6 +42,7 @@ namespace js
 	{
 		// 기본 세팅
 		Creature::Initialize();
+		SetImage(Resources::Load<Image>(L"Monster", L"..\\Resources\\Image\\Enemy\\monster.bmp"));
 		SetScale(Vector2::One * 2);
 		SetAnimator();
 
@@ -552,6 +553,11 @@ namespace js
 		{
 			// 나아가지 못하게 막기
 			BodyCollision(this);
+		}
+		// 피해받으면 추격상태로 변경
+		if (type == eColliderLayer::Player_Projectile)
+		{
+			mState = eMonsterState::Chase;
 		}
 	}
 	void Monster::OnCollisionStay(Collider* other)

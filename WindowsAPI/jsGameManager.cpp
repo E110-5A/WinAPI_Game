@@ -79,6 +79,9 @@ namespace js
 			mChest[idx] = new Chest();
 			mChest[idx]->SetType(eColliderLayer::Chest);
 		}
+
+		mBossMonster = new BossMonster();
+		mBossMonster->SetType(eColliderLayer::Monster);
 	}
 
 	void GameManager::AddObject()
@@ -109,8 +112,9 @@ namespace js
 			int myType = rand() % 10;       // 0 ~ 9
 			// 상자 추가, 상자 초기화
 			mChest[idx]->AddChest(myType);
-
 		}
+		mBossMonster->AddBoss();
+		mBossMonster->AddComponentScene();
 	}
 
 
@@ -180,6 +184,11 @@ namespace js
 			// 마지막에 스폰시간 초기화
 			mSpawnTime = 0.0f;
 		}		
+	}
+	void GameManager::SpawnBoss()
+	{
+		mBossMonster->SetPos(Pos(702.0f, 448.0f));
+		mBossMonster->Spawn();
 	}
 	void GameManager::Playing()
 	{

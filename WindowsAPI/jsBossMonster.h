@@ -78,7 +78,7 @@ namespace js
 		MonsterSkillInfo*	mAttack2;
 
 		MonsterAttack*		mDamageObj;
-
+		bool				mDeath;
 
 	private:
 		int					mDropExp;

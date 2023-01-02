@@ -176,7 +176,10 @@
     <ClInclude Include="jsSmallChest.h" />
     <ClInclude Include="jsSound.h" />
     <ClInclude Include="jsSoundManager.h" />
+    <ClInclude Include="jsStageA.h" />
+    <ClInclude Include="jsStageB.h" />
     <ClInclude Include="jsTeleporter.h" />
+    <ClInclude Include="jsTestScene2.h" />
     <ClInclude Include="jsUIBase.h" />
     <ClInclude Include="jsUIGameObject.h" />
     <ClInclude Include="jsUIManager.h" />
@@ -188,7 +191,6 @@
     <ClInclude Include="jsObject.h" />
     <ClInclude Include="jsPlayer.h" />
     <ClInclude Include="jsPlayerProjectile.h" />
-    <ClInclude Include="jsStage1.h" />
     <ClInclude Include="jsResource.h" />
     <ClInclude Include="jsResources.h" />
     <ClInclude Include="jsRigidbody.h" />
@@ -247,7 +249,10 @@
     <ClCompile Include="jsSmallChest.cpp" />
     <ClCompile Include="jsSound.cpp" />
     <ClCompile Include="jsSoundManager.cpp" />
+    <ClCompile Include="jsStageA.cpp" />
+    <ClCompile Include="jsStageB.cpp" />
     <ClCompile Include="jsTeleporter.cpp" />
+    <ClCompile Include="jsTestScene2.cpp" />
     <ClCompile Include="jsUIBase.cpp" />
     <ClCompile Include="jsUIGameObject.cpp" />
     <ClCompile Include="jsUIManager.cpp" />
@@ -258,7 +263,6 @@
     <ClCompile Include="jsMonster.cpp" />
     <ClCompile Include="jsPlayer.cpp" />
     <ClCompile Include="jsPlayerProjectile.cpp" />
-    <ClCompile Include="jsStage1.cpp" />
     <ClCompile Include="jsResource.cpp" />
     <ClCompile Include="jsResources.cpp" />
     <ClCompile Include="jsRigidbody.cpp" />

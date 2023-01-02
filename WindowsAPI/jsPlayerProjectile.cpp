@@ -126,7 +126,10 @@ namespace js
 			}
 		}
 		if (nullptr != target)
-			target->SelfHit(this, mInfo.damage * mOwner->GetOffence()->damage, mInfo.stagger, mInfo.power);
+		{
+			float damage = mInfo.damage * mOwner->GetOffence()->damage;
+			target->SelfHit(this, damage, mInfo.stagger, mInfo.power);
+		}
 	}
 
 	void PlayerProjectile::OnCollisionEnter(Collider* other)

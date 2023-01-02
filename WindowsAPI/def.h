@@ -34,11 +34,12 @@ enum class eSceneType
 {
 	MapTool,
 	Test,
+	Test2,
 	Title,
 	Select,
-	STG1,
-	STG2,
-	STG3,
+	STGA,
+	STGB,
+	STGC,
 	Option,
 	End,
 };

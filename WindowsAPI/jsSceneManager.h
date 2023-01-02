@@ -27,6 +27,20 @@ namespace js
 			toolScene->LoadTilePalette(path);
 		}
 
+
+	public:
+		static void NextStage()
+		{
+			// enum으로 구현하면 좋을거 같긴한데
+			if (mPlayScene == mScene[(UINT)eSceneType::STGA])
+				ChangeScene(eSceneType::STGB);
+			/*else if (mPlayScene == mScene[(UINT)eSceneType::STGB])
+				ChangeScene(eSceneType::STGC);*/
+
+			if (mPlayScene == mScene[(UINT)eSceneType::Test])
+				ChangeScene(eSceneType::Test2);
+		}
+
 	private:
 		static Scene* mScene[(UINT)eSceneType::End];
 		static Scene* mPlayScene;

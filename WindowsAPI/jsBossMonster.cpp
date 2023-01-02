@@ -78,7 +78,7 @@ namespace js
 
 	void BossMonster::InitColossus()
 	{
-		SetMonsterStat(1400.f, 0, 0, 40, 1, 200, 13.f);
+		SetMonsterStat(400.f, 0, 0, 40, 1, 200, 13.f);
 		
 		mBodyCollider->SetSize(Size(86.f, 119.f));
 		mFootCollider->SetSize(Size(86.f, 40.f));
@@ -279,6 +279,10 @@ namespace js
 	void BossMonster::Death()
 	{
 		// ..?
+		GameManager::AddExp(20);
+		Teleporter* tp = GameManager::GetTeleporter();
+		tp->BossKilled();
+		SetAble(false);
 	}
 	void BossMonster::Cooldown()
 	{
@@ -376,12 +380,13 @@ namespace js
 		if (0 >= mHealthStat->curHP)
 		{
 			// »ç¸Á!
-
-			
+			GameManager::KillBoss();
+			mState = eBossState::Death;
 		}
 	}
 	void BossMonster::AddBoss()
 	{
+		SetAble(false);
 		Scene* scene = SceneManager::GetPlayScene();
 		// ¾À¿¡ Ãß°¡
 		scene->AddGameObject(this, eColliderLayer::Monster);

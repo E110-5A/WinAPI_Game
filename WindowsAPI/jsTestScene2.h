@@ -4,12 +4,11 @@
 namespace js
 {
 	class Chest;
-	class Teleporter;
-	class TestScene : public Scene
+	class TestScene2 : public Scene
 	{
 	public:
-		TestScene();
-		~TestScene();
+		TestScene2();
+		~TestScene2();
 
 		void Initialize() override;
 
@@ -27,7 +26,6 @@ namespace js
 		virtual void Exit();
 
 	private:
-		Chest*				mChest[CHEST_POOL];
-		Teleporter*			mTeleporter;
+		Chest* mChest[CHEST_POOL];
 	};
 }

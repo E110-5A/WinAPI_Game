@@ -141,7 +141,7 @@ namespace js
 	void Monster::InitImp()
 	{
 		// stat
-		SetMonsterStat(310.0f, 0, 0, 13, 1, 100, 16.0f);
+		SetMonsterStat(70.0f, 0, 0, 13, 1, 100, 16.0f);
 
 		// collider
 		mBodyCollider->SetSize(Size(20.f, 25.f) * GetScale());
@@ -537,6 +537,7 @@ namespace js
 
 	void Monster::AddMonster()
 	{
+		SetAble(false);
 		Scene* scene = SceneManager::GetPlayScene();
 		// ¾À¿¡ Ãß°¡
 		scene->AddGameObject(this, eColliderLayer::Monster);

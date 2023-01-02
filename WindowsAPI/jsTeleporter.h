@@ -3,6 +3,13 @@
 
 namespace js
 {
+	enum class eTeleporterState
+	{
+		Default,
+		Charging,
+		FullyCharged,
+	};
+
 	class Teleporter : public EventObject
 	{
 	public:
@@ -14,7 +21,6 @@ namespace js
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 
-		virtual void InitComponent();
 
 		void AddTeleporter();
 
@@ -30,6 +36,7 @@ namespace js
 		virtual void OnCollisionStay(Collider* other) override;
 		virtual void OnCollisionExit(Collider* other) override;
 	private:
+		eTeleporterState mState;
 		bool mCharging;
 		bool mFullyCharged;
 		

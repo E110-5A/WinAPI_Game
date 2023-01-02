@@ -36,20 +36,22 @@ namespace js
 		static void Damaged() {} // 안씀
 
 
-		// 몬스터 리스폰 기능 (able = true, rand type, rand Pos)
+		// 기능
 		static void SpawnMonster();
-		static void SpawnBoss();
-
-
-		static Chest* GetChest(int idx) { return mChest[idx]; }
+		static void KillBoss();
 
 
 		static void SetSpawnPlatform(Platform* prevPlatform) { mSpawnPlatform = prevPlatform; }
 		static Platform* GetSpawnPlatform() { return mSpawnPlatform; }
+
 		// Get Info
 		static Player* GetPlayer() { return mPlayer; }
 		static PlayerInfo* GetPlayerInfo() { return mPlayerInfo; }
 		static int* GetDifficulty() { return mDifficulty; }
+		// Get Objects
+		static BossMonster* GetBoss() { return mBossMonster; }
+		static Chest* GetChest(int idx) { return mChest[idx]; }
+		static Teleporter* GetTeleporter() { return mTeleporter; }
 
 		// 아이템 함수
 		static void PickUpItems(eItemList item);

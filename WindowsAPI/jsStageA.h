@@ -3,11 +3,11 @@
 
 namespace js
 {
-	class Stage1 : public Scene
+	class StageA : public Scene
 	{
 	public:
-		Stage1();
-		~Stage1();
+		StageA();
+		~StageA();
 
 		void Initialize() override;
 

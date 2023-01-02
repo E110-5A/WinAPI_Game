@@ -1,4 +1,4 @@
-#include "jsStage1.h"
+#include "jsStageB.h"
 
 // manager
 #include "jsInput.h"
@@ -28,15 +28,15 @@
 
 namespace js
 {
-	Stage1::Stage1()
+	StageB::StageB()
 	{
 	}
-	Stage1::~Stage1()
+	StageB::~StageB()
 	{
 	}
-	void Stage1::Initialize()
+	void StageB::Initialize()
 	{
-		
+
 		InitBG();
 
 		/*
@@ -48,7 +48,7 @@ namespace js
 
 	}
 
-	void Stage1::InitBG()
+	void StageB::InitBG()
 	{
 		SceneManager::LoadMap<MapToolScene>(L"..\\Resources\\Tile\\STG1\\stage1", eSceneType::MapTool);
 
@@ -59,10 +59,10 @@ namespace js
 		AddGameObject(bg, eColliderLayer::BackGroundImage);
 	}
 
-	void Stage1::Tick()
+	void StageB::Tick()
 	{
 		Scene::Tick();
-		
+
 		if (KEY_DOWN(eKeyCode::ESC))
 		{
 			SceneManager::ChangeScene(eSceneType::Title);
@@ -74,7 +74,7 @@ namespace js
 		*  - 메뉴 UI 불러오기
 		*/
 	}
-	void Stage1::Render(HDC hdc)
+	void StageB::Render(HDC hdc)
 	{
 		Scene::Render(hdc);
 		wchar_t szFloat[40] = {};
@@ -82,7 +82,7 @@ namespace js
 		int strLen = wcsnlen_s(szFloat, 40);
 		TextOut(hdc, 5, 10, szFloat, strLen);
 	}
-	void Stage1::Enter()
+	void StageB::Enter()
 	{
 		GameManager::SetPlayable(true);
 
@@ -97,16 +97,16 @@ namespace js
 		UIManager::Push(eUIType::ExpBar);
 
 	}
-	void Stage1::Exit()
+	void StageB::Exit()
 	{
 	}
 
-	void Stage1::EnterObject()
+	void StageB::EnterObject()
 	{
 		GameManager::AddObject();
 	}
 
-	void Stage1::EnterUI()
+	void StageB::EnterUI()
 	{
 		UIManager::Push(eUIType::PlayerInfo);
 
@@ -136,7 +136,7 @@ namespace js
 		difficultyHud->SetDifficulty(GameManager::GetDifficulty());
 	}
 
-	void Stage1::EnterLayer()
+	void StageB::EnterLayer()
 	{
 		CollisionManager::SetLayer(eColliderLayer::Platform, eColliderLayer::Head, true);
 		CollisionManager::SetLayer(eColliderLayer::Platform, eColliderLayer::Foot, true);

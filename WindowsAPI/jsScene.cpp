@@ -26,7 +26,6 @@ namespace js
 				mObjects[y][x] = nullptr;
 			}
 		}
-		
 	}
 
 	void Scene::Initialize()

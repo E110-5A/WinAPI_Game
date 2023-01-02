@@ -62,30 +62,29 @@ namespace js
 		// 플레이어 생성
 		mPlayer = new Player();
 		mPlayer->SetType(eColliderLayer::Player);
-
+		// 투사체 생성
 		for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
-		{
-			// 투사체 생성
+		{			
 			mPlayerAttack[idx] = new PlayerProjectile();
 			mPlayerAttack[idx]->SetType(eColliderLayer::Player_Projectile);
 			mPlayerAttack[idx]->SetPlayerInfo(mPlayer);
-		}		
+		}	
+		// 몬스터 생성
 		for (int idx = 0; idx < MONSTER_POOL; ++idx)
-		{
-			// 몬스터 생성
+		{			
 			mMonster[idx] = new Monster();
 			mMonster[idx]->SetType(eColliderLayer::Monster);
 		}
+		// 상자 생성
 		for (int idx = 0; idx < CHEST_POOL; ++idx)
-		{
-			// 상자 생성
+		{			
 			mChest[idx] = new Chest();
 			mChest[idx]->SetType(eColliderLayer::Chest);
 		}
-
+		// 보스 생성
 		mBossMonster = new BossMonster();
 		mBossMonster->SetType(eColliderLayer::Monster);
-
+		// 텔레포터 생성
 		mTeleporter = new Teleporter();
 		mTeleporter->SetType(eColliderLayer::Teleporter);
 	}
@@ -198,12 +197,9 @@ namespace js
 			mSpawnTime = 0.0f;
 		}		
 	}
-	void GameManager::SpawnBoss()
+	void GameManager::KillBoss()
 	{
-		/*mBossMonster->SetPos(Pos(702.0f, 448.0f));
-		mBossMonster->Spawn();*/
-		// 텔레포터를 통해서 보스가 소환되도록 만들기
-		mTeleporter->
+		mTeleporter->BossKilled();
 	}
 	void GameManager::Playing()
 	{

@@ -70,11 +70,11 @@ namespace js
 		
 		InitComponent();
 
-		InitSkill(mDubleTab, 60.f, 50.f, 2
+		InitSkill(mDubleTab, 0.6f, 50.f, 2
 			, mPlayerInfo->stat->playerOffence->attackSpeed* 0.14f, mPlayerInfo->stat->playerOffence->attackSpeed * 0.4f);
-		InitSkill(mFMJ, 230.f, 120.f, 1, 0.60f, 3.0f, eStagger::Nomal);
+		InitSkill(mFMJ, 2.3f, 120.f, 1, 0.60f, 3.0f, eStagger::Nomal);
 		InitSkill(mTacticalDive, 0.f, mPlayerInfo->stat->playerUtility->moveSpeed * 100.f, 1, 0.70f, 5.0f);
-		InitSkill(mSupressiveFire, 800.f, 60.f, 6
+		InitSkill(mSupressiveFire, 0.8f, 60.f, 6
 			, mPlayerInfo->stat->playerOffence->attackSpeed * 0.14f, 5.0f, eStagger::Heave);
 	}
 	void Player::InitComponent()

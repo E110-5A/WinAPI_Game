@@ -175,9 +175,6 @@
     <ClInclude Include="jsComponent.h">
       <Filter>1 Engine\Component\Base</Filter>
     </ClInclude>
-    <ClInclude Include="jsStage1.h">
-      <Filter>1 Engine\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="jsTitleScene.h">
       <Filter>1 Engine\Scene</Filter>
     </ClInclude>
@@ -341,6 +338,15 @@
       <Filter>1 Engine\GameObject\Creature\Monster</Filter>
     </ClInclude>
     <ClInclude Include="jsTeleporter.h" />
+    <ClInclude Include="jsStageB.h">
+      <Filter>1 Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="jsStageA.h">
+      <Filter>1 Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="jsTestScene2.h">
+      <Filter>1 Engine\Scene\Tool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -388,9 +394,6 @@
     </ClCompile>
     <ClCompile Include="jsComponent.cpp">
       <Filter>1 Engine\Component\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="jsStage1.cpp">
-      <Filter>1 Engine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="jsTitleScene.cpp">
       <Filter>1 Engine\Scene</Filter>
@@ -552,5 +555,14 @@
       <Filter>1 Engine\GameObject\Creature\Monster</Filter>
     </ClCompile>
     <ClCompile Include="jsTeleporter.cpp" />
+    <ClCompile Include="jsStageB.cpp">
+      <Filter>1 Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="jsStageA.cpp">
+      <Filter>1 Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="jsTestScene2.cpp">
+      <Filter>1 Engine\Scene\Tool</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -144,6 +144,7 @@ namespace js
 
     void Chest::AddChest(int type)
     {
+        SetAble(false);
         Scene* scene = SceneManager::GetPlayScene();
 
         if (0 <= type && 5 > type)

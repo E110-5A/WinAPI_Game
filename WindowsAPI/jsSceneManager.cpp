@@ -1,8 +1,10 @@
 #include "jsSceneManager.h"
 #include "jsTitleScene.h"
-#include "jsStage1.h"
+#include "jsStageA.h"
+#include "jsStageB.h"
 #include "jsMapToolScene.h"
 #include "jsTestScene.h"
+#include "jsTestScene2.h"
 #include "jsSelectScene.h"
 #include "jsObject.h"
 
@@ -17,12 +19,16 @@ namespace js
 		mScene[(UINT)eSceneType::MapTool]->Initialize();
 		mScene[(UINT)eSceneType::Test] = new TestScene();
 		mScene[(UINT)eSceneType::Test]->Initialize();
+		mScene[(UINT)eSceneType::Test2] = new TestScene2();
+		mScene[(UINT)eSceneType::Test2]->Initialize();
 		mScene[(UINT)eSceneType::Title] = new TitleScene();
 		mScene[(UINT)eSceneType::Title]->Initialize();
 		mScene[(UINT)eSceneType::Select] = new SelectScene();
 		mScene[(UINT)eSceneType::Select]->Initialize();
-		mScene[(UINT)eSceneType::STG1] = new Stage1();
-		mScene[(UINT)eSceneType::STG1]->Initialize();
+		mScene[(UINT)eSceneType::STGA] = new StageA();
+		mScene[(UINT)eSceneType::STGA]->Initialize();
+		mScene[(UINT)eSceneType::STGB] = new StageB();
+		mScene[(UINT)eSceneType::STGB]->Initialize();
 		ChangeScene(eSceneType::Test);
 	}
 

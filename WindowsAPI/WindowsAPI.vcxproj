@@ -176,6 +176,7 @@
     <ClInclude Include="jsSmallChest.h" />
     <ClInclude Include="jsSound.h" />
     <ClInclude Include="jsSoundManager.h" />
+    <ClInclude Include="jsTeleporter.h" />
     <ClInclude Include="jsUIBase.h" />
     <ClInclude Include="jsUIGameObject.h" />
     <ClInclude Include="jsUIManager.h" />
@@ -246,6 +247,7 @@
     <ClCompile Include="jsSmallChest.cpp" />
     <ClCompile Include="jsSound.cpp" />
     <ClCompile Include="jsSoundManager.cpp" />
+    <ClCompile Include="jsTeleporter.cpp" />
     <ClCompile Include="jsUIBase.cpp" />
     <ClCompile Include="jsUIGameObject.cpp" />
     <ClCompile Include="jsUIManager.cpp" />

@@ -26,6 +26,7 @@ namespace js
 	{
 	}
 
+	// 콜라이더 추가
 	void EventObject::Initialize()
 	{
 		SetScale(Vector2(2.0f, 2.0f));

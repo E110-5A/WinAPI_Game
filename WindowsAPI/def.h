@@ -103,7 +103,7 @@ typedef ColliderID TileID;
 
 
 // Component enum
-#define _COLLIDER_LAYER 18		// 충돌체 유형
+#define _COLLIDER_LAYER 20		// 충돌체 유형
 enum class eComponentType
 {
 	Rigidbody,
@@ -120,8 +120,8 @@ enum class eColliderLayer
 	BGObj,						//	3		// 이미지 외에 컴포넌트가 필요한 배경 오브젝트
 
 								//	4	//
-
-	Propellant,				//	4		// 상자, 추진체
+	Teleporter,
+	Propellant,					//	4		// 상자, 추진체
 	Chest,
 	Platform,					//	5		// 벽, 바닥
 	Ladder,						//	6		// 사다리

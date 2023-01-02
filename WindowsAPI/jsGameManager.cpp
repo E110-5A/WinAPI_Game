@@ -14,6 +14,7 @@
 #include "jsChest.h"
 #include "jsBossMonster.h"
 #include "jsPlatform.h"
+#include "jsTeleporter.h"
 
 #include "jsCollider.h"
 
@@ -25,6 +26,8 @@ namespace js
 	Monster*			GameManager::mMonster[MONSTER_POOL] = {};
 	Chest*				GameManager::mChest[CHEST_POOL] = {};
 	BossMonster*		GameManager::mBossMonster = nullptr;
+	Teleporter*			GameManager::mTeleporter = nullptr;
+
 	Platform*			GameManager::mSpawnPlatform = nullptr;
 
 	// 게임 정보
@@ -82,6 +85,9 @@ namespace js
 
 		mBossMonster = new BossMonster();
 		mBossMonster->SetType(eColliderLayer::Monster);
+
+		mTeleporter = new Teleporter();
+		mTeleporter->SetType(eColliderLayer::Teleporter);
 	}
 
 	void GameManager::AddObject()
@@ -92,19 +98,22 @@ namespace js
 		scene->AddGameObject(mPlayer, eColliderLayer::Player);
 		mPlayer->AddComponentScene();
 
+		// 씬에 플레이어 투사체 풀 추가
 		for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 		{
 			// 플레이어 투사체 추가
 			scene->AddGameObject(mPlayerAttack[idx], eColliderLayer::Player_Projectile);			
 		}
 
+
+		// 씬에 몬스터 풀 추가
 		for (int idx = 0; idx < MONSTER_POOL; ++idx)
 		{
 			// 몬스터 추가, 몬스터 초기화
 			mMonster[idx]->AddMonster();
 			mMonster[idx]->AddComponentScene();
 		}
-
+		// 씬에 상자 풀 추가
 		for (int idx = 0; idx < CHEST_POOL; ++idx)
 		{
 			// 타입 변경			
@@ -113,10 +122,14 @@ namespace js
 			// 상자 추가, 상자 초기화
 			mChest[idx]->AddChest(myType);
 		}
+
+		// 씬에 보스 추가
 		mBossMonster->AddBoss();
 		mBossMonster->AddComponentScene();
-	}
 
+		// 씬에 텔레포터 추가
+		mTeleporter->AddTeleporter();
+	}
 
 	void GameManager::InitStat(PlayerInfo* info)
 	{
@@ -187,8 +200,10 @@ namespace js
 	}
 	void GameManager::SpawnBoss()
 	{
-		mBossMonster->SetPos(Pos(702.0f, 448.0f));
-		mBossMonster->Spawn();
+		/*mBossMonster->SetPos(Pos(702.0f, 448.0f));
+		mBossMonster->Spawn();*/
+		// 텔레포터를 통해서 보스가 소환되도록 만들기
+		mTeleporter->
 	}
 	void GameManager::Playing()
 	{

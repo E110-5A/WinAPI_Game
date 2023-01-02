@@ -9,6 +9,7 @@ namespace js
 	class Chest;
 	class Platform;
 	class BossMonster;
+	class Teleporter;
 	class GameManager
 	{
 	public:
@@ -36,16 +37,15 @@ namespace js
 
 
 		// 몬스터 리스폰 기능 (able = true, rand type, rand Pos)
-		static void SetSpawnPlatform(Platform* prevPlatform) { mSpawnPlatform = prevPlatform; }
-		static Platform* GetSpawnPlatform() { return mSpawnPlatform; }
 		static void SpawnMonster();
 		static void SpawnBoss();
 
 
-		// 상자 세팅
 		static Chest* GetChest(int idx) { return mChest[idx]; }
 
 
+		static void SetSpawnPlatform(Platform* prevPlatform) { mSpawnPlatform = prevPlatform; }
+		static Platform* GetSpawnPlatform() { return mSpawnPlatform; }
 		// Get Info
 		static Player* GetPlayer() { return mPlayer; }
 		static PlayerInfo* GetPlayerInfo() { return mPlayerInfo; }
@@ -73,7 +73,7 @@ namespace js
 		static Monster*				mMonster[MONSTER_POOL];
 		static Chest*				mChest[CHEST_POOL];
 		static BossMonster*			mBossMonster;
-
+		static Teleporter*			mTeleporter;
 		static Platform*			mSpawnPlatform;
 
 		// 플레이어 정보

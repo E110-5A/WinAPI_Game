@@ -122,6 +122,9 @@
     <Filter Include="1 Engine\GameObject\UI\Panel">
       <UniqueIdentifier>{cff2f6c1-1e4f-4e8f-80f0-16a711f3936c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1 Engine\GameObject\EventObj\Teleporter">
+      <UniqueIdentifier>{44e62c4c-6313-4c46-a02d-2bb38d4cfc67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -337,6 +340,7 @@
     <ClInclude Include="jsBossMonster.h">
       <Filter>1 Engine\GameObject\Creature\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="jsTeleporter.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -547,5 +551,6 @@
     <ClCompile Include="jsBossMonster.cpp">
       <Filter>1 Engine\GameObject\Creature\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="jsTeleporter.cpp" />
   </ItemGroup>
 </Project>

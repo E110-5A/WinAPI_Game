@@ -14,6 +14,7 @@
 // object
 #include "jsMonsterAttack.h"
 #include "jsPlayer.h"
+#include "jsTeleporter.h"
 
 namespace js
 {
@@ -372,6 +373,12 @@ namespace js
 	}
 	void BossMonster::DeadCheck()
 	{
+		if (0 >= mHealthStat->curHP)
+		{
+			// »ç¸Á!
+
+			
+		}
 	}
 	void BossMonster::AddBoss()
 	{

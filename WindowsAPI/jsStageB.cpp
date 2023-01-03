@@ -79,7 +79,7 @@ namespace js
 
 		Platform* Ground3 = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(1984, 640));
 		Ground3->SetColliderSize(Size(GRID_SIZE * 7, GRID_SIZE * 4));
-		Ground3->SetColliderOffset(Vector2(GRID_SIZE * 6, GRID_SIZE * 2));
+		Ground3->SetColliderOffset(Vector2(GRID_SIZE * 7 / 2, GRID_SIZE * 2));
 
 		Platform* Ground4 = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(1536, 512));
 		Ground4->SetColliderSize(Size(GRID_SIZE * 15, GRID_SIZE * 2));
@@ -109,6 +109,10 @@ namespace js
 		ladder2->SetColliderSize(Size(GRID_SIZE, GRID_SIZE * 4));
 		ladder2->SetColliderOffset(Vector2(GRID_SIZE / 2, GRID_SIZE * 2));
 
+		Ladder* ladder3 = object::Instantiate<Ladder>(eColliderLayer::Ladder, Pos(704, 640));
+		ladder3->SetColliderSize(Size(GRID_SIZE, GRID_SIZE * 4));
+		ladder3->SetColliderOffset(Vector2(GRID_SIZE / 2, GRID_SIZE * 2));
+
 		Propellant* propellant = object::Instantiate<Propellant>(eColliderLayer::Propellant, Pos(1344, 896));
 		propellant->SetPos(Pos(1344, 896 - 80));
 	}
@@ -116,6 +120,7 @@ namespace js
 	void StageB::Tick()
 	{
 		Scene::Tick();
+		GameManager::Playing();
 
 		if (KEY_DOWN(eKeyCode::ESC))
 		{
@@ -156,12 +161,25 @@ namespace js
 	}
 
 	void StageB::EnterObject()
-	{		
+	{
 		GameManager::AddObject();
 		Player* player = GameManager::GetPlayer();
 		player->SetPos(Pos(640.0f, 620.0f));
 		Camera::SetTarget(GameManager::GetPlayer());
 
+		// 씬에서 상자 연결
+		for (int idx = 0; idx < CHEST_POOL; ++idx)
+		{
+			mChest[idx] = GameManager::GetChest(idx);
+		}
+		mChest[0]->SetPos(Pos(384, 896 - 30));
+		mChest[1]->SetPos(Pos(512, 384 - 30));
+		mChest[2]->SetPos(Pos(1216, 128 - 30));
+		mChest[3]->SetPos(Pos(2368, 512 - 30));
+
+		// 텔레포터 연결
+		mTeleporter = GameManager::GetTeleporter();
+		mTeleporter->SetPos(Pos(1984, 512 - 64.0f));
 
 		EnterUI();
 		EnterLayer();
@@ -209,8 +227,10 @@ namespace js
 		CollisionManager::SetLayer(eColliderLayer::Ladder, eColliderLayer::Player, true);
 
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Propellant, true);
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Chest, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Item, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::DamageObject, true);
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Teleporter, true);
 
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Propellant, true);
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player_Projectile, true);

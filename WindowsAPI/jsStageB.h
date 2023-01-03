@@ -23,5 +23,7 @@ namespace js
 		void EnterObject();
 		void EnterUI();
 	private:
+		Chest* mChest[CHEST_POOL];
+		Teleporter* mTeleporter;
 	};
 }

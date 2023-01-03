@@ -22,9 +22,14 @@
 // object
 #include "jsObject.h"
 #include "jsPlayer.h"
-#include "jsBGObj.h"
 #include "jsMonster.h"
+#include "jsChest.h"
+
+#include "jsBGObj.h"
 #include "jsPlatform.h"
+#include "jsLadder.h"
+#include "jsPropellant.h"
+#include "jsTeleporter.h"
 
 namespace js
 {
@@ -39,24 +44,73 @@ namespace js
 
 		InitBG();
 
-		/*
-		tempGround* g = new tempGround();
-		g->SetImage(L"PlayG", L"Play_Ground.bmp");
-		g->Initialize();
-		AddGameObject(g, eColliderLayer::Tile);*/
-
-
 	}
 
 	void StageB::InitBG()
 	{
-		SceneManager::LoadMap<MapToolScene>(L"..\\Resources\\Tile\\STG1\\stage1", eSceneType::MapTool);
-
 		// 배경 오브젝트 추가
 		BGObj* bg = new BGObj();
-		bg->SetImage(L"PlayBG", L"Play_BG.bmp");
+		bg->SetImage(L"PlayBG2", L"Play_BG2.bmp");
 		bg->Initialize();
 		AddGameObject(bg, eColliderLayer::BackGroundImage);
+
+		// 맵 불러오기
+		BGObj* STG2Map = new BGObj();
+		STG2Map->SetImage(L"STG2Map", L"STG2.bmp");
+		STG2Map->Initialize();
+		STG2Map->SetCamFollow();
+		AddGameObject(STG2Map, eColliderLayer::BackgroundMap);
+
+		 
+
+		// 플레이어 시작위치
+		Platform* startGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(384.0f, 896.0f));
+		startGround->SetColliderSize(Size(GRID_SIZE * 25, GRID_SIZE * 6));
+		startGround->SetColliderOffset(Vector2(GRID_SIZE * 25 / 2, GRID_SIZE * 3));
+		GameManager::SetSpawnPlatform(startGround);
+
+		Platform* leftGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(0.0f, 384.0f));
+		leftGround->SetColliderSize(Size(GRID_SIZE * 6, GRID_SIZE * 14));
+		leftGround->SetColliderOffset(Vector2(GRID_SIZE * 3, GRID_SIZE * 7));
+
+		Platform* Ground2 = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(640, 640));
+		Ground2->SetColliderSize(Size(GRID_SIZE * 4, GRID_SIZE * 2));
+		Ground2->SetColliderOffset(Vector2(GRID_SIZE * 2, GRID_SIZE));
+
+		Platform* Ground3 = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(1984, 640));
+		Ground3->SetColliderSize(Size(GRID_SIZE * 7, GRID_SIZE * 4));
+		Ground3->SetColliderOffset(Vector2(GRID_SIZE * 6, GRID_SIZE * 2));
+
+		Platform* Ground4 = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(1536, 512));
+		Ground4->SetColliderSize(Size(GRID_SIZE * 15, GRID_SIZE * 2));
+		Ground4->SetColliderOffset(Vector2(GRID_SIZE * 15 / 2, GRID_SIZE));
+
+		Platform* rightGround = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(2432.0f, 0.0f));
+		rightGround->SetColliderSize(Size(GRID_SIZE * 4, GRID_SIZE * 20));
+		rightGround->SetColliderOffset(Vector2(GRID_SIZE * 2, GRID_SIZE * 10));
+
+		Platform* Platform1 = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(448, 384));
+		Platform1->SetColliderSize(Size(GRID_SIZE * 2, GRID_SIZE * 1));
+		Platform1->SetColliderOffset(Vector2(GRID_SIZE, GRID_SIZE / 2));
+
+		Platform* Platform2 = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(704, 384));
+		Platform2->SetColliderSize(Size(GRID_SIZE * 7, GRID_SIZE * 1));
+		Platform2->SetColliderOffset(Vector2(GRID_SIZE * 7 / 2, GRID_SIZE / 2));
+
+		Platform* Platform3 = object::Instantiate<Platform>(eColliderLayer::Platform, Pos(1024, 128));
+		Platform3->SetColliderSize(Size(GRID_SIZE * 4, GRID_SIZE));
+		Platform3->SetColliderOffset(Vector2(GRID_SIZE * 2, GRID_SIZE / 2));
+
+		Ladder* ladder1 = object::Instantiate<Ladder>(eColliderLayer::Ladder, Pos(768, 384));
+		ladder1->SetColliderSize(Size(GRID_SIZE, GRID_SIZE * 4));
+		ladder1->SetColliderOffset(Vector2(GRID_SIZE / 2, GRID_SIZE * 2));
+
+		Ladder* ladder2 = object::Instantiate<Ladder>(eColliderLayer::Ladder, Pos(1088, 128));
+		ladder2->SetColliderSize(Size(GRID_SIZE, GRID_SIZE * 4));
+		ladder2->SetColliderOffset(Vector2(GRID_SIZE / 2, GRID_SIZE * 2));
+
+		Propellant* propellant = object::Instantiate<Propellant>(eColliderLayer::Propellant, Pos(1344, 896));
+		propellant->SetPos(Pos(1344, 896 - 80));
 	}
 
 	void StageB::Tick()
@@ -84,10 +138,8 @@ namespace js
 	}
 	void StageB::Enter()
 	{
-		GameManager::SetPlayable(true);
-
 		EnterObject();
-
+		GameManager::SetPlayable(true);
 		Camera::SetTarget(GameManager::GetPlayer());
 
 		EnterUI();
@@ -99,11 +151,20 @@ namespace js
 	}
 	void StageB::Exit()
 	{
+		UIManager::Pop(eUIType::PlayerInfo);
+		UIManager::Pop(eUIType::Difficulty);
 	}
 
 	void StageB::EnterObject()
-	{
+	{		
 		GameManager::AddObject();
+		Player* player = GameManager::GetPlayer();
+		player->SetPos(Pos(640.0f, 620.0f));
+		Camera::SetTarget(GameManager::GetPlayer());
+
+
+		EnterUI();
+		EnterLayer();
 	}
 
 	void StageB::EnterUI()

@@ -49,11 +49,13 @@ namespace js
 		{
 			// 대상의 Ground상태 변경, 점프카운트 초기화, Climb 예외처리
 			TargetSetGround(target, true);
-			TargetJumpCountReset(target);
 
 			// 플레이어가 충돌한 경우, 몬스터 스폰지점을 해당 플랫폼으로 변경
 			if (eColliderLayer::Player == dynamic_cast<Foot*>(target)->GetOwner()->GetType())
+			{
 				GameManager::SetSpawnPlatform(this);
+				TargetJumpCountReset(target);
+			}
 		}
 	}
 	void Platform::OnCollisionStay(Collider* other)

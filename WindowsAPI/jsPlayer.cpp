@@ -82,7 +82,7 @@ namespace js
 		Creature::InitComponent();
 		InitAnim();
 
-		mBodyCollider->SetSize(Size(PLAYER_SIZE_X, PLAYER_SIZE_Y) * GetScale());
+		mBodyCollider->SetSize(Size(PLAYER_SIZE_X, PLAYER_SIZE_Y / 2) * GetScale());
 		mBodyCollider->SetOffset(Vector2(-10.f, 0.f));
 
 		mFootCollider->SetSize(Size(15, 5));

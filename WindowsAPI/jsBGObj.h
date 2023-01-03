@@ -15,8 +15,12 @@ namespace js
 		// 이미지 연결
 		void SetImage(const std::wstring& key, const std::wstring& fileName);
 
+		void SetCamFollow(bool camFollow = true) { mCamFollow = camFollow; }
+
 	private:
 		Image* mImage;
 		std::wstring mImageName;
+
+		bool mCamFollow;
 	};
 }

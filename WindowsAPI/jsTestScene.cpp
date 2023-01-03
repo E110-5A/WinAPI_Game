@@ -198,12 +198,13 @@ namespace js
 		{
 			mChest[idx] = GameManager::GetChest(idx);
 		}
-		mChest[0]->SetPos(Pos(70.0f, 610.0f));
-		mChest[1]->SetPos(Pos(140.0f, 610.0f));
-		mChest[2]->SetPos(Pos(220.0f, 610.0f));
+		mChest[0]->SetPos(Pos(384.0f, 896.0f));
+		mChest[1]->SetPos(Pos(1280.0f, 640.0f));
+		mChest[2]->SetPos(Pos(1536.0f, 640.0f));
+		mChest[3]->SetPos(Pos(2368.0f, 640.0f));
 		// 텔레포터 연결
 		mTeleporter = GameManager::GetTeleporter();
-		mTeleporter->SetPos(Pos(440.f, 576.f));
+		mTeleporter->SetPos(Pos(2112.f, 640.f));
 
 		SetLayer();
 		SetUI();

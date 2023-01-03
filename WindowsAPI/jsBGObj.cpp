@@ -1,6 +1,7 @@
 #include "jsBGObj.h"
 #include "jsResources.h"
 #include "jsImage.h"
+#include "jsCamera.h"
 
 namespace js
 {
@@ -31,17 +32,30 @@ namespace js
 		rect.y = mImage->GetHeight() * scale.y;
 
 
-		TransparentBlt(hdc,
-			finalPos.x, finalPos.y,
-			rect.x, rect.y,
-			mImage->GetDC(), 0, 0,
-			mImage->GetWidth(), mImage->GetHeight(), RGB(255, 0, 255));
+		pos = Camera::CalculateObjectPos(GetPos());
+
+		if (true == mCamFollow)
+		{
+			TransparentBlt(hdc,
+				pos.x, pos.y,
+				rect.x, rect.y,
+				mImage->GetDC(), 0, 0,
+				mImage->GetWidth(), mImage->GetHeight(), RGB(255, 0, 255));
+		}
+		else
+		{
+			TransparentBlt(hdc,
+				finalPos.x, finalPos.y,
+				rect.x, rect.y,
+				mImage->GetDC(), 0, 0,
+				mImage->GetWidth(), mImage->GetHeight(), RGB(255, 0, 255));
+		}
 
 		GameObject::Render(hdc);
 	}
 	void BGObj::SetImage(const std::wstring& key, const std::wstring& fileName)
 	{
-		std::wstring path = L"..\\Resources\\Image\\etc\\";
+		std::wstring path = L"..\\Resources\\Image\\Background\\";
 		path += fileName;
 
 		mImage = Resources::Load<Image>(key, path);

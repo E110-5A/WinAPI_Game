@@ -118,6 +118,7 @@ enum class eColliderLayer
 	Default,					//	0	//	// None
 	BackGroundImage,			//	1		// 제일 바닥에 깔리는 이미지
 	Tile,						//	2		// 타일로 존재하는 배경 오브젝트
+	BackgroundMap,
 	BGObj,						//	3		// 이미지 외에 컴포넌트가 필요한 배경 오브젝트
 
 								//	4	//
@@ -180,7 +181,7 @@ enum class eStagger
 
 #define PLAYER_PROJECTILE_POOL	40
 #define MONSTER_POOL			45
-#define CHEST_POOL				7
+#define CHEST_POOL				4
 // item enum
 enum class eChestType
 {
@@ -206,7 +207,7 @@ enum class eItemList
 	Tooth,			// 처치시 체력 회복
 	Root,			// 최대 채력 증가
 	// Uncommon
-	TimeKeeper = 5,		// 치명상을 입을 때, 시간을 멈춤
+	TimeKeeper = 5,	// 치명상을 입을 때, 시간을 멈춤
 	Wisp,			// 처치시 폭발
 	MissileMk1,		// 일정확률로 투사체 사출
 	Seed,			// 타격마다 회복

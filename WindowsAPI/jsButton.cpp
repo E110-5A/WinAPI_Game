@@ -84,7 +84,7 @@ namespace js
 	}
 	void Button::GoToPlayScene()
 	{
-		SceneManager::ChangeScene(eSceneType::Test);
+		SceneManager::ChangeScene(eSceneType::STGA);
 	}
 	void Button::GoToTitleScene()
 	{

@@ -83,7 +83,7 @@ namespace js
 		for (; iter != mTarget.end(); ++iter)
 		{
 			// 몬스터 위치 가져오기
-			(*iter)->SelfHit(this, mInfo.damage, mInfo.stagger, mInfo.power);
+			(*iter)->SelfHit(this, mInfo.damage * mOwner->GetOffence()->damage, mInfo.stagger, mInfo.power);
 		}
 	}
 

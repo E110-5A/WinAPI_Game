@@ -137,6 +137,7 @@
     <ClInclude Include="jsAnimation.h" />
     <ClInclude Include="jsAnimator.h" />
     <ClInclude Include="jsBarUI.h" />
+    <ClInclude Include="jsBossHpBar.h" />
     <ClInclude Include="jsBossMonster.h" />
     <ClInclude Include="jsChest.h" />
     <ClInclude Include="jsCollisionBlock.h" />
@@ -210,6 +211,7 @@
     <ClCompile Include="jsAnimation.cpp" />
     <ClCompile Include="jsAnimator.cpp" />
     <ClCompile Include="jsBarUI.cpp" />
+    <ClCompile Include="jsBossHpBar.cpp" />
     <ClCompile Include="jsBossMonster.cpp" />
     <ClCompile Include="jsChest.cpp" />
     <ClCompile Include="jsCollisionBlock.cpp" />

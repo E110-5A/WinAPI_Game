@@ -67,6 +67,8 @@ enum class eUIType
 	Difficulty,		// 난이도
 	DifficultyBar,
 
+	BossHp,
+	BossHpBar,
 
 	ItemInventory,	// 인게임 HUD
 	Option,			// 

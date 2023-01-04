@@ -18,13 +18,14 @@
 #include "jsBarUI.h"
 #include "jsIcon.h"
 #include "jsDifficultyHUD.h"
-
+#include "jsBossHpBar.h"
 // object
 #include "jsObject.h"
 #include "jsPlayer.h"
 #include "jsMonster.h"
-#include "jsChest.h"
+#include "jsBossMonster.h"
 
+#include "jsChest.h"
 #include "jsBGObj.h"
 #include "jsPlatform.h"
 #include "jsLadder.h"
@@ -180,7 +181,9 @@ namespace js
 		// 텔레포터 연결
 		mTeleporter = GameManager::GetTeleporter();
 		mTeleporter->SetPos(Pos(1984, 512 - 64.0f));
-
+		// 보스몬스터 연결
+		mBossMonster = GameManager::GetBoss();
+		mBossMonster->SetScene(this);
 		EnterUI();
 		EnterLayer();
 	}

@@ -111,12 +111,17 @@ namespace js
 	{
 		// 활성화
 		SetAble(true);
-		// 디버깅용
+		
+		// 스텟 설정
 		mBossType = eBossType::Colossus;
 		InitColossus();
 		mEyesight = mBodyCollider->GetSize().x * 10;
 
+		// 상태 초기화
 		mState = eBossState::Stay;
+
+		// 씬에서 보스 UI 활성화
+		mPlayScene->PushBossUI();
 	}
 	void BossMonster::Tick()
 	{
@@ -381,6 +386,7 @@ namespace js
 		{
 			// 사망!
 			GameManager::KillBoss();
+			mPlayScene->PopBossUI();
 			mState = eBossState::Death;
 		}
 	}

@@ -6,6 +6,7 @@
 #include "jsBarUI.h"
 #include "jsIcon.h"
 #include "jsDifficultyHUD.h"
+#include "jsBossHpBar.h"
 
 namespace js
 {
@@ -273,5 +274,17 @@ namespace js
 		difficultyBar->SetPos(Vector2::Zero);
 
 		difficultyPanel->AddChild(difficultyBar);
+
+		Panel* bossHp = new Panel(eUIType::BossHp);
+		mUIs.insert(std::make_pair(eUIType::BossHp, bossHp));
+		bossHp->ImageLoad(L"BossHp", L"..\\Resources\\Image\\UI\\InGame\\BossHpBarE.bmp");
+		bossHp->SetPos(Vector2(141, 30));
+
+		BossHpBar* bossHpBarF = new BossHpBar(eUIType::BossHpBar);
+		mUIs.insert(std::make_pair(eUIType::BossHpBar, bossHpBarF));
+		bossHpBarF->ImageLoad(L"BossHpBar", L"..\\Resources\\Image\\UI\\InGame\\BossHpBarF.bmp");
+		bossHpBarF->SetPos(Vector2::Zero);
+
+		bossHp->AddChild(bossHpBarF);
 	}
 }

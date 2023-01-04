@@ -17,6 +17,7 @@ namespace js
 		Death,
 	};
 
+	class Scene;
 	class Player;
 	class MonsterAttack;
 	class BossMonster : public Creature
@@ -27,6 +28,8 @@ namespace js
 		virtual ~BossMonster();
 
 		virtual void Initialize();
+
+		void SetScene(Scene* scene) { mPlayScene = scene; }
 
 		void SetAnimator();
 
@@ -68,6 +71,7 @@ namespace js
 		virtual void SelfDamaged(float damage) override;
 
 	private:
+		Scene*				mPlayScene;
 		eBossType			mBossType;
 		int					mEyesight;
 

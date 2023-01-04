@@ -18,24 +18,23 @@
 #include "jsBarUI.h"
 #include "jsIcon.h"
 #include "jsDifficultyHUD.h"
-
+#include "jsBossHpBar.h"
 // obj
 #include "jsPlayer.h"
 #include "jsObject.h"
 #include "jsPlayerProjectile.h"
 #include "jsImp.h"
-#include "jsSmallChest.h"
-#include "jsLargeChest.h"
-#include "jsGoldenChest.h"
-#include "jsItemObject.h"
 #include "jsDamageObject.h"
-#include "jsTeleporter.h"
+#include "jsBossMonster.h"
 
 // env
 #include "jsBGObj.h"
 #include "jsPlatform.h"
 #include "jsLadder.h"
 #include "jsPropellant.h"
+#include "jsTeleporter.h"
+#include "jsItemObject.h"
+#include "jsChest.h"
 
 // component
 #include "jsCollider.h"
@@ -76,6 +75,7 @@ namespace js
 		*  - 메뉴 UI 불러오기
 		*
 		*/
+
 		if (KEY_DOWN(eKeyCode::N))
 		{
 			SceneManager::ChangeScene(eSceneType::Title);
@@ -180,7 +180,11 @@ namespace js
 
 		DifficultyHUD* difficultyHud = UIManager::GetUIInstant<DifficultyHUD>(eUIType::DifficultyBar);
 		difficultyHud->SetDifficulty(GameManager::GetDifficulty());
+
+		
+
 	}
+
 
 	// 충돌 및 UI 설정
 	void TestScene::Enter()
@@ -206,7 +210,8 @@ namespace js
 		mChest[3]->SetPos(Pos(2368.0f, 640.0f));
 		// 텔레포터 연결
 		mTeleporter = GameManager::GetTeleporter();
-		mTeleporter->SetPos(Pos(2112.f, 640.f));
+		mTeleporter->SetPos(Pos(440, 576.f));
+		
 
 		SetLayer();
 		SetUI();

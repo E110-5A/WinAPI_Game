@@ -337,7 +337,6 @@
     <ClInclude Include="jsBossMonster.h">
       <Filter>1 Engine\GameObject\Creature\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="jsTeleporter.h" />
     <ClInclude Include="jsStageB.h">
       <Filter>1 Engine\Scene</Filter>
     </ClInclude>
@@ -346,6 +345,12 @@
     </ClInclude>
     <ClInclude Include="jsTestScene2.h">
       <Filter>1 Engine\Scene\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="jsTeleporter.h">
+      <Filter>1 Engine\GameObject\EventObj\Teleporter</Filter>
+    </ClInclude>
+    <ClInclude Include="jsBossHpBar.h">
+      <Filter>1 Engine\GameObject\UI\HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -554,7 +559,6 @@
     <ClCompile Include="jsBossMonster.cpp">
       <Filter>1 Engine\GameObject\Creature\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="jsTeleporter.cpp" />
     <ClCompile Include="jsStageB.cpp">
       <Filter>1 Engine\Scene</Filter>
     </ClCompile>
@@ -563,6 +567,12 @@
     </ClCompile>
     <ClCompile Include="jsTestScene2.cpp">
       <Filter>1 Engine\Scene\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="jsTeleporter.cpp">
+      <Filter>1 Engine\GameObject\EventObj\Teleporter</Filter>
+    </ClCompile>
+    <ClCompile Include="jsBossHpBar.cpp">
+      <Filter>1 Engine\GameObject\UI\HUD</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

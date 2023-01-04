@@ -19,7 +19,7 @@ namespace js
 	{
 		mOwner = owner;
 		mCollider = AddComponent<Collider>();
-		mAble = false;
+		SetAble(false);
 	}
 	MonsterAttack::~MonsterAttack()
 	{
@@ -69,14 +69,15 @@ namespace js
 	void MonsterAttack::Active()
 	{
 		// 활성화
-		mAble = true;
-		// 정보 갱신 (할필요 없을지도)
+		SetAble(true);
 
+		// 공격 범위(크기) 설정
 		mRange = mOwner->GetOffence()->range;
 		Collider* onwerCollider = mOwner->GetComponent<Collider>();
 		float colliderSizeY = onwerCollider->GetSize().y;
 		mCollider->SetSize(Size(mRange, colliderSizeY));
 
+		// 공격력
 		mInfo.damage = mOwner->GetOffence()->damage;
 		
 		// 위치값 갱신

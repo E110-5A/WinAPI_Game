@@ -39,6 +39,7 @@ namespace js
 
 	void DamageObject::OnCollisionEnter(Collider* other)
 	{
+		int a;
 	}
 	void DamageObject::OnCollisionStay(Collider* other)
 	{

@@ -197,6 +197,6 @@ namespace js
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::DamageObject, true);
 
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Propellant, true);
-		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player_Projectile, true);
+		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Projectile, true);
 	}
 }

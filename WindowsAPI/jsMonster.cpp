@@ -541,7 +541,7 @@ namespace js
 		Scene* scene = SceneManager::GetPlayScene();
 		// 씬에 추가
 		scene->AddGameObject(this, eColliderLayer::Monster);
-		scene->AddGameObject(mDamageObj, eColliderLayer::DamageObject);
+		scene->AddGameObject(mDamageObj, eColliderLayer::Projectile);
 	}
 	
 	void Monster::OnCollisionEnter(Collider* other)
@@ -556,9 +556,14 @@ namespace js
 			BodyCollision(this);
 		}
 		// 피해받으면 추격상태로 변경
-		if (type == eColliderLayer::Player_Projectile)
+		if (type == eColliderLayer::Projectile)
 		{
-			mState = eMonsterState::Chase;
+			PlayerProjectile* projectile = dynamic_cast<PlayerProjectile*>(collisionObj);
+			if (nullptr != projectile)
+			{
+				mState = eMonsterState::Chase;
+
+			}
 		}
 	}
 	void Monster::OnCollisionStay(Collider* other)

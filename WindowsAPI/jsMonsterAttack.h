@@ -32,7 +32,7 @@ namespace js
 			// 유지시간 초기화
 			mDeltaTime = 0.0f;
 			// 비활성화
-			mAble = false;
+			SetAble(false);
 		}
 		bool IsActive() { return mAble; }
 

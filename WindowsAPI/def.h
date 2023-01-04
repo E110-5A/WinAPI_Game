@@ -131,9 +131,9 @@ enum class eColliderLayer
 	Head,						//			// Creature 머리충돌
 	Foot,						//			// Creature 바닥충돌
 	Player,						//			// 
-	Player_Projectile,			//			// 플레이어가 매개가 되는 투사체 (스킬과 아이템효과)
+	Projectile,					//			// 
 	Monster,					//			// 플레이어 투사체에 의해서만 피해를 입음
-
+	Monster_Projectile,
 	DamageObject,				//			// 용암바닥, 몬스터 투사체 등
 
 	UI = _COLLIDER_LAYER - 1,	//	

@@ -20,7 +20,7 @@ namespace js
 		, mDeltaTime (0.0f)
 		, mLifeTime (0.05f)
 	{
-		SetType(eColliderLayer::Player_Projectile);
+		SetType(eColliderLayer::Projectile);
 		mCollider = AddComponent<Collider>();
 		mAble = false;
 	}
@@ -30,7 +30,7 @@ namespace js
 		, mDeltaTime(0.0f)
 		, mLifeTime(0.05f)
 	{
-		SetType(eColliderLayer::Player_Projectile);
+		SetType(eColliderLayer::Projectile);
 		mCollider = AddComponent<Collider>();
 		mAble = false;
 	}

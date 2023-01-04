@@ -390,7 +390,7 @@ namespace js
 		Scene* scene = SceneManager::GetPlayScene();
 		// ¾À¿¡ Ãß°¡
 		scene->AddGameObject(this, eColliderLayer::Monster);
-		scene->AddGameObject(mDamageObj, eColliderLayer::DamageObject);
+		scene->AddGameObject(mDamageObj, eColliderLayer::Projectile);
 	}
 	void BossMonster::OnCollisionEnter(Collider* other)
 	{

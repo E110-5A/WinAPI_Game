@@ -125,7 +125,7 @@ namespace js
 	void TestScene::InitObject()
 	{
 		// 플레이어 상호작용 테스트
-		DamageObject* damageTest = object::Instantiate<DamageObject>(eColliderLayer::DamageObject, Pos(GRID_SIZE*5,GRID_SIZE*9));
+		DamageObject* damageTest = object::Instantiate<DamageObject>(eColliderLayer::Projectile, Pos(GRID_SIZE*5,GRID_SIZE*9));
 	}
 
 	void TestScene::SetLayer()
@@ -140,13 +140,15 @@ namespace js
 		CollisionManager::SetLayer(eColliderLayer::Ladder, eColliderLayer::Player, true);
 
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Propellant, true);
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Teleporter, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Chest, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Item, true);
-		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::DamageObject, true);
-		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Teleporter, true);
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Projectile, true);
 
+
+		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::DamageObject, true);
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Propellant, true);
-		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player_Projectile, true);
+		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Projectile, true);
 	}
 
 	void TestScene::SetUI()

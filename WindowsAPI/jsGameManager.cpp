@@ -66,7 +66,7 @@ namespace js
 		for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 		{			
 			mPlayerAttack[idx] = new PlayerProjectile();
-			mPlayerAttack[idx]->SetType(eColliderLayer::Player_Projectile);
+			mPlayerAttack[idx]->SetType(eColliderLayer::Projectile);
 			mPlayerAttack[idx]->SetPlayerInfo(mPlayer);
 		}	
 		// 몬스터 생성
@@ -101,7 +101,7 @@ namespace js
 		for (int idx = 0; idx < PLAYER_PROJECTILE_POOL; ++idx)
 		{
 			// 플레이어 투사체 추가
-			scene->AddGameObject(mPlayerAttack[idx], eColliderLayer::Player_Projectile);			
+			scene->AddGameObject(mPlayerAttack[idx], eColliderLayer::Projectile);			
 		}
 
 
@@ -162,12 +162,12 @@ namespace js
 	}
 	void GameManager::SpawnMonster()
 	{
-		srand(Time::GetDeltaTime());
+		srand(*mDifficulty);
 
 		mSpawnTime += Time::GetDeltaTime();
 		
 		int count = 0;
-		int monsterTO = 1 + (*mDifficulty) / 2;
+		int monsterTO = 1 + (*mDifficulty) / 3;
 
 
 		// (5 + 난이도)초마다 몬스터 스폰
@@ -189,8 +189,9 @@ namespace js
 						float spawnWidth = mSpawnPlatform->GetComponent<Collider>()->GetSize().x;
 						float monsterHight = mMonster[idx]->GetBodyCollider()->GetSize().y;
 						float monsterWidth = mMonster[idx]->GetBodyCollider()->GetSize().x;
-
-						float spawnPosX = spawnLT.x + (rand() % (int)spawnWidth - monsterWidth);
+						float randValue = spawnWidth - monsterWidth * 2;
+						float randPosX = (rand() % (int)randValue);
+						float spawnPosX = spawnLT.x + monsterWidth + randPosX;
 
 						// 스폰 위치 설정
 						mMonster[idx]->SetPos(Vector2(spawnPosX, spawnLT.y - monsterHight));
@@ -224,9 +225,10 @@ namespace js
 			mPlayerInfo->curExp = overExp;
 		}
 		// 난이도 관련 로직
-		if (60.0f <= *mDifficultyTime)
+		if (15.0f <= *mDifficultyTime)
 		{
-			*mDifficulty += 1;
+			if (45 >= *mDifficulty)
+				*mDifficulty += 1;
 			*mDifficultyTime = 0.0f;
 		}
 		SpawnMonster();

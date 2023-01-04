@@ -868,6 +868,9 @@ namespace js
 	{
 		GameObject* collisionObj = other->GetOwner();
 		eColliderLayer type = collisionObj->GetType();
+		PlayerProjectile* projectile = dynamic_cast<PlayerProjectile*>(collisionObj);
+		if (nullptr != projectile)
+			return;
 
 		// 벽에 닿음
 		if (type == eColliderLayer::Platform)
@@ -880,9 +883,13 @@ namespace js
 		}
 		
 		// 공격 받음
-		if (type == eColliderLayer::DamageObject)
+		if (type == eColliderLayer::Projectile)
 		{
+			
 			Creature* attacker = dynamic_cast<Creature*>(other->GetOwner());
+
+
+
 			Offence offence= {};
 			if (nullptr != attacker)
 				offence = *(attacker->GetOffence());
@@ -890,7 +897,6 @@ namespace js
 			{
 				DamageObject* damageObject = dynamic_cast<DamageObject*>(other->GetOwner());
 				offence = damageObject->GetOffence();
-
 			}
 
 			SelfHit(other->GetOwner(), offence.damage, eStagger::Nomal);

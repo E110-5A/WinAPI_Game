@@ -29,7 +29,7 @@ namespace js
 		mScene[(UINT)eSceneType::STGA]->Initialize();
 		mScene[(UINT)eSceneType::STGB] = new StageB();
 		mScene[(UINT)eSceneType::STGB]->Initialize();
-		ChangeScene(eSceneType::Title);
+		ChangeScene(eSceneType::Test);
 	}
 
 	void SceneManager::Tick()

@@ -104,7 +104,7 @@ typedef ColliderID TileID;
 
 
 // Component enum
-#define _COLLIDER_LAYER 20		// 충돌체 유형
+#define _COLLIDER_LAYER 25		// 충돌체 유형
 enum class eComponentType
 {
 	Rigidbody,
@@ -115,29 +115,29 @@ enum class eComponentType
 };
 enum class eColliderLayer
 {
-	Default,					//	0	//	// None
-	BackGroundImage,			//	1		// 제일 바닥에 깔리는 이미지
-	Tile,						//	2		// 타일로 존재하는 배경 오브젝트
+	Default,					//		//	// None
+	BackGroundImage,			//			// 제일 바닥에 깔리는 이미지
+	Tile,						//			// 타일로 존재하는 배경 오브젝트
 	BackgroundMap,
-	BGObj,						//	3		// 이미지 외에 컴포넌트가 필요한 배경 오브젝트
-
-								//	4	//
+	BGObj,						//			// 이미지 외에 컴포넌트가 필요한 배경 오브젝트
+									
 	Teleporter,
-	Propellant,					//	4		// 상자, 추진체
+	Propellant,					//			// 상자, 추진체
 	Chest,
-	Platform,					//	5		// 벽, 바닥
-	Ladder,						//	6		// 사다리
-	Item,						//	7		// 
+	Platform,					//			// 벽, 바닥
+	Ladder,						//			// 사다리
+	Item,						//			// 
 
-	Head,						//	8		// Creature 머리충돌
-	Foot,						//	9		// Creature 바닥충돌
-	Player,						//	10		// 
-	Player_Projectile,			//	11		// 플레이어가 매개가 되는 투사체 (스킬과 아이템효과)
-	Monster,					//	12		// 플레이어 투사체에 의해서만 피해를 입음
-	DamageObject,				//	13		// 용암바닥, 몬스터 투사체 등
+	Head,						//			// Creature 머리충돌
+	Foot,						//			// Creature 바닥충돌
+	Player,						//			// 
+	Player_Projectile,			//			// 플레이어가 매개가 되는 투사체 (스킬과 아이템효과)
+	Monster,					//			// 플레이어 투사체에 의해서만 피해를 입음
 
-	UI = _COLLIDER_LAYER - 1,	//	14
-	End = _COLLIDER_LAYER,		//	15
+	DamageObject,				//			// 용암바닥, 몬스터 투사체 등
+
+	UI = _COLLIDER_LAYER - 1,	//	
+	End = _COLLIDER_LAYER,		//	
 };
 // 1 백그라운드 레이어 통일할 것
 

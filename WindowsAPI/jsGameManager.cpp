@@ -92,7 +92,7 @@ namespace js
 	void GameManager::AddObject()
 	{
 		Scene* scene = SceneManager::GetPlayScene();
-		srand((unsigned int)time(NULL));
+		srand(Time::GetDeltaTime());
 		// 플레이어 추가
 		scene->AddGameObject(mPlayer, eColliderLayer::Player);
 		mPlayer->AddComponentScene();
@@ -162,36 +162,44 @@ namespace js
 	}
 	void GameManager::SpawnMonster()
 	{
-		srand((unsigned int)time(NULL));
+		srand(Time::GetDeltaTime());
+
 		mSpawnTime += Time::GetDeltaTime();
-
 		
-
 		int count = 0;
 		int monsterTO = 1 + (*mDifficulty) / 2;
 
 
 		// (5 + 난이도)초마다 몬스터 스폰
-		if (5 + (float)(*mDifficulty) <= mSpawnTime)
+		if (10 + (float)(*mDifficulty) <= mSpawnTime)
 		{
-			// 몬스터 풀에서 가용인원을 스폰함
-			for (int idx = 0; idx < MONSTER_POOL; ++idx)
+			// TO만큼 몬스터를 추가함
+			for (int count = 0; count < monsterTO; ++count)
 			{
-				if (false == mMonster[idx]->IsAble())
+				// 몬스터 풀에서 가용인원을 스폰함
+				for (int idx = 0; idx < MONSTER_POOL; ++idx)
 				{
-					// 스폰 위치 정하기 // Platform Pos , Size 값 받아와서 랜덤 돌리기
-					Vector2 spawnLT = mSpawnPlatform->GetPos();
-					float spawnWidth = mSpawnPlatform->GetComponent<Collider>()->GetSize().x;
-					float spawnPosX = (rand() % (int)spawnWidth);
-					float monsterHight = mMonster[idx]->GetBodyCollider()->GetSize().y;
-					float monsterWidth = mMonster[idx]->GetBodyCollider()->GetSize().x;
+					if (false == mMonster[idx]->IsAble())
+					{
+						// 스폰 위치 정하기 // Platform Pos , Size 값 받아와서 랜덤 돌리기
 
-					// 스폰 위치 설정
-					mMonster[idx]->SetPos(Vector2(spawnPosX + monsterWidth, spawnLT.y - monsterHight));
-					mMonster[idx]->Spawn(mSpawnPlatform);
-					break;
+						// 스폰위치 (X값: LT.x~ LT.x+Size.x, Y값 : LT.y - 본인->Size.y
+
+						Vector2 spawnLT = mSpawnPlatform->GetPos();
+						float spawnWidth = mSpawnPlatform->GetComponent<Collider>()->GetSize().x;
+						float monsterHight = mMonster[idx]->GetBodyCollider()->GetSize().y;
+						float monsterWidth = mMonster[idx]->GetBodyCollider()->GetSize().x;
+
+						float spawnPosX = spawnLT.x + (rand() % (int)spawnWidth - monsterWidth);
+
+						// 스폰 위치 설정
+						mMonster[idx]->SetPos(Vector2(spawnPosX, spawnLT.y - monsterHight));
+						mMonster[idx]->Spawn(mSpawnPlatform);
+						break;
+					}
 				}
 			}
+			
 
 			// 마지막에 스폰시간 초기화
 			mSpawnTime = 0.0f;

@@ -171,7 +171,7 @@ namespace js
 
 
 		// (5 + 난이도)초마다 몬스터 스폰
-		if (10 + (float)(*mDifficulty) <= mSpawnTime)
+		if (7 + (float)(*mDifficulty) <= mSpawnTime)
 		{
 			// TO만큼 몬스터를 추가함
 			for (int count = 0; count < monsterTO; ++count)

@@ -447,7 +447,7 @@ namespace js
 	void Player::Render(HDC hdc)
 	{
 		Creature::Render(hdc);
-		func::DebugTextRender(hdc, L"현재 State :", std::to_wstring((int)mState), 10, 130);
+		/*func::DebugTextRender(hdc, L"현재 State :", std::to_wstring((int)mState), 10, 130);
 		func::DebugTextRender(hdc, L"Z", L" 기본공격", 5, 150);
 		func::DebugTextRender(hdc, L"X", L" 관통 공격 (쿨다운3초)", 5, 165);
 		func::DebugTextRender(hdc, L"C", L" 회피 (쿨다운5초)", 5, 180);
@@ -456,7 +456,7 @@ namespace js
 		func::DebugTextRender(hdc, L"A", L" 상자 열기", 5, 220);
 
 		func::DebugTextRender(hdc, L"Left, Right", L" 이동", 5, 235);
-		func::DebugTextRender(hdc, L"Up, Donw", L" 사다리 타기", 5, 250);
+		func::DebugTextRender(hdc, L"Up, Donw", L" 사다리 타기", 5, 250);*/
 	}
 	
 	

@@ -137,10 +137,10 @@ namespace js
 	void StageB::Render(HDC hdc)
 	{
 		Scene::Render(hdc);
-		wchar_t szFloat[40] = {};
+		/*wchar_t szFloat[40] = {};
 		swprintf_s(szFloat, 40, L"Play Scene");
 		int strLen = wcsnlen_s(szFloat, 40);
-		TextOut(hdc, 5, 10, szFloat, strLen);
+		TextOut(hdc, 5, 10, szFloat, strLen);*/
 	}
 	void StageB::Enter()
 	{

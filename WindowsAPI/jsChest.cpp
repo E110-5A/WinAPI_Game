@@ -100,9 +100,9 @@ namespace js
             mImage->GetDC(), chestImageX, chestImageY,
             ChestSizeX, ChestSizeY, func);
 
-        // Collider Render
-        if (IsAble())
-            EventObject::Render(hdc);
+        //// Collider Render
+        //if (IsAble())
+        //    EventObject::Render(hdc);
     }
 
     void Chest::OnCollisionEnter(Collider* other)

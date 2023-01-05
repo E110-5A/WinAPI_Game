@@ -25,7 +25,7 @@ namespace js
 	}
 	void Collider::Render(HDC hdc)
 	{
-		GameObject* owner = GetOwner();
+		/*GameObject* owner = GetOwner();
 		if (owner->IsDeath())
 			return;
 
@@ -49,7 +49,7 @@ namespace js
 		
 		SelectObject(hdc, prevPen);
 		DeleteObject(red);
-		DeleteObject(green);
+		DeleteObject(green);*/
 
 	}
 

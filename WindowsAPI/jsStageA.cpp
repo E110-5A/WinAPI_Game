@@ -104,10 +104,10 @@ namespace js
 	void StageA::Render(HDC hdc)
 	{
 		Scene::Render(hdc);
-		wchar_t szFloat[40] = {};
+		/*wchar_t szFloat[40] = {};
 		swprintf_s(szFloat, 40, L"Stage A");
 		int strLen = wcsnlen_s(szFloat, 40);
-		TextOut(hdc, 5, 10, szFloat, strLen);
+		TextOut(hdc, 5, 10, szFloat, strLen);*/
 	}
 	void StageA::Enter()
 	{
@@ -197,7 +197,7 @@ namespace js
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Chest, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Item, true);
 		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Teleporter, true);
-		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::DamageObject, true);
+		CollisionManager::SetLayer(eColliderLayer::Player, eColliderLayer::Projectile, true);
 
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Propellant, true);
 		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Projectile, true);

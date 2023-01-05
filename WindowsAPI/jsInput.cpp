@@ -94,7 +94,7 @@ namespace js
 
 	void Input::Render(HDC hdc)
 	{
-		wchar_t szFloat[40] = {};
+		/*wchar_t szFloat[40] = {};
 		Vector2 mousePos = Camera::CalculateMousePos(mMousePos);
 		std::wstring stateStr = L"Mouse Posision :";
 		stateStr += L" (";
@@ -105,7 +105,7 @@ namespace js
 
 		swprintf_s(szFloat, 40, stateStr.c_str());
 		int strLen = wcsnlen_s(szFloat, 40);
-		TextOut(hdc, 10, 60, szFloat, strLen);
+		TextOut(hdc, 10, 60, szFloat, strLen);*/
 	}
 
 

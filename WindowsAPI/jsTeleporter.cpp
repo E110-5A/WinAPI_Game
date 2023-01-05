@@ -120,9 +120,9 @@ namespace js
 		}
 
 
-		// Collider Render
-		if (IsAble())
-			EventObject::Render(hdc);		
+		//// Collider Render
+		//if (IsAble())
+		//	EventObject::Render(hdc);		
 	}
 	void Teleporter::AddTeleporter()
 	{

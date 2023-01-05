@@ -274,12 +274,12 @@ namespace js
 		
 		Creature::Render(hdc);
 
-		HBRUSH tr = Application::GetInstance().GetBrush(eBrushColor::Transparent);
-		Brush brush(hdc, tr);
-		Vector2 pos = GetPos();
-		Vector2 size = mBodyCollider->GetSize();
+		//HBRUSH tr = Application::GetInstance().GetBrush(eBrushColor::Transparent);
+		//Brush brush(hdc, tr);
+		//Vector2 pos = GetPos();
+		//Vector2 size = mBodyCollider->GetSize();
 
-		Rectangle(hdc, pos.x - mEyesight / 2, pos.y, pos.x + mEyesight / 2, pos.y + size.y);
+		//Rectangle(hdc, pos.x - mEyesight / 2, pos.y, pos.x + mEyesight / 2, pos.y + size.y);
 
 	}
 

@@ -237,23 +237,31 @@ namespace js
 	{
 		// 더블탭은 공속에 영향을 받는다
 
-		int* items = GameManager::GetItemList();
-		int SyringeItem = items[(UINT)eItemList::Syringe];
-		int BehemothItem = items[(UINT)eItemList::Behemoth];
-		
-		float attackSpeed = (SyringeItem * 0.2) + (BehemothItem * 0.5);
-		
-		int RingItem = items[(UINT)eItemList::Ring];
-		float cooldown = (RingItem * 0.2);
+		//int* items = GameManager::GetItemList();
+
+		//int SyringeItem = items[(UINT)eItemList::Syringe];
+		//int BehemothItem = items[(UINT)eItemList::Behemoth];
+		//float attackSpeed = (SyringeItem * 0.2) + (BehemothItem * 0.5);
+
+		//if (0 == attackSpeed)
+		//	attackSpeed = 1;
+
+		//int RingItem = items[(UINT)eItemList::Ring];
+		//float cooldown = (RingItem * 0.2);
+		//if (0 == cooldown)
+		//	cooldown = 1;
+
 
 		if (true == mDubleTab->active)
 		{
 			mDubleTab->coolDownTime += Time::GetDeltaTime();
 
 
-			float totalAttackCooldown = (mDubleTab->coolDown * 100) / (attackSpeed * 100);
+			//float totalAttackCooldown = (mDubleTab->coolDown) / (attackSpeed);
+			/*if (0 >= mDubleTab->coolDown - attackSpeed)
+				totalAttackCooldown = 0.2;*/
 			// 쿨다운이 공속에 비례해서 줄어들어야함 (기본값 0.4)
-			if (mDubleTab->coolDownTime > totalAttackCooldown)
+			if (mDubleTab->coolDownTime > mDubleTab->coolDown)
 			{
 				mDubleTab->active = false;
 				mDubleTab->coolDownTime = 0.0f;
@@ -263,8 +271,8 @@ namespace js
 		{
 			mFMJ->coolDownTime += Time::GetDeltaTime();
 
-			float totalCooldown = (mFMJ->coolDown * 100) / (cooldown * 100);
-			if (mFMJ->coolDownTime > totalCooldown)
+			//float totalCooldown = (mFMJ->coolDown * 100) * (cooldown * 100);
+			if (mFMJ->coolDownTime > mFMJ->coolDown)
 			{
 				mFMJ->active = false;
 				mFMJ->coolDownTime = 0.0f;
@@ -274,8 +282,8 @@ namespace js
 		{
 			mTacticalDive->coolDownTime += Time::GetDeltaTime();
 
-			float totalCooldown = (mTacticalDive->coolDown * 100) / (cooldown * 100);
-			if (mTacticalDive->coolDownTime > totalCooldown)
+			//float totalCooldown = (mTacticalDive->coolDown * 100) * (cooldown * 100);
+			if (mTacticalDive->coolDownTime > mTacticalDive->coolDown)
 			{
 				mTacticalDive->active = false;
 				mTacticalDive->coolDownTime = 0.0f;
@@ -285,8 +293,8 @@ namespace js
 		{
 			mSupressiveFire->coolDownTime += Time::GetDeltaTime();
 
-			float totalCooldown = (mSupressiveFire->coolDown * 100) / (cooldown * 100);
-			if (mSupressiveFire->coolDownTime > totalCooldown)
+			//float totalCooldown = (mSupressiveFire->coolDown * 100) * (cooldown * 100);
+			if (mSupressiveFire->coolDownTime > mSupressiveFire->coolDown)
 			{
 				mSupressiveFire->active = false;
 				mSupressiveFire->coolDownTime = 0.0f;
@@ -295,11 +303,13 @@ namespace js
 	}
 	void Player::SkillProcess()
 	{
-		int* items = GameManager::GetItemList();
+		/*int* items = GameManager::GetItemList();
 		int SyringeItem = items[(UINT)eItemList::Syringe];
 		int BehemothItem = items[(UINT)eItemList::Behemoth];
 
-		float attackSpeed = (SyringeItem * 0.2) + (BehemothItem * 0.5);
+		float extraAttackSpeed = (SyringeItem * 0.2) + (BehemothItem * 0.5);
+		if (0 == extraAttackSpeed)
+			extraAttackSpeed = 1;*/
 
 		// 시간을 재서 여러 호출간 딜레이를 넣어줌
 		// 오브젝트 풀 호출
@@ -311,9 +321,9 @@ namespace js
 			// 스킬 카운트가 유효하다면 반복
 			if (mDubleTab->curCount < mDubleTab->maxCount)
 			{
-				float totalAttackCooldown = (mDubleTab->castDelay * 100) / (attackSpeed * 100);
+				//float totalAttackCooldown = (mDubleTab->castDelay) * (extraAttackSpeed);
 				// 시전 준비가 되면 발사
-				if (mDubleTab->castDelayTime >= totalAttackCooldown)
+				if (mDubleTab->castDelayTime >= mDubleTab->castDelay)
 				{
 					Skill(eProjectileType::DoubleTab);
 					mDubleTab->castDelayTime = 0.0f;
@@ -579,6 +589,10 @@ namespace js
 	}
 	void Player::Move()
 	{
+		int* items = GameManager::GetItemList();
+		int HoofItem = items[(UINT)eItemList::Hoof];
+		float extraSpeed = (HoofItem * 5);
+
 		// 대기 애니메이션
 		if (KEY_UP(eKeyCode::RIGHT))
 		{
@@ -594,14 +608,14 @@ namespace js
 		{
 			SetDir(Vector2::Left);
 			Vector2 curVelocity = mRigidbody->GetVelocity();
-			curVelocity.x = mDir.x * mPlayerInfo->stat->playerUtility->moveSpeed * 100;
+			curVelocity.x = mDir.x * (mPlayerInfo->stat->playerUtility->moveSpeed + extraSpeed) * 100;
 			mRigidbody->SetVelocity(curVelocity);
 		}
 		if (KEY_PRESSE(eKeyCode::RIGHT))
 		{
 			SetDir(Vector2::Right);
 			Vector2 curVelocity = mRigidbody->GetVelocity();
-			curVelocity.x = mDir.x * mPlayerInfo->stat->playerUtility->moveSpeed * 100;
+			curVelocity.x = mDir.x * (mPlayerInfo->stat->playerUtility->moveSpeed + HoofItem) * 100;
 			mRigidbody->SetVelocity(curVelocity);
 		}
 
@@ -673,6 +687,8 @@ namespace js
 	}
 	void Player::Jump()
 	{
+		int* items = GameManager::GetItemList();
+		int RootItem = items[(UINT)eItemList::Root];
 		// 점프 애니메이션
 		if (KEY_DOWN(eKeyCode::RIGHT))
 		{
@@ -684,7 +700,7 @@ namespace js
 		}
 
 		// 로직
-		if (KEY_DOWN(eKeyCode::SPACE) && mPlayerInfo->stat->playerUtility->curJumpCount < mPlayerInfo->stat->playerUtility->maxJumpCount)
+		if (KEY_DOWN(eKeyCode::SPACE) && mPlayerInfo->stat->playerUtility->curJumpCount < mPlayerInfo->stat->playerUtility->maxJumpCount + RootItem)
 		{
 			JumpProcess();			
 		}

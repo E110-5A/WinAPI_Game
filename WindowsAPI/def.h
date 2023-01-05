@@ -203,7 +203,7 @@ enum class eItemType
 enum class eItemList
 {
 	// Common															ㅇ
-	Glasses,		// 치명타 증가										ㅇ 공격력	4	증가
+	Glasses,		// 치명타 증가										ㅇ 공격력	6	증가
 	Syringe,		// 공격속도 증가									   	ㅇ 공격속도	1.2 증가
 	Hoof,			// 이동속도 증가									   	ㅇ 이동속도	5	증가
 	Tooth,			// 처치시 체력 회복								  	ㅇ 타격마다hp1	회복
@@ -215,7 +215,7 @@ enum class eItemList
 	Seed,			// 타격마다 회복									   	ㅇ
 	Feather,		// 점프 1회 추가										ㅇ
 	// Rare																ㅇ
-	MissileMk2 = 10,// 더많이 더 강한 투사체 사출						   	ㅇ 보조카운트	1	증가
+	MissileMk2 = 10,// 더많이 더 강한 투사체 사출						   	ㅇ 공격력	15	증가
 	Behemoth,		// 모든 공격이 폭발함								 	ㅇ 공격속도	1.5 증가
 	Ring,			// 치명타 증가, 치명타시 쿨다운 감소					ㅇ 쿨감		20%	감소
 	Scepter,		// 4번째 스킬 강화								   	ㅇ 최대채력	40	증가

@@ -2,6 +2,7 @@
 
 // 매니저
 #include "jsTime.h"
+#include "jsGameManager.h"
 
 // 컴포넌트
 #include "jsCollider.h"
@@ -79,6 +80,7 @@ namespace js
 
 	void PlayerProjectile::FMJ()
 	{
+
 		std::vector<Creature*>::iterator iter = mTarget.begin();
 		for (; iter != mTarget.end(); ++iter)
 		{
@@ -127,8 +129,13 @@ namespace js
 		}
 		if (nullptr != target)
 		{
+			int* items = GameManager::GetItemList();
+			int GlassesItem = items[(UINT)eItemList::Glasses];
+			int MissileMk2Item = items[(UINT)eItemList::MissileMk2];
+			float extraDamage = (GlassesItem * 6) + (MissileMk2Item * 15);
+
 			// 스킬 데미지비율 * 내 공격력
-			float damage = mInfo.damage * mOwner->GetOffence()->damage;
+			float damage = mInfo.damage * (mOwner->GetOffence()->damage + extraDamage);
 			target->SelfHit(this, damage, mInfo.stagger, mInfo.power);
 		}
 	}

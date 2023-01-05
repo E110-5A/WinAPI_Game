@@ -127,6 +127,7 @@ namespace js
 		}
 		if (nullptr != target)
 		{
+			// 스킬 데미지비율 * 내 공격력
 			float damage = mInfo.damage * mOwner->GetOffence()->damage;
 			target->SelfHit(this, damage, mInfo.stagger, mInfo.power);
 		}

@@ -70,12 +70,10 @@ namespace js
 		
 		InitComponent();
 
-		InitSkill(mDubleTab, 0.6f, 50.f, 2
-			, mPlayerInfo->stat->playerOffence->attackSpeed* 0.14f, mPlayerInfo->stat->playerOffence->attackSpeed * 0.4f);
+		InitSkill(mDubleTab, 0.6f, 50.f, 2, 0.2f, 0.5f);
 		InitSkill(mFMJ, 2.3f, 120.f, 1, 0.60f, 3.0f, eStagger::Nomal);
-		InitSkill(mTacticalDive, 0.f, mPlayerInfo->stat->playerUtility->moveSpeed * 100.f, 1, 0.70f, 5.0f);
-		InitSkill(mSupressiveFire, 0.8f, 60.f, 6
-			, mPlayerInfo->stat->playerOffence->attackSpeed * 0.14f, 5.0f, eStagger::Heave);
+		InitSkill(mTacticalDive, 0.f, 100.f, 1, 0.70f, 5.0f);
+		InitSkill(mSupressiveFire, 0.8f, 60.f, 6, 0.14f, 5.0f, eStagger::Heave);
 	}
 	void Player::InitComponent()
 	{
@@ -237,10 +235,25 @@ namespace js
 	}
 	void Player::Cooldown()
 	{
+		// 더블탭은 공속에 영향을 받는다
+
+		int* items = GameManager::GetItemList();
+		int SyringeItem = items[(UINT)eItemList::Syringe];
+		int BehemothItem = items[(UINT)eItemList::Behemoth];
+		
+		float attackSpeed = (SyringeItem * 0.2) + (BehemothItem * 0.5);
+		
+		int RingItem = items[(UINT)eItemList::Ring];
+		float cooldown = (RingItem * 0.2);
+
 		if (true == mDubleTab->active)
 		{
 			mDubleTab->coolDownTime += Time::GetDeltaTime();
-			if (mDubleTab->coolDownTime > mDubleTab->coolDown)
+
+
+			float totalAttackCooldown = (mDubleTab->coolDown * 100) / (attackSpeed * 100);
+			// 쿨다운이 공속에 비례해서 줄어들어야함 (기본값 0.4)
+			if (mDubleTab->coolDownTime > totalAttackCooldown)
 			{
 				mDubleTab->active = false;
 				mDubleTab->coolDownTime = 0.0f;
@@ -249,7 +262,9 @@ namespace js
 		if (true == mFMJ->active)
 		{
 			mFMJ->coolDownTime += Time::GetDeltaTime();
-			if (mFMJ->coolDownTime > mFMJ->coolDown)
+
+			float totalCooldown = (mFMJ->coolDown * 100) / (cooldown * 100);
+			if (mFMJ->coolDownTime > totalCooldown)
 			{
 				mFMJ->active = false;
 				mFMJ->coolDownTime = 0.0f;
@@ -258,7 +273,9 @@ namespace js
 		if (true == mTacticalDive->active)
 		{
 			mTacticalDive->coolDownTime += Time::GetDeltaTime();
-			if (mTacticalDive->coolDownTime > mTacticalDive->coolDown)
+
+			float totalCooldown = (mTacticalDive->coolDown * 100) / (cooldown * 100);
+			if (mTacticalDive->coolDownTime > totalCooldown)
 			{
 				mTacticalDive->active = false;
 				mTacticalDive->coolDownTime = 0.0f;
@@ -267,7 +284,9 @@ namespace js
 		if (true == mSupressiveFire->active)
 		{
 			mSupressiveFire->coolDownTime += Time::GetDeltaTime();
-			if (mSupressiveFire->coolDownTime > mSupressiveFire->coolDown)
+
+			float totalCooldown = (mSupressiveFire->coolDown * 100) / (cooldown * 100);
+			if (mSupressiveFire->coolDownTime > totalCooldown)
 			{
 				mSupressiveFire->active = false;
 				mSupressiveFire->coolDownTime = 0.0f;
@@ -276,6 +295,12 @@ namespace js
 	}
 	void Player::SkillProcess()
 	{
+		int* items = GameManager::GetItemList();
+		int SyringeItem = items[(UINT)eItemList::Syringe];
+		int BehemothItem = items[(UINT)eItemList::Behemoth];
+
+		float attackSpeed = (SyringeItem * 0.2) + (BehemothItem * 0.5);
+
 		// 시간을 재서 여러 호출간 딜레이를 넣어줌
 		// 오브젝트 풀 호출
 		if (true == mDubleTab->run)
@@ -286,8 +311,9 @@ namespace js
 			// 스킬 카운트가 유효하다면 반복
 			if (mDubleTab->curCount < mDubleTab->maxCount)
 			{
+				float totalAttackCooldown = (mDubleTab->castDelay * 100) / (attackSpeed * 100);
 				// 시전 준비가 되면 발사
-				if (mDubleTab->castDelayTime >= mDubleTab->castDelay)
+				if (mDubleTab->castDelayTime >= totalAttackCooldown)
 				{
 					Skill(eProjectileType::DoubleTab);
 					mDubleTab->castDelayTime = 0.0f;
@@ -406,7 +432,9 @@ namespace js
 		case eProjectileType::TacticalDive:
 		{
 			Vector2 velocity = mRigidbody->GetVelocity();
-			velocity.x = GetDir().x * mTacticalDive->power * 3.0f;
+
+			// 스킬위력 * 이동속도 * 기본개수
+			velocity.x = GetDir().x * mPlayerInfo->stat->playerUtility->moveSpeed * mTacticalDive->power * 3.0f;
 			mRigidbody->SetVelocity(velocity);
 
 			mTacticalDive->active = true;

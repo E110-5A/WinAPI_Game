@@ -24,6 +24,7 @@ namespace js
 	};
 	class Image;
 	class ItemObject;
+	class Sound;
 	class Chest : public EventObject
 	{
 	public:
@@ -120,6 +121,7 @@ namespace js
 		UINT		mY;
 
 	private:
-		eChestType mChestType;
+		eChestType	mChestType;
+		Sound*		mOpenSound;
 	};
 }

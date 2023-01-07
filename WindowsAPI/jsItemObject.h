@@ -3,6 +3,7 @@
 
 namespace js
 {
+	class Sound;
 	class ItemObject : public EventObject
 	{
 	public:
@@ -25,8 +26,10 @@ namespace js
 		void PickUp();
 
 	private:
+		Sound*		mPickupSound;
+		
 		Event		mOnTrigger;
-
+		
 		// 아틀라스 이미지 설정 값
 		eItemList	mIndex;
 		// 이미지 LT 좌표

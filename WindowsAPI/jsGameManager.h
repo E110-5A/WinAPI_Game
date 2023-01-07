@@ -10,6 +10,7 @@ namespace js
 	class Platform;
 	class BossMonster;
 	class Teleporter;
+	class Sound;
 	class GameManager
 	{
 	public:
@@ -24,6 +25,10 @@ namespace js
 		// 오브젝트 추가 (씬에서 호출)
 		static void AddObject();
 
+		static Sound* GetTitleSound() { return mTitleMusic; }
+		static Sound* GetSTG1Sound() { return mSTG1Music; }
+		static Sound* GetSTG2Sound() { return mSTG2Music; }
+		static Sound* GetBossSound() { return mBossMusic; }
 
 		// 게임이 진행중인 경우 호출
 		static void Playing();
@@ -68,6 +73,14 @@ namespace js
 
 	private:
 		// 씬에서 사용할 객체
+		static Sound* mTitleMusic;
+		static Sound* mSTG1Music;
+		static Sound* mSTG2Music;
+		static Sound* mBossMusic;
+
+		static Sound* mLevelUpSound;
+		static Sound* mTeleporterSound;
+
 
 		static Player*				mPlayer;
 		static PlayerProjectile*	mPlayerAttack[PLAYER_PROJECTILE_POOL];

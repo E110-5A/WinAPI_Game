@@ -6,6 +6,10 @@
 #include "jsSceneManager.h"
 #include "jsCamera.h"
 #include "jsUIManager.h"
+#include "jsGameManager.h"
+
+#include "jsResources.h"
+#include "jsSound.h"
 
 // 오브젝트
 #include "jsObject.h"
@@ -35,7 +39,6 @@ namespace js
 		// 이동하는 플레이어 배경 추가
 		CommandoRun* pObj = object::Instantiate<CommandoRun>(eColliderLayer::BGObj, Vector2(640.0f, 618.0f));
 
-
 	}
 	void TitleScene::Tick()
 	{
@@ -60,6 +63,7 @@ namespace js
 		UIManager::Push(eUIType::SelectBtn);
 		UIManager::Push(eUIType::OptionBtn);
 		UIManager::Push(eUIType::QuitBtn);
+		GameManager::GetTitleSound()->Play(true);
 	}
 	void TitleScene::Exit()
 	{

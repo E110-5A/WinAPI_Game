@@ -11,6 +11,7 @@
 
 // scene
 #include "jsMapToolScene.h"
+#include "jsSound.h"
 
 // ui
 #include "jsHUD.h"
@@ -144,6 +145,10 @@ namespace js
 	}
 	void StageB::Enter()
 	{
+		GameManager::GetBossSound()->Stop(true);
+
+		GameManager::GetSTG2Sound()->Play(true);
+
 		EnterObject();
 		GameManager::SetPlayable(true);
 		Camera::SetTarget(GameManager::GetPlayer());
@@ -157,6 +162,7 @@ namespace js
 	}
 	void StageB::Exit()
 	{
+		GameManager::GetSTG2Sound()->Stop(true);
 		UIManager::Pop(eUIType::PlayerInfo);
 		UIManager::Pop(eUIType::Difficulty);
 	}

@@ -10,7 +10,7 @@
 // 리소스
 #include "jsImage.h"
 #include "jsResources.h"
-
+#include "jsSound.h"
 #include "jsScene.h"
 
 // 콜라이더
@@ -67,13 +67,15 @@ namespace js
 		// 애니메이션 스프라이트 로딩
 		if (nullptr == mSpriteImage)
 			SetImage(Resources::Load<Image>(L"Player", L"..\\Resources\\Image\\Player\\player.bmp"));
-		
+		mPewSound = Resources::Load<Sound>(L"Pew", L"..\\Resources\\Sound\\Player\\Bullet1.wav");
+		mPowSound = Resources::Load<Sound>(L"Pow", L"..\\Resources\\Sound\\Player\\Bullet2.wav");
+
 		InitComponent();
 
 		InitSkill(mDubleTab, 0.6f, 50.f, 2, 0.2f, 0.5f);
 		InitSkill(mFMJ, 2.3f, 120.f, 1, 0.60f, 3.0f, eStagger::Nomal);
 		InitSkill(mTacticalDive, 0.f, 100.f, 1, 0.70f, 5.0f);
-		InitSkill(mSupressiveFire, 0.8f, 60.f, 6, 0.14f, 5.0f, eStagger::Heave);
+		InitSkill(mSupressiveFire, 0.8f, 60.f, 6, 0.16f, 5.0f, eStagger::Heave);
 	}
 	void Player::InitComponent()
 	{
@@ -416,7 +418,10 @@ namespace js
 				// 비활성화 투사체 찾으면
 				if (mWeapon[idx]->IsAble() == false)
 				{
+					mPewSound->Stop(true);
 					// Active상태로 만들고
+					mPewSound->Play(false);
+
 					mWeapon[idx]->Active(type, mDubleTab->damage, mDubleTab->stagger, mDubleTab->power);
 					mDubleTab->active = true;
 					mDubleTab->run = true;
@@ -431,6 +436,9 @@ namespace js
 			{
 				if (mWeapon[idx]->IsAble() == false)
 				{
+					mPowSound->Stop(true);
+					// Active상태로 만들고
+					mPowSound->Play(false);
 					mWeapon[idx]->Active(type, mFMJ->damage, mFMJ->stagger, mFMJ->power);
 					mFMJ->active = true;
 					mFMJ->run = true;
@@ -457,6 +465,9 @@ namespace js
 			{
 				if (mWeapon[idx]->IsAble() == false)
 				{
+					mPewSound->Stop(true);
+					// Active상태로 만들고
+					mPewSound->Play(false);
 					mWeapon[idx]->Active(type, mSupressiveFire->damage, mSupressiveFire->stagger, mSupressiveFire->power);
 					mSupressiveFire->active = true;
 					mSupressiveFire->run = true;

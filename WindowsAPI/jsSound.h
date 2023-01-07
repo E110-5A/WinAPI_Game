@@ -1,7 +1,6 @@
 #pragma once
 #include "jsResource.h"
 
-
 namespace js
 {
 	class Sound : public Resource

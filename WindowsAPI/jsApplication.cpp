@@ -23,11 +23,11 @@ namespace js
 
 		Time::Initialize();
 		Input::Initialize();
+		SoundManager::Initialize();
 		UIManager::Initialize();
 		GameManager::Initialize();
 		SceneManager::Initialize();
 		Camera::Initialize();
-		SoundManager::Initialize();
 	}
 
 	void Application::InitializeAtlasWindow(WindowData data)

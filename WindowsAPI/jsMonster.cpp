@@ -10,6 +10,7 @@
 // 리소스
 #include "jsResources.h"
 #include "jsImage.h"
+#include "jsSound.h"
 
 // 컴포넌트
 #include "jsCollider.h"
@@ -43,6 +44,8 @@ namespace js
 		// 기본 세팅
 		Creature::Initialize();
 		SetImage(Resources::Load<Image>(L"Monster", L"..\\Resources\\Image\\Enemy\\monster.bmp"));
+		mImpAttackSound = Resources::Load<Sound>(L"ImpAttackSound", L"..\\Resources\\Sound\\Monster\\ImpShoot1.wav");
+		mImpDeadSound = Resources::Load<Sound>(L"ImpDeadSound", L"..\\Resources\\Sound\\Monster\\ImpDeath.wav");
 		SetScale(Vector2::One * 2);
 		SetAnimator();
 
@@ -502,6 +505,8 @@ namespace js
 
 	void Monster::Skill()
 	{
+		mImpAttackSound->Stop(true);
+		mImpAttackSound->Play(false);
 		mDamageObj->Active();
 		mSkillInfo->active = true;
 		mSkillInfo->run = true;
@@ -512,6 +517,8 @@ namespace js
 		if (0 >= mHealthStat->curHP)
 		{
 			mState = eMonsterState::Death;
+			mImpDeadSound->Stop(true);
+			mImpDeadSound->Play(false);
 			// 애니메이션 재생
 			switch (mMonsterType)
 			{

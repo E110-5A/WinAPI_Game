@@ -8,6 +8,8 @@
 // resource
 #include "jsResources.h"
 #include "jsImage.h"
+#include "jsSound.h"
+
 // component
 #include "jsCollider.h"
 
@@ -31,7 +33,8 @@ namespace js
         EventObject::Initialize();
         // 아이템 이미지 세팅
         SetImage(L"Items", L"..\\Resources\\Image\\EventObject\\Items.bmp");
-
+        mPickupSound = Resources::Load<Sound>(L"Pickup", L"..\\Resources\\Sound\\Env\\Pickup.wav");
+        //
         // 콜라이더 설정
         mEventCollider->SetSize(Size(ITEM_SIZE * TILE_SCALE, ITEM_SIZE * TILE_SCALE));
         mEventCollider->SetOffset(Vector2(ITEM_SIZE, ITEM_SIZE));
@@ -113,6 +116,8 @@ namespace js
     {
         // 게임매니저의 아이템리스트 갱신;
         GameManager::PickUpItems(mIndex);
+        mPickupSound->Stop(true);
+        mPickupSound->Play(false);
         InActive();
     }
     void ItemObject::OnCollisionEnter(Collider* other)

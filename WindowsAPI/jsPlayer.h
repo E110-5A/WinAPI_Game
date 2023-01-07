@@ -13,6 +13,7 @@ namespace js
 	class GameObject;
 	class PlayerProjectile;
 	class GroundCheck;
+	class Sound;
 	class Player : public Creature
 	{
 	public:
@@ -101,6 +102,8 @@ namespace js
 		SkillInfo*			mSupressiveFire;
 		SkillInfo*			mTacticalDive;
 
+		Sound*				mPewSound;
+		Sound*				mPowSound;
 		// 외부요인
 	private:
 		bool				mBlocking;

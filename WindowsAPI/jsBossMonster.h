@@ -20,6 +20,7 @@ namespace js
 	class Scene;
 	class Player;
 	class MonsterAttack;
+	class Sound;
 	class BossMonster : public Creature
 	{
 	public:
@@ -82,6 +83,9 @@ namespace js
 		MonsterSkillInfo*	mAttack2;
 
 		MonsterAttack*		mDamageObj;
+
+		Sound*				mAttackSound;
+
 		bool				mDeath;
 
 	private:

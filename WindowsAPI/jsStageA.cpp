@@ -12,6 +12,7 @@
 // scene
 #include "jsMapToolScene.h"
 #include "jsCollider.h"
+#include "jsSound.h"
 // ui
 #include "jsHUD.h"
 #include "jsButton.h"
@@ -111,19 +112,23 @@ namespace js
 	}
 	void StageA::Enter()
 	{
-
+		// 사운드 초기화
+		GameManager::GetTitleSound()->Stop(true);
+		GameManager::GetBossSound()->Stop(true);
+		
+		GameManager::GetSTG1Sound()->Play(true);
 		EnterObject();
 		GameManager::SetPlayable(true);
 		Camera::SetTarget(GameManager::GetPlayer());
-
-
 		EnterUI();
 		EnterLayer();
 	}
 	void StageA::Exit()
 	{
+		GameManager::GetSTG1Sound()->Stop(true);
 		UIManager::Pop(eUIType::PlayerInfo);
 		UIManager::Pop(eUIType::Difficulty);
+		PopBossUI();
 	}
 
 	void StageA::EnterObject()
@@ -178,8 +183,6 @@ namespace js
 
 		DifficultyHUD* difficultyHud = UIManager::GetUIInstant<DifficultyHUD>(eUIType::DifficultyBar);
 		difficultyHud->SetDifficulty(GameManager::GetDifficulty());
-
-
 	}
 
 	void StageA::EnterLayer()

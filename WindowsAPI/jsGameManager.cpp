@@ -7,6 +7,9 @@
 // scene
 #include "jsScene.h"
 
+#include "jsResources.h"
+#include "jsSound.h"
+
 // object
 #include "jsPlayer.h"
 #include "jsPlayerProjectile.h"
@@ -20,6 +23,14 @@
 
 namespace js
 {
+	// 사운드
+	Sound* GameManager::mTitleMusic = nullptr;
+	Sound* GameManager::mSTG1Music = nullptr;
+	Sound* GameManager::mSTG2Music = nullptr;
+	Sound* GameManager::mBossMusic = nullptr;
+	Sound* GameManager::mLevelUpSound = nullptr;
+	Sound* GameManager::mTeleporterSound = nullptr;
+
 	// 오브젝트
 	Player*				GameManager::mPlayer = nullptr;
 	PlayerProjectile*	GameManager::mPlayerAttack[PLAYER_PROJECTILE_POOL] = {};
@@ -43,7 +54,7 @@ namespace js
 
 	void GameManager::Initialize()
 	{
-		// 플레이어 설정
+		// 플레이어 설정 초기화
 		mPlayerInfo = new PlayerInfo();
 		mDefaultStat = new PlayerStat();
 		mDifficultyTime = new float;
@@ -51,6 +62,14 @@ namespace js
 		InitStat(mPlayerInfo);
 		mDefaultStat = mPlayerInfo->stat;
 		PlayerLevelUp();
+
+		// 배경음악 초기화
+		mTitleMusic = Resources::Load<Sound>(L"TitleMusic", L"..\\Resources\\Sound\\Background\\1RiskofRain.wav");
+		mSTG1Music = Resources::Load<Sound>(L"STG1Music", L"..\\Resources\\Sound\\Background\\2Monsoon.wav");
+		mSTG2Music = Resources::Load<Sound>(L"STG2Music", L"..\\Resources\\Sound\\Background\\3Cyclogenesis.wav");
+		mBossMusic = Resources::Load<Sound>(L"BossMusic", L"..\\Resources\\Sound\\Background\\4SurfaceTension.wav");
+		mLevelUpSound = Resources::Load<Sound>(L"LevelUp", L"..\\Resources\\Sound\\Env\\LevelUp.wav");
+		mTeleporterSound = Resources::Load<Sound>(L"TeleporterSound", L"..\\Resources\\Sound\\Env\\Teleporter.wav");
 
 		*mDifficultyTime = 0;
 		*mDifficulty = 0;
@@ -209,6 +228,8 @@ namespace js
 	void GameManager::KillBoss()
 	{
 		mTeleporter->BossKilled();
+		mTeleporterSound->Stop(true);
+		mTeleporterSound->Play(false);
 	}
 	void GameManager::Playing()
 	{

@@ -7,6 +7,7 @@
 // resource
 #include "jsResources.h"
 #include "jsImage.h"
+#include "jsSound.h"
 
 // component
 #include "jsCollider.h"
@@ -51,6 +52,7 @@ namespace js
         EventObject::Initialize();
         SetImage(L"ChestSprite", L"..\\Resources\\Image\\EventObject\\Chests.bmp");
         mTextImage = Resources::Load<Image>(L"ChestText", L"..\\Resources\\Image\\EventObject\\ChestText.bmp");
+        mOpenSound = Resources::Load<Sound>(L"OpenChest", L"..\\Resources\\Sound\\Env\\Chest1.wav");
         // 상자와 대응하는 아이템 생성
 
         mItemObject = new ItemObject();
@@ -120,6 +122,8 @@ namespace js
         {
             if (KEY_DOWN(eKeyCode::A))
             {
+                mOpenSound->Stop(true);
+                mOpenSound->Play(false);
                 if (eChestType::Small == mChestType)
                 {
                     SmallChestTrigger();

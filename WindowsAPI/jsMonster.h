@@ -29,6 +29,7 @@ namespace js
 	class Platform;
 	class Player;
 	class MonsterAttack;
+	class Sound;
 	class Monster : public Creature
 	{
 	public:
@@ -85,16 +86,18 @@ namespace js
 		void SelfStun(float power);
 
 	private:
+		Sound*			mImpAttackSound;
+		Sound*			mImpDeadSound;
+		Player*			mTarget;
+
 		eMonsterType	mMonsterType;
 		int				mEyesight;
 
 		eMonsterState	mState;
-		Player*			mTarget;
 
 
 		MonsterSkillInfo*	mSkillInfo;
 		MonsterAttack*		mDamageObj;
-
 
 	private:
 		int				mDropExp;

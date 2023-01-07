@@ -1,8 +1,9 @@
 #include "jsBossMonster.h"
 #include "jsApplication.h"
 
-#include "jsResources.h"
 #include "jsScene.h"
+#include "jsResources.h"
+#include "jsSound.h"
 // manager
 #include "jsSceneManager.h"
 #include "jsGameManager.h"
@@ -10,6 +11,7 @@
 // component
 #include "jsAnimator.h"
 #include "jsCollider.h"
+
 
 // object
 #include "jsMonsterAttack.h"
@@ -36,6 +38,7 @@ namespace js
 	{
 		Creature::Initialize();
 		SetImage(Resources::Load<Image>(L"Boss", L"..\\Resources\\Image\\Enemy\\boss.bmp"));
+		mAttackSound = Resources::Load<Sound>(L"AttackSound", L"..\\Resources\\Sound\\Monster\\GolemAttack1.wav");
 		SetAnimator();
 		mResistance = eStagger::Heave;
 		
@@ -361,6 +364,8 @@ namespace js
 	}
 	void BossMonster::Skill(eBossAttackType type)
 	{
+		mAttackSound->Stop(true);
+		mAttackSound->Play(false);
 		switch (type)
 		{
 		case eBossAttackType::A:
@@ -386,7 +391,6 @@ namespace js
 		{
 			// »ç¸Á!
 			GameManager::KillBoss();
-			mPlayScene->PopBossUI();
 			mState = eBossState::Death;
 		}
 	}

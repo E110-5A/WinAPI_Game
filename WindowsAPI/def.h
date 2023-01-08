@@ -204,7 +204,7 @@ enum class eItemList
 {
 	// Common															ㅇ
 	Glasses,		// 치명타 증가										ㅇ 공격력	6	증가
-	Syringe,		// 공격속도 증가									   	ㅇ 공격속도	1.2 증가
+	Syringe,		// 공격속도 증가									   	ㅇ 방어력	3	증가
 	Hoof,			// 이동속도 증가									   	ㅇ 이동속도	5	증가
 	Tooth,			// 처치시 체력 회복								  	ㅇ 타격마다hp1	회복
 	Root,			// 최대 채력 증가									   	ㅇ 점프카운트	1	증가

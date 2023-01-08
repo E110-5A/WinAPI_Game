@@ -408,6 +408,9 @@ namespace js
 	}
 	void Player::Skill(eProjectileType type)
 	{
+		int* items = GameManager::GetItemList();
+		int ToothItem = items[(UINT)eItemList::Tooth];
+		int regenHp = ToothItem * 2;
 		switch (type)
 		{
 		case eProjectileType::DoubleTab:
@@ -422,6 +425,9 @@ namespace js
 					// Active상태로 만들고
 					mPewSound->Play(false);
 
+					mPlayerInfo->stat->playerHealth->curHP += regenHp;
+					if (mPlayerInfo->stat->playerHealth->curHP >= mPlayerInfo->stat->playerHealth->maxHP)
+						mPlayerInfo->stat->playerHealth->curHP = mPlayerInfo->stat->playerHealth->maxHP;
 					mWeapon[idx]->Active(type, mDubleTab->damage, mDubleTab->stagger, mDubleTab->power);
 					mDubleTab->active = true;
 					mDubleTab->run = true;
@@ -439,6 +445,10 @@ namespace js
 					mPowSound->Stop(true);
 					// Active상태로 만들고
 					mPowSound->Play(false);
+
+					mPlayerInfo->stat->playerHealth->curHP += regenHp;
+					if (mPlayerInfo->stat->playerHealth->curHP >= mPlayerInfo->stat->playerHealth->maxHP)
+						mPlayerInfo->stat->playerHealth->curHP = mPlayerInfo->stat->playerHealth->maxHP;
 					mWeapon[idx]->Active(type, mFMJ->damage, mFMJ->stagger, mFMJ->power);
 					mFMJ->active = true;
 					mFMJ->run = true;
@@ -468,6 +478,10 @@ namespace js
 					mPewSound->Stop(true);
 					// Active상태로 만들고
 					mPewSound->Play(false);
+
+					mPlayerInfo->stat->playerHealth->curHP += regenHp;
+					if (mPlayerInfo->stat->playerHealth->curHP >= mPlayerInfo->stat->playerHealth->maxHP)
+						mPlayerInfo->stat->playerHealth->curHP = mPlayerInfo->stat->playerHealth->maxHP;
 					mWeapon[idx]->Active(type, mSupressiveFire->damage, mSupressiveFire->stagger, mSupressiveFire->power);
 					mSupressiveFire->active = true;
 					mSupressiveFire->run = true;
@@ -602,7 +616,7 @@ namespace js
 	{
 		int* items = GameManager::GetItemList();
 		int HoofItem = items[(UINT)eItemList::Hoof];
-		float extraSpeed = (HoofItem * 5);
+		float extraSpeed = (0.1 * HoofItem);
 
 		// 대기 애니메이션
 		if (KEY_UP(eKeyCode::RIGHT))
@@ -626,7 +640,7 @@ namespace js
 		{
 			SetDir(Vector2::Right);
 			Vector2 curVelocity = mRigidbody->GetVelocity();
-			curVelocity.x = mDir.x * (mPlayerInfo->stat->playerUtility->moveSpeed + HoofItem) * 100;
+			curVelocity.x = mDir.x * (mPlayerInfo->stat->playerUtility->moveSpeed + extraSpeed) * 100;
 			mRigidbody->SetVelocity(curVelocity);
 		}
 

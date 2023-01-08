@@ -189,8 +189,8 @@ namespace js
 		int monsterTO = 1 + (*mDifficulty) / 3;
 
 
-		// (5 + 난이도)초마다 몬스터 스폰
-		if (7 + (float)(*mDifficulty) <= mSpawnTime)
+		// (12 + 난이도)초마다 몬스터 스폰
+		if (12 + (float)(*mDifficulty) <= mSpawnTime)
 		{
 			// TO만큼 몬스터를 추가함
 			for (int count = 0; count < monsterTO; ++count)

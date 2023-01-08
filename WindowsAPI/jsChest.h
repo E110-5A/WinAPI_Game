@@ -51,10 +51,13 @@ namespace js
 		{
 			// 아이템 종류
 			srand((unsigned int)time(NULL));
-			int rare = 10 + (rand() % 4);
+			int common = 0 + (rand() % 5);
+
+			//int rare = 10 + (rand() % 4);
 
 			// 아이템 불러오기
-			mItemObject->Active(GetPos(), (eItemList)rare);
+			mItemObject->Active(GetPos(), (eItemList)(common));     // 0~2  common
+			//mItemObject->Active(GetPos(), (eItemList)rare);
 
 			// 비활성화 하기
 			mAble = false;
@@ -73,12 +76,12 @@ namespace js
 			int active = 15 + (rand() % 3);
 
 			// 아이템 불러오기
-			if (0 <= randomItem && 20 > randomItem)
+			//if (0 <= randomItem && 20 > randomItem)
 				mItemObject->Active(GetPos(), (eItemList)(common));     // 0~2  common
-			else if (20 <= randomItem && 40 > randomItem)
-				mItemObject->Active(GetPos(), (eItemList)(uncommon));   // 3~4  uncommon
-			else
-				mItemObject->Active(GetPos(), (eItemList)(active));     // 5    active
+			//else if (20 <= randomItem && 40 > randomItem)
+				//mItemObject->Active(GetPos(), (eItemList)(uncommon));   // 3~4  uncommon
+			//else
+				//mItemObject->Active(GetPos(), (eItemList)(active));     // 5    active
 
 			// 비활성화 하기
 			mAble = false;
@@ -95,12 +98,12 @@ namespace js
 			int randomItem = (rand() % 50);
 
 			// 아이템 불러오기
-			if (0 <= randomItem && 30 > randomItem)
+			//if (0 <= randomItem && 30 > randomItem)
 				mItemObject->Active(GetPos(), (eItemList)(common));     // 0~2  common
-			else if (30 <= randomItem && 40 > randomItem)
-				mItemObject->Active(GetPos(), (eItemList)(uncommon));   // 3~4  uncommon
-			else
-				mItemObject->Active(GetPos(), (eItemList)(active));     // 5    active
+			//else if (30 <= randomItem && 40 > randomItem)
+				//mItemObject->Active(GetPos(), (eItemList)(uncommon));   // 3~4  uncommon
+			//else
+				//mItemObject->Active(GetPos(), (eItemList)(active));     // 5    active
 
 			// 비활성화 하기
 			mAble = false;

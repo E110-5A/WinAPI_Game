@@ -48,7 +48,7 @@ namespace js
 			// 텔레포터 충전하기
 			mChargingDeltaTime += Time::GetDeltaTime();
 
-			if (15 <= mChargingDeltaTime)
+			if (30 <= mChargingDeltaTime)
 			{
 				mFullyCharged = true;
 				mCharging = false;
